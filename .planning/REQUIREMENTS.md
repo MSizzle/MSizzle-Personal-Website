@@ -103,11 +103,40 @@ Explicitly excluded. Documented to prevent scope creep.
 
 ## Traceability
 
-<!-- Filled by roadmap creation -->
+<!-- Filled by roadmap creation 2026-03-31 -->
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| | | |
+| HOME-01 | Phase 3 — Core Pages | not_started |
+| HOME-02 | Phase 3 — Core Pages | not_started |
+| HOME-03 | Phase 4 — Animation & Polish | not_started |
+| HOME-04 | Phase 1 (scaffold) / Phase 4 (full integration) | not_started |
+| PORT-01 | Phase 3 — Core Pages | not_started |
+| PORT-02 | Phase 4 — Animation & Polish | not_started |
+| PORT-03 | Phase 3 — Core Pages | not_started |
+| BLOG-01 | Phase 2 — Notion CMS Integration | not_started |
+| BLOG-02 | Phase 2 — Notion CMS Integration | not_started |
+| BLOG-03 | Phase 3 — Core Pages | not_started |
+| BLOG-04 | Phase 3 — Core Pages | not_started |
+| BLOG-05 | Phase 2 — Notion CMS Integration | not_started |
+| ABOUT-01 | Phase 3 — Core Pages | not_started |
+| ANLY-01 | Phase 5 — Analytics | not_started |
+| ANLY-02 | Phase 5 — Analytics | not_started |
+| ANLY-03 | Phase 5 — Analytics | not_started |
+| ANLY-04 | Phase 5 — Analytics | not_started |
+| ANLY-05 | Phase 5 — Analytics | not_started |
+| ANLY-06 | Phase 5 — Analytics | not_started |
+| DSGN-01 | Phase 1 — Foundation | not_started |
+| DSGN-02 | Phase 3 — Core Pages | not_started |
+| DSGN-03 | Phase 4 — Animation & Polish | not_started |
+| DSGN-04 | Phase 4 — Animation & Polish | not_started |
+| DSGN-05 | Phase 3 — Core Pages | not_started |
+| DSGN-06 | Phase 1 — Foundation | not_started |
+| SOC-01 | Phase 3 — Core Pages | not_started |
+| SOC-02 | Phase 3 — Core Pages | not_started |
+| SOC-03 | Phase 3 — Core Pages | not_started |
+| SOC-04 | Phase 3 — Core Pages | not_started |
+| SOC-05 | Phase 3 — Core Pages | not_started |
 
 ---
 *Requirements defined: 2026-03-31*
