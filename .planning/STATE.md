@@ -1,6 +1,20 @@
+---
+gsd_state_version: 1.0
+milestone: v1.0
+milestone_name: milestone
+current_phase: 03
+status: unknown
+last_updated: "2026-04-02T21:22:00.781Z"
+progress:
+  total_phases: 6
+  completed_phases: 0
+  total_plans: 6
+  completed_plans: 3
+---
+
 # Project State
 
-**Current Phase:** Phase 3 — Core Pages
+**Current Phase:** 03
 **Last Updated:** 2026-04-02
 
 ## Phase Status
@@ -21,12 +35,15 @@ Phases 1–2 complete (retroactively documented). Ready for Phase 3 — Core Pag
 ## Accumulated Context
 
 ### Decisions
+
 - Next.js 16.2.1 used instead of 15.2.x (works fine)
 - Provider hierarchy: ThemeProvider > LenisProvider > MotionProvider
 - Image proxy route chosen over build-time download for Notion images
 - notion.dataSources.query (v5 API) used — databases.query deprecated in v5
 - Direct block rendering instead of markdown conversion for richer output
 - ISR revalidation at 30 minutes
+- [Phase 03]: Used inline SVGs for brand social icons (X, LinkedIn, GitHub) — lucide-react v4 removed brand icons
+- [Phase 03]: Added Notion API env var guards to blog pages — build now succeeds without NOTION_TOKEN set
 
 ## Known Issues
 

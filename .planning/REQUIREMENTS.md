@@ -44,15 +44,15 @@ Requirements for initial release. Each maps to roadmap phases.
 ### Design System
 
 - [ ] **DSGN-01**: Dark/light mode with system detection + manual toggle, no FOUC
-- [ ] **DSGN-02**: Mobile responsive design tested at 375px / iPhone SE
+- [x] **DSGN-02**: Mobile responsive design tested at 375px / iPhone SE
 - [ ] **DSGN-03**: Animated page transitions between routes
 - [ ] **DSGN-04**: Scroll reveal animations (elements animate in on scroll)
-- [ ] **DSGN-05**: Consistent design tokens (colors, spacing, typography) via Tailwind v4
+- [x] **DSGN-05**: Consistent design tokens (colors, spacing, typography) via Tailwind v4
 - [ ] **DSGN-06**: Custom domain pointed to Vercel
 
 ### Social & SEO
 
-- [ ] **SOC-01**: Social links hub in footer + dedicated /links page
+- [x] **SOC-01**: Social links hub in footer + dedicated /links page
 - [ ] **SOC-02**: OG meta tags with dynamic OG images per page
 - [ ] **SOC-03**: Auto-generated sitemap via app/sitemap.ts
 - [ ] **SOC-04**: robots.txt and Person structured data (JSON-LD)

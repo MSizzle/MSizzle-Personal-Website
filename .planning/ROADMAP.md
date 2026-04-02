@@ -12,7 +12,7 @@
 |---|-------|------|--------------|------------------|
 | 1 | Foundation | Lock architectural patterns and deploy a live skeleton | DSGN-01, DSGN-06, HOME-04 | 4 |
 | 2 | Notion CMS Integration | Content authored in Notion renders on the site without broken images | BLOG-01, BLOG-02, BLOG-05 | 4 |
-| 3 | Core Pages | Every page exists and is functionally complete | HOME-01, HOME-02, PORT-01, PORT-03, BLOG-03, BLOG-04, ABOUT-01, SOC-01, SOC-02, SOC-03, SOC-04, SOC-05, DSGN-02, DSGN-05, DSGN-06 | 5 |
+| 3 | Core Pages | 1/6 | In Progress|  |
 | 4 | Animation & Polish | The site feels alive and memorable | HOME-03, HOME-04, PORT-02, DSGN-03, DSGN-04 | 4 |
 | 5 | Analytics | Real visitor data is flowing to a private dashboard | ANLY-01, ANLY-02, ANLY-03, ANLY-04, ANLY-05, ANLY-06 | 4 |
 | 6 | Pre-Launch QA | Confidence the site is production-ready | All requirements validated end-to-end | 5 |
@@ -71,10 +71,10 @@
 
 **Requirements:** HOME-01, HOME-02, PORT-01, PORT-03, BLOG-03, BLOG-04, ABOUT-01, SOC-01, SOC-02, SOC-03, SOC-04, SOC-05, DSGN-02, DSGN-05
 
-**Plans:** 6 plans
+**Plans:** 1/6 plans executed
 
 Plans:
-- [ ] 03-01-PLAN.md — Infrastructure, design tokens, navigation, footer, vitest setup
+- [x] 03-01-PLAN.md — Infrastructure, design tokens, navigation, footer, vitest setup
 - [ ] 03-02-PLAN.md — Homepage with hero and scroll-driven narrative sections
 - [ ] 03-03-PLAN.md — Projects data layer, listing page, and case study pages
 - [ ] 03-04-PLAN.md — Blog enhancements: tag filtering, reading time, newsletter CTA
