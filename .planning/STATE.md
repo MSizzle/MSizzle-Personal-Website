@@ -4,18 +4,19 @@ milestone: v1.0
 milestone_name: milestone
 current_phase: 03
 status: unknown
-last_updated: "2026-04-02T23:05:48.009Z"
+last_updated: "2026-04-02T23:07:57.000Z"
 progress:
   total_phases: 6
   completed_phases: 0
   total_plans: 6
-  completed_plans: 5
+  completed_plans: 6
 ---
 
 # Project State
 
 **Current Phase:** 03
 **Last Updated:** 2026-04-02
+**Last Stopped At:** Completed 03-03-PLAN.md
 
 ## Phase Status
 
@@ -48,6 +49,8 @@ Phases 1–2 complete (retroactively documented). Ready for Phase 3 — Core Pag
 - [Phase 03]: JSON-LD Person structured data embedded in homepage for SEO per D-17/SOC-04
 - [Phase 03-core-pages]: Used inline SVG brand icons in Links page — lucide-react v4 removed brand icons (same pattern as Plan 01 Footer)
 - [Phase 03-core-pages]: Newsletter card in /links routes to /blog (not dead #newsletter anchor)
+- [Phase 03-03]: Project card external link text is "Check out more information" per user request — overrides UI-SPEC "View Project" copy
+- [Phase 03-03]: Blog pages received try-catch guards for Notion API calls — build-safe when token is invalid/absent
 
 ## Known Issues
 
