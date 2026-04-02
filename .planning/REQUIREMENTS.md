@@ -24,8 +24,8 @@ Requirements for initial release. Each maps to roadmap phases.
 
 - [ ] **BLOG-01**: Blog posts powered by Notion CMS with custom rendering
 - [ ] **BLOG-02**: Readable typography using @tailwindcss/typography
-- [ ] **BLOG-03**: Estimated reading time displayed on each post
-- [ ] **BLOG-04**: Tag/category filtering on blog listing page
+- [x] **BLOG-03**: Estimated reading time displayed on each post
+- [x] **BLOG-04**: Tag/category filtering on blog listing page
 - [ ] **BLOG-05**: Rich Notion block rendering (callouts, toggles, code blocks, embeds)
 
 ### About
@@ -56,7 +56,7 @@ Requirements for initial release. Each maps to roadmap phases.
 - [ ] **SOC-02**: OG meta tags with dynamic OG images per page
 - [ ] **SOC-03**: Auto-generated sitemap via app/sitemap.ts
 - [ ] **SOC-04**: robots.txt and Person structured data (JSON-LD)
-- [ ] **SOC-05**: Newsletter subscribe CTA (inline at end of blog posts)
+- [x] **SOC-05**: Newsletter subscribe CTA (inline at end of blog posts)
 
 ## v2 Requirements
 
