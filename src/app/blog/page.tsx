@@ -9,7 +9,14 @@ export const metadata = {
 };
 
 export default async function BlogPage() {
-  const posts = await getPublishedPosts();
+  let posts: Awaited<ReturnType<typeof getPublishedPosts>> = [];
+  if (process.env.NOTION_TOKEN && process.env.NOTION_DATABASE_ID) {
+    try {
+      posts = await getPublishedPosts();
+    } catch {
+      // Notion API unavailable — show empty state
+    }
+  }
 
   return (
     <div className="mx-auto max-w-3xl px-6 pb-24 pt-32">

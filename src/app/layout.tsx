@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { LenisProvider } from "@/components/providers/lenis-provider";
 import { MotionProvider } from "@/components/providers/motion-provider";
+import { Navigation } from "@/components/nav/navigation";
+import { Footer } from "@/components/footer";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -34,7 +36,11 @@ export default function RootLayout({
       <body className="min-h-screen bg-background text-foreground antialiased">
         <ThemeProvider>
           <LenisProvider>
-            <MotionProvider>{children}</MotionProvider>
+            <MotionProvider>
+              <Navigation />
+              <main>{children}</main>
+              <Footer />
+            </MotionProvider>
           </LenisProvider>
         </ThemeProvider>
       </body>

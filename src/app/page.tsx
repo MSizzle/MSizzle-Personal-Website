@@ -1,18 +1,8 @@
-import { ThemeToggle } from "@/components/theme-toggle";
-
 export default function Home() {
   return (
     <div className="relative">
-      {/* Nav */}
-      <header className="fixed top-0 right-0 left-0 z-50 flex items-center justify-between px-6 py-4">
-        <span className="text-lg font-semibold tracking-tight">
-          Monty Singer
-        </span>
-        <ThemeToggle />
-      </header>
-
       {/* Hero */}
-      <section className="flex min-h-screen items-center justify-center px-6">
+      <section className="flex min-h-screen items-center justify-center px-6 pt-16">
         <div className="max-w-2xl text-center">
           <h1 className="text-5xl font-bold tracking-tight sm:text-7xl">
             Hey, I&apos;m Monty.
