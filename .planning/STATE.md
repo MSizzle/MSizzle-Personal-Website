@@ -4,12 +4,12 @@ milestone: v1.0
 milestone_name: milestone
 current_phase: 03
 status: unknown
-last_updated: "2026-04-02T21:22:00.781Z"
+last_updated: "2026-04-02T22:53:16.554Z"
 progress:
   total_phases: 6
   completed_phases: 0
   total_plans: 6
-  completed_plans: 3
+  completed_plans: 4
 ---
 
 # Project State
@@ -44,6 +44,8 @@ Phases 1–2 complete (retroactively documented). Ready for Phase 3 — Core Pag
 - ISR revalidation at 30 minutes
 - [Phase 03]: Used inline SVGs for brand social icons (X, LinkedIn, GitHub) — lucide-react v4 removed brand icons
 - [Phase 03]: Added Notion API env var guards to blog pages — build now succeeds without NOTION_TOKEN set
+- [Phase 03]: Hero section uses pt-24 (96px top padding) to offset fixed navigation per UI-SPEC spacing contract
+- [Phase 03]: JSON-LD Person structured data embedded in homepage for SEO per D-17/SOC-04
 
 ## Known Issues
 

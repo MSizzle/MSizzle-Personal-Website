@@ -9,8 +9,8 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Homepage
 
-- [ ] **HOME-01**: Hero section with profile photo, name, tagline, and CTA
-- [ ] **HOME-02**: Scroll-driven narrative sections (about snapshot, featured work, writing teaser, contact CTA)
+- [x] **HOME-01**: Hero section with profile photo, name, tagline, and CTA
+- [x] **HOME-02**: Scroll-driven narrative sections (about snapshot, featured work, writing teaser, contact CTA)
 - [ ] **HOME-03**: GSAP scroll-triggered animations and parallax effects
 - [ ] **HOME-04**: Lenis smooth scrolling across the entire site
 
