@@ -16,9 +16,9 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Portfolio
 
-- [ ] **PORT-01**: Project cards with title, description, image, and external links
+- [x] **PORT-01**: Project cards with title, description, image, and external links
 - [ ] **PORT-02**: Hover-reveal interactions on project cards
-- [ ] **PORT-03**: Case study deep-dive pages with rich media for key projects
+- [x] **PORT-03**: Case study deep-dive pages with rich media for key projects
 
 ### Blog
 

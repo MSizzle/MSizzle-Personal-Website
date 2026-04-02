@@ -1,0 +1,39 @@
+import { getPublishedProjects } from "@/lib/notion-projects";
+import { ProjectCard } from "@/components/projects/project-card";
+
+export const revalidate = 1800; // 30 minutes
+
+export const metadata = {
+  title: "Projects — Monty Singer",
+  description: "Things I've built and invested in.",
+};
+
+export default async function ProjectsPage() {
+  const projects = await getPublishedProjects();
+
+  return (
+    <div className="mx-auto max-w-5xl px-6 pb-24 pt-32">
+      <h1 className="text-3xl font-semibold tracking-tight sm:text-5xl">
+        Projects
+      </h1>
+      <p className="mt-4 text-lg text-[var(--fg-muted)]">
+        Things I&apos;ve built and invested in.
+      </p>
+
+      {projects.length === 0 ? (
+        <div className="mt-16 text-center">
+          <h2 className="text-xl font-semibold">Projects coming soon.</h2>
+          <p className="mt-2 text-[var(--fg-muted)]">
+            Case studies and build logs being added.
+          </p>
+        </div>
+      ) : (
+        <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          {projects.map((project) => (
+            <ProjectCard key={project.id} project={project} />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
