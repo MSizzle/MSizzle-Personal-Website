@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getPublishedPosts } from "@/lib/notion";
+import { getPublishedPosts, type BlogPost } from "@/lib/notion";
 
 export const revalidate = 1800; // 30 minutes
 
@@ -9,7 +9,12 @@ export const metadata = {
 };
 
 export default async function BlogPage() {
-  const posts = await getPublishedPosts();
+  let posts: BlogPost[] = [];
+  try {
+    posts = await getPublishedPosts();
+  } catch {
+    posts = [];
+  }
 
   return (
     <div className="mx-auto max-w-3xl px-6 pb-24 pt-32">
