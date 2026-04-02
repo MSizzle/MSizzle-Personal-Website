@@ -4,7 +4,7 @@ milestone: v1.0
 milestone_name: milestone
 current_phase: 03
 status: unknown
-last_updated: "2026-04-02T21:22:00.781Z"
+last_updated: "2026-04-02T23:06:40.847Z"
 progress:
   total_phases: 6
   completed_phases: 0
@@ -44,6 +44,8 @@ Phases 1–2 complete (retroactively documented). Ready for Phase 3 — Core Pag
 - ISR revalidation at 30 minutes
 - [Phase 03]: Used inline SVGs for brand social icons (X, LinkedIn, GitHub) — lucide-react v4 removed brand icons
 - [Phase 03]: Added Notion API env var guards to blog pages — build now succeeds without NOTION_TOKEN set
+- [Phase 03]: estimateReadingTime used on listing from description — no extra API calls per D-09
+- [Phase 03]: calculateReadingTime used on detail from already-fetched blocks — zero extra API calls
 
 ## Known Issues
 
