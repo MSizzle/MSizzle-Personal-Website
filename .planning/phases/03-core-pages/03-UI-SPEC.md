@@ -5,6 +5,7 @@ status: draft
 shadcn_initialized: false
 preset: none
 created: 2026-04-02
+revised: 2026-04-02
 ---
 
 # Phase 3 — UI Design Contract
@@ -54,17 +55,18 @@ Exceptions:
 
 All sizes are pixel equivalents of Tailwind v4 rem values at 16px base.
 
+**Exactly 2 weights: Regular (400) and Semibold (600).** No other weights are used anywhere in the system.
+
 | Role | Size | Tailwind Class | Weight | Weight Class | Line Height | Usage |
 |------|------|----------------|--------|--------------|-------------|-------|
-| Display | 60px (sm: 72px) | `text-6xl sm:text-7xl` | Bold (700) | `font-bold` | 1.1 | Hero h1 "Hey, I'm Monty." — source: existing `page.tsx` |
-| Heading | 30px (sm: 48px) | `text-3xl sm:text-5xl` | Semibold (600) | `font-semibold` | 1.2 | Section h2 titles, page titles — source: existing `page.tsx` |
-| Subheading | 20px | `text-xl` | Semibold (600) | `font-semibold` | 1.3 | Card titles, about section headings |
+| Display | 60px (sm: 72px) | `text-6xl sm:text-7xl` | Semibold (600) | `font-semibold` | 1.1 | Hero h1 "Hey, I'm Monty." — source: existing `page.tsx` |
+| Heading | 30px (sm: 48px) | `text-3xl sm:text-5xl` | Semibold (600) | `font-semibold` | 1.2 | Section h2 titles, page titles, card titles, section subheads — source: existing `page.tsx` |
 | Body | 16px | `text-base` | Regular (400) | `font-normal` | 1.6 | Prose content, blog post body, about page narrative |
-| Label | 14px | `text-sm` | Medium (500) | `font-medium` | 1.4 | Tag pills, reading time, date stamps, nav links |
+| Label | 14px | `text-sm` | Regular (400) | `font-normal` | 1.4 | Tag pills, reading time, date stamps, nav links |
 
-**Constraint: exactly 2 weights in the system** — Regular (400) for body/muted, Semibold (600) for all headings and labels. Bold (700) is used only for the hero display heading (one element per page maximum).
+**Card titles and section subheads** that previously used the removed Subheading role use `text-xl font-semibold` (a Heading-scale variant, not a separate named role).
 
-**Letter spacing:** Use `tracking-tight` (`letter-spacing: -0.025em`) on all headings and display sizes. Body and labels: default tracking.
+**Letter spacing:** Use `tracking-tight` (`letter-spacing: -0.025em`) on Display and Heading sizes. Body and labels: default tracking.
 
 **Prose content** (blog posts, about page): rendered inside `prose prose-neutral dark:prose-invert` from `@tailwindcss/typography`. Already installed in Phase 2.
 
@@ -138,9 +140,9 @@ Components to build in this phase with their visual contract:
 - Fixed top bar, `z-50`, full width, height 64px (`h-16`)
 - Background: transparent when at top of page, `bg-background/80 backdrop-blur-sm border-b border-border` after scroll
 - Left: "Monty Singer" in `text-base font-semibold tracking-tight`
-- Center/right: nav links in `text-sm font-medium`, active route has accent underline (`border-b-2 border-accent`)
+- Center/right: nav links in `text-sm`, active route has accent underline (`border-b-2 border-accent`)
 - Right: ThemeToggle (existing component)
-- Mobile: hamburger icon (`Menu` from lucide-react, 24px), nav links in full-screen drawer, each link 48px tall minimum touch target
+- Mobile: hamburger button uses `Menu` icon from lucide-react at 24px. The button element must carry `aria-label="Open navigation menu"` (and `aria-label="Close navigation menu"` when open). Nav links in full-screen drawer, each link 48px tall minimum touch target.
 - Transition: `transition-all duration-200` on background opacity change
 
 ### Project Card (project-card.tsx)
@@ -156,8 +158,8 @@ Components to build in this phase with their visual contract:
 
 ### Tag Pills (tag-filter.tsx)
 
-- Inactive pill: `bg-neutral-100 dark:bg-neutral-800 text-sm font-medium px-3 py-1 rounded-full`
-- Active pill: `bg-accent text-white text-sm font-medium px-3 py-1 rounded-full`
+- Inactive pill: `bg-neutral-100 dark:bg-neutral-800 text-sm px-3 py-1 rounded-full`
+- Active pill: `bg-accent text-white text-sm px-3 py-1 rounded-full`
 - "All" pill: same styles as active/inactive, clears filter when clicked
 - Gap between pills: 8px (`gap-2`)
 - Transition: `transition-colors duration-150`
@@ -167,10 +169,10 @@ Components to build in this phase with their visual contract:
 - Full-width card, `bg-secondary border border-border rounded-xl`
 - Height: 64px minimum (`min-h-16`)
 - Padding: 16px horizontal (`px-4`)
-- Icon: 20px, left-aligned, `text-fg-muted`
-- Label: `text-base font-medium`, centered
-- Arrow/external indicator: `ArrowUpRight` from lucide-react, right-aligned, `text-fg-muted`
-- Gap between cards: 12px (non-standard — exception noted, between 8px and 16px for this specific list pattern)
+- Icon: 20px, left-aligned, `text-fg-muted`. Each icon-only element must carry an `aria-label` matching the link label (e.g., `aria-label="Twitter / X"`).
+- Label: `text-base`, centered
+- Arrow/external indicator: `ArrowUpRight` from lucide-react, right-aligned, `text-fg-muted`, `aria-hidden="true"`
+- Gap between cards: 8px (`gap-2`). To visually separate cards at this tight gap, add `border-b border-border` to all cards except the last (`last:border-b-0`).
 - Hover: `hover:bg-accent/5 hover:border-accent/30 transition-colors duration-150`
 
 ### Newsletter CTA Block (newsletter-cta.tsx)
@@ -187,7 +189,7 @@ Components to build in this phase with their visual contract:
 
 - Background: `bg-secondary border-t border-border`
 - Padding: 48px vertical, 24px horizontal (`py-12 px-6`)
-- Social links: inline, 24px gap, icons at 20px from lucide-react
+- Social links: inline, 24px gap, icons at 20px from lucide-react. Each icon-only anchor must carry `aria-label` with the platform name (e.g., `aria-label="Twitter / X"`, `aria-label="LinkedIn"`, `aria-label="GitHub"`, `aria-label="Email"`).
 - Copyright: `text-sm text-muted-foreground`
 - Max width: `max-w-5xl mx-auto`
 
@@ -216,8 +218,9 @@ Components to build in this phase with their visual contract:
 | Links page h1 | "Find Me Online" | Inferred from SOC-01 / D-10 |
 | Newsletter CTA heading | "Stay in the Loop" | Default |
 | Newsletter CTA body | "Get new posts delivered to your inbox. No spam, ever." | Default |
-| Newsletter CTA button | "Subscribe" | Default |
-| Newsletter placeholder post-submit | "You're in. Talk soon." | Default |
+| Newsletter CTA button | "Get Posts by Email" | Revised — verb + noun, more specific than "Subscribe" |
+| Newsletter success state | "You're in. Talk soon." | Default |
+| Newsletter error state | "Something went wrong. Try again or email me directly." | Default |
 | Footer copyright | "© {year} Monty Singer" | Standard |
 | OG image default site name | "Monty Singer" | Branding |
 | OG image blog variant | "{post title}" + "msizzle.com" | D-14 |
@@ -240,7 +243,7 @@ Per D-14: text-on-gradient design using Edge Runtime.
 | Background (blog/project) | `linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%)` |
 | Background (default site) | `linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%)` |
 | Site name label | "Monty Singer", `color: #888`, `font-size: 24` |
-| Title text | `color: #fafafa`, `font-size: 56`, `font-weight: 700`, `line-height: 1.1` |
+| Title text | `color: #fafafa`, `font-size: 56`, `font-weight: 600`, `line-height: 1.1` |
 | Padding | 60px all sides |
 | Layout | column, items start, justify end (bottom-left anchor) |
 | Source | `src/app/[route]/opengraph-image.tsx` file convention per D-14 |
