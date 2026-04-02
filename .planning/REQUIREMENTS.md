@@ -53,9 +53,9 @@ Requirements for initial release. Each maps to roadmap phases.
 ### Social & SEO
 
 - [x] **SOC-01**: Social links hub in footer + dedicated /links page
-- [ ] **SOC-02**: OG meta tags with dynamic OG images per page
-- [ ] **SOC-03**: Auto-generated sitemap via app/sitemap.ts
-- [ ] **SOC-04**: robots.txt and Person structured data (JSON-LD)
+- [x] **SOC-02**: OG meta tags with dynamic OG images per page
+- [x] **SOC-03**: Auto-generated sitemap via app/sitemap.ts
+- [x] **SOC-04**: robots.txt and Person structured data (JSON-LD)
 - [x] **SOC-05**: Newsletter subscribe CTA (inline at end of blog posts)
 
 ## v2 Requirements

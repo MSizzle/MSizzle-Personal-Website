@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 current_phase: 03
-status: unknown
-last_updated: "2026-04-02T23:06:40.847Z"
+status: in_progress
+last_updated: "2026-04-02T23:35:00.000Z"
 progress:
   total_phases: 6
   completed_phases: 0
   total_plans: 6
-  completed_plans: 3
+  completed_plans: 6
 ---
 
 # Project State
@@ -23,14 +23,14 @@ progress:
 |-------|--------|---------|-----------|
 | 1 — Foundation | complete | 2026-03-31 | 2026-03-31 |
 | 2 — Notion CMS Integration | complete | 2026-03-31 | 2026-03-31 |
-| 3 — Core Pages | not_started | — | — |
+| 3 — Core Pages | in_progress | 2026-04-02 | — |
 | 4 — Animation & Polish | not_started | — | — |
 | 5 — Analytics | not_started | — | — |
 | 6 — Pre-Launch QA | not_started | — | — |
 
 ## Active Work
 
-Phases 1–2 complete (retroactively documented). Ready for Phase 3 — Core Pages.
+Phase 3 plans 01-06 all complete. Phase 3 — Core Pages is done.
 
 ## Accumulated Context
 
@@ -46,6 +46,9 @@ Phases 1–2 complete (retroactively documented). Ready for Phase 3 — Core Pag
 - [Phase 03]: Added Notion API env var guards to blog pages — build now succeeds without NOTION_TOKEN set
 - [Phase 03]: estimateReadingTime used on listing from description — no extra API calls per D-09
 - [Phase 03]: calculateReadingTime used on detail from already-fetched blocks — zero extra API calls
+- [Phase 03, Plan 06]: Used next/og ImageResponse built into Next.js — no @vercel/og package needed
+- [Phase 03, Plan 06]: Blog OG image shows title AND date per locked decision D-14
+- [Phase 03, Plan 06]: Sitemap try/catch around Notion calls — degrades gracefully without API access
 
 ## Known Issues
 

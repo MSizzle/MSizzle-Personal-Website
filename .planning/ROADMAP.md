@@ -71,15 +71,15 @@
 
 **Requirements:** HOME-01, HOME-02, PORT-01, PORT-03, BLOG-03, BLOG-04, ABOUT-01, SOC-01, SOC-02, SOC-03, SOC-04, SOC-05, DSGN-02, DSGN-05
 
-**Plans:** 3/6 plans executed
+**Plans:** 6/6 plans executed
 
 Plans:
 - [x] 03-01-PLAN.md — Infrastructure, design tokens, navigation, footer, vitest setup
 - [x] 03-02-PLAN.md — Homepage with hero and scroll-driven narrative sections
-- [ ] 03-03-PLAN.md — Projects data layer, listing page, and case study pages
-- [ ] 03-04-PLAN.md — Blog enhancements: tag filtering, reading time, newsletter CTA
+- [x] 03-03-PLAN.md — Projects data layer, listing page, and case study pages
+- [x] 03-04-PLAN.md — Blog enhancements: tag filtering, reading time, newsletter CTA
 - [x] 03-05-PLAN.md — About page and Links page
-- [ ] 03-06-PLAN.md — OG images, sitemap, robots.txt, SEO meta
+- [x] 03-06-PLAN.md — OG images, sitemap, robots.txt, SEO meta
 
 **UI hint:** yes — this phase is almost entirely UI and page-level layout work
 
