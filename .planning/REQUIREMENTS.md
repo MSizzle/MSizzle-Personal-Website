@@ -30,7 +30,7 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### About
 
-- [ ] **ABOUT-01**: Bio page with background, education (Georgetown), career (investing, NYC), skills as prose
+- [x] **ABOUT-01**: Bio page with background, education (Georgetown), career (investing, NYC), skills as prose
 
 ### Analytics
 
