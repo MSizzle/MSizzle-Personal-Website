@@ -134,6 +134,12 @@ Plans:
 
 **Requirements:** ANLY-01, ANLY-02, ANLY-03, ANLY-04, ANLY-05, ANLY-06
 
+**Plans:** 2 plans
+
+Plans:
+- [ ] 05-01-PLAN.md — UmamiAnalytics component, layout integration, outbound click tracking attributes
+- [ ] 05-02-PLAN.md — Deploy Umami infrastructure (Neon + Vercel), verify end-to-end analytics flow
+
 **UI hint:** no — the output is a separate Umami dashboard, not changes to the main site UI
 
 **Success Criteria:**
@@ -167,7 +173,7 @@ Plans:
 4. Dark mode first-visit test in incognito passes: system dark → renders dark, system light → renders light, no FOUC in either case.
 5. All 28 v1 requirements have been manually confirmed against the live production URL and checked off in REQUIREMENTS.md.
 
-**Dependencies:** Phases 1–5 all complete.
+**Dependencies:** Phases 1-5 all complete.
 
 **Risks:**
 - Environment variable mismatches between local and Vercel production — run `vercel build` locally (not `next build`) to catch these.
