@@ -14,7 +14,7 @@
 | 2 | Notion CMS Integration | Content authored in Notion renders on the site without broken images | BLOG-01, BLOG-02, BLOG-05 | 4 |
 | 3 | Core Pages | 3/6 | In Progress|  |
 | 4 | Animation & Polish | 3/3 | Complete   | 2026-04-03 |
-| 5 | Analytics | Real visitor data is flowing to a private dashboard | ANLY-01, ANLY-02, ANLY-03, ANLY-04, ANLY-05, ANLY-06 | 4 |
+| 5 | Analytics | 0/2 | Planned    |  |
 | 6 | Pre-Launch QA | Confidence the site is production-ready | All requirements validated end-to-end | 5 |
 
 ---
@@ -134,7 +134,7 @@ Plans:
 
 **Requirements:** ANLY-01, ANLY-02, ANLY-03, ANLY-04, ANLY-05, ANLY-06
 
-**Plans:** 2 plans
+**Plans:** 0/2 plans executed
 
 Plans:
 - [ ] 05-01-PLAN.md — UmamiAnalytics component, layout integration, outbound click tracking attributes

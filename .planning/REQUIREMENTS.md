@@ -34,12 +34,12 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Analytics
 
-- [ ] **ANLY-01**: Self-hosted Umami analytics with private dashboard
-- [ ] **ANLY-02**: Real-time visitor tracking
-- [ ] **ANLY-03**: Traffic source tracking (referrers, UTM, direct)
-- [ ] **ANLY-04**: Page popularity tracking (views per page/post)
-- [ ] **ANLY-05**: Geographic and device/browser breakdown
-- [ ] **ANLY-06**: Geo map visualization of visitor locations
+- [x] **ANLY-01**: Self-hosted Umami analytics with private dashboard
+- [x] **ANLY-02**: Real-time visitor tracking
+- [x] **ANLY-03**: Traffic source tracking (referrers, UTM, direct)
+- [x] **ANLY-04**: Page popularity tracking (views per page/post)
+- [x] **ANLY-05**: Geographic and device/browser breakdown
+- [x] **ANLY-06**: Geo map visualization of visitor locations
 
 ### Design System
 

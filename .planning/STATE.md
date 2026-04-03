@@ -4,11 +4,11 @@ milestone: v1.0
 milestone_name: milestone
 current_phase: 5
 status: Ready to plan
-last_updated: "2026-04-03T03:47:26.816Z"
+last_updated: "2026-04-03T04:18:51.186Z"
 progress:
   total_phases: 6
   completed_phases: 2
-  total_plans: 9
+  total_plans: 11
   completed_plans: 11
 ---
 
@@ -55,6 +55,8 @@ Phase 3 plans 01-06 all complete. Phase 3 — Core Pages is done.
 - [Phase 04-animation-polish]: Contact section ScrollReveal only — avoids scroll-end parallax jank
 - [Phase 04-animation-polish]: ProjectCard converted to use client for AnimatePresence overlay — useState, useEffect, and Motion AnimatePresence require client context
 - [Phase 04-animation-polish]: Blog/About/Links/Projects pages remain Server Components with ScrollReveal client child — no use client needed on page files
+- [Phase 05-analytics]: vi.doMock used after vi.resetModules() for per-test env var isolation in analytics tests
+- [Phase 05-analytics]: data-umami-event declarative click tracking on footer, project-card, and links page outbound links
 
 ## Known Issues
 
