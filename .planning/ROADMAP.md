@@ -104,6 +104,13 @@ Plans:
 
 **Requirements:** HOME-03, HOME-04 (Lenis full integration), PORT-02, DSGN-03, DSGN-04
 
+**Plans:** 3 plans
+
+Plans:
+- [ ] 04-01-PLAN.md — GSAP install, Lenis+GSAP ticker sync, page transition upgrade, MotionConfig reducedMotion, Wave 0 tests
+- [ ] 04-02-PLAN.md — ScrollReveal + ParallaxLayer components, homepage cinematic animations
+- [ ] 04-03-PLAN.md — Project card hover-reveal overlay, site-wide scroll reveals on all pages
+
 **UI hint:** yes — this phase is entirely visual/interaction layer
 
 **Success Criteria:**
