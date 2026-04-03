@@ -2,19 +2,19 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-current_phase: 4
-status: Ready to plan
-last_updated: "2026-04-02T23:45:21.880Z"
+current_phase: 04
+status: Executing Phase 04
+last_updated: "2026-04-03T00:45:43.665Z"
 progress:
   total_phases: 6
   completed_phases: 1
-  total_plans: 6
-  completed_plans: 8
+  total_plans: 9
+  completed_plans: 9
 ---
 
 # Project State
 
-**Current Phase:** 4
+**Current Phase:** 04
 **Last Updated:** 2026-04-02
 
 ## Phase Status
@@ -49,6 +49,8 @@ Phase 3 plans 01-06 all complete. Phase 3 — Core Pages is done.
 - [Phase 03, Plan 06]: Used next/og ImageResponse built into Next.js — no @vercel/og package needed
 - [Phase 03, Plan 06]: Blog OG image shows title AND date per locked decision D-14
 - [Phase 03, Plan 06]: Sitemap try/catch around Notion calls — degrades gracefully without API access
+- [Phase 04]: GSAP ticker drives Lenis — prevents animation desyncs with ScrollTrigger
+- [Phase 04]: MotionConfig reducedMotion='user' applied at provider level — all m.* components inherit a11y behavior
 
 ## Known Issues
 
