@@ -13,7 +13,7 @@
 | 1 | Foundation | Lock architectural patterns and deploy a live skeleton | DSGN-01, DSGN-06, HOME-04 | 4 |
 | 2 | Notion CMS Integration | Content authored in Notion renders on the site without broken images | BLOG-01, BLOG-02, BLOG-05 | 4 |
 | 3 | Core Pages | 3/6 | In Progress|  |
-| 4 | Animation & Polish | 2/3 | In Progress|  |
+| 4 | Animation & Polish | 3/3 | Complete   | 2026-04-03 |
 | 5 | Analytics | Real visitor data is flowing to a private dashboard | ANLY-01, ANLY-02, ANLY-03, ANLY-04, ANLY-05, ANLY-06 | 4 |
 | 6 | Pre-Launch QA | Confidence the site is production-ready | All requirements validated end-to-end | 5 |
 
@@ -104,12 +104,12 @@ Plans:
 
 **Requirements:** HOME-03, HOME-04 (Lenis full integration), PORT-02, DSGN-03, DSGN-04
 
-**Plans:** 2/3 plans executed
+**Plans:** 3/3 plans complete
 
 Plans:
 - [x] 04-01-PLAN.md — GSAP install, Lenis+GSAP ticker sync, page transition upgrade, MotionConfig reducedMotion, Wave 0 tests
 - [x] 04-02-PLAN.md — ScrollReveal + ParallaxLayer components, homepage cinematic animations
-- [ ] 04-03-PLAN.md — Project card hover-reveal overlay, site-wide scroll reveals on all pages
+- [x] 04-03-PLAN.md — Project card hover-reveal overlay, site-wide scroll reveals on all pages
 
 **UI hint:** yes — this phase is entirely visual/interaction layer
 
