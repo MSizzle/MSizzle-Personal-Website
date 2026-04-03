@@ -2,7 +2,7 @@
 phase: 5
 slug: analytics
 status: draft
-nyquist_compliant: false
+nyquist_compliant: true
 wave_0_complete: false
 created: 2026-04-02
 ---
@@ -17,20 +17,21 @@ created: 2026-04-02
 
 | Property | Value |
 |----------|-------|
-| **Framework** | Manual verification + curl/CLI commands |
-| **Config file** | none — no test framework needed for infrastructure deployment |
-| **Quick run command** | `curl -s https://analytics.msizzle.com/api/heartbeat` |
-| **Full suite command** | `curl -s https://analytics.msizzle.com/api/heartbeat && curl -s -o /dev/null -w '%{http_code}' https://msizzle.com \| grep 200` |
-| **Estimated runtime** | ~5 seconds |
+| **Framework** | Vitest (unit tests) + manual verification (infrastructure) |
+| **Config file** | `vitest.config.ts` |
+| **Quick run command** | `npx vitest run src/__tests__/components/umami-analytics.test.tsx` |
+| **Full suite command** | `npx vitest run` |
+| **Post-deploy check** | `curl -s https://analytics.msizzle.com/api/heartbeat` |
+| **Estimated runtime** | ~3 seconds (unit), ~5 seconds (post-deploy curl) |
 
 ---
 
 ## Sampling Rate
 
-- **After every task commit:** Run quick heartbeat check
-- **After every plan wave:** Run full suite command
+- **After every task commit:** Run `npx vitest run src/__tests__/components/umami-analytics.test.tsx`
+- **After every plan wave:** Run `npx vitest run`
 - **Before `/gsd:verify-work`:** Full suite must be green + manual dashboard verification
-- **Max feedback latency:** 5 seconds
+- **Max feedback latency:** 3 seconds
 
 ---
 
@@ -38,12 +39,10 @@ created: 2026-04-02
 
 | Task ID | Plan | Wave | Requirement | Test Type | Automated Command | File Exists | Status |
 |---------|------|------|-------------|-----------|-------------------|-------------|--------|
-| 05-01-01 | 01 | 1 | ANLY-01 | manual | Neon DB creation — verify via Neon dashboard | N/A | ⬜ pending |
-| 05-01-02 | 01 | 1 | ANLY-01 | manual | Umami fork + Vercel deploy — verify heartbeat endpoint | N/A | ⬜ pending |
-| 05-02-01 | 02 | 2 | ANLY-01 | integration | `grep -r 'NEXT_PUBLIC_UMAMI' src/app/layout.tsx` | ✅ | ⬜ pending |
-| 05-02-02 | 02 | 2 | ANLY-04 | integration | `grep -r 'data-umami-event' src/` | ✅ | ⬜ pending |
-| 05-03-01 | 03 | 3 | ANLY-01,02,03,05,06 | manual | Visit site → check Umami dashboard for pageview + geo + sources | N/A | ⬜ pending |
-| 05-03-02 | 03 | 3 | ANLY-04 | manual | Click outbound link → check Umami events log | N/A | ⬜ pending |
+| 05-01 T1 | 01 | 1 | ANLY-01 | unit (TDD) | `npx vitest run src/__tests__/components/umami-analytics.test.tsx` | ❌ W0 | ⬜ pending |
+| 05-01 T2 | 01 | 1 | ANLY-04, D-11 | unit (TDD) | `npx vitest run src/__tests__/components/footer.test.tsx src/__tests__/components/project-card.test.tsx src/__tests__/pages/links.test.tsx` | ❌ W0 | ⬜ pending |
+| 05-02 T1 | 02 | 2 | ANLY-01..06 | checkpoint:human-action | Manual — fork repo, create Neon DB, deploy Umami, set env vars | N/A | ⬜ pending |
+| 05-02 T2 | 02 | 2 | ANLY-01..06 | checkpoint:human-verify | Manual — visit site, check dashboard for pageviews, events, geo | N/A | ⬜ pending |
 
 *Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky*
 
@@ -51,7 +50,12 @@ created: 2026-04-02
 
 ## Wave 0 Requirements
 
-*Existing infrastructure covers all phase requirements — no test framework install needed. Phase 5 is infrastructure deployment (Umami + Neon) plus script integration, verified via HTTP endpoints and dashboard inspection.*
+- [ ] `src/__tests__/components/umami-analytics.test.tsx` — test stubs for UmamiAnalytics component (created by Plan 01 Task 1 via TDD)
+- [ ] `src/__tests__/components/footer.test.tsx` — test stubs for footer data-umami-event attributes (created by Plan 01 Task 2 via TDD)
+- [ ] `src/__tests__/components/project-card.test.tsx` — test stubs for project-card data-umami-event (created by Plan 01 Task 2 via TDD)
+- [ ] `src/__tests__/pages/links.test.tsx` — test stubs for links page data-umami-event (created by Plan 01 Task 2 via TDD)
+
+*All test files are created within Plan 01 tasks via TDD pattern (write test first → verify red → implement → verify green). No separate Wave 0 plan needed.*
 
 ---
 
@@ -70,11 +74,11 @@ created: 2026-04-02
 
 ## Validation Sign-Off
 
-- [ ] All tasks have `<automated>` verify or Wave 0 dependencies
-- [ ] Sampling continuity: no 3 consecutive tasks without automated verify
-- [ ] Wave 0 covers all MISSING references
-- [ ] No watch-mode flags
-- [ ] Feedback latency < 5s
-- [ ] `nyquist_compliant: true` set in frontmatter
+- [x] All tasks have `<automated>` verify or Wave 0 dependencies
+- [x] Sampling continuity: no 3 consecutive tasks without automated verify
+- [x] Wave 0 covers all MISSING references
+- [x] No watch-mode flags
+- [x] Feedback latency < 3s
+- [x] `nyquist_compliant: true` set in frontmatter
 
 **Approval:** pending
