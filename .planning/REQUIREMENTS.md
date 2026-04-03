@@ -11,7 +11,7 @@ Requirements for initial release. Each maps to roadmap phases.
 
 - [x] **HOME-01**: Hero section with profile photo, name, tagline, and CTA
 - [x] **HOME-02**: Scroll-driven narrative sections (about snapshot, featured work, writing teaser, contact CTA)
-- [ ] **HOME-03**: GSAP scroll-triggered animations and parallax effects
+- [x] **HOME-03**: GSAP scroll-triggered animations and parallax effects
 - [x] **HOME-04**: Lenis smooth scrolling across the entire site
 
 ### Portfolio
@@ -46,7 +46,7 @@ Requirements for initial release. Each maps to roadmap phases.
 - [ ] **DSGN-01**: Dark/light mode with system detection + manual toggle, no FOUC
 - [x] **DSGN-02**: Mobile responsive design tested at 375px / iPhone SE
 - [x] **DSGN-03**: Animated page transitions between routes
-- [ ] **DSGN-04**: Scroll reveal animations (elements animate in on scroll)
+- [x] **DSGN-04**: Scroll reveal animations (elements animate in on scroll)
 - [x] **DSGN-05**: Consistent design tokens (colors, spacing, typography) via Tailwind v4
 - [ ] **DSGN-06**: Custom domain pointed to Vercel
 

@@ -4,12 +4,12 @@ milestone: v1.0
 milestone_name: milestone
 current_phase: 04
 status: Executing Phase 04
-last_updated: "2026-04-03T00:45:43.665Z"
+last_updated: "2026-04-03T00:49:50.497Z"
 progress:
   total_phases: 6
   completed_phases: 1
   total_plans: 9
-  completed_plans: 9
+  completed_plans: 10
 ---
 
 # Project State
@@ -51,6 +51,8 @@ Phase 3 plans 01-06 all complete. Phase 3 — Core Pages is done.
 - [Phase 03, Plan 06]: Sitemap try/catch around Notion calls — degrades gracefully without API access
 - [Phase 04]: GSAP ticker drives Lenis — prevents animation desyncs with ScrollTrigger
 - [Phase 04]: MotionConfig reducedMotion='user' applied at provider level — all m.* components inherit a11y behavior
+- [Phase 04-animation-polish]: Writing section heading uses ParallaxLayer nested inside ScrollReveal — rotation [-2,2] continues post-reveal
+- [Phase 04-animation-polish]: Contact section ScrollReveal only — avoids scroll-end parallax jank
 
 ## Known Issues
 
