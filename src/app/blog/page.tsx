@@ -2,6 +2,7 @@ import { Suspense } from 'react'
 import { getPublishedPosts } from '@/lib/notion'
 import { TagFilter } from '@/components/blog/tag-filter'
 import { estimateReadingTime } from '@/utils/reading-time'
+import { ScrollReveal } from '@/components/animations/scroll-reveal'
 
 export const revalidate = 1800; // 30 minutes
 
@@ -27,21 +28,29 @@ export default async function BlogPage() {
 
   return (
     <div className="mx-auto max-w-3xl px-6 pb-24 pt-32">
-      <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
-        Writing
-      </h1>
-      <p className="mt-4 text-lg text-neutral-600 dark:text-neutral-400">
-        Ideas, observations, and lessons learned.
-      </p>
+      <ScrollReveal delay={0}>
+        <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
+          Writing
+        </h1>
+        <p className="mt-4 text-lg text-neutral-600 dark:text-neutral-400">
+          Ideas, observations, and lessons learned.
+        </p>
+      </ScrollReveal>
 
       {posts.length === 0 ? (
-        <p className="mt-12 text-neutral-500 dark:text-neutral-400">
-          No posts yet. Check back soon.
-        </p>
+        <ScrollReveal delay={0.15}>
+          <p className="mt-12 text-neutral-500 dark:text-neutral-400">
+            No posts yet. Check back soon.
+          </p>
+        </ScrollReveal>
       ) : (
-        <Suspense fallback={<div className="mt-12">Loading...</div>}>
-          <TagFilter posts={posts} readingTimes={readingTimes} />
-        </Suspense>
+        <>
+          <ScrollReveal delay={0.15}>
+            <Suspense fallback={<div className="mt-12">Loading...</div>}>
+              <TagFilter posts={posts} readingTimes={readingTimes} />
+            </Suspense>
+          </ScrollReveal>
+        </>
       )}
     </div>
   )

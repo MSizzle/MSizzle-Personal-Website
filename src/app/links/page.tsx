@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Mail, ArrowUpRight, Newspaper } from 'lucide-react'
+import { ScrollReveal } from '@/components/animations/scroll-reveal'
 
 export const metadata: Metadata = {
   title: 'Links — Monty Singer',
@@ -66,32 +67,36 @@ const LINKS: LinkItem[] = [
 export default function LinksPage() {
   return (
     <div className="mx-auto max-w-md px-6 pb-24 pt-32">
-      <h1 className="text-center text-3xl font-semibold tracking-tight sm:text-5xl">
-        Find Me Online
-      </h1>
-      <p className="mt-4 text-center text-[var(--fg-muted)]">
-        All the places you can find me on the internet.
-      </p>
+      <ScrollReveal delay={0}>
+        <h1 className="text-center text-3xl font-semibold tracking-tight sm:text-5xl">
+          Find Me Online
+        </h1>
+        <p className="mt-4 text-center text-[var(--fg-muted)]">
+          All the places you can find me on the internet.
+        </p>
+      </ScrollReveal>
 
-      <div className="mt-12 flex flex-col gap-2">
-        {LINKS.map((link, index) => {
-          const isExternal = link.href.startsWith('http')
-          const isLast = index === LINKS.length - 1
-          return (
-            <a
-              key={link.label}
-              href={link.href}
-              target={isExternal ? '_blank' : undefined}
-              rel={isExternal ? 'noopener noreferrer' : undefined}
-              className={`flex min-h-16 items-center rounded-xl border border-[var(--border)] bg-[var(--bg-secondary)] px-4 transition-colors duration-150 hover:border-[var(--accent)]/30 hover:bg-[var(--accent)]/5${!isLast ? ' border-b border-[var(--border)]' : ''}`}
-            >
-              <link.icon size={20} aria-label={link.label} />
-              <span className="flex-1 text-center text-base">{link.label}</span>
-              <ArrowUpRight size={20} className="text-[var(--fg-muted)]" aria-hidden="true" />
-            </a>
-          )
-        })}
-      </div>
+      <ScrollReveal delay={0.15}>
+        <div className="mt-12 flex flex-col gap-2">
+          {LINKS.map((link, index) => {
+            const isExternal = link.href.startsWith('http')
+            const isLast = index === LINKS.length - 1
+            return (
+              <a
+                key={link.label}
+                href={link.href}
+                target={isExternal ? '_blank' : undefined}
+                rel={isExternal ? 'noopener noreferrer' : undefined}
+                className={`flex min-h-16 items-center rounded-xl border border-[var(--border)] bg-[var(--bg-secondary)] px-4 transition-colors duration-150 hover:border-[var(--accent)]/30 hover:bg-[var(--accent)]/5${!isLast ? ' border-b border-[var(--border)]' : ''}`}
+              >
+                <link.icon size={20} aria-label={link.label} />
+                <span className="flex-1 text-center text-base">{link.label}</span>
+                <ArrowUpRight size={20} className="text-[var(--fg-muted)]" aria-hidden="true" />
+              </a>
+            )
+          })}
+        </div>
+      </ScrollReveal>
     </div>
   )
 }
