@@ -87,6 +87,7 @@ export default function LinksPage() {
                 href={link.href}
                 target={isExternal ? '_blank' : undefined}
                 rel={isExternal ? 'noopener noreferrer' : undefined}
+                {...(isExternal ? { 'data-umami-event': `links-click-${link.label.toLowerCase().replace(/[\s/]+/g, '-')}` } : {})}
                 className={`flex min-h-16 items-center rounded-xl border border-[var(--border)] bg-[var(--bg-secondary)] px-4 transition-colors duration-150 hover:border-[var(--accent)]/30 hover:bg-[var(--accent)]/5${!isLast ? ' border-b border-[var(--border)]' : ''}`}
               >
                 <link.icon size={20} aria-label={link.label} />

@@ -49,6 +49,7 @@ export function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={link.label}
+              data-umami-event={`social-click-${link.label.toLowerCase().replace(/[\s/]+/g, '-')}`}
               className="text-[var(--fg-muted)] transition-colors hover:text-foreground"
             >
               {link.icon}

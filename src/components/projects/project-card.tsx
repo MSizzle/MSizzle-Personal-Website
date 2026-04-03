@@ -121,6 +121,8 @@ export function ProjectCard({ project }: { project: Project }) {
             href={project.externalUrl}
             target="_blank"
             rel="noopener noreferrer"
+            data-umami-event="project-external-link"
+            data-umami-event-title={project.title}
             className="mt-4 inline-flex items-center gap-1 text-sm text-[var(--accent)] hover:underline"
             onClick={(e) => e.stopPropagation()}
           >

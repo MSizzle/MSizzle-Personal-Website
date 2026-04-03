@@ -46,4 +46,12 @@ describe("ProjectCard hover-reveal (PORT-02)", () => {
     // Overlay CTA text should be present
     expect(screen.getByText(/View Project/)).toBeDefined();
   });
+
+  it("renders data-umami-event on external link", async () => {
+    const { ProjectCard } = await import("@/components/projects/project-card");
+    const { container } = render(<ProjectCard project={mockProject} />);
+    const extLink = container.querySelector('a[data-umami-event="project-external-link"]');
+    expect(extLink).not.toBeNull();
+    expect(extLink?.getAttribute('data-umami-event-title')).toBe('Test Project');
+  });
 });
