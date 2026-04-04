@@ -42,7 +42,7 @@ export default async function ProjectPage({ params }: PageProps) {
   const blocks = await getBlocks(project.id);
 
   return (
-    <article className="mx-auto max-w-3xl px-6 pb-24 pt-32">
+    <article className="mx-auto max-w-2xl px-6 pb-16 pt-24">
       <header className="mb-12">
         <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
           {project.title}

@@ -26,7 +26,7 @@ const personJsonLd = {
 
 export default function AboutPage() {
   return (
-    <div className="mx-auto max-w-3xl px-6 pb-24 pt-32">
+    <div className="mx-auto max-w-2xl px-6 pb-16 pt-24">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}

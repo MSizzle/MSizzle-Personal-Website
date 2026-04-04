@@ -13,7 +13,7 @@ export default async function ProjectsPage() {
   const projects = await getPublishedProjects();
 
   return (
-    <div className="mx-auto max-w-5xl px-6 pb-24 pt-32">
+    <div className="mx-auto max-w-3xl px-6 pb-16 pt-24">
       <ScrollReveal delay={0}>
         <h1 className="text-3xl font-semibold tracking-tight sm:text-5xl">
           Projects
@@ -34,7 +34,7 @@ export default async function ProjectsPage() {
         </ScrollReveal>
       ) : (
         <ScrollReveal delay={0.15}>
-          <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-8 grid gap-6 sm:grid-cols-2">
             {projects.map((project) => (
               <ProjectCard key={project.id} project={project} />
             ))}

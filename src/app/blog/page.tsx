@@ -27,7 +27,7 @@ export default async function BlogPage() {
   }
 
   return (
-    <div className="mx-auto max-w-3xl px-6 pb-24 pt-32">
+    <div className="mx-auto max-w-2xl px-6 pb-16 pt-24">
       <ScrollReveal delay={0}>
         <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
           Writing

@@ -2,7 +2,7 @@ import { Mail, Newspaper } from 'lucide-react'
 
 const SOCIAL_LINKS = [
   {
-    href: 'mailto:monty@msizzle.com',
+    href: 'mailto:mds@georgetown.edu',
     label: 'Email',
     icon: (
       <Mail size={20} />
@@ -38,7 +38,7 @@ const SOCIAL_LINKS = [
 ]
 
 const FOOTER_LINKS = [
-  { href: 'mailto:monty@msizzle.com', label: 'Email' },
+  { href: 'mailto:mds@georgetown.edu', label: 'Email' },
   { href: 'https://x.com/thefullmonty0', label: 'Twitter / X' },
   { href: 'https://linkedin.com/in/monty-singer', label: 'LinkedIn' },
   { href: 'https://github.com/MSizzle', label: 'GitHub' },
