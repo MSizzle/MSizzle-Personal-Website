@@ -108,8 +108,8 @@ export async function getPublishedPosts(): Promise<BlogPost[]> {
 
   do {
     const response = await withRetry(() =>
-      notion.dataSources.query({
-        data_source_id: DATABASE_ID,
+      notion.databases.query({
+        database_id: DATABASE_ID,
         filter: {
           property: "Published",
           checkbox: { equals: true },
@@ -134,8 +134,8 @@ export async function getPostBySlug(
   slug: string
 ): Promise<BlogPost | null> {
   const response = await withRetry(() =>
-    notion.dataSources.query({
-      data_source_id: DATABASE_ID,
+    notion.databases.query({
+      database_id: DATABASE_ID,
       filter: {
         and: [
           { property: "Slug", rich_text: { equals: slug } },

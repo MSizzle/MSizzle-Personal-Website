@@ -118,8 +118,8 @@ export async function getPublishedProjects(): Promise<Project[]> {
 
     do {
       const response = await withRetry(() =>
-        notion.dataSources.query({
-          data_source_id: PROJECTS_DATABASE_ID,
+        notion.databases.query({
+          database_id: PROJECTS_DATABASE_ID,
           filter: {
             property: "Published",
             checkbox: { equals: true },
@@ -152,8 +152,8 @@ export async function getProjectBySlug(
 
   try {
     const response = await withRetry(() =>
-      notion.dataSources.query({
-        data_source_id: PROJECTS_DATABASE_ID,
+      notion.databases.query({
+        database_id: PROJECTS_DATABASE_ID,
         filter: {
           and: [
             { property: "Slug", rich_text: { equals: slug } },
@@ -183,8 +183,8 @@ export async function getFeaturedProjects(): Promise<Project[]> {
 
     do {
       const response = await withRetry(() =>
-        notion.dataSources.query({
-          data_source_id: PROJECTS_DATABASE_ID,
+        notion.databases.query({
+          database_id: PROJECTS_DATABASE_ID,
           filter: {
             and: [
               { property: "Published", checkbox: { equals: true } },
