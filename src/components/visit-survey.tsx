@@ -15,7 +15,7 @@ export function VisitSurvey() {
 
   useEffect(() => {
     if (sessionStorage.getItem('visit-survey-done')) return
-    const timer = setTimeout(() => setShow(true), 1500)
+    const timer = setTimeout(() => setShow(true), 30000)
     return () => clearTimeout(timer)
   }, [])
 
@@ -29,18 +29,6 @@ export function VisitSurvey() {
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 backdrop-blur-sm">
       <div className="flex items-end gap-0">
-        {/* Pixel art Monty pointing at the survey */}
-        <div className="hidden sm:block -mr-4 mb-4">
-          <Image
-            src="/monty-pixel-art.png"
-            alt="Pixel art Monty pointing"
-            width={200}
-            height={350}
-            className="drop-shadow-lg"
-            priority
-          />
-        </div>
-
         {/* Survey card */}
         <div className="mx-4 sm:mx-0 w-full max-w-sm rounded-xl border border-[var(--border)] bg-[var(--bg)] p-6 shadow-lg">
           <h3 className="text-lg font-semibold">What brought you here?</h3>
@@ -66,6 +54,18 @@ export function VisitSurvey() {
           >
             Skip
           </button>
+        </div>
+
+        {/* Pixel art Monty pointing at the survey */}
+        <div className="hidden sm:block -ml-4 mb-4">
+          <Image
+            src="/monty-pixel-art.png"
+            alt="Pixel art Monty pointing"
+            width={200}
+            height={350}
+            className="drop-shadow-lg -scale-x-100"
+            priority
+          />
         </div>
       </div>
     </div>
