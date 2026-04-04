@@ -60,7 +60,7 @@ export function TagFilter({ posts, readingTimes }: TagFilterProps) {
                 <article>
                   <div className="flex items-baseline justify-between gap-4">
                     <h2 className="text-xl font-semibold tracking-tight group-hover:underline sm:text-2xl">
-                      {post.title}
+                      {post.emoji && <span className="mr-2">{post.emoji}</span>}{post.title}
                     </h2>
                     <div className="flex shrink-0 items-baseline gap-2 text-sm text-neutral-500 dark:text-neutral-400">
                       {post.date && (

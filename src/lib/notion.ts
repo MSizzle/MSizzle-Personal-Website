@@ -45,6 +45,7 @@ export interface BlogPost {
   date: string;
   tags: string[];
   cover: string | null;
+  emoji: string | null;
   lastEdited: string;
 }
 
@@ -89,6 +90,8 @@ function extractPageProperties(page: PageObjectResponse): BlogPost {
       : page.cover.file.url
     : null;
 
+  const emoji = page.icon?.type === "emoji" ? page.icon.emoji : null;
+
   return {
     id: page.id,
     slug,
@@ -98,6 +101,7 @@ function extractPageProperties(page: PageObjectResponse): BlogPost {
     date,
     tags,
     cover,
+    emoji,
     lastEdited: page.last_edited_time,
   };
 }

@@ -41,6 +41,7 @@ export interface Project {
   title: string;
   description: string;
   image: string | null;
+  emoji: string | null;
   externalUrl: string;
   tags: string[];
   featured: boolean;
@@ -93,12 +94,15 @@ function extractProjectProperties(page: PageObjectResponse): Project {
       : page.cover.file.url
     : null;
 
+  const emoji = page.icon?.type === "emoji" ? page.icon.emoji : null;
+
   return {
     id: page.id,
     slug,
     title,
     description,
     image,
+    emoji,
     externalUrl,
     tags,
     featured,

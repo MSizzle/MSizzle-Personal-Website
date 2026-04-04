@@ -50,7 +50,7 @@ export default async function BlogPostPage({ params }: PageProps) {
     <article className="mx-auto max-w-3xl px-6 pb-24 pt-32">
       <header className="mb-12">
         <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
-          {post.title}
+          {post.emoji && <span className="mr-3">{post.emoji}</span>}{post.title}
         </h1>
         <div className="mt-4 flex items-center gap-4 text-sm text-neutral-500 dark:text-neutral-400">
           {post.date && (
