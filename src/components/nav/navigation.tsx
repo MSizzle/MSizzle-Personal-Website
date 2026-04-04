@@ -3,7 +3,6 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { ThemeToggle } from '@/components/theme-toggle'
 import { Menu, X as CloseIcon } from 'lucide-react'
 import { cn } from '@/utils/cn'
 
@@ -12,7 +11,6 @@ const NAV_LINKS = [
   { href: '/projects', label: 'Projects' },
   { href: '/blog', label: 'Blog' },
   { href: '/about', label: 'About' },
-  { href: '/links', label: 'Links' },
 ]
 
 export function Navigation() {
@@ -23,7 +21,6 @@ export function Navigation() {
     <>
       <header className="fixed inset-x-0 top-0 z-50 h-16 border-b border-[var(--border)]/50 bg-[var(--bg)]/80 backdrop-blur-sm">
         <nav className="mx-auto flex h-full max-w-5xl items-center justify-between px-6">
-          {/* Logo / Site name */}
           <Link href="/" className="text-base font-semibold tracking-tight">
             Monty Singer
           </Link>
@@ -47,17 +44,14 @@ export function Navigation() {
             ))}
           </ul>
 
-          {/* Right side: theme toggle + hamburger */}
-          <div className="flex items-center gap-4">
-            <ThemeToggle />
-            <button
-              className="flex min-h-[44px] min-w-[44px] items-center justify-center md:hidden"
-              onClick={() => setOpen(!open)}
-              aria-label={open ? 'Close navigation menu' : 'Open navigation menu'}
-            >
-              {open ? <CloseIcon size={24} /> : <Menu size={24} />}
-            </button>
-          </div>
+          {/* Mobile hamburger */}
+          <button
+            className="flex min-h-[44px] min-w-[44px] items-center justify-center md:hidden"
+            onClick={() => setOpen(!open)}
+            aria-label={open ? 'Close navigation menu' : 'Open navigation menu'}
+          >
+            {open ? <CloseIcon size={24} /> : <Menu size={24} />}
+          </button>
         </nav>
       </header>
 

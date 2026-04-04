@@ -1,4 +1,4 @@
-import { Mail } from 'lucide-react'
+import { Mail, Newspaper } from 'lucide-react'
 
 const SOCIAL_LINKS = [
   {
@@ -37,11 +37,39 @@ const SOCIAL_LINKS = [
   },
 ]
 
+const FOOTER_LINKS = [
+  { href: 'mailto:monty@msizzle.com', label: 'Email' },
+  { href: 'https://x.com/thefullmonty0', label: 'Twitter / X' },
+  { href: 'https://linkedin.com/in/monty-singer', label: 'LinkedIn' },
+  { href: 'https://github.com/MSizzle', label: 'GitHub' },
+  { href: '/blog', label: 'Newsletter' },
+]
+
 export function Footer() {
   return (
     <footer className="border-t border-[var(--border)] bg-[var(--bg-secondary)]">
       <div className="mx-auto max-w-5xl px-6 py-12">
-        <div className="flex items-center justify-center gap-6">
+        {/* Labeled links */}
+        <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
+          {FOOTER_LINKS.map((link) => {
+            const isExternal = link.href.startsWith('http') || link.href.startsWith('mailto')
+            return (
+              <a
+                key={link.label}
+                href={link.href}
+                target={isExternal ? '_blank' : undefined}
+                rel={isExternal ? 'noopener noreferrer' : undefined}
+                data-umami-event={isExternal ? `social-click-${link.label.toLowerCase().replace(/[\s/]+/g, '-')}` : undefined}
+                className="text-sm text-[var(--fg-muted)] transition-colors hover:text-foreground"
+              >
+                {link.label}
+              </a>
+            )
+          })}
+        </div>
+
+        {/* Icon row */}
+        <div className="mt-6 flex items-center justify-center gap-6">
           {SOCIAL_LINKS.map((link) => (
             <a
               key={link.href}
@@ -56,6 +84,7 @@ export function Footer() {
             </a>
           ))}
         </div>
+
         <p className="mt-6 text-center text-sm text-[var(--fg-muted)]">
           &copy; {new Date().getFullYear()} Monty Singer
         </p>

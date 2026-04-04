@@ -1,11 +1,26 @@
 "use client";
 
-import { ThemeProvider as NextThemesProvider } from "next-themes";
+import { useEffect } from "react";
+
+function getTimeBasedTheme(): "light" | "dark" {
+  const hour = new Date().getHours();
+  // Dark theme from 7 PM to 7 AM
+  return hour >= 19 || hour < 7 ? "dark" : "light";
+}
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  return (
-    <NextThemesProvider attribute="class" defaultTheme="system" enableSystem>
-      {children}
-    </NextThemesProvider>
-  );
+  useEffect(() => {
+    const apply = () => {
+      const theme = getTimeBasedTheme();
+      document.documentElement.classList.toggle("dark", theme === "dark");
+      document.documentElement.style.colorScheme = theme;
+    };
+
+    apply();
+    // Re-check every 5 minutes in case the hour changes
+    const interval = setInterval(apply, 5 * 60 * 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  return <>{children}</>;
 }
