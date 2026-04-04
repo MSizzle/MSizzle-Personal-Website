@@ -6,6 +6,7 @@ import { MotionProvider } from "@/components/providers/motion-provider";
 import { Navigation } from "@/components/nav/navigation";
 import { Footer } from "@/components/footer";
 import { UmamiAnalytics } from "@/components/analytics/umami-analytics";
+import { VisitSurvey } from "@/components/visit-survey";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -45,6 +46,7 @@ export default function RootLayout({
           </LenisProvider>
         </ThemeProvider>
         <UmamiAnalytics />
+        <VisitSurvey />
       </body>
     </html>
   );
