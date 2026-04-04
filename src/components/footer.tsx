@@ -9,7 +9,7 @@ const SOCIAL_LINKS = [
     ),
   },
   {
-    href: 'https://twitter.com/msizzle',
+    href: 'https://x.com/thefullmonty0',
     label: 'Twitter / X',
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -18,7 +18,7 @@ const SOCIAL_LINKS = [
     ),
   },
   {
-    href: 'https://linkedin.com/in/montysinger',
+    href: 'https://linkedin.com/in/monty-singer',
     label: 'LinkedIn',
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -27,7 +27,7 @@ const SOCIAL_LINKS = [
     ),
   },
   {
-    href: 'https://github.com/montysinger',
+    href: 'https://github.com/MSizzle',
     label: 'GitHub',
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">

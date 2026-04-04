@@ -12,9 +12,9 @@ const personJsonLd = {
   name: 'Monty Singer',
   url: 'https://msizzle.com',
   sameAs: [
-    'https://twitter.com/msizzle',
-    'https://linkedin.com/in/montysinger',
-    'https://github.com/montysinger',
+    'https://x.com/thefullmonty0',
+    'https://linkedin.com/in/monty-singer',
+    'https://github.com/MSizzle',
   ],
   jobTitle: 'Investor',
   alumniOf: {

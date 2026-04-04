@@ -58,9 +58,9 @@ type LinkItem = {
 
 const LINKS: LinkItem[] = [
   { href: 'mailto:monty@msizzle.com', label: 'Email', icon: Mail },
-  { href: 'https://twitter.com/msizzle', label: 'Twitter / X', icon: TwitterIcon },
-  { href: 'https://linkedin.com/in/montysinger', label: 'LinkedIn', icon: LinkedinIcon },
-  { href: 'https://github.com/montysinger', label: 'GitHub', icon: GithubIcon },
+  { href: 'https://x.com/thefullmonty0', label: 'Twitter / X', icon: TwitterIcon },
+  { href: 'https://linkedin.com/in/monty-singer', label: 'LinkedIn', icon: LinkedinIcon },
+  { href: 'https://github.com/MSizzle', label: 'GitHub', icon: GithubIcon },
   { href: '/blog', label: 'Subscribe to Newsletter', icon: Newspaper },
 ]
 
