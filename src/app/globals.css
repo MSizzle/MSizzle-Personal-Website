@@ -7,26 +7,29 @@
   --color-fg-muted: var(--fg-muted);
   --color-border: var(--border);
   --color-accent: var(--accent);
+  --color-accent-warm: var(--accent-warm);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
 :root {
-  --bg: #f0ede6;
-  --fg: #1a1a1a;
-  --bg-secondary: #e6e2da;
-  --fg-muted: #6b6b6b;
-  --border: #d4d0c8;
-  --accent: #2563eb;
+  --bg: #E5E5E5;
+  --fg: #000000;
+  --bg-secondary: #BFD7FF;
+  --fg-muted: #4a4a4a;
+  --border: #c8c8c8;
+  --accent: #007EA7;
+  --accent-warm: #CE2D4F;
 }
 
 .dark {
   --bg: #0a0a0a;
-  --fg: #fafafa;
-  --bg-secondary: #171717;
+  --fg: #E5E5E5;
+  --bg-secondary: #1a1a2e;
   --fg-muted: #a3a3a3;
   --border: #262626;
-  --accent: #3b82f6;
+  --accent: #007EA7;
+  --accent-warm: #CE2D4F;
 }
 
 html {

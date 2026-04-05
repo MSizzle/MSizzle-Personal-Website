@@ -35,7 +35,7 @@ export default function Home() {
           <div className="mt-6 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
             <Link
               href="/projects"
-              className="inline-flex items-center rounded-lg bg-[var(--accent)] px-6 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90"
+              className="inline-flex items-center rounded-lg bg-[var(--accent-warm)] px-6 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90"
             >
               View My Work
             </Link>
