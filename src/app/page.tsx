@@ -1,8 +1,25 @@
+import fs from "fs";
+import path from "path";
 import Link from "next/link";
 import { getPublishedPosts } from "@/lib/notion";
 import { getFeaturedProjects } from "@/lib/notion-projects";
 import { Timeline } from "@/components/about/timeline";
 import { TIMELINE_EVENTS } from "@/data/timeline";
+import { PhotoCarousel } from "@/components/home/photo-carousel";
+import { RotatingTagline } from "@/components/home/rotating-tagline";
+
+function getCarouselPhotos(): string[] {
+  try {
+    const dir = path.join(process.cwd(), "public", "MSizzle-website-photos");
+    return fs
+      .readdirSync(dir)
+      .filter((f) => /\.(jpg|jpeg|png|webp|gif)$/i.test(f))
+      .sort()
+      .map((f) => `/MSizzle-website-photos/${f}`);
+  } catch {
+    return [];
+  }
+}
 
 export const revalidate = 1800;
 
@@ -33,6 +50,7 @@ export default async function Home() {
 
   const latestPost = posts[0];
   const recentPosts = posts.slice(1, 4);
+  const carouselPhotos = getCarouselPhotos();
 
   return (
     <>
@@ -50,10 +68,9 @@ export default async function Home() {
           <h1 className="mt-3 text-5xl font-bold tracking-tight text-white sm:text-7xl">
             Monty Singer
           </h1>
-          <p className="mt-4 max-w-lg text-lg text-white/80">
-            Building at the intersection of technology and finance in New York City.
-            Georgetown grad, lifelong learner, always shipping.
-          </p>
+          <div className="mt-4 max-w-lg">
+            <RotatingTagline />
+          </div>
           <div className="mt-6 flex gap-4">
             <Link
               href="/projects"
@@ -70,6 +87,15 @@ export default async function Home() {
           </div>
         </div>
       </section>
+
+      {/* Photo carousel */}
+      {carouselPhotos.length > 0 && (
+        <section className="px-6 pt-12">
+          <div className="mx-auto max-w-4xl">
+            <PhotoCarousel photos={carouselPhotos} />
+          </div>
+        </section>
+      )}
 
       {/* Featured Post — large card */}
       {latestPost && (
