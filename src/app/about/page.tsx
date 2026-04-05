@@ -1,6 +1,4 @@
 import type { Metadata } from 'next'
-import { Timeline } from '@/components/about/timeline'
-import { TIMELINE_EVENTS } from '@/data/timeline'
 
 export const metadata: Metadata = {
   title: 'About — Monty Singer',
@@ -36,20 +34,34 @@ export default function AboutPage() {
       <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
         About Me
       </h1>
-      <p className="mt-3 text-base text-[var(--fg-muted)]">
-        Investor, builder, and lifelong learner based in NYC. Georgetown grad working
-        at the intersection of technology and finance.
-      </p>
 
-      <h2 className="mt-10 text-xs font-semibold uppercase tracking-widest text-[var(--accent)]">
-        Timeline
-      </h2>
-      <p className="mt-1 text-sm text-[var(--fg-muted)]">
-        Click an icon to learn more about each experience.
-      </p>
+      <div className="prose prose-neutral dark:prose-invert mt-6 max-w-none">
+        <p>
+          I&apos;m Monty Singer — an investor, builder, and perpetual student based in New York City.
+          I spend my time at the intersection of technology and finance, always looking for what&apos;s
+          next and trying to build things that matter.
+        </p>
 
-      <div className="mt-6">
-        <Timeline events={TIMELINE_EVENTS} />
+        <h2>Education</h2>
+        <p>
+          I studied at Georgetown University in Washington, D.C., where I developed a foundation in
+          analytical thinking and a deep curiosity about how systems work — from markets to technology
+          to organizations.
+        </p>
+
+        <h2>Career</h2>
+        <p>
+          My career has centered on investing — understanding businesses, evaluating opportunities,
+          and making decisions under uncertainty. More recently, I&apos;ve been channeling that same
+          energy into building. Whether it&apos;s software tools, content, or experiments with AI, I
+          believe the best way to understand something is to create it.
+        </p>
+
+        <h2>Outside of Work</h2>
+        <p>
+          Reading constantly, exploring NYC, and finding new rabbit holes to dive into. This site is
+          one of those projects — a place to share what I&apos;m learning and building.
+        </p>
       </div>
     </div>
   )

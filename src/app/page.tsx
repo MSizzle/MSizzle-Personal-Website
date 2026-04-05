@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { getPublishedPosts } from "@/lib/notion";
 import { getFeaturedProjects } from "@/lib/notion-projects";
+import { Timeline } from "@/components/about/timeline";
+import { TIMELINE_EVENTS } from "@/data/timeline";
 
 export const revalidate = 1800;
 
@@ -118,6 +120,21 @@ export default async function Home() {
           </div>
         </section>
       )}
+
+      {/* Timeline — interactive career/experience */}
+      <section className="border-t border-[var(--border)] px-6 py-12">
+        <div className="mx-auto max-w-4xl">
+          <h2 className="text-xs font-semibold uppercase tracking-widest text-[var(--accent)]">
+            Timeline
+          </h2>
+          <p className="mt-1 text-sm text-[var(--fg-muted)]">
+            Click an icon to learn more about each experience.
+          </p>
+          <div className="mt-6">
+            <Timeline events={TIMELINE_EVENTS} />
+          </div>
+        </div>
+      </section>
 
       {/* Recent Posts + Featured Projects side by side */}
       <section className="border-t border-[var(--border)] px-6 py-12">
