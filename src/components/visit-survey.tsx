@@ -28,44 +28,46 @@ export function VisitSurvey() {
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center overflow-hidden bg-black/40 backdrop-blur-sm">
-      <div className="flex max-w-[90vw] items-end gap-0">
-        {/* Survey card */}
-        <div className="mx-4 sm:mx-0 w-full max-w-sm rounded-xl border border-[var(--border)] bg-[var(--bg)] p-6 shadow-lg">
-          <h3 className="text-lg font-semibold">What brought you here?</h3>
-          <div className="mt-4 flex flex-col gap-2">
-            {OPTIONS.map((opt) => (
-              <button
-                key={opt.value}
-                data-umami-event="visit-reason"
-                data-umami-event-reason={opt.value}
-                onClick={() => handleClick(opt.value)}
-                className="rounded-lg border border-[var(--border)] bg-[var(--bg-secondary)] px-4 py-3 text-left text-sm font-medium transition-colors hover:border-[var(--accent)]/30 hover:bg-[var(--accent)]/5"
-              >
-                {opt.label}
-              </button>
-            ))}
+      <div className="mx-4 w-full max-w-lg rounded-xl border border-[var(--border)] bg-[var(--bg)] p-6 shadow-lg">
+        <div className="flex items-start gap-4">
+          {/* Survey content */}
+          <div className="flex-1">
+            <h3 className="text-lg font-semibold">What brought you here?</h3>
+            <div className="mt-4 flex flex-col gap-2">
+              {OPTIONS.map((opt) => (
+                <button
+                  key={opt.value}
+                  data-umami-event="visit-reason"
+                  data-umami-event-reason={opt.value}
+                  onClick={() => handleClick(opt.value)}
+                  className="rounded-lg border border-[var(--border)] bg-[var(--bg-secondary)] px-4 py-3 text-left text-sm font-medium transition-colors hover:border-[var(--accent)]/30 hover:bg-[var(--accent)]/5"
+                >
+                  {opt.label}
+                </button>
+              ))}
+            </div>
+            <button
+              onClick={() => {
+                sessionStorage.setItem('visit-survey-done', 'true')
+                setShow(false)
+              }}
+              className="mt-3 w-full text-center text-xs text-[var(--fg-muted)] hover:text-foreground"
+            >
+              Skip
+            </button>
           </div>
-          <button
-            onClick={() => {
-              sessionStorage.setItem('visit-survey-done', 'true')
-              setShow(false)
-            }}
-            className="mt-3 w-full text-center text-xs text-[var(--fg-muted)] hover:text-foreground"
-          >
-            Skip
-          </button>
-        </div>
 
-        {/* Pixel art Monty on right, pointing left at the survey */}
-        <div className="hidden sm:block -ml-4 mb-4 shrink-0">
-          <Image
-            src="/monty-pixel-art.png"
-            alt="Pixel art Monty pointing"
-            width={160}
-            height={280}
-            className="drop-shadow-lg"
-            priority
-          />
+          {/* Pixel art Monty inside the card */}
+          <div className="hidden shrink-0 sm:block">
+            <Image
+              src="/monty-pixel-art.png"
+              alt="Pixel art Monty pointing"
+              width={140}
+              height={245}
+              className="drop-shadow-lg"
+              priority
+            />
+          </div>
         </div>
       </div>
     </div>
