@@ -3,8 +3,9 @@ import path from "path";
 import Link from "next/link";
 import { getPublishedPosts } from "@/lib/notion";
 import { getFeaturedProjects } from "@/lib/notion-projects";
-import { Timeline } from "@/components/about/timeline";
+import { HorizontalTimeline } from "@/components/about/horizontal-timeline";
 import { TIMELINE_EVENTS } from "@/data/timeline";
+import { TIMELINE_VISUALS } from "@/data/timeline-visuals";
 import { PhotoCarousel } from "@/components/home/photo-carousel";
 import { RotatingTagline } from "@/components/home/rotating-tagline";
 
@@ -147,17 +148,17 @@ export default async function Home() {
         </section>
       )}
 
-      {/* Timeline — interactive career/experience */}
+      {/* Timeline — illustrated horizontal landscape */}
       <section className="border-t border-[var(--border)] px-6 py-12">
-        <div className="mx-auto max-w-4xl">
+        <div className="mx-auto max-w-5xl">
           <h2 className="text-xs font-semibold uppercase tracking-widest text-[var(--accent)]">
-            Timeline
+            The Journey
           </h2>
           <p className="mt-1 text-sm text-[var(--fg-muted)]">
-            Click an icon to learn more about each experience.
+            Click any icon to learn more about each experience.
           </p>
           <div className="mt-6">
-            <Timeline events={TIMELINE_EVENTS} />
+            <HorizontalTimeline events={TIMELINE_EVENTS} visuals={TIMELINE_VISUALS} />
           </div>
         </div>
       </section>
