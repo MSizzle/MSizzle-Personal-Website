@@ -148,20 +148,22 @@ export default async function Home() {
         </section>
       )}
 
-      {/* Timeline — illustrated horizontal landscape */}
-      <section className="border-t border-[var(--border)] px-6 py-12">
-        <div className="mx-auto max-w-5xl">
-          <h2 className="text-xs font-semibold uppercase tracking-widest text-[var(--accent)]">
-            The Journey
-          </h2>
-          <p className="mt-1 text-sm text-[var(--fg-muted)]">
-            Click any icon to learn more about each experience.
-          </p>
-          <div className="mt-6">
-            <HorizontalTimeline events={TIMELINE_EVENTS} visuals={TIMELINE_VISUALS} />
+      {/* Timeline — hidden for now, preserved for future use */}
+      {false && (
+        <section className="border-t border-[var(--border)] px-6 py-12">
+          <div className="mx-auto max-w-5xl">
+            <h2 className="text-xs font-semibold uppercase tracking-widest text-[var(--accent)]">
+              The Journey
+            </h2>
+            <p className="mt-1 text-sm text-[var(--fg-muted)]">
+              Click any icon to learn more about each experience.
+            </p>
+            <div className="mt-6">
+              <HorizontalTimeline events={TIMELINE_EVENTS} visuals={TIMELINE_VISUALS} />
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Recent Posts + Featured Projects side by side */}
       <section className="border-t border-[var(--border)] px-6 py-12">
