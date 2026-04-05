@@ -7,10 +7,8 @@ import { Menu, X as CloseIcon } from 'lucide-react'
 import { cn } from '@/utils/cn'
 
 const NAV_LINKS = [
-  { href: '/', label: 'Home' },
-  { href: '/projects', label: 'Projects' },
-  { href: '/blog', label: 'Blog' },
   { href: '/about', label: 'About' },
+  { href: 'mailto:mds@georgetown.edu', label: 'Contact' },
 ]
 
 export function Navigation() {

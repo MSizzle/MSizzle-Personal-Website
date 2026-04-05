@@ -82,7 +82,7 @@ export default async function Home() {
                   <div className="aspect-video w-full overflow-hidden rounded-lg sm:w-72 sm:shrink-0">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
-                      src={latestPost.cover}
+                      src={`/api/notion-cover?pageId=${latestPost.id}`}
                       alt={latestPost.title}
                       className="h-full w-full object-cover transition-transform duration-200 group-hover:scale-105"
                     />
@@ -187,7 +187,7 @@ export default async function Home() {
                       <div className="h-14 w-14 shrink-0 overflow-hidden rounded-lg">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
-                          src={project.image}
+                          src={`/api/notion-cover?pageId=${project.id}`}
                           alt={project.title}
                           className="h-full w-full object-cover"
                         />

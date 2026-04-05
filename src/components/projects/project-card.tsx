@@ -2,6 +2,8 @@ import Link from "next/link";
 import type { Project } from "@/lib/notion-projects";
 
 export function ProjectCard({ project }: { project: Project }) {
+  const coverSrc = `/api/notion-cover?pageId=${project.id}`;
+
   return (
     <Link
       href={`/projects/${project.slug}`}
@@ -12,7 +14,7 @@ export function ProjectCard({ project }: { project: Project }) {
         {project.image ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
-            src={project.image}
+            src={coverSrc}
             alt={project.title}
             className="h-full w-full object-cover transition-transform duration-200 group-hover:scale-105"
             loading="lazy"
