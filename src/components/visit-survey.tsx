@@ -28,10 +28,10 @@ export function VisitSurvey() {
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center overflow-hidden bg-black/40 backdrop-blur-sm">
-      <div className="mx-4 w-full max-w-lg rounded-xl border border-[var(--border)] bg-[var(--bg)] p-6 shadow-lg">
-        <div className="flex items-start gap-4">
+      <div className="mx-4 w-full max-w-md rounded-xl border border-[var(--border)] bg-[var(--bg)] p-6 shadow-lg">
+        <div className="flex items-center gap-6">
           {/* Survey content */}
-          <div className="flex-1">
+          <div className="flex-1 min-w-0">
             <h3 className="text-lg font-semibold">What brought you here?</h3>
             <div className="mt-4 flex flex-col gap-2">
               {OPTIONS.map((opt) => (
@@ -62,8 +62,8 @@ export function VisitSurvey() {
             <Image
               src="/monty-pixel-art.png"
               alt="Pixel art Monty pointing"
-              width={140}
-              height={245}
+              width={120}
+              height={210}
               className="drop-shadow-lg"
               priority
             />
