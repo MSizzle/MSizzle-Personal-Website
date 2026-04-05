@@ -25,12 +25,12 @@ export function ProjectCard({ project }: { project: Project }) {
       </div>
 
       {/* Title and description */}
-      <div className="p-4">
-        <h3 className="text-base font-semibold tracking-tight group-hover:text-[var(--accent)]">
-          {project.emoji && <span className="mr-1.5">{project.emoji}</span>}{project.title}
+      <div className="p-3">
+        <h3 className="text-sm font-semibold tracking-tight group-hover:text-[var(--accent)]">
+          {project.emoji && <span className="mr-1">{project.emoji}</span>}{project.title}
         </h3>
         {project.description && (
-          <p className="mt-1.5 text-sm text-[var(--fg-muted)] line-clamp-2">
+          <p className="mt-1 text-xs text-[var(--fg-muted)] line-clamp-2">
             {project.description}
           </p>
         )}
