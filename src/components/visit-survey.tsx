@@ -28,19 +28,19 @@ export function VisitSurvey() {
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center overflow-hidden bg-black/40 backdrop-blur-sm">
-      <div className="mx-4 w-full max-w-md rounded-xl border border-[var(--border)] bg-[var(--bg)] p-6 shadow-lg">
-        <div className="flex items-center gap-6">
+      <div className="mx-4 w-full max-w-sm overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--bg)] shadow-lg">
+        <div className="flex">
           {/* Survey content */}
-          <div className="flex-1 min-w-0">
+          <div className="flex-1 p-6">
             <h3 className="text-lg font-semibold">What brought you here?</h3>
-            <div className="mt-4 flex flex-col gap-2">
+            <div className="mt-3 flex flex-col gap-2">
               {OPTIONS.map((opt) => (
                 <button
                   key={opt.value}
                   data-umami-event="visit-reason"
                   data-umami-event-reason={opt.value}
                   onClick={() => handleClick(opt.value)}
-                  className="rounded-lg border border-[var(--border)] bg-[var(--bg-secondary)] px-4 py-3 text-left text-sm font-medium transition-colors hover:border-[var(--accent)]/30 hover:bg-[var(--accent)]/5"
+                  className="rounded-lg border border-[var(--border)] bg-[var(--bg-secondary)] px-3 py-2 text-left text-sm font-medium transition-colors hover:border-[var(--accent)]/30 hover:bg-[var(--accent)]/5"
                 >
                   {opt.label}
                 </button>
@@ -57,14 +57,14 @@ export function VisitSurvey() {
             </button>
           </div>
 
-          {/* Pixel art Monty inside the card */}
-          <div className="hidden shrink-0 sm:block">
+          {/* Pixel art Monty — clipped to card bounds */}
+          <div className="hidden w-28 shrink-0 self-end sm:block">
             <Image
               src="/monty-pixel-art.png"
               alt="Pixel art Monty pointing"
-              width={120}
-              height={210}
-              className="drop-shadow-lg"
+              width={112}
+              height={196}
+              className="object-contain object-bottom"
               priority
             />
           </div>
