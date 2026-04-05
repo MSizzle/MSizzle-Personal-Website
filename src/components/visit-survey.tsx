@@ -27,11 +27,11 @@ export function VisitSurvey() {
   if (!show) return null
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center overflow-hidden bg-black/40 backdrop-blur-sm">
-      <div className="mx-4 w-full max-w-sm overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--bg)] shadow-lg">
-        <div className="flex">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
+      <div className="w-full max-w-md rounded-xl border border-[var(--border)] bg-[var(--bg)] p-8 shadow-lg">
+        <div className="flex items-center gap-8">
           {/* Survey content */}
-          <div className="flex-1 p-6">
+          <div className="flex-1">
             <h3 className="text-lg font-semibold">What brought you here?</h3>
             <div className="mt-3 flex flex-col gap-2">
               {OPTIONS.map((opt) => (
@@ -57,14 +57,14 @@ export function VisitSurvey() {
             </button>
           </div>
 
-          {/* Pixel art Monty — clipped to card bounds */}
-          <div className="hidden w-28 shrink-0 self-end sm:block">
+          {/* Pixel art Monty with padding */}
+          <div className="hidden shrink-0 sm:block">
             <Image
               src="/monty-pixel-art.png"
               alt="Pixel art Monty pointing"
-              width={112}
-              height={196}
-              className="object-contain object-bottom"
+              width={100}
+              height={175}
+              className="object-contain"
               priority
             />
           </div>
