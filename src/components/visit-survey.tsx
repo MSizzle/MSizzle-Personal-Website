@@ -28,42 +28,47 @@ export function VisitSurvey() {
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
-      <div className="w-full max-w-xs rounded-xl border border-[var(--border)] bg-[var(--bg)] p-6 shadow-lg">
-        {/* Pixel art centered at top */}
-        <div className="flex justify-center mb-4">
-          <Image
-            src="/monty-pixel-body.png"
-            alt="Pixel art Monty"
-            width={80}
-            height={100}
-            className="object-contain"
-            priority
-          />
-        </div>
-
-        <h3 className="text-center text-lg font-semibold">What brought you here?</h3>
-        <div className="mt-3 flex flex-col gap-2">
-          {OPTIONS.map((opt) => (
+      <div className="w-full max-w-md rounded-xl border border-[var(--border)] bg-[var(--bg)] p-6 shadow-lg">
+        <div className="flex items-center gap-4">
+          {/* Survey content (left) */}
+          <div className="flex-1 min-w-0">
+            <h3 className="text-lg font-semibold">What brought you here?</h3>
+            <div className="mt-3 flex flex-col gap-2">
+              {OPTIONS.map((opt) => (
+                <button
+                  key={opt.value}
+                  data-umami-event="visit-reason"
+                  data-umami-event-reason={opt.value}
+                  onClick={() => handleClick(opt.value)}
+                  className="rounded-lg border border-[var(--border)] bg-[var(--bg-secondary)] px-3 py-2 text-left text-sm font-medium transition-colors hover:border-[var(--accent)]/30 hover:bg-[var(--accent)]/5"
+                >
+                  {opt.label}
+                </button>
+              ))}
+            </div>
             <button
-              key={opt.value}
-              data-umami-event="visit-reason"
-              data-umami-event-reason={opt.value}
-              onClick={() => handleClick(opt.value)}
-              className="rounded-lg border border-[var(--border)] bg-[var(--bg-secondary)] px-3 py-2.5 text-center text-sm font-medium transition-colors hover:border-[var(--accent)]/30 hover:bg-[var(--accent)]/5"
+              onClick={() => {
+                sessionStorage.setItem('visit-survey-done', 'true')
+                setShow(false)
+              }}
+              className="mt-3 w-full text-center text-xs text-[var(--fg-muted)] hover:text-foreground"
             >
-              {opt.label}
+              Skip
             </button>
-          ))}
+          </div>
+
+          {/* Pixel art Monty on right — pointing left at buttons */}
+          <div className="hidden shrink-0 sm:flex sm:items-center sm:justify-center sm:w-24">
+            <Image
+              src="/monty-pixel-body.png"
+              alt="Pixel art Monty pointing"
+              width={96}
+              height={140}
+              className="object-contain"
+              priority
+            />
+          </div>
         </div>
-        <button
-          onClick={() => {
-            sessionStorage.setItem('visit-survey-done', 'true')
-            setShow(false)
-          }}
-          className="mt-3 w-full text-center text-xs text-[var(--fg-muted)] hover:text-foreground"
-        >
-          Skip
-        </button>
       </div>
     </div>
   )
