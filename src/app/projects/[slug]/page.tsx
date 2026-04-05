@@ -43,19 +43,32 @@ export default async function ProjectPage({ params }: PageProps) {
 
   return (
     <article className="mx-auto max-w-2xl px-6 pb-16 pt-24">
-      <header className="mb-12">
-        <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
+      <header className="mb-10">
+        <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
+          {project.emoji && <span className="mr-2">{project.emoji}</span>}
           {project.title}
         </h1>
 
         {project.description && (
-          <p className="mt-4 text-lg text-[var(--fg-muted)]">
+          <p className="mt-3 text-base text-[var(--fg-muted)]">
             {project.description}
           </p>
         )}
 
+        {/* Thumbnail */}
+        {project.image && (
+          <div className="mt-6 aspect-video w-full overflow-hidden rounded-lg border border-[var(--border)]">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={`/api/notion-cover?pageId=${project.id}`}
+              alt={project.title}
+              className="h-full w-full object-cover"
+            />
+          </div>
+        )}
+
         {(project.tags.length > 0 || project.externalUrl) && (
-          <div className="mt-6 flex flex-wrap items-center gap-4">
+          <div className="mt-5 flex flex-wrap items-center gap-4">
             {project.tags.length > 0 && (
               <div className="flex flex-wrap gap-2">
                 {project.tags.map((tag) => (
@@ -74,9 +87,11 @@ export default async function ProjectPage({ params }: PageProps) {
                 href={project.externalUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 text-sm text-[var(--accent)] hover:underline"
+                data-umami-event="project-external-link"
+                data-umami-event-title={project.title}
+                className="inline-flex items-center gap-1 rounded-lg bg-[var(--accent)] px-4 py-2 text-sm font-semibold text-white transition-opacity hover:opacity-90"
               >
-                Visit project &rarr;
+                View on GitHub &rarr;
               </a>
             )}
           </div>
