@@ -1,4 +1,8 @@
 import Link from "next/link";
+import { getPublishedPosts } from "@/lib/notion";
+import { getFeaturedProjects } from "@/lib/notion-projects";
+
+export const revalidate = 1800;
 
 const personJsonLd = {
   "@context": "https://schema.org",
@@ -14,7 +18,20 @@ const personJsonLd = {
   description: "Investor, builder, and lifelong learner based in NYC.",
 };
 
-export default function Home() {
+export default async function Home() {
+  let posts: Awaited<ReturnType<typeof getPublishedPosts>> = [];
+  let projects: Awaited<ReturnType<typeof getFeaturedProjects>> = [];
+
+  try {
+    posts = await getPublishedPosts();
+  } catch {}
+  try {
+    projects = await getFeaturedProjects();
+  } catch {}
+
+  const latestPost = posts[0];
+  const recentPosts = posts.slice(1, 4);
+
   return (
     <>
       <script
@@ -22,88 +39,181 @@ export default function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
       />
 
-      {/* Hero */}
-      <section className="px-6 pt-28 pb-12">
-        <div className="mx-auto max-w-2xl">
-          <div className="mb-6 h-28 w-28 rounded-full bg-[var(--bg-secondary)] border border-[var(--border)]" />
-          <h1 className="text-5xl font-semibold tracking-tight sm:text-6xl">
-            Hey, I&apos;m Monty.
+      {/* Hero — full-width editorial banner */}
+      <section className="relative overflow-hidden bg-[var(--accent)] px-6 pt-24 pb-16">
+        <div className="mx-auto max-w-4xl">
+          <p className="text-sm font-medium uppercase tracking-widest text-white/70">
+            Investor &middot; Builder &middot; Writer
+          </p>
+          <h1 className="mt-3 text-5xl font-bold tracking-tight text-white sm:text-7xl">
+            Monty Singer
           </h1>
-          <p className="mt-4 text-lg text-[var(--fg-muted)]">
-            Investor, builder, and lifelong learner based in NYC.
+          <p className="mt-4 max-w-lg text-lg text-white/80">
+            Building at the intersection of technology and finance in New York City.
+            Georgetown grad, lifelong learner, always shipping.
           </p>
           <div className="mt-6 flex gap-4">
             <Link
               href="/projects"
-              className="inline-flex items-center rounded-lg bg-[var(--accent-warm)] px-6 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90"
+              className="inline-flex items-center rounded-lg bg-white px-5 py-2.5 text-sm font-semibold text-[var(--accent)] transition-opacity hover:opacity-90"
             >
               View My Work
             </Link>
             <Link
-              href="/blog"
-              className="inline-flex items-center text-sm font-semibold text-[var(--fg-muted)] transition-colors hover:text-foreground"
+              href="/about"
+              className="inline-flex items-center text-sm font-semibold text-white/90 transition-colors hover:text-white"
             >
-              Read My Writing<span className="ml-1">&rarr;</span>
+              About Me<span className="ml-1">&rarr;</span>
             </Link>
           </div>
         </div>
       </section>
 
-      {/* About */}
-      <section className="border-t border-[var(--border)] px-6 py-12">
-        <div className="mx-auto max-w-2xl">
-          <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">
-            About
-          </h2>
-          <p className="mt-3 text-base leading-relaxed text-[var(--fg-muted)]">
-            Georgetown grad turned investor, now building at the intersection of
-            technology and finance in New York City. Always learning, always
-            shipping.
-          </p>
-          <Link
-            href="/about"
-            className="mt-3 inline-block text-sm font-semibold text-[var(--accent)] hover:underline"
-          >
-            More about me &rarr;
-          </Link>
-        </div>
-      </section>
+      {/* Featured Post — large card */}
+      {latestPost && (
+        <section className="px-6 py-12">
+          <div className="mx-auto max-w-4xl">
+            <p className="text-xs font-semibold uppercase tracking-widest text-[var(--accent)]">
+              Latest
+            </p>
+            <Link href={`/blog/${latestPost.slug}`} className="group mt-3 block">
+              <div className="flex flex-col gap-6 sm:flex-row sm:items-start">
+                {latestPost.cover && (
+                  <div className="aspect-video w-full overflow-hidden rounded-lg sm:w-72 sm:shrink-0">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={latestPost.cover}
+                      alt={latestPost.title}
+                      className="h-full w-full object-cover transition-transform duration-200 group-hover:scale-105"
+                    />
+                  </div>
+                )}
+                <div>
+                  <h2 className="text-2xl font-bold tracking-tight group-hover:text-[var(--accent)] sm:text-3xl">
+                    {latestPost.emoji && <span className="mr-2">{latestPost.emoji}</span>}
+                    {latestPost.title}
+                  </h2>
+                  {latestPost.description && (
+                    <p className="mt-2 text-base leading-relaxed text-[var(--fg-muted)] line-clamp-3">
+                      {latestPost.description}
+                    </p>
+                  )}
+                  <div className="mt-3 flex items-center gap-3 text-sm text-[var(--fg-muted)]">
+                    {latestPost.date && (
+                      <time dateTime={latestPost.date}>
+                        {new Date(latestPost.date).toLocaleDateString("en-US", {
+                          month: "long",
+                          day: "numeric",
+                          year: "numeric",
+                        })}
+                      </time>
+                    )}
+                    <span className="text-sm font-semibold text-[var(--accent)]">
+                      Read &rarr;
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </Link>
+          </div>
+        </section>
+      )}
 
-      {/* Projects */}
+      {/* Recent Posts + Featured Projects side by side */}
       <section className="border-t border-[var(--border)] px-6 py-12">
-        <div className="mx-auto max-w-2xl">
-          <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">
-            Projects
-          </h2>
-          <p className="mt-3 text-base leading-relaxed text-[var(--fg-muted)]">
-            Things I&apos;ve built and invested in — from software products to
-            creative experiments.
-          </p>
-          <Link
-            href="/projects"
-            className="mt-3 inline-block text-sm font-semibold text-[var(--accent)] hover:underline"
-          >
-            See all projects &rarr;
-          </Link>
-        </div>
-      </section>
+        <div className="mx-auto grid max-w-4xl gap-12 md:grid-cols-2">
+          {/* Recent Writing */}
+          <div>
+            <div className="flex items-baseline justify-between">
+              <h3 className="text-xs font-semibold uppercase tracking-widest text-[var(--accent)]">
+                Writing
+              </h3>
+              <Link
+                href="/blog"
+                className="text-xs font-semibold text-[var(--fg-muted)] hover:text-foreground"
+              >
+                All posts &rarr;
+              </Link>
+            </div>
+            <ul className="mt-4 space-y-4">
+              {recentPosts.map((post) => (
+                <li key={post.id}>
+                  <Link href={`/blog/${post.slug}`} className="group block">
+                    <div className="flex items-start gap-2">
+                      {post.emoji && (
+                        <span className="shrink-0 text-base">{post.emoji}</span>
+                      )}
+                      <div className="min-w-0">
+                        <h4 className="text-sm font-semibold group-hover:text-[var(--accent)]">
+                          {post.title}
+                        </h4>
+                        {post.date && (
+                          <time className="text-xs text-[var(--fg-muted)]" dateTime={post.date}>
+                            {new Date(post.date).toLocaleDateString("en-US", {
+                              month: "short",
+                              day: "numeric",
+                            })}
+                          </time>
+                        )}
+                      </div>
+                    </div>
+                  </Link>
+                </li>
+              ))}
+              {recentPosts.length === 0 && (
+                <li className="text-sm text-[var(--fg-muted)]">More posts coming soon.</li>
+              )}
+            </ul>
+          </div>
 
-      {/* Writing */}
-      <section className="border-t border-[var(--border)] px-6 py-12">
-        <div className="mx-auto max-w-2xl">
-          <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">
-            Writing
-          </h2>
-          <p className="mt-3 text-base leading-relaxed text-[var(--fg-muted)]">
-            Ideas, observations, and lessons learned. On investing, building,
-            and everything in between.
-          </p>
-          <Link
-            href="/blog"
-            className="mt-3 inline-block text-sm font-semibold text-[var(--accent)] hover:underline"
-          >
-            Read the blog &rarr;
-          </Link>
+          {/* Featured Projects */}
+          <div>
+            <div className="flex items-baseline justify-between">
+              <h3 className="text-xs font-semibold uppercase tracking-widest text-[var(--accent)]">
+                Projects
+              </h3>
+              <Link
+                href="/projects"
+                className="text-xs font-semibold text-[var(--fg-muted)] hover:text-foreground"
+              >
+                All projects &rarr;
+              </Link>
+            </div>
+            <ul className="mt-4 space-y-4">
+              {projects.map((project) => (
+                <li key={project.id}>
+                  <Link href={`/projects/${project.slug}`} className="group flex items-start gap-3">
+                    {project.image ? (
+                      <div className="h-14 w-14 shrink-0 overflow-hidden rounded-lg">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={project.image}
+                          alt={project.title}
+                          className="h-full w-full object-cover"
+                        />
+                      </div>
+                    ) : (
+                      <div className="h-14 w-14 shrink-0 rounded-lg bg-[var(--bg-secondary)]" />
+                    )}
+                    <div className="min-w-0">
+                      <h4 className="text-sm font-semibold group-hover:text-[var(--accent)]">
+                        {project.emoji && <span className="mr-1">{project.emoji}</span>}
+                        {project.title}
+                      </h4>
+                      {project.description && (
+                        <p className="mt-0.5 text-xs text-[var(--fg-muted)] line-clamp-2">
+                          {project.description}
+                        </p>
+                      )}
+                    </div>
+                  </Link>
+                </li>
+              ))}
+              {projects.length === 0 && (
+                <li className="text-sm text-[var(--fg-muted)]">Projects coming soon.</li>
+              )}
+            </ul>
+          </div>
         </div>
       </section>
     </>
