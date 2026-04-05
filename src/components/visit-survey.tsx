@@ -27,8 +27,8 @@ export function VisitSurvey() {
   if (!show) return null
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 backdrop-blur-sm">
-      <div className="flex items-end gap-0">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center overflow-hidden bg-black/40 backdrop-blur-sm">
+      <div className="flex max-w-[90vw] items-end gap-0">
         {/* Survey card */}
         <div className="mx-4 sm:mx-0 w-full max-w-sm rounded-xl border border-[var(--border)] bg-[var(--bg)] p-6 shadow-lg">
           <h3 className="text-lg font-semibold">What brought you here?</h3>
@@ -57,12 +57,12 @@ export function VisitSurvey() {
         </div>
 
         {/* Pixel art Monty on right, pointing left at the survey */}
-        <div className="hidden sm:block -ml-4 mb-4">
+        <div className="hidden sm:block -ml-4 mb-4 shrink-0">
           <Image
             src="/monty-pixel-art.png"
             alt="Pixel art Monty pointing"
-            width={200}
-            height={350}
+            width={160}
+            height={280}
             className="drop-shadow-lg"
             priority
           />
