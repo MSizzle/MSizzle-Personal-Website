@@ -53,48 +53,39 @@ export function TagFilter({ posts, readingTimes }: TagFilterProps) {
           No posts tagged &ldquo;{activeTag}&rdquo;.
         </p>
       ) : (
-        <ul className="mt-8 space-y-8">
+        <ul className="mt-6 space-y-5">
           {filtered.map((post) => (
             <li key={post.id}>
               <Link href={`/blog/${post.slug}`} className="group block">
                 <article>
-                  <div className="flex items-baseline justify-between gap-4">
-                    <h2 className="text-xl font-semibold tracking-tight group-hover:underline sm:text-2xl">
-                      {post.emoji && <span className="mr-2">{post.emoji}</span>}{post.title}
-                    </h2>
-                    <div className="flex shrink-0 items-baseline gap-2 text-sm text-neutral-500 dark:text-neutral-400">
-                      {post.date && (
-                        <time dateTime={post.date}>
-                          {new Date(post.date).toLocaleDateString('en-US', {
-                            year: 'numeric',
-                            month: 'short',
-                            day: 'numeric',
-                          })}
-                        </time>
+                  <div className="flex items-start gap-2">
+                    {post.emoji && (
+                      <span className="shrink-0 text-lg leading-snug">{post.emoji}</span>
+                    )}
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-baseline justify-between gap-3">
+                        <h2 className="text-base font-semibold tracking-tight group-hover:underline">
+                          {post.title}
+                        </h2>
+                        <div className="flex shrink-0 items-baseline gap-2 text-xs text-neutral-500 dark:text-neutral-400">
+                          {post.date && (
+                            <time dateTime={post.date}>
+                              {new Date(post.date).toLocaleDateString('en-US', {
+                                month: 'short',
+                                day: 'numeric',
+                              })}
+                            </time>
+                          )}
+                          <span>{readingTimes[post.slug] ?? 1}m</span>
+                        </div>
+                      </div>
+                      {post.description && (
+                        <p className="mt-1 text-sm text-neutral-600 dark:text-neutral-400 line-clamp-2">
+                          {post.description}
+                        </p>
                       )}
-                      {post.date && (
-                        <span className="text-neutral-300 dark:text-neutral-600">&middot;</span>
-                      )}
-                      <span>{readingTimes[post.slug] ?? 1} min read</span>
                     </div>
                   </div>
-                  {post.description && (
-                    <p className="mt-2 text-neutral-600 dark:text-neutral-400">
-                      {post.description}
-                    </p>
-                  )}
-                  {post.tags.length > 0 && (
-                    <div className="mt-3 flex flex-wrap gap-2">
-                      {post.tags.map((tag) => (
-                        <span
-                          key={tag}
-                          className="rounded-full bg-neutral-100 px-2.5 py-0.5 text-xs font-medium text-neutral-600 dark:bg-neutral-800 dark:text-neutral-400"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  )}
                 </article>
               </Link>
             </li>
