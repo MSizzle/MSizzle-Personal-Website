@@ -1,6 +1,5 @@
 'use client'
 
-import { useState, useEffect } from 'react'
 import Image from 'next/image'
 
 interface PhotoCarouselProps {
@@ -8,49 +7,30 @@ interface PhotoCarouselProps {
 }
 
 export function PhotoCarousel({ photos }: PhotoCarouselProps) {
-  const [index, setIndex] = useState(0)
-
-  useEffect(() => {
-    if (photos.length <= 1) return
-    const interval = setInterval(() => {
-      setIndex((i) => (i + 1) % photos.length)
-    }, 4000)
-    return () => clearInterval(interval)
-  }, [photos.length])
-
   if (photos.length === 0) return null
 
-  return (
-    <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--bg-secondary)]">
-      {photos.map((src, i) => (
-        <Image
-          key={src}
-          src={src}
-          alt={`Photo ${i + 1}`}
-          fill
-          className={`object-cover transition-opacity duration-700 ${
-            i === index ? 'opacity-100' : 'opacity-0'
-          }`}
-          sizes="(max-width: 768px) 100vw, 896px"
-          priority={i === 0}
-        />
-      ))}
+  // Duplicate the list so the scroll loops seamlessly
+  const doubled = [...photos, ...photos]
 
-      {/* Dots */}
-      {photos.length > 1 && (
-        <div className="absolute bottom-3 left-1/2 flex -translate-x-1/2 gap-1.5">
-          {photos.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => setIndex(i)}
-              className={`h-1.5 rounded-full transition-all ${
-                i === index ? 'w-6 bg-white' : 'w-1.5 bg-white/50'
-              }`}
-              aria-label={`Go to photo ${i + 1}`}
+  return (
+    <div className="relative overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--bg-secondary)] py-4">
+      <div className="flex w-max animate-scroll-left gap-4">
+        {doubled.map((src, i) => (
+          <div
+            key={`${src}-${i}`}
+            className="relative h-48 w-72 shrink-0 overflow-hidden rounded-lg sm:h-64 sm:w-96"
+          >
+            <Image
+              src={src}
+              alt={`Photo ${(i % photos.length) + 1}`}
+              fill
+              className="object-cover"
+              sizes="(max-width: 640px) 288px, 384px"
+              priority={i < 2}
             />
-          ))}
-        </div>
-      )}
+          </div>
+        ))}
+      </div>
     </div>
   )
 }
