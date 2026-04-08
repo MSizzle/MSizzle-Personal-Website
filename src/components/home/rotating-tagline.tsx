@@ -25,9 +25,9 @@ export function RotatingTagline() {
       {TAGLINES.map((tagline, i) => (
         <p
           key={i}
-          className={`absolute inset-0 text-lg text-white/80 transition-all duration-500 ${
+          className={`absolute inset-0 text-base opacity-50 transition-all duration-500 ${
             i === index
-              ? 'translate-y-0 opacity-100'
+              ? 'translate-y-0 opacity-50'
               : i < index
               ? '-translate-y-full opacity-0'
               : 'translate-y-full opacity-0'

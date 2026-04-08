@@ -3,7 +3,6 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Menu, X as CloseIcon } from 'lucide-react'
 import { cn } from '@/utils/cn'
 
 const NAV_LINKS = [
@@ -17,23 +16,24 @@ export function Navigation() {
 
   return (
     <>
-      <header className="fixed inset-x-0 top-0 z-50 h-16 border-b border-[var(--border)]/50 bg-[var(--bg)]/80 backdrop-blur-sm">
-        <nav className="mx-auto flex h-full max-w-5xl items-center justify-between px-6">
-          <Link href="/" className="text-base font-semibold tracking-tight">
+      <header className="fixed inset-x-0 top-0 z-50 bg-[var(--bg)]">
+        <nav className="mx-auto flex h-16 max-w-[66ch] items-center justify-between px-6 md:px-0">
+          <Link
+            href="/"
+            className="text-base font-normal uppercase tracking-widest"
+          >
             Monty Singer
           </Link>
 
           {/* Desktop links */}
-          <ul className="hidden items-center gap-6 md:flex">
+          <ul className="hidden items-center gap-8 md:flex">
             {NAV_LINKS.map((link) => (
               <li key={link.href}>
                 <Link
                   href={link.href}
                   className={cn(
-                    'text-sm transition-colors hover:text-foreground',
-                    pathname === link.href
-                      ? 'border-b-2 border-[var(--accent)] pb-0.5 text-foreground'
-                      : 'text-[var(--fg-muted)]'
+                    'text-sm uppercase tracking-wide transition-opacity hover:opacity-60',
+                    pathname === link.href ? 'opacity-100' : 'opacity-50'
                   )}
                 >
                   {link.label}
@@ -48,7 +48,17 @@ export function Navigation() {
             onClick={() => setOpen(!open)}
             aria-label={open ? 'Close navigation menu' : 'Open navigation menu'}
           >
-            {open ? <CloseIcon size={24} /> : <Menu size={24} />}
+            {open ? (
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <line x1="4" y1="4" x2="20" y2="20" />
+                <line x1="20" y1="4" x2="4" y2="20" />
+              </svg>
+            ) : (
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <line x1="4" y1="7" x2="20" y2="7" />
+                <line x1="4" y1="17" x2="20" y2="17" />
+              </svg>
+            )}
           </button>
         </nav>
       </header>
@@ -61,7 +71,7 @@ export function Navigation() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="flex min-h-[48px] items-center border-b border-[var(--border)] py-3 text-base"
+                className="flex min-h-[48px] items-center border-b border-[var(--border)] py-3 text-base uppercase tracking-wide"
                 onClick={() => setOpen(false)}
               >
                 {link.label}

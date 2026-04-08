@@ -3,9 +3,6 @@ import path from "path";
 import Link from "next/link";
 import { getPublishedPosts } from "@/lib/notion";
 import { getFeaturedProjects } from "@/lib/notion-projects";
-import { HorizontalTimeline } from "@/components/about/horizontal-timeline";
-import { TIMELINE_EVENTS } from "@/data/timeline";
-import { TIMELINE_VISUALS } from "@/data/timeline-visuals";
 import { PhotoCarousel } from "@/components/home/photo-carousel";
 import { RotatingTagline } from "@/components/home/rotating-tagline";
 
@@ -60,76 +57,124 @@ export default async function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
       />
 
-      {/* Hero — full-width editorial banner */}
-      <section className="relative overflow-hidden bg-[var(--accent)] px-6 pt-24 pb-16">
-        <div className="mx-auto max-w-4xl">
-          <p className="text-sm font-medium uppercase tracking-widest text-white/70">
-            Investor &middot; Builder &middot; Writer
-          </p>
-          <h1 className="mt-3 text-5xl font-bold tracking-tight text-white sm:text-7xl">
+      {/* Hero — editorial intro */}
+      <section className="px-6 pt-32 pb-20 md:px-24">
+        <div className="mx-auto max-w-[66ch]">
+          <h1 className="text-4xl font-normal uppercase tracking-tight sm:text-5xl">
             Monty Singer
           </h1>
-          <div className="mt-4 max-w-lg">
+          <p className="mt-6 text-lg leading-relaxed opacity-80">
+            Hello! I&rsquo;m Monty, an investor, builder, and writer based in
+            NYC. I spend my time at the intersection of technology and finance
+            &mdash; reading, writing, and tinkering.
+          </p>
+          <div className="mt-4">
             <RotatingTagline />
           </div>
-          <div className="mt-6 flex gap-4">
-            <Link
-              href="/projects"
-              className="inline-flex items-center rounded-lg bg-white px-5 py-2.5 text-sm font-semibold text-[var(--accent)] transition-opacity hover:opacity-90"
-            >
-              View My Work
-            </Link>
+          <div className="mt-8 flex items-center gap-6">
             <Link
               href="/about"
-              className="inline-flex items-center text-sm font-semibold text-white/90 transition-colors hover:text-white"
+              className="border-b border-current pb-0.5 text-base transition-opacity hover:opacity-60"
             >
-              About Me<span className="ml-1">&rarr;</span>
+              More About Me
             </Link>
+            <a
+              href="mailto:mds@georgetown.edu"
+              className="border-b border-current pb-0.5 text-base transition-opacity hover:opacity-60"
+            >
+              Get in Touch
+            </a>
           </div>
         </div>
       </section>
 
       {/* Photo carousel */}
       {carouselPhotos.length > 0 && (
-        <section className="px-6 pt-12">
-          <div className="mx-auto max-w-4xl">
+        <section className="px-6 pb-20 md:px-24">
+          <div className="mx-auto max-w-[66ch]">
             <PhotoCarousel photos={carouselPhotos} />
           </div>
         </section>
       )}
 
-      {/* Featured Post — large card */}
-      {latestPost && (
-        <section className="px-6 py-12">
-          <div className="mx-auto max-w-4xl">
-            <p className="text-xs font-semibold uppercase tracking-widest text-[var(--accent)]">
-              Latest
-            </p>
-            <Link href={`/blog/${latestPost.slug}`} className="group mt-3 block">
-              <div className="flex flex-col gap-6 sm:flex-row sm:items-start">
-                {latestPost.cover && (
-                  <div className="aspect-video w-full overflow-hidden rounded-lg sm:w-72 sm:shrink-0">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={`/api/notion-cover?pageId=${latestPost.id}`}
-                      alt={latestPost.title}
-                      className="h-full w-full object-cover transition-transform duration-200 group-hover:scale-105"
-                    />
-                  </div>
-                )}
-                <div>
-                  <h2 className="text-2xl font-bold tracking-tight group-hover:text-[var(--accent)] sm:text-3xl">
-                    {latestPost.emoji && <span className="mr-2">{latestPost.emoji}</span>}
-                    {latestPost.title}
-                  </h2>
-                  {latestPost.description && (
-                    <p className="mt-2 text-base leading-relaxed text-[var(--fg-muted)] line-clamp-3">
-                      {latestPost.description}
+      {/* Selected Works */}
+      {(projects.length > 0 || latestPost) && (
+        <section className="px-6 pb-20 md:px-24">
+          <div className="mx-auto max-w-[66ch]">
+            <h2 className="text-sm font-normal uppercase tracking-widest">
+              Selected Works
+            </h2>
+
+            <div className="mt-8 grid gap-10 sm:grid-cols-2 sm:gap-12">
+              {projects.map((project) => (
+                <Link
+                  key={project.id}
+                  href={`/projects/${project.slug}`}
+                  className="group block"
+                >
+                  {project.image && (
+                    <div className="aspect-[3/2] w-full overflow-hidden border border-[var(--border)]">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={`/api/notion-cover?pageId=${project.id}`}
+                        alt={project.title}
+                        className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+                      />
+                    </div>
+                  )}
+                  <h3 className="mt-3 text-sm uppercase tracking-wide">
+                    {project.title}
+                  </h3>
+                  {project.description && (
+                    <p className="mt-1 text-sm opacity-50">
+                      {project.description}
                     </p>
                   )}
-                  <div className="mt-3 flex items-center gap-3 text-sm text-[var(--fg-muted)]">
+                </Link>
+              ))}
+            </div>
+
+            {projects.length === 0 && (
+              <p className="mt-8 opacity-50">Projects coming soon.</p>
+            )}
+          </div>
+        </section>
+      )}
+
+      {/* Statement + Writing */}
+      <section className="px-6 pb-20 md:px-24">
+        <div className="mx-auto grid max-w-[66ch] gap-16 md:grid-cols-2 md:gap-12">
+          {/* Statement */}
+          <div>
+            <p className="text-2xl font-normal leading-snug sm:text-3xl">
+              Georgetown grad, lifelong learner, always shipping.
+            </p>
+            <p className="mt-4 text-base leading-relaxed opacity-50">
+              I believe in building things that matter, writing to think
+              clearly, and staying curious about everything.
+            </p>
+            <Link
+              href="/about"
+              className="mt-4 inline-block border-b border-current pb-0.5 text-base transition-opacity hover:opacity-60"
+            >
+              More About Me
+            </Link>
+          </div>
+
+          {/* Recent Writing */}
+          <div>
+            <h3 className="text-sm font-normal uppercase tracking-widest">
+              Writing
+            </h3>
+            <ul className="mt-6 space-y-5">
+              {latestPost && (
+                <li>
+                  <Link href={`/blog/${latestPost.slug}`} className="group block">
+                    <h4 className="text-base transition-opacity group-hover:opacity-60">
+                      {latestPost.title}
+                    </h4>
                     {latestPost.date && (
-                      <time dateTime={latestPost.date}>
+                      <time className="text-sm opacity-50" dateTime={latestPost.date}>
                         {new Date(latestPost.date).toLocaleDateString("en-US", {
                           month: "long",
                           day: "numeric",
@@ -137,128 +182,36 @@ export default async function Home() {
                         })}
                       </time>
                     )}
-                    <span className="text-sm font-semibold text-[var(--accent)]">
-                      Read &rarr;
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </Link>
-          </div>
-        </section>
-      )}
-
-      {/* Timeline — hidden for now, preserved for future use */}
-      {false && (
-        <section className="border-t border-[var(--border)] px-6 py-12">
-          <div className="mx-auto max-w-5xl">
-            <h2 className="text-xs font-semibold uppercase tracking-widest text-[var(--accent)]">
-              The Journey
-            </h2>
-            <p className="mt-1 text-sm text-[var(--fg-muted)]">
-              Click any icon to learn more about each experience.
-            </p>
-            <div className="mt-6">
-              <HorizontalTimeline events={TIMELINE_EVENTS} visuals={TIMELINE_VISUALS} />
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Recent Posts + Featured Projects side by side */}
-      <section className="border-t border-[var(--border)] px-6 py-12">
-        <div className="mx-auto grid max-w-4xl gap-12 md:grid-cols-2">
-          {/* Recent Writing */}
-          <div>
-            <div className="flex items-baseline justify-between">
-              <h3 className="text-xs font-semibold uppercase tracking-widest text-[var(--accent)]">
-                Writing
-              </h3>
-              <Link
-                href="/blog"
-                className="text-xs font-semibold text-[var(--fg-muted)] hover:text-foreground"
-              >
-                All posts &rarr;
-              </Link>
-            </div>
-            <ul className="mt-4 space-y-4">
+                  </Link>
+                </li>
+              )}
               {recentPosts.map((post) => (
                 <li key={post.id}>
                   <Link href={`/blog/${post.slug}`} className="group block">
-                    <div className="flex items-start gap-2">
-                      {post.emoji && (
-                        <span className="shrink-0 text-base">{post.emoji}</span>
-                      )}
-                      <div className="min-w-0">
-                        <h4 className="text-sm font-semibold group-hover:text-[var(--accent)]">
-                          {post.title}
-                        </h4>
-                        {post.date && (
-                          <time className="text-xs text-[var(--fg-muted)]" dateTime={post.date}>
-                            {new Date(post.date).toLocaleDateString("en-US", {
-                              month: "short",
-                              day: "numeric",
-                            })}
-                          </time>
-                        )}
-                      </div>
-                    </div>
-                  </Link>
-                </li>
-              ))}
-              {recentPosts.length === 0 && (
-                <li className="text-sm text-[var(--fg-muted)]">More posts coming soon.</li>
-              )}
-            </ul>
-          </div>
-
-          {/* Featured Projects */}
-          <div>
-            <div className="flex items-baseline justify-between">
-              <h3 className="text-xs font-semibold uppercase tracking-widest text-[var(--accent)]">
-                Projects
-              </h3>
-              <Link
-                href="/projects"
-                className="text-xs font-semibold text-[var(--fg-muted)] hover:text-foreground"
-              >
-                All projects &rarr;
-              </Link>
-            </div>
-            <ul className="mt-4 space-y-4">
-              {projects.map((project) => (
-                <li key={project.id}>
-                  <Link href={`/projects/${project.slug}`} className="group flex items-start gap-3">
-                    {project.image ? (
-                      <div className="h-14 w-14 shrink-0 overflow-hidden rounded-lg">
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img
-                          src={`/api/notion-cover?pageId=${project.id}`}
-                          alt={project.title}
-                          className="h-full w-full object-cover"
-                        />
-                      </div>
-                    ) : (
-                      <div className="h-14 w-14 shrink-0 rounded-lg bg-[var(--bg-secondary)]" />
+                    <h4 className="text-base transition-opacity group-hover:opacity-60">
+                      {post.title}
+                    </h4>
+                    {post.date && (
+                      <time className="text-sm opacity-50" dateTime={post.date}>
+                        {new Date(post.date).toLocaleDateString("en-US", {
+                          month: "short",
+                          day: "numeric",
+                        })}
+                      </time>
                     )}
-                    <div className="min-w-0">
-                      <h4 className="text-sm font-semibold group-hover:text-[var(--accent)]">
-                        {project.emoji && <span className="mr-1">{project.emoji}</span>}
-                        {project.title}
-                      </h4>
-                      {project.description && (
-                        <p className="mt-0.5 text-xs text-[var(--fg-muted)] line-clamp-2">
-                          {project.description}
-                        </p>
-                      )}
-                    </div>
                   </Link>
                 </li>
               ))}
-              {projects.length === 0 && (
-                <li className="text-sm text-[var(--fg-muted)]">Projects coming soon.</li>
+              {posts.length === 0 && (
+                <li className="opacity-50">More posts coming soon.</li>
               )}
             </ul>
+            <Link
+              href="/blog"
+              className="mt-6 inline-block border-b border-current pb-0.5 text-sm transition-opacity hover:opacity-60"
+            >
+              All posts
+            </Link>
           </div>
         </div>
       </section>
