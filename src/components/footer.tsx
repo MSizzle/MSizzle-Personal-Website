@@ -2,9 +2,8 @@ import Link from 'next/link'
 
 const LINKS = [
   { href: '/about', label: 'About' },
-  { href: '/blog', label: 'Writing' },
-  { href: '/projects', label: 'Projects' },
-  { href: 'mailto:mds@georgetown.edu', label: 'Email' },
+  { href: '/blog', label: 'Writings' },
+  { href: '/projects', label: 'Works' },
 ]
 
 const SOCIALS = [
@@ -15,37 +14,38 @@ const SOCIALS = [
 
 export function Footer() {
   return (
-    <footer className="border-t border-[var(--border)] px-6 md:px-24">
+    <footer id="contact" className="border-t border-[var(--border)] px-6 md:px-24">
       <div className="mx-auto max-w-[66ch] py-16">
+        {/* Contact section */}
+        <div className="mb-16">
+          <h4 className="text-sm uppercase tracking-widest">Contact</h4>
+          <p className="mt-4 text-base leading-relaxed opacity-80">
+            Want to chat about investing, building, or anything else?
+            I&rsquo;d love to hear from you.
+          </p>
+          <a
+            href="mailto:mds@georgetown.edu"
+            className="mt-3 inline-block border-b border-current pb-0.5 text-base transition-opacity hover:opacity-60"
+          >
+            mds@georgetown.edu
+          </a>
+        </div>
+
         <div className="grid gap-12 sm:grid-cols-2">
           {/* Links */}
           <div>
             <h4 className="text-sm uppercase tracking-widest">Links</h4>
             <ul className="mt-4 space-y-2">
-              {LINKS.map((link) => {
-                const isExternal =
-                  link.href.startsWith('http') || link.href.startsWith('mailto')
-                const Component = isExternal ? 'a' : Link
-                const props = isExternal
-                  ? { target: '_blank', rel: 'noopener noreferrer' }
-                  : {}
-                return (
-                  <li key={link.label}>
-                    <Component
-                      href={link.href}
-                      {...props}
-                      data-umami-event={
-                        isExternal
-                          ? `social-click-${link.label.toLowerCase().replace(/[\s/]+/g, '-')}`
-                          : undefined
-                      }
-                      className="text-base opacity-50 transition-opacity hover:opacity-100"
-                    >
-                      {link.label}
-                    </Component>
-                  </li>
-                )
-              })}
+              {LINKS.map((link) => (
+                <li key={link.label}>
+                  <Link
+                    href={link.href}
+                    className="text-base opacity-50 transition-opacity hover:opacity-100"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 

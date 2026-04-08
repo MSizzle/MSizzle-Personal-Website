@@ -7,7 +7,7 @@ import { cn } from '@/utils/cn'
 
 const NAV_LINKS = [
   { href: '/about', label: 'About' },
-  { href: 'mailto:mds@georgetown.edu', label: 'Contact' },
+  { href: '#contact', label: 'Contact' },
 ]
 
 export function Navigation() {
