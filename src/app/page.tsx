@@ -57,7 +57,7 @@ export default async function Home() {
       />
 
       {/* Hero — editorial intro */}
-      <section className="px-6 pt-32 pb-32 md:px-24 md:pb-40">
+      <section className="px-6 pt-32 pb-20 md:px-24">
         <div className="mx-auto max-w-[66ch]">
           <h1 className="text-4xl font-normal uppercase tracking-tight sm:text-5xl">
             Monty Singer
@@ -89,80 +89,79 @@ export default async function Home() {
 
       {/* Photo carousel */}
       {carouselPhotos.length > 0 && (
-        <section className="px-6 pb-32 md:px-24 md:pb-40">
+        <section className="px-6 pb-20 md:px-24">
           <div className="mx-auto max-w-[66ch]">
             <PhotoCarousel photos={carouselPhotos} />
           </div>
         </section>
       )}
 
-      {/* Writings + Works */}
-      <section className="px-6 pb-32 md:px-24 md:pb-40">
-        <div className="mx-auto grid max-w-[66ch] gap-16 md:grid-cols-2 md:gap-16">
-          {/* Writings */}
-          <div>
-            <Link
-              href="/blog"
-              className="text-base font-normal uppercase tracking-widest transition-opacity hover:opacity-60"
-            >
-              Writings &#8600;
-            </Link>
-            <ul className="mt-4 space-y-2">
-              {posts.map((post) => (
-                <li key={post.id}>
-                  <Link
-                    href={`/blog/${post.slug}`}
-                    className="group block underline transition-opacity hover:opacity-60"
-                  >
-                    {post.emoji && (
-                      <span className="mr-2">{post.emoji}</span>
-                    )}
-                    {post.title}
-                  </Link>
-                </li>
-              ))}
-              {posts.length === 0 && (
-                <li className="opacity-50">More posts coming soon.</li>
-              )}
-            </ul>
-          </div>
+      {/* Writings */}
+      <section className="px-6 pb-20 md:px-24">
+        <div className="mx-auto max-w-[66ch]">
+          <Link
+            href="/blog"
+            className="text-base font-normal uppercase tracking-widest transition-opacity hover:opacity-60"
+          >
+            Writings &#8600;
+          </Link>
+          <ul className="mt-4 space-y-2">
+            {posts.map((post) => (
+              <li key={post.id}>
+                <Link
+                  href={`/blog/${post.slug}`}
+                  className="group block underline transition-opacity hover:opacity-60"
+                >
+                  {post.emoji && (
+                    <span className="mr-2">{post.emoji}</span>
+                  )}
+                  {post.title}
+                </Link>
+              </li>
+            ))}
+            {posts.length === 0 && (
+              <li className="opacity-50">More posts coming soon.</li>
+            )}
+          </ul>
+        </div>
+      </section>
 
-          {/* Works */}
-          <div>
-            <Link
-              href="/projects"
-              className="text-base font-normal uppercase tracking-widest transition-opacity hover:opacity-60"
-            >
-              Works &#8600;
-            </Link>
-            <ul className="mt-4 space-y-2">
-              {projects.map((project) => (
-                <li key={project.id}>
-                  <Link
-                    href={`/projects/${project.slug}`}
-                    className="group block"
-                  >
-                    <span className="underline transition-opacity group-hover:opacity-60">
-                      {project.title}
+      {/* Works */}
+      <section className="px-6 pb-20 md:px-24">
+        <div className="mx-auto max-w-[66ch]">
+          <Link
+            href="/projects"
+            className="text-base font-normal uppercase tracking-widest transition-opacity hover:opacity-60"
+          >
+            Works &#8600;
+          </Link>
+          <ul className="mt-4 space-y-2">
+            {projects.map((project) => (
+              <li key={project.id}>
+                <Link
+                  href={`/projects/${project.slug}`}
+                  className="group block"
+                >
+                  <span className="underline transition-opacity group-hover:opacity-60">
+                    {project.title}
+                  </span>
+                  {project.description && (
+                    <span className="ml-2 text-base opacity-50">
+                      &bull; {project.description}
                     </span>
-                    {project.description && (
-                      <span className="ml-2 text-base opacity-50">
-                        &bull; {project.description}
-                      </span>
-                    )}
-                  </Link>
-                </li>
-              ))}
-              {projects.length === 0 && (
-                <li className="opacity-50">Projects coming soon.</li>
-              )}
-            </ul>
-          </div>
+                  )}
+                </Link>
+              </li>
+            ))}
+            {projects.length === 0 && (
+              <li className="opacity-50">Projects coming soon.</li>
+            )}
+          </ul>
         </div>
       </section>
 
       {/* Events */}
-      <section className="px-6 pb-32 md:px-24 md:pb-40">
+      <section className="px-6 pb-20 md:px-24">
         <div className="mx-auto max-w-[66ch]">
           <Link
             href="/events"
