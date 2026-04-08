@@ -80,7 +80,7 @@ export default async function Home() {
               href="#contact"
               className="border-b border-current pb-0.5 text-base transition-opacity hover:opacity-60"
             >
-              Contact Me
+              Get in Touch
             </a>
           </div>
         </div>
