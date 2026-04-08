@@ -3,6 +3,7 @@ import path from "path";
 import Link from "next/link";
 import { getPublishedPosts } from "@/lib/notion";
 import { getFeaturedProjects } from "@/lib/notion-projects";
+import { EVENTS } from "@/data/events";
 import { PhotoCarousel } from "@/components/home/photo-carousel";
 import { RotatingTagline } from "@/components/home/rotating-tagline";
 
@@ -72,13 +73,13 @@ export default async function Home() {
           <div className="mt-8 flex items-center gap-6">
             <Link
               href="/about"
-              className="border-b border-current pb-0.5 text-base transition-opacity hover:opacity-60"
+              className="underline transition-opacity hover:opacity-60"
             >
               More About Me
             </Link>
             <a
               href="#contact"
-              className="border-b border-current pb-0.5 text-base transition-opacity hover:opacity-60"
+              className="underline transition-opacity hover:opacity-60"
             >
               Get in Touch
             </a>
@@ -95,36 +96,28 @@ export default async function Home() {
         </section>
       )}
 
-      {/* Writings + Works side by side */}
+      {/* Writings + Works */}
       <section className="px-6 pb-20 md:px-24">
-        <div className="mx-auto grid max-w-[66ch] gap-16 md:grid-cols-2 md:gap-12">
+        <div className="mx-auto grid max-w-[66ch] gap-16 md:grid-cols-2 md:gap-16">
           {/* Writings */}
           <div>
             <Link
               href="/blog"
-              className="text-sm font-normal uppercase tracking-widest transition-opacity hover:opacity-60"
+              className="text-base font-normal uppercase tracking-widest transition-opacity hover:opacity-60"
             >
-              Writings
+              Writings &#8600;
             </Link>
-            <ul className="mt-6 space-y-5">
+            <ul className="mt-4 space-y-2">
               {posts.map((post) => (
                 <li key={post.id}>
-                  <Link href={`/blog/${post.slug}`} className="group block">
-                    <h4 className="text-base transition-opacity group-hover:opacity-60">
-                      {post.emoji && (
-                        <span className="mr-2">{post.emoji}</span>
-                      )}
-                      {post.title}
-                    </h4>
-                    {post.date && (
-                      <time className="text-sm opacity-50" dateTime={post.date}>
-                        {new Date(post.date).toLocaleDateString("en-US", {
-                          month: "short",
-                          day: "numeric",
-                          year: "numeric",
-                        })}
-                      </time>
+                  <Link
+                    href={`/blog/${post.slug}`}
+                    className="group block underline transition-opacity hover:opacity-60"
+                  >
+                    {post.emoji && (
+                      <span className="mr-2">{post.emoji}</span>
                     )}
+                    {post.title}
                   </Link>
                 </li>
               ))}
@@ -138,24 +131,24 @@ export default async function Home() {
           <div>
             <Link
               href="/projects"
-              className="text-sm font-normal uppercase tracking-widest transition-opacity hover:opacity-60"
+              className="text-base font-normal uppercase tracking-widest transition-opacity hover:opacity-60"
             >
-              Works
+              Works &#8600;
             </Link>
-            <ul className="mt-6 space-y-5">
+            <ul className="mt-4 space-y-2">
               {projects.map((project) => (
                 <li key={project.id}>
                   <Link
                     href={`/projects/${project.slug}`}
                     className="group block"
                   >
-                    <h4 className="text-base transition-opacity group-hover:opacity-60">
+                    <span className="underline transition-opacity group-hover:opacity-60">
                       {project.title}
-                    </h4>
+                    </span>
                     {project.description && (
-                      <p className="text-sm opacity-50">
-                        {project.description}
-                      </p>
+                      <span className="ml-2 text-base opacity-50">
+                        &bull; {project.description}
+                      </span>
                     )}
                   </Link>
                 </li>
@@ -165,6 +158,48 @@ export default async function Home() {
               )}
             </ul>
           </div>
+        </div>
+      </section>
+
+      {/* Events */}
+      <section className="px-6 pb-32 md:px-24">
+        <div className="mx-auto max-w-[66ch]">
+          <Link
+            href="/events"
+            className="text-base font-normal uppercase tracking-widest transition-opacity hover:opacity-60"
+          >
+            Events &#8600;
+          </Link>
+          {EVENTS.length > 0 ? (
+            <ul className="mt-4 space-y-2">
+              {EVENTS.slice(0, 5).map((event) => (
+                <li key={event.id}>
+                  {event.url ? (
+                    <a
+                      href={event.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="underline transition-opacity hover:opacity-60"
+                    >
+                      {event.title}
+                    </a>
+                  ) : (
+                    <span>{event.title}</span>
+                  )}
+                  <span className="ml-2 text-base opacity-50">
+                    &bull;{" "}
+                    {new Date(event.date).toLocaleDateString("en-US", {
+                      month: "short",
+                      day: "numeric",
+                    })}
+                    {event.location && `, ${event.location}`}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="mt-4 opacity-50">Events coming soon.</p>
+          )}
         </div>
       </section>
     </>
