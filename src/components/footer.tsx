@@ -24,10 +24,10 @@ export function Footer() {
             I&rsquo;d love to hear from you.
           </p>
           <a
-            href="mailto:mds@georgetown.edu"
+            href="mailto:mds345@georgetown.edu"
             className="mt-3 inline-block border-b border-current pb-0.5 text-base transition-opacity hover:opacity-60"
           >
-            mds@georgetown.edu
+            mds345@georgetown.edu
           </a>
         </div>
 
