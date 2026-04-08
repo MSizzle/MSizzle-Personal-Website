@@ -110,12 +110,12 @@ export default async function Home() {
               <li key={post.id}>
                 <Link
                   href={`/blog/${post.slug}`}
-                  className="group block underline transition-opacity hover:opacity-60"
+                  className="group block transition-opacity hover:opacity-60"
                 >
                   {post.emoji && (
-                    <span className="mr-2">{post.emoji}</span>
+                    <span className="mr-2 no-underline">{post.emoji}</span>
                   )}
-                  {post.title}
+                  <span className="underline">{post.title}</span>
                 </Link>
               </li>
             ))}
