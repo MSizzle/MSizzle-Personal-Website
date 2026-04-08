@@ -25,17 +25,17 @@ const personJsonLd = {
 
 export default function AboutPage() {
   return (
-    <div className="mx-auto max-w-2xl px-6 pb-16 pt-24">
+    <div className="mx-auto max-w-[66ch] px-6 pb-16 pt-24 md:px-0">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
       />
 
-      <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
-        About Me
+      <h1 className="text-sm font-normal uppercase tracking-widest">
+        About
       </h1>
 
-      <div className="prose prose-neutral dark:prose-invert mt-6 max-w-none">
+      <div className="prose mt-8 max-w-none">
         <p>
           I&apos;m Monty Singer — an investor, builder, and perpetual student based in New York City.
           I spend my time at the intersection of technology and finance, always looking for what&apos;s

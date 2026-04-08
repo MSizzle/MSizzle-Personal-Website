@@ -45,6 +45,46 @@ body {
   overflow-x: hidden;
 }
 
+/* Global link styling — underlined with opacity hover */
+a {
+  text-underline-offset: 3px;
+}
+
+/* Prose overrides for editorial aesthetic */
+.prose {
+  --tw-prose-body: var(--fg);
+  --tw-prose-headings: var(--fg);
+  --tw-prose-links: var(--fg);
+  --tw-prose-bold: var(--fg);
+  --tw-prose-counters: var(--fg);
+  --tw-prose-bullets: var(--fg);
+  --tw-prose-quotes: var(--fg);
+  --tw-prose-code: var(--fg);
+  --tw-prose-hr: var(--fg);
+  --tw-prose-th-borders: var(--fg);
+  --tw-prose-td-borders: var(--fg);
+}
+
+.prose h2 {
+  font-weight: 400;
+  text-transform: uppercase;
+  font-size: 1rem;
+  letter-spacing: 0.05em;
+  margin-top: 3rem;
+}
+
+.prose h3 {
+  font-weight: 400;
+  font-size: 1rem;
+}
+
+.prose code {
+  background: rgba(45, 23, 36, 0.1);
+  padding: 0.125rem 0.25rem;
+  border-radius: 0.125rem;
+  font-weight: 400;
+}
+
 @keyframes scroll-left {
   from {
     transform: translateX(0);

@@ -47,12 +47,12 @@ export default async function BlogPostPage({ params }: PageProps) {
   const readingTime = calculateReadingTime(blocks)
 
   return (
-    <article className="mx-auto max-w-2xl px-6 pb-16 pt-24">
+    <article className="mx-auto max-w-[66ch] px-6 pb-16 pt-24 md:px-0">
       <header className="mb-12">
-        <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
+        <h1 className="text-2xl font-normal tracking-tight sm:text-3xl">
           {post.emoji && <span className="mr-3">{post.emoji}</span>}{post.title}
         </h1>
-        <div className="mt-4 flex items-center gap-4 text-sm text-neutral-500 dark:text-neutral-400">
+        <div className="mt-4 flex items-center gap-4 text-sm opacity-50">
           {post.date && (
             <time dateTime={post.date}>
               {new Date(post.date).toLocaleDateString('en-US', {
@@ -62,19 +62,14 @@ export default async function BlogPostPage({ params }: PageProps) {
               })}
             </time>
           )}
-          {post.date && (
-            <span className="text-neutral-300 dark:text-neutral-600">&middot;</span>
-          )}
+          {post.date && <span>&middot;</span>}
           <span>{readingTime} min read</span>
           {post.tags.length > 0 && (
             <>
-              <span className="text-neutral-300 dark:text-neutral-600">&middot;</span>
+              <span>&middot;</span>
               <div className="flex gap-2">
                 {post.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="rounded-full bg-neutral-100 px-2.5 py-0.5 text-xs font-medium text-neutral-600 dark:bg-neutral-800 dark:text-neutral-400"
-                  >
+                  <span key={tag} className="text-sm">
                     {tag}
                   </span>
                 ))}
@@ -83,13 +78,13 @@ export default async function BlogPostPage({ params }: PageProps) {
           )}
         </div>
         {post.description && (
-          <p className="mt-4 text-lg text-neutral-600 dark:text-neutral-400">
+          <p className="mt-4 text-lg opacity-80">
             {post.description}
           </p>
         )}
       </header>
 
-      <div className="prose prose-neutral dark:prose-invert max-w-none">
+      <div className="prose max-w-none">
         <NotionRenderer blocks={blocks as (BlockObjectResponse & { children?: BlockObjectResponse[] })[]} />
       </div>
 

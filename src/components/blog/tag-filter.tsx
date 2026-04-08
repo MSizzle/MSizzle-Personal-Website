@@ -19,14 +19,12 @@ export function TagFilter({ posts, readingTimes }: TagFilterProps) {
   return (
     <div>
       {allTags.length > 0 && (
-        <div className="mt-8 flex gap-2 overflow-x-auto pb-2">
+        <div className="mt-8 flex gap-3 overflow-x-auto pb-2">
           <button
             onClick={() => setActiveTag(null)}
             className={cn(
-              'rounded-full px-3 py-1 text-sm transition-colors duration-150 whitespace-nowrap',
-              !activeTag
-                ? 'bg-[var(--accent)] text-white'
-                : 'bg-neutral-100 dark:bg-neutral-800 text-[var(--fg-muted)]'
+              'text-sm uppercase tracking-wide whitespace-nowrap transition-opacity',
+              !activeTag ? 'opacity-100' : 'opacity-40 hover:opacity-70'
             )}
           >
             All
@@ -36,10 +34,8 @@ export function TagFilter({ posts, readingTimes }: TagFilterProps) {
               key={tag}
               onClick={() => setActiveTag(tag === activeTag ? null : tag)}
               className={cn(
-                'rounded-full px-3 py-1 text-sm whitespace-nowrap transition-colors duration-150',
-                tag === activeTag
-                  ? 'bg-[var(--accent)] text-white'
-                  : 'bg-neutral-100 dark:bg-neutral-800 text-[var(--fg-muted)]'
+                'text-sm uppercase tracking-wide whitespace-nowrap transition-opacity',
+                tag === activeTag ? 'opacity-100' : 'opacity-40 hover:opacity-70'
               )}
             >
               {tag}
@@ -49,7 +45,7 @@ export function TagFilter({ posts, readingTimes }: TagFilterProps) {
       )}
 
       {filtered.length === 0 ? (
-        <p className="mt-12 text-[var(--fg-muted)]">
+        <p className="mt-8 opacity-50">
           No posts tagged &ldquo;{activeTag}&rdquo;.
         </p>
       ) : (
@@ -64,10 +60,10 @@ export function TagFilter({ posts, readingTimes }: TagFilterProps) {
                     )}
                     <div className="min-w-0 flex-1">
                       <div className="flex items-baseline justify-between gap-3">
-                        <h2 className="text-base font-semibold tracking-tight group-hover:underline">
+                        <h2 className="text-base font-normal underline transition-opacity group-hover:opacity-60">
                           {post.title}
                         </h2>
-                        <div className="flex shrink-0 items-baseline gap-2 text-xs text-neutral-500 dark:text-neutral-400">
+                        <div className="flex shrink-0 items-baseline gap-2 text-sm opacity-50">
                           {post.date && (
                             <time dateTime={post.date}>
                               {new Date(post.date).toLocaleDateString('en-US', {
@@ -80,7 +76,7 @@ export function TagFilter({ posts, readingTimes }: TagFilterProps) {
                         </div>
                       </div>
                       {post.description && (
-                        <p className="mt-1 text-sm text-neutral-600 dark:text-neutral-400 line-clamp-2">
+                        <p className="mt-1 text-sm opacity-50 line-clamp-2">
                           {post.description}
                         </p>
                       )}

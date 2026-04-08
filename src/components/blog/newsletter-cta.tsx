@@ -14,20 +14,22 @@ export function NewsletterCta() {
   }
 
   return (
-    <section className="mt-16 rounded-xl border border-[var(--border)] bg-[var(--bg-secondary)] p-8">
-      <h3 className="text-xl font-semibold">Stay in the Loop</h3>
-      <p className="mt-2 text-sm text-[var(--fg-muted)]">
+    <section className="mt-16 border-t border-[var(--border)] pt-8">
+      <h3 className="text-sm font-normal uppercase tracking-widest">
+        Stay in the Loop
+      </h3>
+      <p className="mt-2 opacity-50">
         Get new posts delivered to your inbox. No spam, ever.
       </p>
 
       {status === 'success' && (
-        <p className="mt-4 text-sm text-[var(--accent)]">
+        <p className="mt-4 text-sm">
           You&apos;re in. Talk soon.
         </p>
       )}
 
       {status === 'error' && (
-        <p className="mt-4 text-sm text-red-500">
+        <p className="mt-4 text-sm">
           Something went wrong. Try again or email me directly.
         </p>
       )}
@@ -40,13 +42,13 @@ export function NewsletterCta() {
             onChange={(e) => setEmail(e.target.value)}
             placeholder="you@example.com"
             required
-            className="flex-1 rounded-lg border border-[var(--border)] bg-[var(--bg)] px-4 py-2 text-sm outline-none focus:border-[var(--accent)] transition-colors"
+            className="flex-1 border-b border-[var(--border)] bg-transparent px-0 py-2 text-base outline-none transition-opacity placeholder:opacity-30 focus:border-[var(--fg)]"
           />
           <button
             type="submit"
-            className="rounded-lg bg-[var(--accent)] px-4 py-2 text-sm font-semibold text-white transition-opacity hover:opacity-90"
+            className="border-b border-[var(--border)] px-2 py-2 text-base transition-opacity hover:opacity-60"
           >
-            Get Posts by Email
+            Subscribe
           </button>
         </form>
       )}

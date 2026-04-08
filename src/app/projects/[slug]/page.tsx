@@ -42,22 +42,22 @@ export default async function ProjectPage({ params }: PageProps) {
   const blocks = await getBlocks(project.id);
 
   return (
-    <article className="mx-auto max-w-2xl px-6 pb-16 pt-24">
+    <article className="mx-auto max-w-[66ch] px-6 pb-16 pt-24 md:px-0">
       <header className="mb-10">
-        <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
+        <h1 className="text-2xl font-normal tracking-tight sm:text-3xl">
           {project.emoji && <span className="mr-2">{project.emoji}</span>}
           {project.title}
         </h1>
 
         {project.description && (
-          <p className="mt-3 text-base text-[var(--fg-muted)]">
+          <p className="mt-3 opacity-80">
             {project.description}
           </p>
         )}
 
         {/* Thumbnail */}
         {project.image && (
-          <div className="mt-6 aspect-video w-full overflow-hidden rounded-lg border border-[var(--border)]">
+          <div className="mt-6 aspect-video w-full overflow-hidden border border-[var(--border)]">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={`/api/notion-cover?pageId=${project.id}`}
@@ -70,12 +70,9 @@ export default async function ProjectPage({ params }: PageProps) {
         {(project.tags.length > 0 || project.externalUrl) && (
           <div className="mt-5 flex flex-wrap items-center gap-4">
             {project.tags.length > 0 && (
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-3">
                 {project.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="rounded-full bg-neutral-100 px-2.5 py-0.5 text-xs font-medium text-neutral-600 dark:bg-neutral-800 dark:text-neutral-400"
-                  >
+                  <span key={tag} className="text-sm opacity-50">
                     {tag}
                   </span>
                 ))}
@@ -89,7 +86,7 @@ export default async function ProjectPage({ params }: PageProps) {
                 rel="noopener noreferrer"
                 data-umami-event="project-external-link"
                 data-umami-event-title={project.title}
-                className="inline-flex items-center gap-1 rounded-lg bg-[var(--accent)] px-4 py-2 text-sm font-semibold text-white transition-opacity hover:opacity-90"
+                className="underline transition-opacity hover:opacity-60"
               >
                 View on GitHub &rarr;
               </a>
@@ -98,7 +95,7 @@ export default async function ProjectPage({ params }: PageProps) {
         )}
       </header>
 
-      <div className="prose prose-neutral dark:prose-invert mt-12 max-w-none">
+      <div className="prose mt-12 max-w-none">
         <NotionRenderer
           blocks={
             blocks as (BlockObjectResponse & {

@@ -57,7 +57,7 @@ export default async function Home() {
       />
 
       {/* Hero — editorial intro */}
-      <section className="px-6 pt-32 pb-20 md:px-24">
+      <section className="px-6 pt-32 pb-32 md:px-24 md:pb-40">
         <div className="mx-auto max-w-[66ch]">
           <h1 className="text-4xl font-normal uppercase tracking-tight sm:text-5xl">
             Monty Singer
@@ -89,7 +89,7 @@ export default async function Home() {
 
       {/* Photo carousel */}
       {carouselPhotos.length > 0 && (
-        <section className="px-6 pb-20 md:px-24">
+        <section className="px-6 pb-32 md:px-24 md:pb-40">
           <div className="mx-auto max-w-[66ch]">
             <PhotoCarousel photos={carouselPhotos} />
           </div>
@@ -97,7 +97,7 @@ export default async function Home() {
       )}
 
       {/* Writings + Works */}
-      <section className="px-6 pb-20 md:px-24">
+      <section className="px-6 pb-32 md:px-24 md:pb-40">
         <div className="mx-auto grid max-w-[66ch] gap-16 md:grid-cols-2 md:gap-16">
           {/* Writings */}
           <div>
@@ -162,7 +162,7 @@ export default async function Home() {
       </section>
 
       {/* Events */}
-      <section className="px-6 pb-32 md:px-24">
+      <section className="px-6 pb-32 md:px-24 md:pb-40">
         <div className="mx-auto max-w-[66ch]">
           <Link
             href="/events"
