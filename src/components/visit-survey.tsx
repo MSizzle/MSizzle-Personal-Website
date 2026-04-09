@@ -4,10 +4,12 @@ import { useState, useEffect } from 'react'
 import Image from 'next/image'
 
 const OPTIONS = [
-  { label: 'Blog', value: 'blog' },
-  { label: 'Business', value: 'business' },
-  { label: 'Personal', value: 'personal' },
-  { label: 'Monty', value: 'monty' },
+  { label: 'X', value: 'x' },
+  { label: 'LinkedIn', value: 'linkedin' },
+  { label: 'Monty Monthly', value: 'monty-monthly' },
+  { label: 'Prometheus', value: 'prometheus' },
+  { label: 'Actually In Person / Monty', value: 'in-person' },
+  { label: 'Other', value: 'other' },
 ]
 
 export function VisitSurvey() {
