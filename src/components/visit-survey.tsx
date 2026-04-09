@@ -28,7 +28,7 @@ export function VisitSurvey() {
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
-      <div className="w-full max-w-md rounded-xl border border-[var(--border)] bg-[var(--bg)] p-6 shadow-lg">
+      <div className="w-full max-w-lg overflow-visible rounded-xl border border-[var(--border)] bg-[var(--bg)] p-6 shadow-lg">
         <div className="flex items-center gap-4">
           {/* Survey content (left) */}
           <div className="flex-1 min-w-0">
