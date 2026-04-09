@@ -3,7 +3,7 @@ import path from "path";
 import Link from "next/link";
 import { getPublishedPosts } from "@/lib/notion";
 import { getFeaturedProjects } from "@/lib/notion-projects";
-import { EVENTS } from "@/data/events";
+import { getUpcomingEvents, getPastEvents } from "@/lib/notion-events";
 import { PhotoCarousel } from "@/components/home/photo-carousel";
 import { RotatingTagline } from "@/components/home/rotating-tagline";
 
@@ -39,12 +39,20 @@ const personJsonLd = {
 export default async function Home() {
   let posts: Awaited<ReturnType<typeof getPublishedPosts>> = [];
   let projects: Awaited<ReturnType<typeof getFeaturedProjects>> = [];
+  let upcomingEvents: Awaited<ReturnType<typeof getUpcomingEvents>> = [];
+  let pastEvents: Awaited<ReturnType<typeof getPastEvents>> = [];
 
   try {
     posts = await getPublishedPosts();
   } catch {}
   try {
     projects = await getFeaturedProjects();
+  } catch {}
+  try {
+    upcomingEvents = await getUpcomingEvents();
+  } catch {}
+  try {
+    pastEvents = await getPastEvents();
   } catch {}
 
   const carouselPhotos = getCarouselPhotos();
@@ -71,6 +79,14 @@ export default async function Home() {
             <RotatingTagline />
           </div>
           <div className="mt-8 flex items-center gap-6">
+            <a
+              href="https://prometheus.today"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline transition-opacity hover:opacity-60"
+            >
+              Prometheus
+            </a>
             <Link
               href="/about"
               className="underline transition-opacity hover:opacity-60"
@@ -140,13 +156,14 @@ export default async function Home() {
               <li key={project.id}>
                 <Link
                   href={`/projects/${project.slug}`}
-                  className="group block"
+                  className="group flex items-baseline transition-opacity hover:opacity-60"
                 >
-                  <span className="underline transition-opacity group-hover:opacity-60">
-                    {project.title}
-                  </span>
+                  {project.emoji && (
+                    <span className="mr-2 shrink-0 no-underline">{project.emoji}</span>
+                  )}
+                  <span className="underline">{project.title}</span>
                   {project.description && (
-                    <span className="ml-2 text-base opacity-50">
+                    <span className="ml-2 text-base opacity-50 no-underline">
                       &bull; {project.description}
                     </span>
                   )}
@@ -169,34 +186,115 @@ export default async function Home() {
           >
             Events &#8600;
           </Link>
-          {EVENTS.length > 0 ? (
-            <ul className="mt-4 space-y-2">
-              {EVENTS.slice(0, 5).map((event) => (
-                <li key={event.id}>
-                  {event.url ? (
-                    <a
-                      href={event.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="underline transition-opacity hover:opacity-60"
-                    >
-                      {event.title}
-                    </a>
-                  ) : (
-                    <span>{event.title}</span>
-                  )}
-                  <span className="ml-2 text-base opacity-50">
-                    &bull;{" "}
-                    {new Date(event.date).toLocaleDateString("en-US", {
-                      month: "short",
-                      day: "numeric",
-                    })}
-                    {event.location && `, ${event.location}`}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          ) : (
+          {pastEvents.length > 0 && (
+            <>
+              <h3 className="mt-4 text-xs font-normal uppercase tracking-widest opacity-50">
+                Previous
+              </h3>
+              <ul className="mt-2 space-y-2">
+                {pastEvents.slice(0, 5).map((event) => (
+                  <li key={event.id}>
+                    {event.link ? (
+                      <a
+                        href={event.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group flex items-baseline transition-opacity hover:opacity-60"
+                      >
+                        {event.emoji && (
+                          <span className="mr-2 shrink-0 no-underline">{event.emoji}</span>
+                        )}
+                        <span className="underline">{event.name}</span>
+                        <span className="ml-2 text-base opacity-50 no-underline">
+                          &bull;{" "}
+                          {event.date
+                            ? new Date(event.date).toLocaleDateString("en-US", {
+                                month: "short",
+                                day: "numeric",
+                              })
+                            : "TBD"}
+                          {event.location && `, ${event.location}`}
+                        </span>
+                      </a>
+                    ) : (
+                      <span className="flex items-baseline">
+                        {event.emoji && (
+                          <span className="mr-2 shrink-0">{event.emoji}</span>
+                        )}
+                        <span>{event.name}</span>
+                        <span className="ml-2 text-base opacity-50">
+                          &bull;{" "}
+                          {event.date
+                            ? new Date(event.date).toLocaleDateString("en-US", {
+                                month: "short",
+                                day: "numeric",
+                              })
+                            : "TBD"}
+                          {event.location && `, ${event.location}`}
+                        </span>
+                      </span>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
+
+          {upcomingEvents.length > 0 && (
+            <>
+              <h3 className="mt-4 text-xs font-normal uppercase tracking-widest opacity-50">
+                Upcoming
+              </h3>
+              <ul className="mt-2 space-y-2">
+                {upcomingEvents.slice(0, 5).map((event) => (
+                  <li key={event.id}>
+                    {event.link ? (
+                      <a
+                        href={event.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group flex items-baseline transition-opacity hover:opacity-60"
+                      >
+                        {event.emoji && (
+                          <span className="mr-2 shrink-0 no-underline">{event.emoji}</span>
+                        )}
+                        <span className="underline">{event.name}</span>
+                        <span className="ml-2 text-base opacity-50 no-underline">
+                          &bull;{" "}
+                          {event.date
+                            ? new Date(event.date).toLocaleDateString("en-US", {
+                                month: "short",
+                                day: "numeric",
+                              })
+                            : "TBD"}
+                          {event.location && `, ${event.location}`}
+                        </span>
+                      </a>
+                    ) : (
+                      <span className="flex items-baseline">
+                        {event.emoji && (
+                          <span className="mr-2 shrink-0">{event.emoji}</span>
+                        )}
+                        <span>{event.name}</span>
+                        <span className="ml-2 text-base opacity-50">
+                          &bull;{" "}
+                          {event.date
+                            ? new Date(event.date).toLocaleDateString("en-US", {
+                                month: "short",
+                                day: "numeric",
+                              })
+                            : "TBD"}
+                          {event.location && `, ${event.location}`}
+                        </span>
+                      </span>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
+
+          {pastEvents.length === 0 && upcomingEvents.length === 0 && (
             <p className="mt-4 opacity-50">Events coming soon.</p>
           )}
         </div>
