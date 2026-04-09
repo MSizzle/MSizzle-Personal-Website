@@ -32,7 +32,7 @@ export function VisitSurvey() {
     return () => clearTimeout(timer)
   }, [])
 
-  function handleOptionClick(value: string) {
+  function handleOptionClick(_value: string) {
     sessionStorage.setItem('visit-survey-done', 'true')
     setWidgetState('thankyou')
     setTimeout(() => {
@@ -73,7 +73,34 @@ export function VisitSurvey() {
   if (widgetState === 'hidden') return null
 
   return (
-    <div className="fixed bottom-16 right-6 z-[90] flex flex-col items-end gap-3">
+    <div className="fixed bottom-6 right-6 z-[90] flex flex-col items-end gap-0">
+      {/* Large pixel-art Monty — above the box */}
+      <AnimatePresence>
+        {(widgetState === 'open' || widgetState === 'thankyou') && (
+          <motion.div
+            key="monty-avatar"
+            className="pointer-events-none relative -mb-2 hidden sm:block"
+            {...(prefersReducedMotion
+              ? {}
+              : {
+                  initial: { opacity: 0, y: 20 },
+                  animate: { opacity: 1, y: 0 },
+                  exit: { opacity: 0, y: 20 },
+                  transition: { duration: 0.3, ease: 'easeOut' as const },
+                })}
+          >
+            <Image
+              src="/monty-pixel-body.png"
+              alt="Pixel art Monty"
+              width={270}
+              height={372}
+              className="object-contain"
+              priority
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <AnimatePresence>
         {(widgetState === 'open' || widgetState === 'thankyou') && (
           <motion.div
@@ -113,31 +140,19 @@ export function VisitSurvey() {
             <div className="p-4">
               {widgetState === 'open' && (
                 <motion.div key="question" {...messageMotion}>
-                  {/* Avatar + message row */}
-                  <div className="flex items-start gap-3">
-                    <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-full border border-[var(--border)]">
-                      <Image
-                        src="/monty-pixel-body.png"
-                        alt="Monty"
-                        fill
-                        className="object-cover object-[center_15%]"
-                        priority
-                      />
-                    </div>
-                    <div className="flex-1 border border-[var(--border)] bg-[var(--bg)] px-3 py-2 text-sm leading-relaxed">
-                      Thanks for checking out my site! What brought you here?
-                    </div>
-                  </div>
+                  <p className="text-sm leading-relaxed">
+                    Thanks for checking out my site! What brought you here?
+                  </p>
 
-                  {/* Quick-reply pill buttons */}
-                  <div className="mt-3 flex flex-wrap gap-2">
+                  {/* Vertical stacked option buttons */}
+                  <div className="mt-4 flex flex-col gap-2">
                     {OPTIONS.map((opt) => (
                       <button
                         key={opt.value}
                         data-umami-event="visit-reason"
                         data-umami-event-reason={opt.value}
                         onClick={() => handleOptionClick(opt.value)}
-                        className="cursor-pointer border border-[var(--border)] bg-[var(--bg)] px-3 py-1.5 text-xs font-medium tracking-wide transition-opacity hover:opacity-60"
+                        className="w-full cursor-pointer border border-[var(--border)] bg-[var(--bg)] px-4 py-2.5 text-left text-sm font-medium tracking-wide transition-opacity hover:opacity-60"
                       >
                         {opt.label}
                       </button>
@@ -148,20 +163,9 @@ export function VisitSurvey() {
 
               {widgetState === 'thankyou' && (
                 <motion.div key="thankyou" {...messageMotion}>
-                  <div className="flex items-start gap-3">
-                    <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-full border border-[var(--border)]">
-                      <Image
-                        src="/monty-pixel-body.png"
-                        alt="Monty"
-                        fill
-                        className="object-cover object-[center_15%]"
-                        priority
-                      />
-                    </div>
-                    <div className="flex-1 border border-[var(--border)] bg-[var(--bg)] px-3 py-2 text-sm leading-relaxed">
-                      Awesome, welcome! Enjoy exploring.
-                    </div>
-                  </div>
+                  <p className="text-sm leading-relaxed">
+                    Awesome, welcome! Enjoy exploring.
+                  </p>
                 </motion.div>
               )}
             </div>
