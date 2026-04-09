@@ -99,6 +99,11 @@ function extractEventProperties(page: PageObjectResponse): EventItem {
 
 export async function getPublishedEvents(): Promise<EventItem[]> {
   if (!process.env.NOTION_TOKEN || !process.env.NOTION_EVENTS_DB_ID) {
+    console.warn('[notion-events] Missing env vars:', {
+      hasToken: !!process.env.NOTION_TOKEN,
+      hasDbId: !!process.env.NOTION_EVENTS_DB_ID,
+      dbId: process.env.NOTION_EVENTS_DB_ID?.slice(0, 8) + '...',
+    });
     return [];
   }
 
@@ -127,8 +132,10 @@ export async function getPublishedEvents(): Promise<EventItem[]> {
       cursor = response.has_more ? response.next_cursor ?? undefined : undefined;
     } while (cursor);
 
+    console.log('[notion-events] getPublishedEvents found', pages.length, 'pages');
     return pages.map(extractEventProperties);
-  } catch {
+  } catch (err) {
+    console.error('[notion-events] getPublishedEvents error:', err);
     return [];
   }
 }
@@ -167,8 +174,10 @@ export async function getUpcomingEvents(): Promise<EventItem[]> {
       cursor = response.has_more ? response.next_cursor ?? undefined : undefined;
     } while (cursor);
 
+    console.log('[notion-events] getUpcomingEvents found', pages.length, 'pages');
     return pages.map(extractEventProperties);
-  } catch {
+  } catch (err) {
+    console.error('[notion-events] getUpcomingEvents error:', err);
     return [];
   }
 }
@@ -207,8 +216,10 @@ export async function getPastEvents(): Promise<EventItem[]> {
       cursor = response.has_more ? response.next_cursor ?? undefined : undefined;
     } while (cursor);
 
+    console.log('[notion-events] getPastEvents found', pages.length, 'pages');
     return pages.map(extractEventProperties);
-  } catch {
+  } catch (err) {
+    console.error('[notion-events] getPastEvents error:', err);
     return [];
   }
 }
