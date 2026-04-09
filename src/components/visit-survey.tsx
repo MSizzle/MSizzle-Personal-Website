@@ -92,8 +92,8 @@ export function VisitSurvey() {
             <Image
               src="/monty-pixel-body.png"
               alt="Pixel art Monty"
-              width={270}
-              height={372}
+              width={405}
+              height={558}
               className="object-contain"
               priority
             />

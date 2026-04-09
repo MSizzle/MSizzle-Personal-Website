@@ -20,43 +20,46 @@ function formatDate(dateStr: string | null): string {
 }
 
 function EventCard({ event, delay }: { event: EventItem; delay: number }) {
-  return (
-    <ScrollReveal delay={delay}>
-      <div className="border border-[var(--border)] rounded-lg p-5">
-        {/* Top row: emoji + name */}
-        <div className="flex items-center gap-2">
-          {event.emoji && (
-            <span className="text-base leading-none">{event.emoji}</span>
-          )}
-          <span className="text-base font-medium">{event.name}</span>
+  const content = (
+    <div className="flex items-start gap-2">
+      {event.emoji && (
+        <span className="shrink-0 text-lg leading-snug">{event.emoji}</span>
+      )}
+      <div className="min-w-0 flex-1">
+        <div className="flex items-baseline justify-between gap-3">
+          <h2 className="text-base font-normal underline transition-opacity group-hover:opacity-60">
+            {event.name}
+          </h2>
+          <span className="shrink-0 text-sm opacity-50">
+            {formatDate(event.date)}
+          </span>
         </div>
 
-        {/* Date + location */}
-        <div className="mt-1 text-sm opacity-50">
-          {formatDate(event.date)}
-          {event.location && (
-            <>
-              {" · "}
-              {event.location}
-            </>
-          )}
-        </div>
-
-        {/* Description */}
-        {event.description && (
-          <p className="mt-2 text-sm opacity-70">{event.description}</p>
+        {event.location && (
+          <p className="mt-0.5 text-sm opacity-50">{event.location}</p>
         )}
 
-        {/* RSVP link */}
-        {event.link && (
+        {event.description && (
+          <p className="mt-1 text-sm opacity-50 line-clamp-2">{event.description}</p>
+        )}
+      </div>
+    </div>
+  );
+
+  return (
+    <ScrollReveal delay={delay}>
+      <div className="py-1">
+        {event.link ? (
           <a
             href={event.link}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-3 inline-block text-sm uppercase tracking-wide opacity-50 hover:opacity-100 transition-opacity"
+            className="group block"
           >
-            RSVP / Details
+            {content}
           </a>
+        ) : (
+          <div className="group">{content}</div>
         )}
       </div>
     </ScrollReveal>
@@ -92,11 +95,13 @@ export default async function EventsPage() {
                   Upcoming
                 </h2>
               </ScrollReveal>
-              <div className="mt-4 flex flex-col gap-4">
+              <ul className="mt-6 space-y-5">
                 {upcoming.map((event, i) => (
-                  <EventCard key={event.id} event={event} delay={0.2 + i * 0.05} />
+                  <li key={event.id}>
+                    <EventCard event={event} delay={0.2 + i * 0.05} />
+                  </li>
                 ))}
-              </div>
+              </ul>
             </>
           )}
 
@@ -107,11 +112,13 @@ export default async function EventsPage() {
                   Past
                 </h2>
               </ScrollReveal>
-              <div className="mt-4 flex flex-col gap-4">
+              <ul className="mt-6 space-y-5">
                 {past.map((event, i) => (
-                  <EventCard key={event.id} event={event} delay={0.35 + i * 0.05} />
+                  <li key={event.id}>
+                    <EventCard event={event} delay={0.35 + i * 0.05} />
+                  </li>
                 ))}
-              </div>
+              </ul>
             </>
           )}
         </>
