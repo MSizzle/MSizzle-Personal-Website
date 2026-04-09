@@ -4,12 +4,12 @@ milestone: v1.0
 milestone_name: milestone
 current_phase: 05
 status: Executing Phase 05
-last_updated: "2026-04-03T04:18:51.186Z"
+last_updated: "2026-04-03T15:18:15.955Z"
 progress:
   total_phases: 6
   completed_phases: 2
   total_plans: 11
-  completed_plans: 11
+  completed_plans: 12
 ---
 
 # Project State
@@ -57,6 +57,13 @@ Phase 3 plans 01-06 all complete. Phase 3 — Core Pages is done.
 - [Phase 04-animation-polish]: Blog/About/Links/Projects pages remain Server Components with ScrollReveal client child — no use client needed on page files
 - [Phase 05-analytics]: vi.doMock used after vi.resetModules() for per-test env var isolation in analytics tests
 - [Phase 05-analytics]: data-umami-event declarative click tracking on footer, project-card, and links page outbound links
+
+### Quick Tasks Completed
+
+| # | Description | Date | Commit | Directory |
+|---|-------------|------|--------|-----------|
+| 260409-js5 | Restyle visit-survey from modal to chat widget | 2026-04-09 | 9fd193c | [260409-js5-restyle-visit-survey-from-modal-to-chat-](./quick/260409-js5-restyle-visit-survey-from-modal-to-chat-/) |
+| 260409-lle | Add Notion-powered events feature with /events page | 2026-04-09 | 7207e6a | [260409-lle-add-notion-powered-events-feature-with-e](./quick/260409-lle-add-notion-powered-events-feature-with-e/) |
 
 ## Known Issues
 
