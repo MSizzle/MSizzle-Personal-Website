@@ -196,7 +196,7 @@ export async function getFeaturedProjects(): Promise<Project[]> {
             ],
           },
           sorts: [{ property: "Date", direction: "descending" }],
-          page_size: 3,
+          page_size: 100,
           start_cursor: cursor,
         })
       );
@@ -209,7 +209,7 @@ export async function getFeaturedProjects(): Promise<Project[]> {
       cursor = response.has_more ? response.next_cursor ?? undefined : undefined;
     } while (cursor);
 
-    return pages.slice(0, 3).map(extractProjectProperties);
+    return pages.map(extractProjectProperties);
   } catch {
     return [];
   }

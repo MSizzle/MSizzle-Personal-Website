@@ -30,7 +30,7 @@ export function VisitSurvey() {
     <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
       <div className="relative w-full max-w-md overflow-visible border border-[var(--border)] bg-[var(--bg)] px-8 py-8 shadow-lg">
         {/* Heading — editorial uppercase */}
-        <h3 className="text-xs font-normal uppercase tracking-widest opacity-60">
+        <h3 className="text-sm font-semibold uppercase tracking-widest">
           What brought you here?
         </h3>
 
@@ -59,13 +59,13 @@ export function VisitSurvey() {
           Skip
         </button>
 
-        {/* Pixel art Monty — positioned outside the card on the right */}
-        <div className="pointer-events-none absolute -right-28 -bottom-8 hidden sm:block">
+        {/* Pixel art Monty — vertically centered, right of card */}
+        <div className="pointer-events-none absolute -right-80 top-1/2 hidden -translate-y-1/2 sm:block">
           <Image
             src="/monty-pixel-body.png"
             alt="Pixel art Monty saying hey friend"
-            width={160}
-            height={220}
+            width={480}
+            height={660}
             className="object-contain"
             priority
           />
