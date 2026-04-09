@@ -7,6 +7,7 @@ import { cn } from '@/utils/cn'
 
 const NAV_LINKS = [
   { href: '/about', label: 'About' },
+  { href: '/events', label: 'Events' },
   { href: '#contact', label: 'Contact' },
 ]
 
