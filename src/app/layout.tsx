@@ -21,8 +21,24 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Monty Singer",
-  description: "Portfolio, blog, and personal site of Monty Singer.",
+  metadataBase: new URL("https://montysinger.com"),
+  title: {
+    default: "Monty Singer",
+    template: "%s — Monty Singer",
+  },
+  description: "Investor, builder, and lifelong learner based in NYC.",
+  openGraph: {
+    type: "website",
+    url: "https://montysinger.com",
+    siteName: "Monty Singer",
+    title: "Monty Singer",
+    description: "Investor, builder, and lifelong learner based in NYC.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Monty Singer",
+    description: "Investor, builder, and lifelong learner based in NYC.",
+  },
 };
 
 export default function RootLayout({
