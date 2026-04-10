@@ -57,7 +57,8 @@ Phases 1-5 complete. Phase 5 (Analytics) infrastructure deployed: Umami live at 
 - [Phase 04-animation-polish]: Blog/About/Links/Projects pages remain Server Components with ScrollReveal client child — no use client needed on page files
 - [Phase 05-analytics]: vi.doMock used after vi.resetModules() for per-test env var isolation in analytics tests
 - [Phase 05-analytics]: data-umami-event declarative click tracking on footer, project-card, and links page outbound links
-- [Phase 05-analytics]: Umami deployed as separate Vercel project (fork of umami-software/umami) backed by Neon Postgres at https://umami-khaki-three.vercel.app — custom subdomain analytics.msizzle.com deferred as optional
+- [Phase 05-analytics]: Umami deployed as separate Vercel project (fork of umami-software/umami) backed by Neon Postgres, now reachable at https://analytics.montysinger.com (custom subdomain D-04 completed 2026-04-10 via Namecheap CNAME → cname.vercel-dns.com); legacy *.vercel.app alias preserved
+- [Phase 05-analytics]: Production domain is montysinger.com (Namecheap registrar/DNS), NOT msizzle.com — earlier planning docs were incorrect
 
 ### Quick Tasks Completed
 
@@ -68,8 +69,9 @@ Phases 1-5 complete. Phase 5 (Analytics) infrastructure deployed: Umami live at 
 
 ## Known Issues
 
-- DSGN-06 (custom domain on Vercel) not yet configured — needs deployment + DNS
-- Notion env vars (NOTION_TOKEN, NOTION_DATABASE_ID) needed for live testing
+- DSGN-06 (custom domain on Vercel): main site live at montysinger.com via Namecheap DNS; analytics subdomain analytics.montysinger.com live as of 2026-04-10
+- Notion env vars (NOTION_TOKEN, NOTION_DATABASE_ID) — set in production, still useful to verify locally for dev
+- Planning artifacts in `.planning/phases/` reference msizzle.com in places — should be swept to montysinger.com in a future docs cleanup
 
 ---
 

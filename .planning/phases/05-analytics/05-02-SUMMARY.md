@@ -7,7 +7,7 @@ dependency_graph:
   requires:
     - "05-01 (UmamiAnalytics component + outbound event attributes)"
   provides:
-    - "Live Umami dashboard at https://umami-khaki-three.vercel.app"
+    - "Live Umami dashboard at https://analytics.montysinger.com (custom subdomain) — also reachable at https://umami-khaki-three.vercel.app"
     - "Production env vars NEXT_PUBLIC_UMAMI_URL and NEXT_PUBLIC_UMAMI_WEBSITE_ID"
     - "End-to-end analytics pipeline from main site to Umami"
   affects:
@@ -25,7 +25,7 @@ key_files:
   created: []
   modified: []
 decisions:
-  - "Stayed on default *.vercel.app subdomain (umami-khaki-three.vercel.app) instead of analytics.msizzle.com — D-04 custom subdomain deferred as optional"
+  - "D-04 (custom subdomain) completed 2026-04-10 — analytics.montysinger.com attached to umami Vercel project, CNAME at Namecheap → cname.vercel-dns.com, Let's Encrypt cert auto-provisioned. Note: planning docs incorrectly referenced msizzle.com; actual production domain is montysinger.com (registered at Namecheap, not msizzle.com)."
 metrics:
   duration: "human-action checkpoint"
   completed_date: "2026-04-03"
@@ -74,12 +74,22 @@ The visit-survey component (commit `2d08105`) and other custom Umami events intr
 
 ## Deviations from Plan
 
-### Custom subdomain deferred (D-04)
+### Custom subdomain completed 2026-04-10 (D-04)
 
-`analytics.msizzle.com` was listed as optional in 05-02-PLAN.md Step 6. Currently still using the default `umami-khaki-three.vercel.app` URL. No DNS work done. Switching later only requires:
-1. CNAME `analytics.msizzle.com` → `cname.vercel-dns.com`
-2. Add the domain in the Umami Vercel project
-3. Update `NEXT_PUBLIC_UMAMI_URL` and redeploy the main site
+Initially deferred during 2026-04-03 deployment. Completed retroactively on 2026-04-10:
+
+1. **Subdomain attached to umami Vercel project:** `vercel domains add analytics.montysinger.com` (run from a temp directory linked to the `umami` project, since the main repo is linked to `m-sizzle-personal-website`).
+2. **CNAME added at Namecheap** (the actual DNS host — planning docs incorrectly referenced GoDaddy/msizzle.com): `analytics` CNAME → `cname.vercel-dns.com`. Propagated within minutes.
+3. **Let's Encrypt cert auto-provisioned by Vercel** (issuer: R13, valid Apr 10 → Jul 9 2026, CN=analytics.montysinger.com).
+4. **Updated `NEXT_PUBLIC_UMAMI_URL` in main site Production env** from `https://umami-khaki-three.vercel.app` → `https://analytics.montysinger.com` via `vercel env update`.
+5. **Redeployed current production deployment** via `vercel redeploy <url> --target production --scope msizzles-projects` (reusing the existing build, just re-baking env vars).
+6. **Verified live HTML on https://montysinger.com** references `https://analytics.montysinger.com/script.js` — zero residual references to the old `umami-khaki-three` subdomain.
+
+Both URLs continue to work; the *.vercel.app alias is preserved automatically by Vercel.
+
+### Domain naming inconsistency in earlier planning docs
+
+Phase 05 planning artifacts reference `msizzle.com` as the production domain, but the actual production domain is `montysinger.com` (registered at Namecheap, deployed via Vercel project `m-sizzle-personal-website`). This was discovered during the D-04 follow-up work. Future planning docs should use `montysinger.com`.
 
 ### Summary written retroactively
 
