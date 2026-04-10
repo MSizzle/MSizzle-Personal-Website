@@ -1,15 +1,19 @@
 import { ImageResponse } from 'next/og'
+import { readFileSync } from 'node:fs'
+import { join } from 'node:path'
 
-export const runtime = 'edge'
 export const alt = 'Monty Singer — investor, builder, and lifelong learner based in NYC'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
-export default async function Image() {
-  const photoData = await fetch(new URL('./og-photo.jpg', import.meta.url)).then((res) =>
-    res.arrayBuffer(),
-  )
-  const photoSrc = `data:image/jpeg;base64,${Buffer.from(photoData).toString('base64')}`
+// Read the co-located background photo at module load. Using fs (instead of
+// `fetch(new URL(..., import.meta.url))`) lets this route statically prerender
+// at build time on Vercel, producing a plain cached PNG asset with no function
+// invocation per request.
+const photoBuffer = readFileSync(join(process.cwd(), 'src/app/og-photo.jpg'))
+const photoSrc = `data:image/jpeg;base64,${photoBuffer.toString('base64')}`
+
+export default function Image() {
 
   return new ImageResponse(
     (
