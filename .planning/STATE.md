@@ -23,14 +23,14 @@ progress:
 |-------|--------|---------|-----------|
 | 1 — Foundation | complete | 2026-03-31 | 2026-03-31 |
 | 2 — Notion CMS Integration | complete | 2026-03-31 | 2026-03-31 |
-| 3 — Core Pages | in_progress | 2026-04-02 | — |
-| 4 — Animation & Polish | not_started | — | — |
-| 5 — Analytics | not_started | — | — |
+| 3 — Core Pages | complete | 2026-04-02 | 2026-04-02 |
+| 4 — Animation & Polish | complete | 2026-04-02 | 2026-04-03 |
+| 5 — Analytics | complete | 2026-04-03 | 2026-04-03 |
 | 6 — Pre-Launch QA | not_started | — | — |
 
 ## Active Work
 
-Phase 3 plans 01-06 all complete. Phase 3 — Core Pages is done.
+Phases 1-5 complete. Phase 5 (Analytics) infrastructure deployed: Umami live at https://umami-khaki-three.vercel.app, Production env vars set, end-to-end pipeline confirmed reachable 2026-04-10. Next: Phase 6 — Pre-Launch QA.
 
 ## Accumulated Context
 
@@ -57,6 +57,7 @@ Phase 3 plans 01-06 all complete. Phase 3 — Core Pages is done.
 - [Phase 04-animation-polish]: Blog/About/Links/Projects pages remain Server Components with ScrollReveal client child — no use client needed on page files
 - [Phase 05-analytics]: vi.doMock used after vi.resetModules() for per-test env var isolation in analytics tests
 - [Phase 05-analytics]: data-umami-event declarative click tracking on footer, project-card, and links page outbound links
+- [Phase 05-analytics]: Umami deployed as separate Vercel project (fork of umami-software/umami) backed by Neon Postgres at https://umami-khaki-three.vercel.app — custom subdomain analytics.msizzle.com deferred as optional
 
 ### Quick Tasks Completed
 
