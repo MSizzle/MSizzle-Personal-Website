@@ -19,7 +19,11 @@ describe('extractExcerpt', () => {
     const out = extractExcerpt([para(long)], 50)
     expect(out.length).toBeLessThanOrEqual(51) // 50 + ellipsis
     expect(out.endsWith('…')).toBe(true)
-    expect(out).not.toMatch(/\S$/) // no partial-word end before ellipsis
+    // Char immediately before the ellipsis must be the end of a complete word (not
+    // mid-word). With 'word ' repeated, every word is 4 chars; the body before '…'
+    // should consist only of whole 'word' tokens separated by single spaces.
+    const body = out.slice(0, -1)
+    expect(body).toMatch(/^(?:word)(?: word)*$/)
   })
 
   it('handles empty blocks', () => {
