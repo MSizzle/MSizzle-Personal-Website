@@ -7,6 +7,7 @@ import { Navigation } from "@/components/nav/navigation";
 import { Footer } from "@/components/footer";
 import { UmamiAnalytics } from "@/components/analytics/umami-analytics";
 import { VisitSurvey } from "@/components/visit-survey";
+import { SITE_URL } from "@/lib/seo/site";
 import "./globals.css";
 
 const inter = Inter({
@@ -20,24 +21,32 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const SITE_DESCRIPTION =
+  "Monty Singer is the founder of Prometheus, an AI integrations and education company. Builder, writer, and perpetual tinkerer.";
+const SITE_TITLE = "Monty Singer | Founder of Prometheus, Builder, Writer";
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://montysinger.com"),
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: "Monty Singer",
-    template: "%s — Monty Singer",
+    default: SITE_TITLE,
+    template: "%s | Monty Singer",
   },
-  description: "Investor, builder, and lifelong learner based in NYC.",
+  description: SITE_DESCRIPTION,
+  alternates: {
+    canonical: "/",
+    types: { "application/rss+xml": "/blog/feed.xml" },
+  },
   openGraph: {
     type: "website",
-    url: "https://montysinger.com",
+    url: SITE_URL,
     siteName: "Monty Singer",
-    title: "Monty Singer",
-    description: "Investor, builder, and lifelong learner based in NYC.",
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
   },
   twitter: {
     card: "summary_large_image",
-    title: "Monty Singer",
-    description: "Investor, builder, and lifelong learner based in NYC.",
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
   },
 };
 

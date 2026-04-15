@@ -1,8 +1,7 @@
 import type { MetadataRoute } from 'next'
 import { getPublishedPosts } from '@/lib/notion'
 import { getPublishedProjects } from '@/lib/notion-projects'
-
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://msizzle.com'
+import { SITE_URL } from '@/lib/seo/site'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   let posts: { slug: string; lastEdited: string }[] = []
@@ -10,21 +9,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   try {
     posts = await getPublishedPosts()
-  } catch {
-    // Notion unavailable — sitemap still works with static routes
-  }
+  } catch {}
 
   try {
     projects = await getPublishedProjects()
-  } catch {
-    // Notion unavailable — sitemap still works with static routes
-  }
+  } catch {}
 
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: SITE_URL, lastModified: new Date(), changeFrequency: 'weekly', priority: 1 },
     { url: `${SITE_URL}/about`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${SITE_URL}/prometheus`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.9 },
+    { url: `${SITE_URL}/newsletter`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
+    { url: `${SITE_URL}/uses`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.6 },
     { url: `${SITE_URL}/projects`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
     { url: `${SITE_URL}/blog`, lastModified: new Date(), changeFrequency: 'daily', priority: 0.9 },
+    { url: `${SITE_URL}/events`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.7 },
   ]
 
   const postRoutes: MetadataRoute.Sitemap = posts.map((post) => ({
