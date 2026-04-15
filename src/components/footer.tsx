@@ -2,9 +2,12 @@ import Link from 'next/link'
 
 const LINKS = [
   { href: '/about', label: 'About' },
+  { href: '/prometheus', label: 'Prometheus' },
   { href: '/blog', label: 'Writings' },
   { href: '/projects', label: 'Works' },
+  { href: '/newsletter', label: 'Monty Monthly' },
   { href: '/events', label: 'Events' },
+  { href: '/uses', label: 'Uses' },
 ]
 
 const SOCIALS = [
@@ -23,7 +26,7 @@ export function Footer() {
             Contact &#8600;
           </h4>
           <p className="mt-4 leading-relaxed opacity-80">
-            Want to chat about investing, building, or anything else?
+            Want to talk about AI, building, writing, or a potential Prometheus engagement?
             I&rsquo;d love to hear from you.
           </p>
           <a

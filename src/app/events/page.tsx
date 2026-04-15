@@ -1,12 +1,23 @@
+import type { Metadata } from "next";
 import { getUpcomingEvents, getPastEvents } from "@/lib/notion-events";
 import type { EventItem } from "@/lib/notion-events";
 import { ScrollReveal } from "@/components/animations/scroll-reveal";
+import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 
 export const revalidate = 1800; // 30 minutes
 
-export const metadata = {
-  title: "Events — Monty Singer",
-  description: "Upcoming and past events.",
+export const metadata: Metadata = {
+  title: "Events | Monty Singer",
+  description:
+    "Upcoming and past events where Monty Singer is speaking, attending, or hosting. Talks on AI, building, and Prometheus.",
+  alternates: { canonical: "/events" },
+  openGraph: {
+    title: "Events | Monty Singer",
+    description:
+      "Upcoming and past events where Monty Singer is speaking, attending, or hosting. Talks on AI, building, and Prometheus.",
+    url: "/events",
+    type: "website",
+  },
 };
 
 function formatDate(dateStr: string | null): string {
@@ -75,12 +86,14 @@ export default async function EventsPage() {
   const hasEvents = upcoming.length > 0 || past.length > 0;
 
   return (
-    <div className="mx-auto max-w-[66ch] px-6 pb-16 pt-24 md:px-0">
-      <ScrollReveal delay={0}>
-        <h1 className="text-sm font-normal uppercase tracking-widest">
-          Events
-        </h1>
-      </ScrollReveal>
+    <>
+      <Breadcrumbs items={[{ name: "Home", href: "/" }, { name: "Events" }]} />
+      <div className="mx-auto max-w-[66ch] px-6 pb-16 pt-8 md:px-0">
+        <ScrollReveal delay={0}>
+          <h1 className="text-sm font-normal uppercase tracking-widest">
+            Events
+          </h1>
+        </ScrollReveal>
 
       {!hasEvents ? (
         <ScrollReveal delay={0.15}>
@@ -123,6 +136,7 @@ export default async function EventsPage() {
           )}
         </>
       )}
-    </div>
+      </div>
+    </>
   );
 }
