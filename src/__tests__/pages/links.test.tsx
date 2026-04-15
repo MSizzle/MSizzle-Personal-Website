@@ -10,7 +10,7 @@ describe('Links Page outbound tracking (D-11)', () => {
     const LinksPage = (await import('@/app/links/page')).default
     const { container } = render(<LinksPage />)
     const trackedLinks = container.querySelectorAll('a[data-umami-event]')
-    // Only http:// links get tracked (twitter, linkedin, github) — not mailto or /blog
+    // Only http:// links get tracked (twitter, linkedin, github), not mailto or /blog
     expect(trackedLinks.length).toBe(3)
     const eventNames = Array.from(trackedLinks).map(l => l.getAttribute('data-umami-event'))
     expect(eventNames).toContain('links-click-linkedin')

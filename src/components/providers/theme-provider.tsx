@@ -5,7 +5,7 @@ import { useEffect } from "react";
 function getTimeBasedTheme(): "light" | "dark" {
   const hour = new Date().getHours();
   // Dark theme from 7 PM to 7 AM
-  // TODO: restore time-based theme — return hour >= 19 || hour < 7 ? "dark" : "light";
+  // TODO: restore time-based theme. return hour >= 19 || hour < 7 ? "dark" : "light";
   return "light";
 }
 

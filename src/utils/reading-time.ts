@@ -1,7 +1,7 @@
 import type { BlockObjectResponse } from '@notionhq/client/build/src/api-endpoints'
 import { extractTextFromBlock } from './notion-text'
 
-/** Exact reading time from Notion blocks — use on detail page where blocks are already fetched. */
+/** Exact reading time from Notion blocks. Use on detail page where blocks are already fetched. */
 export function calculateReadingTime(blocks: BlockObjectResponse[]): number {
   const text = blocks.map(extractTextFromBlock).join(' ')
   const words = text.trim().split(/\s+/).filter(Boolean).length

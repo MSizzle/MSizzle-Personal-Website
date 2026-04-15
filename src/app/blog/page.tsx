@@ -27,7 +27,7 @@ export default async function BlogPage() {
     try {
       posts = await getPublishedPosts()
     } catch {
-      // Notion API unavailable — show empty state
+      // Notion API unavailable, show empty state
     }
   }
 

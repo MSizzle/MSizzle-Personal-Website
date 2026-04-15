@@ -155,7 +155,7 @@ function renderBlock(block: BlockWithChildren): React.ReactNode {
       );
     }
 
-    // ------ List items (rendered individually — grouping happens in renderBlocks) ------
+    // ------ List items (rendered individually; grouping happens in renderBlocks) ------
     case "bulleted_list_item": {
       return (
         <li key={id}>

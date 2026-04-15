@@ -8,7 +8,7 @@ import pLimit from "p-limit";
 
 const notion = new Client({ auth: process.env.NOTION_TOKEN });
 
-// Notion allows 3 req/s — keep headroom at 2 concurrent
+// Notion allows 3 req/s. Keep headroom at 2 concurrent.
 const limit = pLimit(2);
 
 async function withRetry<T>(fn: () => Promise<T>, retries = 3): Promise<T> {

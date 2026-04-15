@@ -2,7 +2,7 @@ import { ImageResponse } from 'next/og'
 import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
 
-export const alt = 'Monty Singer — investor, builder, and lifelong learner based in NYC'
+export const alt = 'Monty Singer, founder of Prometheus, builder, and writer'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
@@ -42,7 +42,7 @@ export default function Image() {
           }}
         />
 
-        {/* Dark gradient for text legibility — stronger at bottom */}
+        {/* Dark gradient for text legibility, stronger at bottom */}
         <div
           style={{
             position: 'absolute',
@@ -100,7 +100,7 @@ export default function Image() {
               maxWidth: 900,
             }}
           >
-            Investor, builder, and lifelong learner based in NYC.
+            Founder of Prometheus. Builder, writer, and perpetual tinkerer.
           </p>
         </div>
       </div>
