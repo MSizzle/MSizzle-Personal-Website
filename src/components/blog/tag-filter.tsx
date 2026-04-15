@@ -72,7 +72,7 @@ export function TagFilter({ posts, readingTimes }: TagFilterProps) {
                               })}
                             </time>
                           )}
-                          <span>{readingTimes[post.slug] ?? 1}m</span>
+                          <span>{readingTimes[post.slug] ?? 1} min read</span>
                         </div>
                       </div>
                       {post.description && (
