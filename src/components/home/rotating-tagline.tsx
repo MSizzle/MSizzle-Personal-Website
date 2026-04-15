@@ -3,11 +3,11 @@
 import { useState, useEffect } from 'react'
 
 const TAGLINES = [
-  'Building at the intersection of technology and finance.',
-  'Georgetown grad, lifelong learner, always shipping.',
-  'Investor by day, builder by night.',
-  'Reading, writing, and tinkering in NYC.',
-  'Making something new every week.',
+  'Building AI integrations and education at Prometheus.',
+  'Founder. Builder. Writer.',
+  'Shipping software, essays, and experiments.',
+  'Tinkering with whatever is interesting.',
+  'Always learning, always shipping.',
 ]
 
 export function RotatingTagline() {

@@ -6,6 +6,8 @@ import { getFeaturedProjects } from "@/lib/notion-projects";
 import { getUpcomingEvents, getPastEvents } from "@/lib/notion-events";
 import { PhotoCarousel } from "@/components/home/photo-carousel";
 import { RotatingTagline } from "@/components/home/rotating-tagline";
+import { JsonLd } from "@/components/seo/json-ld";
+import { buildPersonSchema } from "@/lib/seo/schemas";
 
 function getCarouselPhotos(): string[] {
   try {
@@ -21,20 +23,6 @@ function getCarouselPhotos(): string[] {
 }
 
 export const revalidate = 1800;
-
-const personJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "Person",
-  name: "Monty Singer",
-  url: "https://msizzle.com",
-  sameAs: [
-    "https://x.com/thefullmonty0",
-    "https://linkedin.com/in/monty-singer",
-    "https://github.com/MSizzle",
-  ],
-  jobTitle: "Investor",
-  description: "Investor, builder, and lifelong learner based in NYC.",
-};
 
 export default async function Home() {
   let posts: Awaited<ReturnType<typeof getPublishedPosts>> = [];
@@ -59,21 +47,17 @@ export default async function Home() {
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
-      />
+      <JsonLd data={buildPersonSchema()} />
 
-      {/* Hero — editorial intro */}
+      {/* Hero - editorial intro */}
       <section className="px-6 pt-32 pb-20 md:px-24">
         <div className="mx-auto max-w-[66ch]">
           <h1 className="text-4xl font-normal uppercase tracking-tight sm:text-5xl">
             Monty Singer
           </h1>
           <p className="mt-6 text-lg leading-relaxed opacity-80">
-            Hello! I&rsquo;m Monty, an investor, builder, and writer based in
-            NYC. I spend my time at the intersection of technology and finance
-            &mdash; reading, writing, and tinkering.
+            I&rsquo;m Monty Singer, founder of Prometheus, an AI integrations and education company.
+            I build software, write essays, and tinker with whatever is interesting.
           </p>
           <div className="mt-4">
             <RotatingTagline />
