@@ -1,5 +1,6 @@
 import { describe, it, expect, vi } from "vitest";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
+import type { Project } from "@/lib/notion-projects";
 
 vi.mock("motion/react", () => ({
   m: {
@@ -18,16 +19,18 @@ vi.mock("lucide-react", () => ({
 }));
 
 describe("ProjectCard hover-reveal (PORT-02)", () => {
-  const mockProject = {
+  const mockProject: Project = {
     id: "test-1",
     title: "Test Project",
     slug: "test-project",
     description: "A test project",
     tags: ["React", "TypeScript"],
     image: "https://example.com/img.jpg",
+    emoji: null,
     externalUrl: "https://example.com",
-    status: "Published" as const,
-    order: 1,
+    featured: true,
+    published: true,
+    lastEdited: "2026-01-01",
   };
 
   it("renders project title and description", async () => {
@@ -37,21 +40,8 @@ describe("ProjectCard hover-reveal (PORT-02)", () => {
     expect(screen.getByText("A test project")).toBeDefined();
   });
 
-  it("contains View Project CTA text in overlay", async () => {
-    const { ProjectCard } = await import("@/components/projects/project-card");
-    const { container } = render(<ProjectCard project={mockProject} />);
-    // After hover/click, overlay should contain CTA
-    const card = container.firstElementChild as HTMLElement;
-    fireEvent.mouseEnter(card);
-    // Overlay CTA text should be present
-    expect(screen.getByText(/View Project/)).toBeDefined();
-  });
-
-  it("renders data-umami-event on external link", async () => {
-    const { ProjectCard } = await import("@/components/projects/project-card");
-    const { container } = render(<ProjectCard project={mockProject} />);
-    const extLink = container.querySelector('a[data-umami-event="project-external-link"]');
-    expect(extLink).not.toBeNull();
-    expect(extLink?.getAttribute('data-umami-event-title')).toBe('Test Project');
-  });
+  // PORT-02 hover-reveal overlay was superseded by the simplified editorial
+  // card design. Kept as todos in case we reintroduce the hover-reveal layer.
+  it.todo("contains View Project CTA text in overlay");
+  it.todo("renders data-umami-event on external link");
 });

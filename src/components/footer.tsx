@@ -31,6 +31,7 @@ export function Footer() {
           </p>
           <a
             href="mailto:mds345@georgetown.edu"
+            data-umami-event="social-click-email"
             className="mt-2 inline-block underline transition-opacity hover:opacity-60"
           >
             mds345@georgetown.edu

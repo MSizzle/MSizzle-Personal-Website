@@ -38,14 +38,16 @@ export default function LinksPage() {
         <ScrollReveal delay={0.15}>
           <ul className="mt-8 space-y-4">
             {LINKS.map((link) => {
-              const isExternal = link.href.startsWith('http') || link.href.startsWith('mailto')
+              const isHttp = link.href.startsWith('http')
+              const isMailto = link.href.startsWith('mailto')
+              const opensNewTab = isHttp || isMailto
               return (
                 <li key={link.label}>
                   <a
                     href={link.href}
-                    target={isExternal ? '_blank' : undefined}
-                    rel={isExternal ? 'noopener noreferrer' : undefined}
-                    {...(isExternal ? { 'data-umami-event': `links-click-${link.label.toLowerCase().replace(/[\s/]+/g, '-')}` } : {})}
+                    target={opensNewTab ? '_blank' : undefined}
+                    rel={opensNewTab ? 'noopener noreferrer' : undefined}
+                    {...(isHttp ? { 'data-umami-event': `links-click-${link.label.toLowerCase().replace(/[\s/]+/g, '-')}` } : {})}
                     className="text-3xl underline transition-opacity hover:opacity-60 sm:text-lg"
                   >
                     {link.label}
