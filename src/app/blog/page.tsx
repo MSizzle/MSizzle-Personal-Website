@@ -48,7 +48,7 @@ export default async function BlogPage() {
 
         {posts.length === 0 ? (
           <ScrollReveal delay={0.15}>
-            <p className="mt-8 opacity-50">
+            <p className="mt-8 opacity-75">
               No posts yet. Check back soon.
             </p>
           </ScrollReveal>

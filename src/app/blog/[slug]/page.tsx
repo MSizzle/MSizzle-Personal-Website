@@ -59,7 +59,7 @@ export default async function BlogPostPage({ params }: PageProps) {
           <h1 className="text-2xl font-normal tracking-tight sm:text-3xl">
             {post.emoji && <span className="mr-3">{post.emoji}</span>}{post.title}
           </h1>
-          <div className="mt-4 flex items-center gap-4 text-sm opacity-50">
+          <div className="mt-4 flex items-center gap-4 text-sm opacity-75">
             {post.date && (
               <time dateTime={post.date}>
                 {new Date(post.date).toLocaleDateString('en-US', {

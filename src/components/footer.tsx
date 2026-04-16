@@ -82,7 +82,7 @@ export function Footer() {
           </div>
         </div>
 
-        <p className="mt-12 text-base opacity-50">
+        <p className="mt-12 text-base opacity-75">
           &copy; {new Date().getFullYear()} Monty Singer
         </p>
       </div>

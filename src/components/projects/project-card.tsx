@@ -12,7 +12,7 @@ export function ProjectCard({ project }: { project: Project }) {
         {project.title}
       </h3>
       {project.description && (
-        <p className="mt-1 text-sm opacity-50 line-clamp-2">
+        <p className="mt-1 text-sm opacity-75 line-clamp-2">
           {project.description}
         </p>
       )}

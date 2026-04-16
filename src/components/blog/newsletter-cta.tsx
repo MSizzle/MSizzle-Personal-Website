@@ -18,7 +18,7 @@ export function NewsletterCta() {
       <h3 className="text-sm font-normal uppercase tracking-widest">
         Stay in the Loop
       </h3>
-      <p className="mt-2 opacity-50">
+      <p className="mt-2 opacity-75">
         Get new posts delivered to your inbox. No spam, ever.
       </p>
 

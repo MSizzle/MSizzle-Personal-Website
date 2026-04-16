@@ -45,7 +45,7 @@ export function TagFilter({ posts, readingTimes }: TagFilterProps) {
       )}
 
       {filtered.length === 0 ? (
-        <p className="mt-8 opacity-50">
+        <p className="mt-8 opacity-75">
           No posts tagged &ldquo;{activeTag}&rdquo;.
         </p>
       ) : (
@@ -63,7 +63,7 @@ export function TagFilter({ posts, readingTimes }: TagFilterProps) {
                         <h2 className="text-base font-normal underline transition-opacity group-hover:opacity-60">
                           {post.title}
                         </h2>
-                        <div className="flex shrink-0 items-baseline gap-2 text-sm opacity-50">
+                        <div className="flex shrink-0 items-baseline gap-2 text-sm opacity-75">
                           {post.date && (
                             <time dateTime={post.date}>
                               {new Date(post.date).toLocaleDateString('en-US', {
@@ -76,7 +76,7 @@ export function TagFilter({ posts, readingTimes }: TagFilterProps) {
                         </div>
                       </div>
                       {post.description && (
-                        <p className="mt-1 text-sm opacity-50 line-clamp-2">
+                        <p className="mt-1 text-sm opacity-75 line-clamp-2">
                           {post.description}
                         </p>
                       )}

@@ -47,7 +47,7 @@ export default function PrometheusPage() {
 
       <article className="mx-auto max-w-[66ch] px-6 pt-8 pb-16 md:px-0">
         <h1 className="text-2xl font-normal tracking-tight sm:text-3xl">Prometheus</h1>
-        <p className="mt-2 text-sm uppercase tracking-widest opacity-50">
+        <p className="mt-2 text-sm uppercase tracking-widest opacity-75">
           AI Integrations and Education
         </p>
 

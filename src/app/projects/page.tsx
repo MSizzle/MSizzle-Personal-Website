@@ -35,7 +35,7 @@ export default async function ProjectsPage() {
 
         {projects.length === 0 ? (
           <ScrollReveal delay={0.15}>
-            <p className="mt-8 opacity-50">Projects coming soon.</p>
+            <p className="mt-8 opacity-75">Projects coming soon.</p>
           </ScrollReveal>
         ) : (
           <ScrollReveal delay={0.15}>

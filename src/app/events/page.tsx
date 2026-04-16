@@ -41,17 +41,17 @@ function EventCard({ event, delay }: { event: EventItem; delay: number }) {
           <h2 className="text-base font-normal underline transition-opacity group-hover:opacity-60">
             {event.name}
           </h2>
-          <span className="shrink-0 text-sm opacity-50">
+          <span className="shrink-0 text-sm opacity-75">
             {formatDate(event.date)}
           </span>
         </div>
 
         {event.location && (
-          <p className="mt-0.5 text-sm opacity-50">{event.location}</p>
+          <p className="mt-0.5 text-sm opacity-75">{event.location}</p>
         )}
 
         {event.description && (
-          <p className="mt-1 text-sm opacity-50 line-clamp-2">{event.description}</p>
+          <p className="mt-1 text-sm opacity-75 line-clamp-2">{event.description}</p>
         )}
       </div>
     </div>
@@ -97,14 +97,14 @@ export default async function EventsPage() {
 
       {!hasEvents ? (
         <ScrollReveal delay={0.15}>
-          <p className="mt-8 opacity-50">No events yet.</p>
+          <p className="mt-8 opacity-75">No events yet.</p>
         </ScrollReveal>
       ) : (
         <>
           {upcoming.length > 0 && (
             <>
               <ScrollReveal delay={0.15}>
-                <h2 className="mt-10 text-xs font-normal uppercase tracking-widest opacity-50">
+                <h2 className="mt-10 text-xs font-normal uppercase tracking-widest opacity-75">
                   Upcoming
                 </h2>
               </ScrollReveal>
@@ -121,7 +121,7 @@ export default async function EventsPage() {
           {past.length > 0 && (
             <>
               <ScrollReveal delay={upcoming.length > 0 ? 0.3 : 0.15}>
-                <h2 className="mt-10 text-xs font-normal uppercase tracking-widest opacity-50">
+                <h2 className="mt-10 text-xs font-normal uppercase tracking-widest opacity-75">
                   Past
                 </h2>
               </ScrollReveal>

@@ -74,7 +74,7 @@ export default async function ProjectPage({ params }: PageProps) {
             {project.tags.length > 0 && (
               <div className="flex flex-wrap gap-3">
                 {project.tags.map((tag) => (
-                  <span key={tag} className="text-sm opacity-50">
+                  <span key={tag} className="text-sm opacity-75">
                     {tag}
                   </span>
                 ))}

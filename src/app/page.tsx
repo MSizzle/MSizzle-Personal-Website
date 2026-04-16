@@ -120,7 +120,7 @@ export default async function Home() {
               </li>
             ))}
             {posts.length === 0 && (
-              <li className="opacity-50">More posts coming soon.</li>
+              <li className="opacity-75">More posts coming soon.</li>
             )}
           </ul>
         </div>
@@ -147,7 +147,7 @@ export default async function Home() {
                   )}
                   <span className="underline">{project.title}</span>
                   {project.description && (
-                    <span className="ml-2 text-base opacity-50 no-underline">
+                    <span className="ml-2 text-base opacity-75 no-underline">
                       &bull; {project.description}
                     </span>
                   )}
@@ -155,7 +155,7 @@ export default async function Home() {
               </li>
             ))}
             {projects.length === 0 && (
-              <li className="opacity-50">Projects coming soon.</li>
+              <li className="opacity-75">Projects coming soon.</li>
             )}
           </ul>
         </div>
@@ -189,7 +189,7 @@ export default async function Home() {
                           <span className="mr-2 shrink-0 no-underline">{event.emoji}</span>
                         )}
                         <span className="underline">{event.name}</span>
-                        <span className="ml-2 text-base opacity-50 no-underline">
+                        <span className="ml-2 text-base opacity-75 no-underline">
                           &bull;{" "}
                           {event.date
                             ? new Date(event.date).toLocaleDateString("en-US", {
@@ -206,7 +206,7 @@ export default async function Home() {
                           <span className="mr-2 shrink-0">{event.emoji}</span>
                         )}
                         <span>{event.name}</span>
-                        <span className="ml-2 text-base opacity-50">
+                        <span className="ml-2 text-base opacity-75">
                           &bull;{" "}
                           {event.date
                             ? new Date(event.date).toLocaleDateString("en-US", {
@@ -243,7 +243,7 @@ export default async function Home() {
                           <span className="mr-2 shrink-0 no-underline">{event.emoji}</span>
                         )}
                         <span className="underline">{event.name}</span>
-                        <span className="ml-2 text-base opacity-50 no-underline">
+                        <span className="ml-2 text-base opacity-75 no-underline">
                           &bull;{" "}
                           {event.date
                             ? new Date(event.date).toLocaleDateString("en-US", {
@@ -260,7 +260,7 @@ export default async function Home() {
                           <span className="mr-2 shrink-0">{event.emoji}</span>
                         )}
                         <span>{event.name}</span>
-                        <span className="ml-2 text-base opacity-50">
+                        <span className="ml-2 text-base opacity-75">
                           &bull;{" "}
                           {event.date
                             ? new Date(event.date).toLocaleDateString("en-US", {
@@ -279,7 +279,7 @@ export default async function Home() {
           )}
 
           {pastEvents.length === 0 && upcomingEvents.length === 0 && (
-            <p className="mt-4 opacity-50">Events coming soon.</p>
+            <p className="mt-4 opacity-75">Events coming soon.</p>
           )}
         </div>
       </section>
