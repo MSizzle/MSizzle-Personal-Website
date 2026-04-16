@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 const LINKS = [
   { href: '/about', label: 'About' },
-  { href: '/prometheus', label: 'Prometheus' },
+  { href: 'https://prometheus.today', label: 'Prometheus' },
   { href: '/blog', label: 'Writings' },
   { href: '/projects', label: 'Works' },
   { href: '/newsletter', label: 'Monty Monthly' },
@@ -46,16 +46,21 @@ export function Footer() {
               Links &#8600;
             </h2>
             <ul className="mt-2 space-y-2">
-              {LINKS.map((link) => (
-                <li key={link.label}>
-                  <Link
-                    href={link.href}
-                    className="text-3xl underline transition-opacity hover:opacity-60 sm:text-base"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
+              {LINKS.map((link) => {
+                const isExternal = link.href.startsWith('http')
+                const Tag = isExternal ? 'a' : Link
+                return (
+                  <li key={link.label}>
+                    <Tag
+                      href={link.href}
+                      {...(isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                      className="text-3xl underline transition-opacity hover:opacity-60 sm:text-base"
+                    >
+                      {link.label}
+                    </Tag>
+                  </li>
+                )
+              })}
             </ul>
           </div>
 
