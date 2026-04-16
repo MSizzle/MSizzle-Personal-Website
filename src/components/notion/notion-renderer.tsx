@@ -1,7 +1,10 @@
 "use client";
 
-import React, { Fragment } from "react";
+import React, { Fragment, createContext, useContext, useMemo } from "react";
+import Image from "next/image";
 import type { BlockObjectResponse, RichTextItemResponse } from "@notionhq/client/build/src/api-endpoints";
+
+const FirstImageContext = createContext<string | null>(null);
 
 // ---------------------------------------------------------------------------
 // Types
@@ -272,25 +275,7 @@ function renderBlock(block: BlockWithChildren): React.ReactNode {
 
     // ------ Image ------
     case "image": {
-      const caption = plainText(block.image.caption);
-      const alt = caption || "Image";
-      const src = `/api/notion-image?blockId=${block.id}`;
-      return (
-        <figure key={id} className="my-6">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={src}
-            alt={alt}
-            loading="lazy"
-            className="w-full rounded-lg"
-          />
-          {caption && (
-            <figcaption className="mt-2 text-center text-sm text-gray-500 dark:text-gray-400">
-              {caption}
-            </figcaption>
-          )}
-        </figure>
-      );
+      return <NotionImageBlock key={id} block={block} />;
     }
 
     // ------ Bookmark ------
@@ -523,12 +508,56 @@ function groupBlocks(blocks: BlockWithChildren[]): GroupedBlock[] {
 // Main component
 // ---------------------------------------------------------------------------
 
+function findFirstImageId(blocks: BlockWithChildren[]): string | null {
+  for (const block of blocks) {
+    if (block.type === "image") return block.id;
+    if (block.children) {
+      const nested = findFirstImageId(block.children);
+      if (nested) return nested;
+    }
+  }
+  return null;
+}
+
+function NotionImageBlock({ block }: { block: BlockWithChildren }) {
+  if (block.type !== "image") return null;
+  const firstImageId = useContext(FirstImageContext);
+  const isFirst = firstImageId === block.id;
+  const caption = plainText(block.image.caption);
+  const alt = caption || "Image";
+  const src = `/api/notion-image?blockId=${block.id}`;
+  return (
+    <figure className="my-6">
+      <Image
+        src={src}
+        alt={alt}
+        width={1200}
+        height={800}
+        sizes="(max-width: 768px) 100vw, 66ch"
+        priority={isFirst}
+        loading={isFirst ? "eager" : "lazy"}
+        className="h-auto w-full rounded-lg"
+        unoptimized={false}
+      />
+      {caption && (
+        <figcaption className="mt-2 text-center text-sm text-gray-500 dark:text-gray-400">
+          {caption}
+        </figcaption>
+      )}
+    </figure>
+  );
+}
+
 export function NotionRenderer({ blocks }: NotionRendererProps) {
+  const firstImageId = useMemo(() => findFirstImageId(blocks ?? []), [blocks]);
+  const outerContext = useContext(FirstImageContext);
   if (!blocks || blocks.length === 0) return null;
 
   const groups = groupBlocks(blocks);
+  // Only the outermost renderer provides the first-image id; nested renderers inherit it.
+  const providerValue = outerContext ?? firstImageId;
 
-  return (
+  const content = (
     <>
       {groups.map((group, i) => {
         if (group.type === "bulleted_list") {
@@ -551,6 +580,13 @@ export function NotionRenderer({ blocks }: NotionRendererProps) {
         return <Fragment key={group.blocks[0].id}>{renderBlock(group.blocks[0])}</Fragment>;
       })}
     </>
+  );
+
+  if (outerContext) return content;
+  return (
+    <FirstImageContext.Provider value={providerValue}>
+      {content}
+    </FirstImageContext.Provider>
   );
 }
 
