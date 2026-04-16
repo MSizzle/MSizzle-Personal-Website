@@ -146,11 +146,6 @@ export default async function Home() {
                     <span className="mr-2 shrink-0 no-underline">{project.emoji}</span>
                   )}
                   <span className="underline">{project.title}</span>
-                  {project.description && (
-                    <span className="ml-2 text-base opacity-75 no-underline">
-                      &bull; {project.description}
-                    </span>
-                  )}
                 </Link>
               </li>
             ))}
