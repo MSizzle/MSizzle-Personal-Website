@@ -7,10 +7,6 @@ import { cn } from '@/utils/cn'
 
 const NAV_LINKS = [
   { href: '/about', label: 'About' },
-  { href: '/prometheus', label: 'Prometheus' },
-  { href: '/blog', label: 'Writings' },
-  { href: '/projects', label: 'Works' },
-  { href: '/newsletter', label: 'Monty Monthly' },
   { href: '#contact', label: 'Contact' },
 ]
 
