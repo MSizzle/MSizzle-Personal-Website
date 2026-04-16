@@ -44,6 +44,20 @@ export default async function ProjectPage({ params }: PageProps) {
           { name: project.title },
         ]}
       />
+      {/* Hero image — full width, above content */}
+      {project.image && (
+        <div className="mx-auto max-w-[66ch] px-6 pt-8 md:px-0">
+          <div className="w-full overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--muted)]">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={`/api/notion-cover?pageId=${project.id}`}
+              alt={project.title}
+              className="w-full object-contain"
+            />
+          </div>
+        </div>
+      )}
+
       <article className="mx-auto max-w-[66ch] px-6 pb-16 pt-8 md:px-0">
         <header className="mb-10">
         <h1 className="text-2xl font-normal tracking-tight sm:text-3xl">
@@ -55,18 +69,6 @@ export default async function ProjectPage({ params }: PageProps) {
           <p className="mt-3 opacity-80">
             {project.description}
           </p>
-        )}
-
-        {/* Thumbnail */}
-        {project.image && (
-          <div className="mt-6 aspect-video w-full overflow-hidden border border-[var(--border)]">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={`/api/notion-cover?pageId=${project.id}`}
-              alt={project.title}
-              className="h-full w-full object-cover"
-            />
-          </div>
         )}
 
         {(project.tags.length > 0 || project.externalUrl) && (
