@@ -1,0 +1,183 @@
+<claude-code-hint v="1" type="plugin" value="vercel@claude-plugins-official" />
+Retrieving project…
+> Downloading `production` Environment Variables for msizzles-projects/m-sizzle-personal-website
+Downloading
+Created .vercel/.env.production.local file  [177ms]
+
+> Downloading project settings
+Downloaded project settings to ~/MSizzle Personal Website/.vercel/project.json [0ms]
+<claude-code-hint v="1" type="plugin" value="vercel@claude-plugins-official" />
+WARNING: You should not upload the `.next` directory.
+Installing dependencies...
+
+up to date in 596ms
+
+170 packages are looking for funding
+  run `npm fund` for details
+Detected Next.js version: 16.2.1
+Running "npm run build"
+
+> msizzle-website@0.1.0 build
+> next build
+
+Attention: Next.js now collects completely anonymous telemetry regarding usage.
+This information is used to shape Next.js' roadmap and prioritize features.
+You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+https://nextjs.org/telemetry
+
+▲ Next.js 16.2.1 (Turbopack)
+- Environments: .env.local
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 2.3s
+  Running TypeScript ...
+  Finished TypeScript in 2.4s ...
+  Collecting page data using 9 workers ...
+⚠ Using edge runtime on a page currently disables static generation for that page
+  Generating static pages using 9 workers (0/40) ...
+(node:31199) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+  Generating static pages using 9 workers (10/40) 
+  Generating static pages using 9 workers (20/40) 
+  Generating static pages using 9 workers (30/40) 
+✓ Generating static pages using 9 workers (40/40) in 11.6s
+  Finalizing page optimization ...
+
+Route (app)                       Revalidate  Expire
+┌ ○ /                                    30m      1y
+├ ○ /_not-found
+├ ○ /about
+├ ƒ /api/notion-cover
+├ ƒ /api/notion-image
+├ ○ /blog                                30m      1y
+├ ● /blog/[slug]                         30m      1y
+│ ├ /blog/pursuit-of-happierness         30m      1y
+│ ├ /blog/defiant-optimism               30m      1y
+│ ├ /blog/demystifying-merlin            30m      1y
+│ └ [+12 more paths]
+├ ƒ /blog/-/opengraph-image
+├ ○ /blog/feed.xml                       30m      1y
+├ ○ /events                              30m      1y
+├ ○ /icon.png
+├ ○ /links
+├ ○ /newsletter                           1d      1y
+├ ○ /opengraph-image
+├ ○ /projects                            30m      1y
+├ ● /projects/[slug]                     30m      1y
+│ ├ /projects/mahealth-scanner           30m      1y
+│ ├ /projects/goaltender                 30m      1y
+│ ├ /projects/insider-trader             30m      1y
+│ └ [+4 more paths]
+├ ƒ /projects/-/opengraph-image
+├ ○ /prometheus
+├ ○ /robots.txt
+├ ○ /sitemap.xml
+└ ○ /uses
+
+
+○  (Static)   prerendered as static content
+●  (SSG)      prerendered as static HTML (uses generateStaticParams)
+ƒ  (Dynamic)  server-rendered on demand
+
+Traced Next.js server files in: 33.214ms
+Created all serverless functions in: 386.166ms
+Collected static files (public/, static/, .next/static): 3.236ms
+{
+  "status": "ok",
+  "outputDir": "/Users/Montster/MSizzle Personal Website/.vercel/output",
+  "outputDirRelative": ".vercel/output",
+  "target": "production",
+  "message": "Build completed successfully.",
+  "next": [
+    {
+      "command": "vercel deploy",
+      "when": "Deploy the build output"
+    }
+  ]
+}
+vercel build exit: 
+<claude-code-hint v="1" type="plugin" value="vercel@claude-plugins-official" />
+WARNING: You should not upload the `.next` directory.
+Installing dependencies...
+
+up to date in 571ms
+
+170 packages are looking for funding
+  run `npm fund` for details
+Detected Next.js version: 16.2.1
+Running "npm run build"
+
+> msizzle-website@0.1.0 build
+> next build
+
+▲ Next.js 16.2.1 (Turbopack)
+- Environments: .env.local
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 2.3s
+  Running TypeScript ...
+  Finished TypeScript in 2.5s ...
+  Collecting page data using 9 workers ...
+⚠ Using edge runtime on a page currently disables static generation for that page
+  Generating static pages using 9 workers (0/40) ...
+(node:31352) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+  Generating static pages using 9 workers (10/40) 
+  Generating static pages using 9 workers (20/40) 
+  Generating static pages using 9 workers (30/40) 
+✓ Generating static pages using 9 workers (40/40) in 12.3s
+  Finalizing page optimization ...
+
+Route (app)                       Revalidate  Expire
+┌ ○ /                                    30m      1y
+├ ○ /_not-found
+├ ○ /about
+├ ƒ /api/notion-cover
+├ ƒ /api/notion-image
+├ ○ /blog                                30m      1y
+├ ● /blog/[slug]                         30m      1y
+│ ├ /blog/pursuit-of-happierness         30m      1y
+│ ├ /blog/defiant-optimism               30m      1y
+│ ├ /blog/demystifying-merlin            30m      1y
+│ └ [+12 more paths]
+├ ƒ /blog/-/opengraph-image
+├ ○ /blog/feed.xml                       30m      1y
+├ ○ /events                              30m      1y
+├ ○ /icon.png
+├ ○ /links
+├ ○ /newsletter                           1d      1y
+├ ○ /opengraph-image
+├ ○ /projects                            30m      1y
+├ ● /projects/[slug]                     30m      1y
+│ ├ /projects/mahealth-scanner           30m      1y
+│ ├ /projects/goaltender                 30m      1y
+│ ├ /projects/insider-trader             30m      1y
+│ └ [+4 more paths]
+├ ƒ /projects/-/opengraph-image
+├ ○ /prometheus
+├ ○ /robots.txt
+├ ○ /sitemap.xml
+└ ○ /uses
+
+
+○  (Static)   prerendered as static content
+●  (SSG)      prerendered as static HTML (uses generateStaticParams)
+ƒ  (Dynamic)  server-rendered on demand
+
+Traced Next.js server files in: 32.015ms
+Created all serverless functions in: 369.775ms
+Collected static files (public/, static/, .next/static): 3.019ms
+{
+  "status": "ok",
+  "outputDir": "/Users/Montster/MSizzle Personal Website/.vercel/output",
+  "outputDirRelative": ".vercel/output",
+  "target": "production",
+  "message": "Build completed successfully.",
+  "next": [
+    {
+      "command": "vercel deploy",
+      "when": "Deploy the build output"
+    }
+  ]
+}
+vercel build exit: 0
