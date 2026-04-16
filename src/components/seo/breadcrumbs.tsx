@@ -8,7 +8,7 @@ export function Breadcrumbs({ items }: { items: BreadcrumbItem[] }) {
       <JsonLd data={buildBreadcrumbListSchema(items)} />
       <nav
         aria-label="Breadcrumb"
-        className="mx-auto max-w-[66ch] px-6 pt-24 text-xs uppercase tracking-widest opacity-75 md:px-0"
+        className="sr-only"
       >
         <ol className="flex flex-wrap items-center gap-2">
           {items.map((item, idx) => {
