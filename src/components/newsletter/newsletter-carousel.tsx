@@ -57,11 +57,12 @@ export function NewsletterCarousel({ issues }: { issues: MontyMonthlyIssue[] }) 
             )}
             <div className="p-4">
               <h3 className="text-base font-normal leading-snug">{issue.title}</h3>
-              <time className="mt-2 block text-sm opacity-75">
+              <time className="mt-2 block text-sm opacity-75" suppressHydrationWarning>
                 {new Date(issue.pubDate).toLocaleDateString('en-US', {
                   year: 'numeric',
                   month: 'long',
                   day: 'numeric',
+                  timeZone: 'UTC',
                 })}
               </time>
             </div>
