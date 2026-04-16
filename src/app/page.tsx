@@ -172,9 +172,9 @@ export default async function Home() {
           </Link>
           {pastEvents.length > 0 && (
             <>
-              <h3 className="mt-4 text-xs font-normal uppercase tracking-widest opacity-50">
+              <h2 className="mt-4 text-xs font-normal uppercase tracking-widest opacity-75">
                 Previous
-              </h3>
+              </h2>
               <ul className="mt-2 space-y-2">
                 {pastEvents.slice(0, 5).map((event) => (
                   <li key={event.id}>
@@ -226,9 +226,9 @@ export default async function Home() {
 
           {upcomingEvents.length > 0 && (
             <>
-              <h3 className="mt-4 text-xs font-normal uppercase tracking-widest opacity-50">
+              <h2 className="mt-4 text-xs font-normal uppercase tracking-widest opacity-75">
                 Upcoming
-              </h3>
+              </h2>
               <ul className="mt-2 space-y-2">
                 {upcomingEvents.slice(0, 5).map((event) => (
                   <li key={event.id}>

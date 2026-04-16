@@ -22,9 +22,9 @@ export function Footer() {
       <div className="mx-auto max-w-[66ch] py-16">
         {/* Contact */}
         <div id="contact" className="mb-16 scroll-mt-20">
-          <h4 className="text-base font-normal uppercase tracking-widest">
+          <h2 className="text-base font-normal uppercase tracking-widest">
             Contact &#8600;
-          </h4>
+          </h2>
           <p className="mt-4 leading-relaxed opacity-80">
             Want to talk about AI, building, writing, or a potential Prometheus engagement?
             I&rsquo;d love to hear from you.
@@ -42,9 +42,9 @@ export function Footer() {
         <div className="grid gap-12 sm:grid-cols-2 sm:gap-16">
           {/* Links */}
           <div>
-            <h4 className="text-base font-normal uppercase tracking-widest">
+            <h2 className="text-base font-normal uppercase tracking-widest">
               Links &#8600;
-            </h4>
+            </h2>
             <ul className="mt-2 space-y-2">
               {LINKS.map((link) => (
                 <li key={link.label}>
@@ -61,9 +61,9 @@ export function Footer() {
 
           {/* Socials */}
           <div>
-            <h4 className="text-base font-normal uppercase tracking-widest">
+            <h2 className="text-base font-normal uppercase tracking-widest">
               Socials &#8600;
-            </h4>
+            </h2>
             <ul className="mt-2 space-y-2">
               {SOCIALS.map((link) => (
                 <li key={link.label}>

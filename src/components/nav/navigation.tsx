@@ -36,8 +36,8 @@ export function Navigation() {
                 <Link
                   href={link.href}
                   className={cn(
-                    'text-sm uppercase tracking-wide transition-opacity hover:opacity-60',
-                    pathname === link.href ? 'opacity-100' : 'opacity-50'
+                    'text-sm uppercase tracking-wide transition-opacity hover:opacity-80',
+                    pathname === link.href ? 'opacity-100' : 'opacity-75'
                   )}
                 >
                   {link.label}
