@@ -4,13 +4,13 @@ milestone: v1.0
 milestone_name: milestone
 current_phase: 06
 status: Phase 07 complete; Phase 06 planned (CONTEXT + 6 PLANs staged)
-last_updated: "2026-04-16T00:00:00.000Z"
+last_updated: "2026-04-16T19:48:53.987Z"
 progress:
   total_phases: 7
-  completed_phases: 6
-  total_plans: 22
-  completed_plans: 22
-  percent: 100
+  completed_phases: 4
+  total_plans: 28
+  completed_plans: 25
+  percent: 89
 ---
 
 # Project State
@@ -61,6 +61,7 @@ Phases 1-5 and 7 complete. Phase 7 (SEO Overhaul) shipped all 11 plans (07-01..0
 - [Phase 05-analytics]: data-umami-event declarative click tracking on footer, project-card, and links page outbound links
 - [Phase 05-analytics]: Umami deployed as separate Vercel project (fork of umami-software/umami) backed by Neon Postgres, now reachable at https://analytics.montysinger.com (custom subdomain D-04 completed 2026-04-10 via Namecheap CNAME → cname.vercel-dns.com); legacy *.vercel.app alias preserved
 - [Phase 05-analytics]: Production domain is montysinger.com (Namecheap registrar/DNS), NOT msizzle.com — earlier planning docs were incorrect
+- [Phase 06]: Plan 06-01 classified broader-sweep NOTION_TOKEN variable-name hits as INFO (not LEAK) since they are process.env reads in server Edge functions; D-14 blocking gate applies to client chunks and to literal secret VALUES only
 
 ### Roadmap Evolution
 
