@@ -47,7 +47,7 @@ export default async function ProjectPage({ params }: PageProps) {
       {/* Hero image — full width, above content */}
       {project.image && (
         <div className="mx-auto max-w-[66ch] px-6 pt-8 md:px-0">
-          <div className="w-full overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--muted)]">
+          <div className="w-full overflow-hidden rounded-lg bg-[var(--muted)]">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={`/api/notion-cover?pageId=${project.id}`}
