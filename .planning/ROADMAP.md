@@ -6,16 +6,20 @@
 
 ---
 
+<!-- Overview table reconciled 2026-04-15 as Phase 6 plan 06-01 Task 1. Source of truth: STATE.md Phase Status table + Accumulated Context. -->
 ## Phase Overview
 
-| # | Phase | Goal | Requirements | Success Criteria |
-|---|-------|------|--------------|------------------|
-| 1 | Foundation | Lock architectural patterns and deploy a live skeleton | DSGN-01, DSGN-06, HOME-04 | 4 |
-| 2 | Notion CMS Integration | Content authored in Notion renders on the site without broken images | BLOG-01, BLOG-02, BLOG-05 | 4 |
-| 3 | Core Pages | 3/6 | In Progress|  |
-| 4 | Animation & Polish | 3/3 | Complete   | 2026-04-03 |
-| 5 | Analytics | 0/2 | Planned    |  |
-| 6 | Pre-Launch QA | Confidence the site is production-ready | All requirements validated end-to-end | 5 |
+| # | Phase | Plans | Status | Completed |
+|---|-------|-------|--------|-----------|
+| 1 | Foundation | — | Complete | 2026-03-31 |
+| 2 | Notion CMS Integration | — | Complete | 2026-03-31 |
+| 3 | Core Pages | 6/6 | Complete | 2026-04-02 |
+| 4 | Animation & Polish | 3/3 | Complete | 2026-04-03 |
+| 5 | Analytics | 2/2 | Complete | 2026-04-03 |
+| 6 | Pre-Launch QA | 6/6 planned | In Progress | — |
+| 7 | SEO Overhaul | 11/11 | Complete | 2026-04-14 |
+
+Per-phase details below. Requirement coverage summary at the bottom.
 
 ---
 

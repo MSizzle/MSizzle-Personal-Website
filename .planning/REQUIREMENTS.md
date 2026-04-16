@@ -103,40 +103,40 @@ Explicitly excluded. Documented to prevent scope creep.
 
 ## Traceability
 
-<!-- Filled by roadmap creation 2026-03-31 -->
+<!-- Reconciled 2026-04-15 as Phase 6 plan 06-01 Task 1. Status reflects pre-UAT shipped state; 06-UAT.md re-stamps each row as pass | fail | skipped | blocked. DSGN-06 is `complete` per D-15 (montysinger.com live via Namecheap→Vercel, Super disconnected). -->
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| HOME-01 | Phase 3 — Core Pages | not_started |
-| HOME-02 | Phase 3 — Core Pages | not_started |
-| HOME-03 | Phase 4 — Animation & Polish | not_started |
-| HOME-04 | Phase 1 (scaffold) / Phase 4 (full integration) | partial — scaffold done |
-| PORT-01 | Phase 3 — Core Pages | not_started |
-| PORT-02 | Phase 4 — Animation & Polish | not_started |
-| PORT-03 | Phase 3 — Core Pages | not_started |
-| BLOG-01 | Phase 2 — Notion CMS Integration | complete |
-| BLOG-02 | Phase 2 — Notion CMS Integration | complete |
-| BLOG-03 | Phase 3 — Core Pages | not_started |
-| BLOG-04 | Phase 3 — Core Pages | not_started |
-| BLOG-05 | Phase 2 — Notion CMS Integration | complete |
-| ABOUT-01 | Phase 3 — Core Pages | not_started |
-| ANLY-01 | Phase 5 — Analytics | not_started |
-| ANLY-02 | Phase 5 — Analytics | not_started |
-| ANLY-03 | Phase 5 — Analytics | not_started |
-| ANLY-04 | Phase 5 — Analytics | not_started |
-| ANLY-05 | Phase 5 — Analytics | not_started |
-| ANLY-06 | Phase 5 — Analytics | not_started |
-| DSGN-01 | Phase 1 — Foundation | complete |
-| DSGN-02 | Phase 3 — Core Pages | not_started |
-| DSGN-03 | Phase 4 — Animation & Polish | not_started |
-| DSGN-04 | Phase 4 — Animation & Polish | not_started |
-| DSGN-05 | Phase 3 — Core Pages | not_started |
-| DSGN-06 | Phase 1 — Foundation | not_started — needs Vercel deploy + DNS |
-| SOC-01 | Phase 3 — Core Pages | not_started |
-| SOC-02 | Phase 3 — Core Pages | not_started |
-| SOC-03 | Phase 3 — Core Pages | not_started |
-| SOC-04 | Phase 3 — Core Pages | not_started |
-| SOC-05 | Phase 3 — Core Pages | not_started |
+| HOME-01 | Phase 3, Core Pages | complete |
+| HOME-02 | Phase 3, Core Pages | complete |
+| HOME-03 | Phase 4, Animation & Polish | complete |
+| HOME-04 | Phase 1 (scaffold) / Phase 4 (full integration) | complete |
+| PORT-01 | Phase 3, Core Pages | complete |
+| PORT-02 | Phase 4, Animation & Polish | complete |
+| PORT-03 | Phase 3, Core Pages | complete |
+| BLOG-01 | Phase 2, Notion CMS Integration | complete |
+| BLOG-02 | Phase 2, Notion CMS Integration | complete |
+| BLOG-03 | Phase 3, Core Pages | complete |
+| BLOG-04 | Phase 3, Core Pages | complete |
+| BLOG-05 | Phase 2, Notion CMS Integration | complete |
+| ABOUT-01 | Phase 3, Core Pages | complete |
+| ANLY-01 | Phase 5, Analytics | complete |
+| ANLY-02 | Phase 5, Analytics | complete |
+| ANLY-03 | Phase 5, Analytics | complete |
+| ANLY-04 | Phase 5, Analytics | complete |
+| ANLY-05 | Phase 5, Analytics | complete |
+| ANLY-06 | Phase 5, Analytics | complete |
+| DSGN-01 | Phase 1, Foundation | complete |
+| DSGN-02 | Phase 3, Core Pages | complete |
+| DSGN-03 | Phase 4, Animation & Polish | complete |
+| DSGN-04 | Phase 4, Animation & Polish | complete |
+| DSGN-05 | Phase 3, Core Pages | complete |
+| DSGN-06 | Phase 1, Foundation | complete |
+| SOC-01 | Phase 3, Core Pages | complete |
+| SOC-02 | Phase 3, Core Pages | complete |
+| SOC-03 | Phase 3, Core Pages | complete |
+| SOC-04 | Phase 3, Core Pages | complete |
+| SOC-05 | Phase 3, Core Pages | complete |
 
 ---
 *Requirements defined: 2026-03-31*
