@@ -26,7 +26,7 @@ export function PhotoCarousel({ photos }: PhotoCarouselProps) {
               fill
               className="object-cover"
               sizes="(max-width: 640px) 288px, 384px"
-              priority={i < 2}
+              loading="lazy"
             />
           </div>
         ))}
