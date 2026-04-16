@@ -219,6 +219,16 @@ Plans:
 
 Every v1 requirement maps to exactly one phase. Coverage: 28/28 (100%).
 
+### Phase 7: SEO Overhaul
+
+**Goal:** Rank montysinger.com for "Monty Singer," "Monty Singer AI," and "Monty Singer Prometheus" by fixing site-wide SEO infrastructure, rewriting thin homepage/about copy, shipping /prometheus, /newsletter, and /uses pages, adding JSON-LD (Person + FAQ + Breadcrumb), RSS for the blog, and per-page metadata for every blog post and project.
+**Requirements**: New phase — requirements captured as PRD-derived decisions in CONTEXT.md (no REQUIREMENTS.md IDs)
+**Depends on:** None (SEO should land before Phase 6 QA)
+**Plans:** 0 plans
+
+Plans:
+- [ ] TBD (run /gsd-plan-phase 7 to break down)
+
 ---
 
 *Roadmap created: 2026-03-31*

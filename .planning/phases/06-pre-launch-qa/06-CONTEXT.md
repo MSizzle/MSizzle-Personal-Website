@@ -17,10 +17,10 @@ Systematic validation that the MSizzle Personal Website is production-ready befo
 - Cross-browser check: Safari (page transitions, `backdrop-filter`) + Chrome
 - Security check: confirm `NOTION_TOKEN` is not present in any client-side bundle
 - Verify Notion-pipeline "2+ hour image" (signed URL refresh holds)
-- Reconcile the stale REQUIREMENTS.md Traceability table against real shipped state
+- Reconcile the stale `REQUIREMENTS.md` Traceability table AND the stale `ROADMAP.md` Phase Overview table against real shipped state (see D-08)
 
-**Out of scope (separate post-QA gate):**
-- Custom domain DNS cutover — tracked as a downstream step after Phase 6 sign-off, not a plan within this phase
+**Out of scope:**
+- Custom domain DNS cutover — **already complete** pre-Phase-6 (Super disconnected; `montysinger.com` live on Vercel via Namecheap). See D-15. No post-Phase-6 follow-up needed.
 - Any new feature work — scope-creep deferred to backlog
 
 </domain>
@@ -33,14 +33,20 @@ Systematic validation that the MSizzle Personal Website is production-ready befo
 - **D-02:** Before each QA run, redeploy latest `main` to Vercel production so the URL reflects the commit being audited. Record the deployment URL + commit SHA at the top of the verification report.
 
 ### Lighthouse Execution
-- **D-03:** Use the **Lighthouse CLI** (`npx lighthouse <url> --preset=desktop --output=html,json`) for the canonical numbers captured in the QA report. Rationale: reproducible, scriptable, produces the JSON blob we can commit as evidence. [auto-selected: lighthouse-cli]
-- **D-04:** Cross-check with **PageSpeed Insights (web.dev/measure)** for the mobile profile — some perf regressions only surface on PSI's throttled mobile simulator. Include both desktop CLI and PSI-mobile scores in the verification report.
-- **D-05:** Score thresholds are **hard gates**: Perf ≥ 90, A11y ≥ 95, Best Practices ≥ 95, SEO = 100. Any score below threshold blocks launch and produces a sub-plan (`06-0X-FIX-lighthouse-<metric>.md`).
+- **D-03:** Use the **Lighthouse CLI** for the canonical desktop numbers captured in the QA report (`npx lighthouse <url> --preset=desktop --output=html,json`). Rationale: reproducible, scriptable, produces the JSON blob we can commit as evidence.
+- **D-04:** **Triple coverage** on mobile:
+  1. `npx lighthouse <url> --preset=mobile --output=html,json` — reproducible local mobile number, independent of Google infra and insulated against PSI flakiness.
+  2. **PageSpeed Insights (https://pagespeed.web.dev/)** mobile run — authoritative for "what Google sees"; pulls CrUX field data if available.
+  3. Both sets of mobile scores get recorded in the verification report alongside the desktop CLI numbers.
+- **D-05:** Score thresholds are **hard gates** on every profile (desktop CLI, mobile CLI, PSI mobile): Perf ≥ 90, A11y ≥ 95, Best Practices ≥ 95, SEO = 100. Any score below threshold blocks launch and produces a sub-plan (`06-0X-FIX-lighthouse-<metric>.md`).
 
 ### Requirement Verification Method
 - **D-06:** **Eyeball + screenshot** each of the 28 v1 requirements on the live URL. Capture one screenshot per requirement (desktop + mobile) and commit the set under `.planning/phases/06-pre-launch-qa/evidence/`. No Playwright/E2E automation in Phase 6 — that's deferred to post-launch.
 - **D-07:** Write results into a **single `06-UAT.md` file** using the standard GSD UAT format (`pass` / `fail` / `skipped` / `blocked` per requirement). The UAT file is the primary audit artifact for Phase 6 completion.
-- **D-08:** The existing REQUIREMENTS.md Traceability table is **stale** (many `not_started` rows that have actually shipped). Plan 06-01 reconciles the table as its first task, so Phase 6 starts from accurate status.
+- **D-08:** Two planning docs are stale and reconciled in **Plan 06-01 before any QA work runs**:
+  1. `.planning/REQUIREMENTS.md` Traceability table (many `not_started` rows that have shipped).
+  2. `.planning/ROADMAP.md` overview table (lines ~13-18) — phase-status + success-criteria columns lag reality, including Phase 7 which already shipped.
+  Both get updated to reflect actual state so Phase 6 audits against truth, not fiction.
 
 ### Failure Handling
 - **D-09:** Two failure tiers:
@@ -56,10 +62,10 @@ Systematic validation that the MSizzle Personal Website is production-ready befo
 - **D-13:** Specific Safari checks: (a) Lenis smooth scroll behaves, (b) `backdrop-filter` on nav/overlays renders, (c) page transitions between routes don't flicker.
 
 ### Security Check
-- **D-14:** Use `npx next build` + manual inspection of `.next/static/chunks/*.js` for the literal string `secret_` or `NOTION_TOKEN`. Confirm `process.env.NOTION_TOKEN` only appears in server-only modules. Flag any leak as blocking.
+- **D-14:** Grep for `secret_` and `NOTION_TOKEN` literals in **both** build-output trees, since the QA gate runs `vercel build` (not `next build`): `.next/static/chunks/**/*.js` **and** `.vercel/output/static/_next/static/chunks/**/*.js`. Also grep the full `.vercel/output/` tree for good measure. Confirm `process.env.NOTION_TOKEN` only appears in server-only modules (`src/lib/notion*.ts` and similar). Any hit in a client chunk = blocking fail.
 
 ### Domain Cutover (scope-boundary reminder)
-- **D-15:** The `montysinger.com` DNS switch is **NOT** a Phase 6 plan. It's a single post-sign-off step. The CONTEXT captures it only so the planner doesn't accidentally pull it into Phase 6 scope. Add it as a todo after 06-UAT passes.
+- **D-15:** `montysinger.com` is **already fully live on Vercel via Namecheap DNS** — Super is disconnected. DSGN-06 is therefore **complete**, not "partial." No post-Phase-6 DNS cutover todo is needed. Phase 6 validates against `https://montysinger.com` directly (or whichever Vercel apex domain is configured as primary).
 
 ### Claude's Discretion
 - Choice of exact Lighthouse CLI flags (desktop vs mobile preset, throttling mode) within the constraint that scores are reported for both.
@@ -136,7 +142,7 @@ Downstream agents MUST read these before planning or implementing Phase 6.
 - Playwright / E2E automation of the full requirement matrix — valuable but a post-launch v1.1 improvement. Captured for roadmap backlog.
 - Automated bundle-size regression budget (e.g., `size-limit`) — useful later, not a Phase 6 blocker.
 - Public status/perf page (ANLY-V2-01 in REQUIREMENTS.md) — already in the v2 backlog.
-- Custom-domain DNS cutover (`montysinger.com` → Vercel) — single post-Phase-6 step, not a plan.
+- ~~Custom-domain DNS cutover~~ — already complete (Namecheap → Vercel live; Super disconnected). Per revised D-15.
 
 </deferred>
 
@@ -146,11 +152,11 @@ Downstream agents MUST read these before planning or implementing Phase 6.
 Each of the gray areas below was auto-selected to its recommended option because `/gsd-discuss-phase 6 --auto` was invoked. If any of these feels wrong, run `/gsd-discuss-phase 6` without `--auto` or edit this CONTEXT.md directly before `/gsd-plan-phase 6`.
 
 1. **QA target environment** → live Vercel production URL (recommended; required by success criteria 2 & 5).
-2. **Lighthouse runner** → Lighthouse CLI as canonical + PSI as mobile cross-check (recommended; reproducible evidence).
+2. **Lighthouse runner** → Lighthouse CLI desktop (canonical) + CLI mobile (reproducible mobile) + PSI mobile (Google-authoritative) — triple coverage (user-directed; protects against both local-CPU noise and PSI infra weirdness).
 3. **Requirement verification method** → eyeball + screenshot committed as evidence (recommended; defer Playwright to v1.1).
 4. **Failure handling** → two-tier (blocking vs non-blocking) with auto-generated FIX sub-plans for blocking items (recommended; scales cleanly into execute-phase).
 5. **Cross-browser matrix** → Chrome + Safari + Firefox (desktop), Chrome + Safari (mobile) (recommended; matches ROADMAP risk callouts).
-6. **Requirements table refresh** → first task of Plan 06-01 reconciles the stale table before QA (recommended; avoids auditing against fiction).
-7. **Domain cutover** → explicitly out-of-scope for Phase 6; captured as a post-QA todo (recommended; honors ROADMAP phrasing "before the domain is fully switched over").
+6. **Stale-doc refresh** → first task of Plan 06-01 reconciles **both** `REQUIREMENTS.md` Traceability table AND `ROADMAP.md` overview table (user-directed; avoids auditing against fiction on either surface).
+7. **Domain cutover** → **already complete** — `montysinger.com` on Vercel via Namecheap, Super disconnected. DSGN-06 marks as complete in the reconciled Traceability table; no post-Phase-6 DNS todo needed (user-confirmed 2026-04-16).
 
 </auto_log>

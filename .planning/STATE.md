@@ -2,20 +2,21 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-current_phase: 05
-status: Executing Phase 05
-last_updated: "2026-04-03T15:18:15.955Z"
+current_phase: 06
+status: Phase 07 complete; Phase 06 planned (CONTEXT + 6 PLANs staged)
+last_updated: "2026-04-16T00:00:00.000Z"
 progress:
-  total_phases: 6
-  completed_phases: 2
-  total_plans: 11
-  completed_plans: 12
+  total_phases: 7
+  completed_phases: 6
+  total_plans: 22
+  completed_plans: 22
+  percent: 100
 ---
 
 # Project State
 
-**Current Phase:** 05
-**Last Updated:** 2026-04-02
+**Current Phase:** 06
+**Last Updated:** 2026-04-16
 
 ## Phase Status
 
@@ -26,11 +27,12 @@ progress:
 | 3 — Core Pages | complete | 2026-04-02 | 2026-04-02 |
 | 4 — Animation & Polish | complete | 2026-04-02 | 2026-04-03 |
 | 5 — Analytics | complete | 2026-04-03 | 2026-04-03 |
-| 6 — Pre-Launch QA | not_started | — | — |
+| 7 — SEO Overhaul | complete | 2026-04-14 | 2026-04-16 |
+| 6 — Pre-Launch QA | planned | 2026-04-16 | — |
 
 ## Active Work
 
-Phases 1-5 complete. Phase 5 (Analytics) infrastructure deployed: Umami live at https://umami-khaki-three.vercel.app, Production env vars set, end-to-end pipeline confirmed reachable 2026-04-10. Next: Phase 6 — Pre-Launch QA.
+Phases 1-5 and 7 complete. Phase 7 (SEO Overhaul) shipped all 11 plans (07-01..07-11): SEO infrastructure, Substack RSS pipeline, homepage/about rewrites, `/prometheus` + `/newsletter` + `/uses` routes, per-blog-post and per-project metadata, RSS feed at `/blog/feed.xml`, styled 404, and final em-dash sweep. Phase 6 (Pre-Launch QA) now has CONTEXT + 6 PLAN files staged (06-01 through 06-06) covering doc reconciliation, `vercel build` gate + bundle-secret scan, Lighthouse triple coverage (desktop CLI, mobile CLI, PSI mobile), 28-requirement UAT, Notion long-tail + dark-mode FOUC + Safari checks, SEO re-audit against live HTML, and GO/NO-GO aggregation.
 
 ## Accumulated Context
 
@@ -60,6 +62,10 @@ Phases 1-5 complete. Phase 5 (Analytics) infrastructure deployed: Umami live at 
 - [Phase 05-analytics]: Umami deployed as separate Vercel project (fork of umami-software/umami) backed by Neon Postgres, now reachable at https://analytics.montysinger.com (custom subdomain D-04 completed 2026-04-10 via Namecheap CNAME → cname.vercel-dns.com); legacy *.vercel.app alias preserved
 - [Phase 05-analytics]: Production domain is montysinger.com (Namecheap registrar/DNS), NOT msizzle.com — earlier planning docs were incorrect
 
+### Roadmap Evolution
+
+- Phase 7 added: SEO Overhaul
+
 ### Quick Tasks Completed
 
 | # | Description | Date | Commit | Directory |
@@ -69,9 +75,8 @@ Phases 1-5 complete. Phase 5 (Analytics) infrastructure deployed: Umami live at 
 
 ## Known Issues
 
-- DSGN-06 (custom domain on Vercel): main site live at montysinger.com via Namecheap DNS; analytics subdomain analytics.montysinger.com live as of 2026-04-10
 - Notion env vars (NOTION_TOKEN, NOTION_DATABASE_ID) — set in production, still useful to verify locally for dev
-- Planning artifacts in `.planning/phases/` reference msizzle.com in places — should be swept to montysinger.com in a future docs cleanup
+- Planning artifacts in `.planning/phases/` reference msizzle.com in places — should be swept to montysinger.com in a future docs cleanup (Phase 07 handled all src/ code; planning docs intentionally left alone for historical fidelity)
 
 ---
 
