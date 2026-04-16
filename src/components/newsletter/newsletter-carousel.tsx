@@ -16,7 +16,7 @@ export function NewsletterCarousel({ issues }: { issues: MontyMonthlyIssue[] }) 
       <button
         type="button"
         aria-label="Scroll left"
-        onClick={() => scrollBy(-320)}
+        onClick={() => scrollBy(-400)}
         className="absolute left-0 top-1/2 z-10 hidden -translate-y-1/2 rounded-full border border-[var(--border)] bg-[var(--bg)] p-2 opacity-70 hover:opacity-100 md:block"
       >
         &larr;
@@ -24,7 +24,7 @@ export function NewsletterCarousel({ issues }: { issues: MontyMonthlyIssue[] }) 
       <button
         type="button"
         aria-label="Scroll right"
-        onClick={() => scrollBy(320)}
+        onClick={() => scrollBy(400)}
         className="absolute right-0 top-1/2 z-10 hidden -translate-y-1/2 rounded-full border border-[var(--border)] bg-[var(--bg)] p-2 opacity-70 hover:opacity-100 md:block"
       >
         &rarr;
@@ -40,24 +40,24 @@ export function NewsletterCarousel({ issues }: { issues: MontyMonthlyIssue[] }) 
             href={issue.link}
             target="_blank"
             rel="noopener noreferrer"
-            className="block w-72 shrink-0 snap-start border border-[var(--border)] transition-opacity hover:opacity-70"
+            className="group block w-80 shrink-0 snap-start overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--bg)] shadow-sm transition-all hover:shadow-md hover:border-[var(--accent)] sm:w-96"
           >
             {issue.thumbnail ? (
-              <div className="relative aspect-[3/2] w-full bg-[var(--muted)]">
+              <div className="relative aspect-[16/9] w-full overflow-hidden bg-[var(--muted)]">
                 <Image
                   src={issue.thumbnail}
                   alt={issue.title}
                   fill
-                  sizes="288px"
-                  className="object-cover"
+                  sizes="(max-width: 640px) 320px, 384px"
+                  className="object-cover transition-transform duration-300 group-hover:scale-105"
                 />
               </div>
             ) : (
-              <div className="aspect-[3/2] w-full bg-[var(--muted)]" aria-hidden />
+              <div className="aspect-[16/9] w-full bg-[var(--muted)]" aria-hidden />
             )}
-            <div className="p-3">
-              <h3 className="text-sm font-normal">{issue.title}</h3>
-              <time className="mt-1 block text-xs opacity-75">
+            <div className="p-4">
+              <h3 className="text-base font-normal leading-snug">{issue.title}</h3>
+              <time className="mt-2 block text-sm opacity-75">
                 {new Date(issue.pubDate).toLocaleDateString('en-US', {
                   year: 'numeric',
                   month: 'long',
