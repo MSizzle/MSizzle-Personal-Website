@@ -4,7 +4,7 @@ const nextConfig: NextConfig = {
   images: {
     localPatterns: [
       {
-        pathname: "/api/notion-image",
+        pathname: "/**",
       },
     ],
     remotePatterns: [
