@@ -35,15 +35,14 @@ export default async function NewsletterPage() {
             learning, and thinking about. Essays on AI, entrepreneurship, philosophy,
             and life.
           </p>
-          <p>
-            <a
-              href="https://montymonthly.substack.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Subscribe on Substack
-            </a>
-          </p>
+          <a
+            href="https://montymonthly.substack.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-6 inline-block rounded-lg border border-[var(--accent)] bg-[var(--accent)] px-6 py-3 text-base font-normal text-white no-underline shadow-md transition-all hover:shadow-lg hover:brightness-110"
+          >
+            Subscribe on Substack &rarr;
+          </a>
         </div>
 
         {issues.length > 0 ? (
