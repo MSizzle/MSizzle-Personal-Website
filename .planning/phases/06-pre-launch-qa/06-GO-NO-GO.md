@@ -112,3 +112,18 @@ User has not yet run PageSpeed Insights on the 5 URLs. This is the only remainin
 3. Dark-mode incognito test
 
 If PSI mobile perf is consistently <90 across routes, log it as a known non-blocking caveat — the SEO impact is minimal for a personal site with <1000 monthly visitors, and perf optimization can continue post-launch.
+
+---
+
+## 10. Final Decision
+
+**GO — v1.0 approved for launch.** 2026-04-16.
+
+User confirmed site looks good after full QA walkthrough + visual fixes session. Mobile perf (PSI 77) accepted as non-blocking for a personal site — optimization continues post-launch.
+
+Human checks completed:
+- Visual QA: user actively tested all major pages during session
+- Visual fixes applied: nav, breadcrumbs, project images, newsletter carousel, subscribe CTA, Prometheus link
+- Dark-mode / responsive: user confirmed "looks good"
+
+PSI mobile scores (4 remaining routes) deferred — homepage representative score of 77 accepted.
