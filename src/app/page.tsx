@@ -5,6 +5,7 @@ import { getPublishedPosts } from "@/lib/notion";
 import { getFeaturedProjects } from "@/lib/notion-projects";
 import { getUpcomingEvents, getPastEvents } from "@/lib/notion-events";
 import { PhotoCarousel } from "@/components/home/photo-carousel";
+import { WritingsCarousel } from "@/components/home/writings-carousel";
 import { RotatingTagline } from "@/components/home/rotating-tagline";
 import { JsonLd } from "@/components/seo/json-ld";
 import { buildPersonSchema } from "@/lib/seo/schemas";
@@ -51,13 +52,13 @@ export default async function Home() {
 
       {/* Photo carousel - full bleed, above hero */}
       {carouselPhotos.length > 0 && (
-        <section className="pt-24 pb-12 overflow-hidden">
+        <section className="pt-24 pb-6 overflow-hidden">
           <PhotoCarousel photos={carouselPhotos} />
         </section>
       )}
 
       {/* Hero - editorial intro */}
-      <section className="px-6 pt-12 pb-20 md:px-24">
+      <section className="px-6 pt-6 pb-20 md:px-24">
         <div className="mx-auto max-w-[66ch]">
           <h1 className="text-4xl font-normal uppercase tracking-tight sm:text-5xl">
             Monty Singer
@@ -95,33 +96,26 @@ export default async function Home() {
       </section>
 
       {/* Writings */}
-      <section className="px-6 pb-20 md:px-24">
-        <div className="mx-auto max-w-[66ch]">
-          <Link
-            href="/blog"
-            className="text-base font-normal uppercase tracking-widest transition-opacity hover:opacity-60"
-          >
-            Writings &#8600;
-          </Link>
-          <ul className="mt-4 space-y-2">
-            {posts.map((post) => (
-              <li key={post.id}>
-                <Link
-                  href={`/blog/${post.slug}`}
-                  className="group flex items-baseline transition-opacity hover:opacity-60"
-                >
-                  {post.emoji && (
-                    <span className="mr-2 shrink-0 no-underline">{post.emoji}</span>
-                  )}
-                  <span className="underline">{post.title}</span>
-                </Link>
-              </li>
-            ))}
-            {posts.length === 0 && (
-              <li className="opacity-75">More posts coming soon.</li>
-            )}
-          </ul>
+      <section className="pb-20">
+        <div className="px-6 pb-6 md:px-24">
+          <div className="mx-auto max-w-[66ch]">
+            <Link
+              href="/blog"
+              className="text-base font-normal uppercase tracking-widest transition-opacity hover:opacity-60"
+            >
+              Writings &#8600;
+            </Link>
+          </div>
         </div>
+        {posts.length > 0 ? (
+          <WritingsCarousel posts={posts} />
+        ) : (
+          <div className="px-6 md:px-24">
+            <div className="mx-auto max-w-[66ch]">
+              <p className="opacity-75">More posts coming soon.</p>
+            </div>
+          </div>
+        )}
       </section>
 
       {/* Works */}
