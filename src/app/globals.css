@@ -98,8 +98,19 @@ a {
   animation: scroll-left 40s linear infinite;
 }
 
+/* Hover-activated scroll — stationary until the outer .group is hovered */
+.animate-scroll-hover {
+  animation: scroll-left 80s linear infinite;
+  animation-play-state: paused;
+}
+
+.group:hover .animate-scroll-hover {
+  animation-play-state: running;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .animate-scroll-left {
+  .animate-scroll-left,
+  .animate-scroll-hover {
     animation: none;
   }
 }

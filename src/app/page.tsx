@@ -6,6 +6,7 @@ import { getFeaturedProjects } from "@/lib/notion-projects";
 import { getUpcomingEvents, getPastEvents } from "@/lib/notion-events";
 import { PhotoCarousel } from "@/components/home/photo-carousel";
 import { WritingsCarousel } from "@/components/home/writings-carousel";
+import { WorksCarousel } from "@/components/home/works-carousel";
 import { RotatingTagline } from "@/components/home/rotating-tagline";
 import { JsonLd } from "@/components/seo/json-ld";
 import { buildPersonSchema } from "@/lib/seo/schemas";
@@ -119,33 +120,26 @@ export default async function Home() {
       </section>
 
       {/* Works */}
-      <section className="px-6 pb-20 md:px-24">
-        <div className="mx-auto max-w-[66ch]">
-          <Link
-            href="/projects"
-            className="text-base font-normal uppercase tracking-widest transition-opacity hover:opacity-60"
-          >
-            Works &#8600;
-          </Link>
-          <ul className="mt-4 space-y-2">
-            {projects.map((project) => (
-              <li key={project.id}>
-                <Link
-                  href={`/projects/${project.slug}`}
-                  className="group flex items-baseline transition-opacity hover:opacity-60"
-                >
-                  {project.emoji && (
-                    <span className="mr-2 shrink-0 no-underline">{project.emoji}</span>
-                  )}
-                  <span className="underline">{project.title}</span>
-                </Link>
-              </li>
-            ))}
-            {projects.length === 0 && (
-              <li className="opacity-75">Projects coming soon.</li>
-            )}
-          </ul>
+      <section className="pb-20">
+        <div className="px-6 pb-6 md:px-24">
+          <div className="mx-auto max-w-[66ch]">
+            <Link
+              href="/projects"
+              className="text-base font-normal uppercase tracking-widest transition-opacity hover:opacity-60"
+            >
+              Works &#8600;
+            </Link>
+          </div>
         </div>
+        {projects.length > 0 ? (
+          <WorksCarousel projects={projects} />
+        ) : (
+          <div className="px-6 md:px-24">
+            <div className="mx-auto max-w-[66ch]">
+              <p className="opacity-75">Projects coming soon.</p>
+            </div>
+          </div>
+        )}
       </section>
 
       {/* Events */}
