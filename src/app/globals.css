@@ -114,3 +114,30 @@ a {
     animation: none;
   }
 }
+
+/* Inverted color band for content sections below hero */
+.section-inverted {
+  --bg: #2d1724;
+  --fg: #fffbfc;
+  --bg-secondary: #2d1724;
+  --fg-muted: #fffbfc;
+  --border: #fffbfc;
+  --accent: #fffbfc;
+  --accent-warm: #fffbfc;
+  --muted: #3d2030;
+  background-color: var(--bg);
+  color: var(--fg);
+}
+
+.dark .section-inverted {
+  --bg: #fffbfc;
+  --fg: #2d1724;
+  --bg-secondary: #fffbfc;
+  --fg-muted: #2d1724;
+  --border: #2d1724;
+  --accent: #2d1724;
+  --accent-warm: #2d1724;
+  --muted: #e8e0e4;
+  background-color: var(--bg);
+  color: var(--fg);
+}

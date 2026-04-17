@@ -188,6 +188,33 @@ export async function getBlocks(blockId: string): Promise<BlockObjectResponse[]>
   return blocks;
 }
 
+// --- Excerpt extraction ---
+
+function extractPlainText(richText: { plain_text: string }[]): string {
+  return richText.map((t) => t.plain_text).join("");
+}
+
+/**
+ * Fetch the first ~300 characters of paragraph text from a Notion page.
+ * Only reads the first page of blocks (max 100) and skips non-text blocks.
+ */
+export async function getPostExcerpt(pageId: string): Promise<string> {
+  const response = await withRetry(() =>
+    notion.blocks.children.list({ block_id: pageId, page_size: 20 })
+  );
+
+  let text = "";
+  for (const block of response.results) {
+    if (!("type" in block)) continue;
+    const b = block as BlockObjectResponse;
+    if (b.type === "paragraph" && b.paragraph.rich_text.length > 0) {
+      text += (text ? " " : "") + extractPlainText(b.paragraph.rich_text);
+      if (text.length >= 300) break;
+    }
+  }
+  return text.slice(0, 400);
+}
+
 // --- Image URL refresh ---
 
 export async function getFreshImageUrl(blockId: string): Promise<string | null> {

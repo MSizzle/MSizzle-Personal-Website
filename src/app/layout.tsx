@@ -69,7 +69,7 @@ export default function RootLayout({
           <LenisProvider>
             <MotionProvider>
               <Navigation />
-              <main>{children}</main>
+              <main className="pt-16">{children}</main>
               <Footer />
             </MotionProvider>
           </LenisProvider>

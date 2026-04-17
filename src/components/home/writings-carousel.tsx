@@ -21,7 +21,7 @@ export function WritingsCarousel({ posts }: WritingsCarouselProps) {
           <Link
             key={`${post.id}-${i}`}
             href={`/blog/${post.slug}`}
-            className="block w-56 shrink-0 overflow-hidden border border-[var(--border)] bg-[var(--bg)] transition-opacity hover:opacity-70 sm:w-64"
+            className="block w-56 shrink-0 overflow-hidden bg-[var(--bg)] transition-opacity hover:opacity-70 sm:w-64"
           >
             <div className="relative aspect-[4/3] w-full overflow-hidden bg-[var(--muted)]">
               {post.cover && (

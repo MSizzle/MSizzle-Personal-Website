@@ -7,7 +7,6 @@ const LINKS = [
   { href: '/projects', label: 'Works' },
   { href: '/newsletter', label: 'Monty Monthly' },
   { href: '/events', label: 'Events' },
-  { href: '/uses', label: 'Uses' },
 ]
 
 const SOCIALS = [

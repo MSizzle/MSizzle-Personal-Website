@@ -53,7 +53,7 @@ export default async function Home() {
 
       {/* Photo carousel - full bleed, above hero */}
       {carouselPhotos.length > 0 && (
-        <section className="pt-24 pb-6 overflow-hidden">
+        <section className="pt-8 pb-6 overflow-hidden">
           <PhotoCarousel photos={carouselPhotos} />
         </section>
       )}
@@ -199,7 +199,11 @@ export default async function Home() {
 
           {upcomingEvents.length > 0 && (
             <>
-              <h2 className="mt-4 text-xs font-normal uppercase tracking-widest opacity-75">
+              <h2 className="mt-4 flex items-center gap-2 text-xs font-normal uppercase tracking-widest">
+                <span className="relative flex h-2 w-2 shrink-0">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-60" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-red-500" />
+                </span>
                 Upcoming
               </h2>
               <ul className="mt-2 space-y-2">
@@ -256,6 +260,7 @@ export default async function Home() {
           )}
         </div>
       </section>
+
     </>
   );
 }

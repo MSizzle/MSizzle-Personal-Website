@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { cn } from '@/utils/cn'
 import type { BlogPost } from '@/lib/notion'
@@ -8,9 +9,10 @@ import type { BlogPost } from '@/lib/notion'
 interface TagFilterProps {
   posts: BlogPost[]
   readingTimes: Record<string, number>
+  excerpts: Record<string, string>
 }
 
-export function TagFilter({ posts, readingTimes }: TagFilterProps) {
+export function TagFilter({ posts, readingTimes, excerpts }: TagFilterProps) {
   const [activeTag, setActiveTag] = useState<string | null>(null)
 
   const allTags = Array.from(new Set(posts.flatMap((p) => p.tags))).sort()
@@ -49,44 +51,63 @@ export function TagFilter({ posts, readingTimes }: TagFilterProps) {
           No posts tagged &ldquo;{activeTag}&rdquo;.
         </p>
       ) : (
-        <ul className="mt-6 space-y-5">
+        <div className="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2">
           {filtered.map((post) => (
-            <li key={post.id}>
-              <Link href={`/blog/${post.slug}`} className="group block">
-                <article>
-                  <div className="flex items-start gap-2">
-                    {post.emoji && (
-                      <span className="shrink-0 text-lg leading-snug">{post.emoji}</span>
-                    )}
-                    <div className="min-w-0 flex-1">
-                      <div className="flex items-baseline justify-between gap-3">
-                        <h2 className="text-base font-normal underline transition-opacity group-hover:opacity-60">
-                          {post.title}
-                        </h2>
-                        <div className="flex shrink-0 items-baseline gap-2 text-sm opacity-75">
-                          {post.date && (
-                            <time dateTime={post.date}>
-                              {new Date(post.date).toLocaleDateString('en-US', {
-                                month: 'short',
-                                day: 'numeric',
-                              })}
-                            </time>
-                          )}
-                          <span>{readingTimes[post.slug] ?? 1} min read</span>
-                        </div>
-                      </div>
-                      {post.description && (
-                        <p className="mt-1 text-sm opacity-75 line-clamp-2">
-                          {post.description}
-                        </p>
-                      )}
-                    </div>
+            <Link
+              key={post.id}
+              href={`/blog/${post.slug}`}
+              className="group block overflow-hidden rounded-lg border border-[var(--border)]/10 bg-[var(--bg-secondary)] transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-[var(--fg)]/5"
+            >
+              <div className="relative aspect-[16/9] w-full overflow-hidden bg-[var(--fg)]/5">
+                {post.cover ? (
+                  <Image
+                    src={`/api/notion-cover?pageId=${post.id}`}
+                    alt={post.title}
+                    fill
+                    sizes="(max-width: 640px) 100vw, 50vw"
+                    className="object-cover transition-transform duration-300 group-hover:scale-105"
+                  />
+                ) : post.emoji ? (
+                  <div className="flex h-full items-center justify-center text-4xl">
+                    {post.emoji}
                   </div>
-                </article>
-              </Link>
-            </li>
+                ) : null}
+              </div>
+
+              <div className="p-5">
+                <h2 className="text-base font-normal leading-snug">
+                  {post.title}
+                </h2>
+
+                <div className="mt-2 flex items-center gap-2 text-xs opacity-50">
+                  {post.date && (
+                    <time dateTime={post.date}>
+                      {new Date(post.date).toLocaleDateString('en-US', {
+                        month: 'short',
+                        day: 'numeric',
+                        year: 'numeric',
+                      })}
+                    </time>
+                  )}
+                  {post.date && <span>&middot;</span>}
+                  <span>{readingTimes[post.slug] ?? 1} min read</span>
+                </div>
+
+                {(excerpts[post.slug] || post.description) && (
+                  <div className="relative mt-3 overflow-hidden" style={{ maxHeight: 'calc(1.625 * 0.875rem * 3)' }}>
+                    <p className="text-sm leading-relaxed">
+                      {excerpts[post.slug] || post.description}
+                    </p>
+                    <div
+                      className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-[var(--bg-secondary)] to-transparent"
+                      style={{ height: 'calc(1.625 * 0.875rem)' }}
+                    />
+                  </div>
+                )}
+              </div>
+            </Link>
           ))}
-        </ul>
+        </div>
       )}
     </div>
   )
