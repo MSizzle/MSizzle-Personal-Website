@@ -15,13 +15,13 @@ export function WorksCarousel({ projects }: WorksCarouselProps) {
   const doubled = [...projects, ...projects]
 
   return (
-    <div className="group relative overflow-hidden px-6 md:px-24">
+    <div className="group relative overflow-hidden">
       <div className="flex w-max animate-scroll-hover gap-5">
         {doubled.map((project, i) => (
           <Link
             key={`${project.id}-${i}`}
             href={`/projects/${project.slug}`}
-            className="block w-[80vw] shrink-0 overflow-hidden border border-[var(--border)] bg-[var(--bg)] transition-opacity hover:opacity-70 sm:w-[45vw] md:w-[30vw]"
+            className="block w-56 shrink-0 overflow-hidden border border-[var(--border)] bg-[var(--bg)] transition-opacity hover:opacity-70 sm:w-64"
           >
             <div className="relative aspect-[4/3] w-full overflow-hidden bg-[var(--muted)]">
               {project.image && (
@@ -29,7 +29,7 @@ export function WorksCarousel({ projects }: WorksCarouselProps) {
                   src={`/api/notion-cover?pageId=${project.id}`}
                   alt={project.title}
                   fill
-                  sizes="(max-width: 640px) 80vw, (max-width: 768px) 45vw, 30vw"
+                  sizes="(max-width: 640px) 224px, 256px"
                   className="object-cover"
                 />
               )}

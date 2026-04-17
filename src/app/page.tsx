@@ -97,49 +97,41 @@ export default async function Home() {
       </section>
 
       {/* Writings */}
-      <section className="pb-20">
-        <div className="px-6 pb-6 md:px-24">
-          <div className="mx-auto max-w-[66ch]">
-            <Link
-              href="/blog"
-              className="text-base font-normal uppercase tracking-widest transition-opacity hover:opacity-60"
-            >
-              Writings &#8600;
-            </Link>
-          </div>
-        </div>
-        {posts.length > 0 ? (
-          <WritingsCarousel posts={posts} />
-        ) : (
-          <div className="px-6 md:px-24">
-            <div className="mx-auto max-w-[66ch]">
-              <p className="opacity-75">More posts coming soon.</p>
+      <section className="px-6 pb-20 md:px-24">
+        <div className="mx-auto max-w-[66ch]">
+          <Link
+            href="/blog"
+            className="text-base font-normal uppercase tracking-widest transition-opacity hover:opacity-60"
+          >
+            Writings &#8600;
+          </Link>
+          {posts.length > 0 ? (
+            <div className="mt-6">
+              <WritingsCarousel posts={posts} />
             </div>
-          </div>
-        )}
+          ) : (
+            <p className="mt-4 opacity-75">More posts coming soon.</p>
+          )}
+        </div>
       </section>
 
       {/* Works */}
-      <section className="pb-20">
-        <div className="px-6 pb-6 md:px-24">
-          <div className="mx-auto max-w-[66ch]">
-            <Link
-              href="/projects"
-              className="text-base font-normal uppercase tracking-widest transition-opacity hover:opacity-60"
-            >
-              Works &#8600;
-            </Link>
-          </div>
-        </div>
-        {projects.length > 0 ? (
-          <WorksCarousel projects={projects} />
-        ) : (
-          <div className="px-6 md:px-24">
-            <div className="mx-auto max-w-[66ch]">
-              <p className="opacity-75">Projects coming soon.</p>
+      <section className="px-6 pb-20 md:px-24">
+        <div className="mx-auto max-w-[66ch]">
+          <Link
+            href="/projects"
+            className="text-base font-normal uppercase tracking-widest transition-opacity hover:opacity-60"
+          >
+            Works &#8600;
+          </Link>
+          {projects.length > 0 ? (
+            <div className="mt-6">
+              <WorksCarousel projects={projects} />
             </div>
-          </div>
-        )}
+          ) : (
+            <p className="mt-4 opacity-75">Projects coming soon.</p>
+          )}
+        </div>
       </section>
 
       {/* Events */}
