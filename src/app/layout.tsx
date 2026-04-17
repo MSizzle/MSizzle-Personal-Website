@@ -27,6 +27,9 @@ const SITE_TITLE = "Monty Singer | Founder of Prometheus, Builder, Writer";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
+  verification: {
+    google: "EV4m-VDmZ4Zqq2sjmhq9qW0OFkBWdMk6eXDAKXOQOcA",
+  },
   title: {
     default: SITE_TITLE,
     template: "%s | Monty Singer",
