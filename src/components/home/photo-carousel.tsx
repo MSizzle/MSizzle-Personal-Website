@@ -18,14 +18,14 @@ export function PhotoCarousel({ photos }: PhotoCarouselProps) {
         {doubled.map((src, i) => (
           <div
             key={`${src}-${i}`}
-            className="relative h-48 w-72 shrink-0 overflow-hidden border border-[var(--border)] sm:h-64 sm:w-96"
+            className="relative h-96 w-[36rem] shrink-0 overflow-hidden border border-[var(--border)] sm:h-[32rem] sm:w-[48rem]"
           >
             <Image
               src={src}
               alt={`Photo ${(i % photos.length) + 1}`}
               fill
               className="object-cover"
-              sizes="(max-width: 640px) 288px, 384px"
+              sizes="(max-width: 640px) 576px, 768px"
               loading="lazy"
             />
           </div>

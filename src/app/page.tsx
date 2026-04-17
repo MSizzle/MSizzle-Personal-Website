@@ -49,8 +49,15 @@ export default async function Home() {
     <>
       <JsonLd data={buildPersonSchema()} />
 
+      {/* Photo carousel - full bleed, above hero */}
+      {carouselPhotos.length > 0 && (
+        <section className="pt-24 pb-12 overflow-hidden">
+          <PhotoCarousel photos={carouselPhotos} />
+        </section>
+      )}
+
       {/* Hero - editorial intro */}
-      <section className="px-6 pt-32 pb-20 md:px-24">
+      <section className="px-6 pt-12 pb-20 md:px-24">
         <div className="mx-auto max-w-[66ch]">
           <h1 className="text-4xl font-normal uppercase tracking-tight sm:text-5xl">
             Monty Singer
@@ -86,15 +93,6 @@ export default async function Home() {
           </div>
         </div>
       </section>
-
-      {/* Photo carousel */}
-      {carouselPhotos.length > 0 && (
-        <section className="px-6 pb-20 md:px-24">
-          <div className="mx-auto max-w-[66ch]">
-            <PhotoCarousel photos={carouselPhotos} />
-          </div>
-        </section>
-      )}
 
       {/* Writings */}
       <section className="px-6 pb-20 md:px-24">
