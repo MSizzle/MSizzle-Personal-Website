@@ -20,7 +20,7 @@ describe('buildBlogPostMetadata', () => {
     const meta = buildBlogPostMetadata(fakePost)
     expect(meta.title).toBe('Hello World | Monty Singer')
     expect(meta.alternates?.canonical).toBe('/blog/hello-world')
-    expect(meta.openGraph?.type).toBe('article')
+    expect((meta.openGraph as { type?: string })?.type).toBe('article')
   })
 
   it('truncates long descriptions to <=155 chars + ellipsis', () => {

@@ -44,6 +44,7 @@ export interface EventItem {
   link: string | null;
   description: string;
   emoji: string | null;
+  image: string | null;      // cover image URL from Notion page
   published: boolean;
 }
 
@@ -84,6 +85,12 @@ function extractEventProperties(page: PageObjectResponse): EventItem {
 
   const emoji = page.icon?.type === "emoji" ? page.icon.emoji : null;
 
+  const image = page.cover
+    ? page.cover.type === "external"
+      ? page.cover.external.url
+      : page.cover.file.url
+    : null;
+
   return {
     id: page.id,
     name,
@@ -93,6 +100,7 @@ function extractEventProperties(page: PageObjectResponse): EventItem {
     link,
     description,
     emoji,
+    image,
     published,
   };
 }
