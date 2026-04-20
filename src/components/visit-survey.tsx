@@ -32,7 +32,7 @@ export function VisitSurvey() {
     return () => clearTimeout(timer)
   }, [])
 
-  function handleOptionClick(_value: string) {
+  function handleOptionClick() {
     sessionStorage.setItem('visit-survey-done', 'true')
     setWidgetState('thankyou')
     setTimeout(() => {
@@ -149,9 +149,8 @@ export function VisitSurvey() {
                     {OPTIONS.map((opt) => (
                       <button
                         key={opt.value}
-                        data-umami-event="visit-reason"
-                        data-umami-event-reason={opt.value}
-                        onClick={() => handleOptionClick(opt.value)}
+                        data-umami-event={`visit-reason-${opt.value}`}
+                        onClick={handleOptionClick}
                         className="w-full cursor-pointer border border-[var(--border)] bg-[var(--bg)] px-4 py-2.5 text-left text-sm font-medium tracking-wide transition-opacity hover:opacity-60"
                       >
                         {opt.label}
