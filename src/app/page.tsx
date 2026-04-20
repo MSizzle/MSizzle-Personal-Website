@@ -131,7 +131,7 @@ export default async function Home() {
           </Link>
           {projects.length > 0 ? (
             <div className="mt-6">
-              <WorksCarousel projects={projects} />
+              <WorksCarousel projects={projects} referenceCount={posts.length} />
             </div>
           ) : (
             <p className="mt-4 opacity-75">Projects coming soon.</p>
