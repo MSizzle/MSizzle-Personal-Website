@@ -24,10 +24,10 @@ progress:
 
 | Phase | Status | Started | Completed |
 |-------|--------|---------|-----------|
-| 8 — Motion Subtractions | code_complete (HUMAN-UAT pending) | 2026-05-21 | 2026-05-21 |
-| 9 — Design Tokens & Editorial Primitives | code_complete (ready for verification) | 2026-05-21 | 2026-05-21 |
-| 10 — Editorial Homepage | code_complete (ready for verification) | 2026-05-21 | 2026-05-21 |
-| 11 — Archive Pages | code_complete (HUMAN-UAT pending) | 2026-05-21 | 2026-05-21 |
+| 8 — Motion Subtractions | complete | 2026-05-21 | 2026-05-21 |
+| 9 — Design Tokens & Editorial Primitives | complete | 2026-05-21 | 2026-05-21 |
+| 10 — Editorial Homepage | complete | 2026-05-21 | 2026-05-21 |
+| 11 — Archive Pages | complete | 2026-05-21 | 2026-05-21 |
 | 12 — Sub-page Restyle Sweep | not_started | — | — |
 | 13 — v2.0 QA & GO/NO-GO | not_started | — | — |
 
@@ -47,7 +47,9 @@ v1.0 Phase Status (archived, see `milestones/v1.0-ROADMAP.md`):
 
 v2.0 ROADMAP.md drafted 2026-05-20. 46 requirements mapped across 6 phases (Phase 8 Motion Subtractions → Phase 13 v2.0 QA & GO/NO-GO). Phase 8 selected as the first v2.0 phase per the "delete noise first to unblock visual work" strategy carried forward from the design-handoff motion budget.
 
-Next action: Phase 11 code-complete with 11-VERIFICATION.md PASS verdict. Operator must run HUMAN-UAT (Vercel preview deploy → perceptual smoke on /writing, /events, /photos at 1440px + 390px). After UAT passes, `/gsd:plan-phase 12` to decompose Sub-page Restyle Sweep into plans.
+Phases 8, 9, 10, 11 all complete (HUMAN-UAT smoke passed on Vercel preview 2026-05-21). Outstanding: minor formatting notes on archive pages captured for Phase 12 sweep.
+
+Next action: `/gsd:plan-phase 12` to decompose Sub-page Restyle Sweep into plans (and absorb the deferred formatting tweaks).
 
 ## Accumulated Context
 
