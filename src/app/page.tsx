@@ -4,7 +4,6 @@ import { getFeaturedProjects } from "@/lib/notion-projects";
 import { getUpcomingEvents, getPastEvents } from "@/lib/notion-events";
 import { WritingsCarousel } from "@/components/home/writings-carousel";
 import { WorksCarousel } from "@/components/home/works-carousel";
-import { RotatingTagline } from "@/components/home/rotating-tagline";
 import {
   FeaturedUpcoming,
   UpcomingMini,
@@ -48,9 +47,6 @@ export default async function Home() {
             I&rsquo;m Monty Singer, founder of Prometheus, an AI integrations and education company.
             I build software, write essays, and tinker with whatever is interesting.
           </p>
-          <div className="mt-4">
-            <RotatingTagline />
-          </div>
           <div className="mt-8 flex items-center gap-6">
             <a
               href="https://prometheus.today"
