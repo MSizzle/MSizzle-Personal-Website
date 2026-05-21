@@ -10,9 +10,9 @@ The redesign is a *subtraction* from v1.0, not an addition. Vanschneider-inspire
 
 ### Design Tokens & Typography
 
-- [ ] **TOKEN-01**: Tailwind v4 `@theme` block defines the warm-paper palette as named tokens (`paper #F4F2EC`, `ink #0E0E0C`, `muted #9A9690`, `faint #C7C3BA`, `rule #E5E2D9`, `rule-strong #1A1A18`, `footer-bg`, `footer-fg`, `footer-mute`, `footer-rule`)
-- [ ] **TOKEN-02**: Custom Tailwind utilities exist for the editorial type scale (`text-display` 124px, page-title 120px, feature 44px, list-title 28px, body-lead 22px, body 16-18px, caption 13-15px, nav 13px, label 11px tracked 0.18-0.22em, meta 11px tracked 0.14-0.18em) — each utility bundles font-size + line-height + letter-spacing + weight per the handoff spec
-- [ ] **TOKEN-03**: Existing Inter font (already wired via `next/font/google` weights 400/700) is the typeface — Helvetica Neue spec values applied to Inter; no font swap
+- [x] **TOKEN-01**: Tailwind v4 `@theme` block defines the warm-paper palette as named tokens (`paper #F4F2EC`, `ink #0E0E0C`, `muted #9A9690`, `faint #C7C3BA`, `rule #E5E2D9`, `rule-strong #1A1A18`, `footer-bg`, `footer-fg`, `footer-mute`, `footer-rule`)
+- [x] **TOKEN-02**: Custom Tailwind utilities exist for the editorial type scale (`text-display` 124px, page-title 120px, feature 44px, list-title 28px, body-lead 22px, body 16-18px, caption 13-15px, nav 13px, label 11px tracked 0.18-0.22em, meta 11px tracked 0.14-0.18em) — each utility bundles font-size + line-height + letter-spacing + weight per the handoff spec
+- [x] **TOKEN-03**: Existing Inter font (already wired via `next/font/google` weights 400/700) is the typeface — Helvetica Neue spec values applied to Inter; no font swap
 
 ### Shared Editorial Primitives
 

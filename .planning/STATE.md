@@ -4,13 +4,13 @@ milestone: v2.0
 milestone_name: Editorial Redesign
 current_phase: 9
 status: executing
-last_updated: "2026-05-21T05:23:32.203Z"
-last_activity: 2026-05-21 -- Phase 9 planning complete
+last_updated: "2026-05-21T05:29:10.853Z"
+last_activity: 2026-05-21 -- Phase 9 Plan 01 complete (design tokens + theme unwire)
 progress:
   total_phases: 6
   completed_phases: 1
   total_plans: 16
-  completed_plans: 7
+  completed_plans: 8
   percent: 17
 ---
 
@@ -25,7 +25,7 @@ progress:
 | Phase | Status | Started | Completed |
 |-------|--------|---------|-----------|
 | 8 — Motion Subtractions | code_complete (HUMAN-UAT pending) | 2026-05-21 | 2026-05-21 |
-| 9 — Design Tokens & Editorial Primitives | not_started | — | — |
+| 9 — Design Tokens & Editorial Primitives | in_progress | 2026-05-21 | — |
 | 10 — Editorial Homepage | not_started | — | — |
 | 11 — Archive Pages | not_started | — | — |
 | 12 — Sub-page Restyle Sweep | not_started | — | — |
@@ -108,14 +108,14 @@ Bookkeeping drift from v1.0, acknowledged at milestone close 2026-05-20. All are
 
 ## Current Position
 
-Phase: 8 (Motion Subtractions) — CODE COMPLETE; HUMAN-UAT PENDING
-Plan: 7 of 7 shipped (Plans 01-07 all have SUMMARY.md; 08-VERIFICATION.md `status: human_needed`; 08-HUMAN-UAT.md holds 2 pending items)
+Phase: 9 (Design Tokens & Editorial Primitives) — EXECUTING
+Plan: 2 of 9
 Status: Ready to execute
 
   1. `npx vercel build --prod` exits 0 (D-11 phase gate)
   2. Manual Lenis + 200-300ms page-load-fade smoke test in Chrome (Plan-07 Task 2 — autonomous: false by plan design)
 
-Last activity: 2026-05-21 -- Phase 9 planning complete
+Last activity: 2026-05-21
 
 ## Operator Next Steps
 
