@@ -11,6 +11,7 @@ import { Rule } from "@/components/editorial/rule";
 import { SectionLabel } from "@/components/editorial/section-label";
 import { AllLink } from "@/components/editorial/all-link";
 import { ListRow } from "@/components/editorial/list-row";
+import { FooterCol } from "@/components/editorial/footer-col";
 import { formatMonthYear, formatMonthDay } from "@/lib/dates";
 
 const HOME_PHOTOS = [
@@ -316,7 +317,87 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* PLAN-10-05 PERSONAL + FOOTER */}
+      {/* Inverted ink footer — HOME-V2-11 / D-29–D-31 */}
+      <footer className="bg-footer-bg text-footer-fg px-7 py-14 md:px-40 md:py-20">
+        <div className="grid grid-cols-1 gap-10 md:grid-cols-4 md:gap-12">
+          {/* Col 1 — Colophon */}
+          <div>
+            <div className="text-label uppercase text-footer-mute">MONTY SINGER</div>
+            <h2 className="mt-6 max-w-[20rem] text-feature text-footer-fg">
+              A calling card, not a billboard.
+            </h2>
+          </div>
+
+          {/* Col 2 — Studio */}
+          <FooterCol
+            title="Studio"
+            links={[
+              { label: "Prometheus",     href: "https://prometheus.today" },
+              { label: "Selected Works", href: "/projects" },
+              { label: "Process Notes",  href: "/blog" },
+            ]}
+          />
+
+          {/* Col 3 — Library */}
+          <FooterCol
+            title="Library"
+            links={[
+              { label: "Monty Monthly", href: "/newsletter" },
+              { label: "Essays",        href: "/blog" },
+              { label: "Reading List",  href: "/links" },
+            ]}
+          />
+
+          {/* Col 4 — About */}
+          <FooterCol
+            title="About"
+            links={[
+              { label: "About",         href: "/about" },
+              { label: "Photo Archive", href: "/photos" },
+              { label: "Contact",       href: "mailto:montydsinger@gmail.com" },
+            ]}
+          />
+        </div>
+
+        {/* Bottom row — copyright + socials (D-31) */}
+        <div className="mt-24 pt-7 border-t border-footer-rule flex flex-col gap-6 md:flex-row md:items-baseline md:justify-between">
+          <span className="text-meta uppercase text-footer-fg">
+            © 2026 Monty Singer · Washington, D.C.
+          </span>
+          <div className="flex flex-wrap gap-6">
+            <a
+              href="https://x.com/thefullmonty0"
+              className="text-meta uppercase text-footer-fg hover:text-footer-fg/70"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Twitter
+            </a>
+            <a
+              href="https://github.com/MSizzle"
+              className="text-meta uppercase text-footer-fg hover:text-footer-fg/70"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              GitHub
+            </a>
+            <a
+              href="https://linkedin.com/in/monty-singer"
+              className="text-meta uppercase text-footer-fg hover:text-footer-fg/70"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              LinkedIn
+            </a>
+            <a
+              href="mailto:montydsinger@gmail.com"
+              className="text-meta uppercase text-footer-fg hover:text-footer-fg/70"
+            >
+              Email
+            </a>
+          </div>
+        </div>
+      </footer>
     </>
   );
 }
