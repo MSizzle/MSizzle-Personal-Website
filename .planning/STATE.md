@@ -2,9 +2,10 @@
 gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: Editorial Redesign
-status: planning
-last_updated: "2026-05-20T00:00:00.000Z"
-last_activity: 2026-05-20
+current_phase: "None — roadmap drafted, awaiting `/gsd:plan-phase 8`"
+status: completed
+last_updated: "2026-05-21T02:45:04.174Z"
+last_activity: 2026-05-20 — v2.0 ROADMAP.md written, REQUIREMENTS traceability populated, 46/46 requirements mapped
 progress:
   total_phases: 6
   completed_phases: 0
