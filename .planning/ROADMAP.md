@@ -152,7 +152,7 @@ Full milestone detail: [milestones/v1.0-ROADMAP.md](./milestones/v1.0-ROADMAP.md
 | 7. SEO Overhaul | v1.0 | 11/11 | Complete | 2026-04-16 |
 | 8. Motion Subtractions | v2.0 | 5/7 | In Progress|  |
 | 9. Design Tokens & Editorial Primitives | v2.0 | 9/9 | Complete    | 2026-05-21 |
-| 10. Editorial Homepage | v2.0 | 7/7 | Complete   | 2026-05-21 |
+| 10. Editorial Homepage | v2.0 | 7/7 | Complete    | 2026-05-21 |
 | 11. Archive Pages | v2.0 | 0/? | Not started | — |
 | 12. Sub-page Restyle Sweep | v2.0 | 0/? | Not started | — |
 | 13. v2.0 QA & GO/NO-GO | v2.0 | 0/? | Not started | — |
