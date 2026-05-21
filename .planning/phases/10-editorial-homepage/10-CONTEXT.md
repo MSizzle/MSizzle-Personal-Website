@@ -25,7 +25,7 @@ Phase 10 is the **centerpiece** of v2.0 — the editorial homepage end-to-end. R
 ### Manifesto (HOME-V2-02 + MOTION-07)
 - **D-01:** **Manifesto text = "BRING FIRE / TO HUMANITY."** (2 lines). Locked by ROADMAP.md HOME-V2-02. The handoff's default was "I BUILD / MACHINES THAT / THINK CAREFULLY." (3 lines) but Monty chose the Prometheus-themed alternative. Both alternates ("MAKE FEWER THINGS. / MAKE THEM MEAN MORE." and "SOFTWARE IS A WAY / OF READING THE WORLD.") are deferred — change in code if needed.
 - **D-02:** **Manifesto styling:** Render as `<h1>` with `text-display` token (124px / 0.96 / -0.045em / 700, per Phase 9 D-06). Each line `white-space: nowrap` to prevent letters wrapping mid-word during stagger. Uppercase. Color `text-ink`.
-- **D-03:** **Manifesto reveal — `<ManifestoReveal>` client component.** New file `src/components/home-v2/manifesto-reveal.tsx`. Marked `'use client'`. Takes `lines: string[]` as prop. Splits each line into per-character `<motion.span>` elements with `display: inline-block`. Animates `translateY(110%) → 0` + `opacity 0 → 1`, per-letter delay `18ms × (lineIdx × lineLength + charIdx)`, transition `transform 700ms cubic-bezier(.2, .7, .2, 1)` + `opacity 500ms ease`. Container has `overflow: hidden` per line so letters slide up from below the visible line.
+- **D-03 (REVISED post-research):** **Manifesto reveal — `<ManifestoReveal>` client component.** New file `src/components/home-v2/manifesto-reveal.tsx`. Marked `'use client'`. Takes `lines: string[]` as prop. Splits each line into per-character `<m.span>` elements (NOTE: import `m` from `motion/react`, NOT `motion` — the project's `<MotionProvider>` uses `LazyMotion strict` per RESEARCH F3, which forbids the full `motion` namespace and requires the lightweight `m` component). `display: inline-block` on each `m.span`. Animates `translateY(110%) → 0` + `opacity 0 → 1`, per-letter delay `18ms × cumulative-char-index` (per RESEARCH skeleton — single accumulator across all lines, not per-line reset), transition `transform 700ms cubic-bezier(.2, .7, .2, 1)` + `opacity 500ms ease`. Container has `overflow: hidden` per line so letters slide up from below the visible line.
 - **D-04:** **Reveal-once gate (per MOTION-07):** Check `sessionStorage.getItem('gsd:manifesto-shown')` on mount. If present, skip animation and render lines in final state immediately. If absent, run animation AND set the flag. Tab-scoped (sessionStorage, not localStorage) so opening a new tab re-plays the animation — this matches the handoff's intent.
 - **D-05:** **Reduced-motion fallback (per MOTION-07):** Use `useReducedMotion()` from `motion/react`. When true, skip per-character stagger entirely and render lines with a single 300ms opacity fade. Set the sessionStorage flag in both branches.
 - **D-06:** **Meta row (HOME-V2-03):** 32px wide × 1px tall hairline `<span className="inline-block h-px w-8 bg-ink align-middle">` + " EST. 2026 · WASHINGTON, D.C." in `text-meta` token (11px tracked 0.16em uppercase muted). Spacing: 56px below the manifesto.
@@ -33,6 +33,20 @@ Phase 10 is the **centerpiece** of v2.0 — the editorial homepage end-to-end. R
 ### Header (HOME-V2-01)
 - **D-07:** **Header layout:** `<header>` with `flex justify-between items-baseline` + padding `36px 160px 0` desktop / `28px 24px 0` mobile. Left: name as `<Link href="/" className="text-[15px] font-bold tracking-tight">Monty Singer</Link>`. Right: 5-link nav with gap-8 spacing using `text-nav` token (13px / 0.02em).
 - **D-08:** **Nav links:** Building → `/projects`; Writing → `/blog` (Phase 11 updates to `/writing` when archive ships); Events → `/events`; About → `/about`; Links → `/links`. The "Building" label is `/projects` because that's the existing route — the handoff's "Building" maps to the projects section conceptually.
+
+### Global Chrome Conflict (D-42, post-research patch)
+- **D-42 (CRITICAL — post-research):** **`src/app/layout.tsx` currently wraps every route in a v1.0 `<Navigation />` (fixed top) + `<Footer />`.** If Plan 10-01 puts the new editorial header + footer inside `page.tsx`, the homepage double-renders both. **Fix in Plan 10-01 Task 0 (BEFORE the rest of Task 1):** Convert `src/components/nav/navigation.tsx` and `src/components/footer.tsx` to client components if not already, then gate them with `usePathname()`:
+  ```tsx
+  'use client';
+  import { usePathname } from "next/navigation";
+  export function Navigation() {
+    const pathname = usePathname();
+    if (pathname === "/") return null;   // v2.0 homepage renders its own chrome
+    return ( /* existing v1.0 nav JSX */ );
+  }
+  ```
+  Same pattern for `Footer`. This is surgical — v1.0 sub-pages (`/about`, `/blog`, etc.) keep their existing chrome until Phase 12 restyles them. The v2.0 homepage renders its own editorial header + ink footer self-contained. Phase 11 archive pages will need the same gate extension (or will be ported into a v2.0 layout group when they ship).
+- **D-42a:** Also update `<main className="pt-16">` in `layout.tsx` to remove the v1.0 nav offset when on `/`. Either: (a) gate the className via the same pathname check, or (b) keep `pt-16` on all routes and have the v2.0 homepage account for it by starting its header at `pt-9` instead of `pt-16+pt-9`. **Recommended (a)** for cleaner CSS — homepage starts at `pt-9` (36px) without the v1.0 offset.
 
 ### Epigraph Image (HOME-V2-04)
 - **D-09:** **Single full-width letterbox photo** using `next/image` with `priority` (above the fold, eligible for LCP optimization). Source: `/MSizzle-website-photos/000092530012.jpeg` (PHOTOS[0] per handoff). Aspect ratio 1120 × 540 (~ 2.07:1). `object-fit: cover` via `className="object-cover"`.
@@ -69,13 +83,14 @@ Phase 10 is the **centerpiece** of v2.0 — the editorial homepage end-to-end. R
 - **D-16:** **Rows separated by `<Rule />` (PRIM-01, 1px hairline).** Each row has `py-9` (36px vertical padding) per handoff.
 
 ### WRITING Section (HOME-V2-07)
-- **D-17:** **WRITING renders 3 latest essays as `<ListRow big>` (PRIM-04 big variant):** Each row has `title` = post title, `extra` = post.excerpt (or post.subtitle — verify Notion BlogPost type during planning), `meta` = formatted date (e.g., "MAY 2026"), `href` = `/blog/${post.slug}`. Plus `<AllLink href="/blog">All writing →</AllLink>` below.
+- **D-17 (REVISED post-research):** **WRITING renders 3 latest essays as `<ListRow big>` (PRIM-04 big variant):** Each row has `title` = `post.title`, `extra` = **`post.description`** (NOT `excerpt` or `subtitle` — RESEARCH verified actual BlogPost field name), `meta` = formatted date (e.g., "MAY 2026") parsed from `post.date`, `href` = `/blog/${post.slug}`. Plus `<AllLink href="/blog">All writing →</AllLink>` below.
 - **D-18:** **Use `getPublishedPosts()` from `src/lib/notion.ts`** and `.slice(0, 3)`. Handle empty state: render "More essays coming soon." in `text-muted` if `posts.length === 0`.
 
 ### EVENTS Section (HOME-V2-08)
-- **D-19:** **Featured upcoming event** rendered via NEW inline component (no extraction to shared file unless planner identifies reuse): 3-column grid `grid-cols-[180px_1fr_auto]` desktop. Date column = `NEXT · ${month abbrev day}` in `text-meta uppercase text-ink` + below in muted: `${time} / ${location}`. Content column = `text-event-title` (36px / 1.1 / -0.02em / 700) + 16px muted blurb (max-w 540px). CTA column = `<AllLink href={event.rsvpUrl || '/events'}>RSVP →</AllLink>`.
+- **D-19 (REVISED post-research):** **Featured upcoming event** rendered via NEW inline component (no extraction to shared file unless planner identifies reuse): 3-column grid `grid-cols-[180px_1fr_auto]` desktop. Date column = `NEXT · ${month abbrev day}` in `text-meta uppercase text-ink` (parsed from `event.date` ISO timestamp via the new `src/lib/dates.ts` helper — RESEARCH-recommended new file) + below in muted: `${formattedTime} / ${event.location}`. Content column = `event.name` (NOT `event.title`) in `text-event-title` (36px / 1.1 / -0.02em / 700) + 16px muted `event.description` (max-w 540px). CTA column = `<AllLink href={event.link || '/events'}>RSVP →</AllLink>` (NOT `event.rsvpUrl` — actual EventItem field is `link` per RESEARCH).
 - **D-20:** **No `animate-ping` indicator** anywhere (carryforward from Phase 8 MOTION-05). The featured event uses a static "NEXT" label, not the pulsing red dot.
-- **D-21:** **Two secondary events as `<ListRow>` (PRIM-04 non-big variant):** Take next 2 from `upcomingEvents.slice(1, 3)`. Each row: title = event name, extra = blurb, meta = formatted date. Plus `<AllLink href="/events">All events →</AllLink>` below.
+- **D-21 (REVISED post-research):** **Two secondary events as `<ListRow>` (PRIM-04 non-big variant):** Take next 2 from `upcomingEvents.slice(1, 3)`. Each row: title = `event.name`, extra = `event.description`, meta = formatted date from `event.date` ISO. Plus `<AllLink href="/events">All events →</AllLink>` below.
+- **D-21a (post-research):** **Date helper** — Plan 10-03 (writing + events) creates `src/lib/dates.ts` with two pure functions: `formatMonthYear(iso: string): string` returning `"MAY 2026"` style, and `formatMonthDay(iso: string): string` returning `"JUN 12"` style. Both accept ISO timestamps as input. Used by D-17 (writing dates), D-19 (featured event date), D-21 (secondary events dates).
 - **D-22:** **Featured event copy fallback when no upcoming events:** Render the handoff's literal sample copy ("AI for Small Biz, Vol. II — A working evening for owner-operators...") as a placeholder OR display "No upcoming events." in `text-muted`. Recommended: muted empty state — don't ship hardcoded sample copy to production.
 
 ### PHOTOGRAPHS Section (HOME-V2-09)
@@ -113,7 +128,7 @@ Phase 10 is the **centerpiece** of v2.0 — the editorial homepage end-to-end. R
 ### Mobile Parity (HOME-V2-12)
 - **D-32:** **Mobile-first Tailwind classes.** Default classes target 390px reference; `md:` prefix (768px+) enables desktop. Specifically:
   - Header: 28px side padding, items still flex baseline.
-  - Manifesto: `text-[56px] leading-[0.96] tracking-[-0.045em] md:text-display` — **note arbitrary value**: 56px isn't in the type-scale tokens. Acceptable exception (HOME-V2-12 specifies 56px exactly per handoff). Document in plan SUMMARY. Mobile manifesto is 4 lines vs desktop 2 lines: lines = `["I build", "machines", "that think", "carefully."]` per handoff mobile spec. Actually for v2.0 with "BRING FIRE / TO HUMANITY." (2 lines), mobile splits to 3 lines: `["BRING", "FIRE TO", "HUMANITY."]` — but recommended is to keep 2 lines at 56px and let it stack tighter. Lock in plan-phase based on visual test.
+  - Manifesto: `text-[56px] leading-[0.96] tracking-[-0.045em] md:text-display` — **note arbitrary value**: 56px isn't in the type-scale tokens. Acceptable exception (HOME-V2-12 specifies 56px exactly per handoff). Document in plan SUMMARY. **Mobile manifesto = 3 lines: `["BRING", "FIRE TO", "HUMANITY."]`** (RESEARCH-recommended — char-width estimate at Inter Bold 56px / -0.045em shows the 2-line "BRING FIRE" overflows the 334px content width at 390px reference; 3-line layout fits cleanly). Plan 10-06 can visually validate and override only if the perceptual result favors 2 lines.
   - Photographs: 2×2 grid on mobile (`grid-cols-2 gap-2`), 12-col asymmetric only at `md:`.
   - Footer: single column on mobile, each column gets `border-b border-footer-rule` divider.
   - All tap targets ≥ 44px (`min-h-11` Tailwind utility = 44px).
@@ -122,14 +137,14 @@ Phase 10 is the **centerpiece** of v2.0 — the editorial homepage end-to-end. R
 - **D-33:** **MOTION-07 is its own plan (the last in the phase).** Build the static homepage first (Plans 10-01 through 10-05), then the mobile sweep (Plan 10-06), then add the interaction (Plan 10-07). This lets `npm run build` validate the static structure before motion code is introduced.
 
 ### Plan Slicing
-- **D-34:** **7 plans, all serialized via `depends_on` on `src/app/page.tsx`** (every plan modifies the homepage file):
-  - **Plan 10-01 — header-hero-manifesto:** HOME-V2-01 + HOME-V2-02 (static manifesto markup, no animation yet) + HOME-V2-03 + HOME-V2-04. Imports/file scaffold for all primitives. Static markup only — no interaction. **Visual checkpoint:** browse `/` and confirm header + 124px static manifesto + meta row + epigraph photo render correctly.
+- **D-34 (REVISED post-research):** **7 plans, all serialized via `depends_on` on `src/app/page.tsx`** (every plan modifies the homepage file). **Plan 10-01 absorbs the global chrome gate as Task 0 (D-42).**
+  - **Plan 10-01 — header-hero-manifesto:** D-42 global chrome gate (Task 0 — Navigation + Footer pathname gate, layout.tsx pt-16 gate) + HOME-V2-01 + HOME-V2-02 (static manifesto markup, no animation yet) + HOME-V2-03 + HOME-V2-04. Imports/file scaffold for all primitives. Static markup only — no interaction. **Visual checkpoint:** browse `/` and confirm header + 124px static manifesto + meta row + epigraph photo render correctly with NO double-header or double-footer.
   - **Plan 10-02 — intro-and-building:** HOME-V2-05 (letter-style intro) + HOME-V2-06 (BUILDING section, Prometheus + Selected Works).
-  - **Plan 10-03 — writing-and-events:** HOME-V2-07 (WRITING — 3 latest essays as ListRow big + AllLink) + HOME-V2-08 (EVENTS — inline featured event + 2 secondary ListRows + AllLink).
+  - **Plan 10-03 — writing-and-events:** HOME-V2-07 (WRITING — 3 latest essays as ListRow big + AllLink, using `post.description` per D-17 revised) + HOME-V2-08 (EVENTS — inline featured event with `event.name`/`event.link`/`event.description` per D-19/D-21 revised + 2 secondary ListRows + AllLink) + **NEW `src/lib/dates.ts`** helper (D-21a).
   - **Plan 10-04 — photographs:** HOME-V2-09 (12-col asymmetric grid + 6 plates + mix-blend captions + AllLink to /photos).
   - **Plan 10-05 — personal-and-footer:** HOME-V2-10 (3-card grid) + HOME-V2-11 (inverted ink footer with 4 cols + bottom row).
-  - **Plan 10-06 — mobile-parity:** HOME-V2-12 (mobile breakpoint sweep across all sections; verify tap targets, single-column layouts, 2×2 photo grid, footer column dividers).
-  - **Plan 10-07 — manifesto-stagger:** MOTION-07 (build `<ManifestoReveal>` client component, wire to manifesto markup from Plan 10-01).
+  - **Plan 10-06 — mobile-parity:** HOME-V2-12 (mobile breakpoint sweep across all sections; manifesto 3-line `["BRING", "FIRE TO", "HUMANITY."]` per D-32 revised; verify tap targets, single-column layouts, 2×2 photo grid, footer column dividers).
+  - **Plan 10-07 — manifesto-stagger:** MOTION-07 (build `<ManifestoReveal>` client component using `m` from `motion/react` per D-03 revised + LazyMotion strict trap, wire to manifesto markup from Plan 10-01).
 - **D-35:** **Wave structure: 1 wave, plans chained serially.** All 7 plans edit `src/app/page.tsx` (and Plan 10-07 also creates `src/components/home-v2/manifesto-reveal.tsx`). Each plan `depends_on: [previous]`. Each plan should leave the page in a buildable state — `npm run build` exits 0 after every commit.
 
 ### Existing Code (Phase 8/9 preservation carryforward)
