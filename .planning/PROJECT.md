@@ -16,6 +16,20 @@ A personal site that feels alive and memorable, *and* legible — not another te
 - **Analytics:** Self-hosted Umami at https://analytics.montysinger.com (Neon Postgres, separate Vercel project)
 - **Routes:** `/`, `/about`, `/projects` + `/projects/[slug]`, `/blog` + `/blog/[slug]` + `/blog/feed.xml`, `/events`, `/links`, `/newsletter`, `/prometheus`, `/uses` (redirects to `/about` post-v1.0)
 
+## Current Milestone: v2.0 Editorial Redesign
+
+**Goal:** Replace v1.0's competing-animation homepage with a vanschneider-inspired minimal editorial system, add dedicated archive pages, and apply a lightweight palette/typography pass to sub-pages — without sacrificing the personal-site "alive" feel.
+
+**Target features:**
+- Editorial homepage anchored on the "BRING FIRE / TO HUMANITY." manifesto with five labeled vertical sections (Building / Writing / Events / Photographs / Personal)
+- Warm-paper monochrome design system (#F4F2EC paper / #0E0E0C ink / #9A9690 muted) implemented as Tailwind v4 `@theme` tokens
+- New archive pages: `/writing` (year-grouped), `/events` (upcoming + past), `/photos` (year-grouped grid)
+- Lightweight palette+typography restyle of every sub-page (no layout changes)
+- Strict motion budget: zero loops, zero auto-scrollers, one signature interaction per page (manifesto letter-stagger on first paint)
+- Shared editorial component primitives reusable across all pages
+
+**Key context:** Full Claude Design handoff at `.planning/research/editorial-redesign-handoff/` is the canonical design contract. Manifesto override (BRING FIRE / TO HUMANITY) and typeface override (keep Inter, do not switch to Helvetica Neue) take precedence over the handoff README.
+
 ## Next Milestone Goals — v2.0 Editorial Redesign
 
 Replace the homepage's competing animation loops with a vanschneider-inspired editorial system, add dedicated archive pages, and apply a lightweight palette/typography pass to the sub-pages. Design contract: `.planning/research/editorial-redesign-handoff/`.

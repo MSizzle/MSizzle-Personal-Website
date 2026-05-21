@@ -1,0 +1,23 @@
+# Phase 6 build audit
+Date: 2026-04-16T19:27:51Z
+Commit SHA: 6aeb05dc88863487c277a15dfca7e49bf56d6e94
+Branch: main
+Working tree clean: yes
+
+## Production env var names (no values)
+<claude-code-hint v="1" type="plugin" value="vercel@claude-plugins-official" />
+Retrieving project…
+> Environment Variables found for msizzles-projects/m-sizzle-personal-website [179ms]
+
+ name                               value               environments                        created    
+ NOTION_EVENTS_DB_ID                Encrypted           Production                          7d ago     
+ NOTION_TOKEN                       Encrypted           Development, Preview, Production    12d ago    
+ NOTION_DATABASE_ID                 Encrypted           Production, Preview, Development    12d ago    
+ NOTION_PROJECTS_DATABASE_ID        Encrypted           Production, Preview, Development    12d ago    
+ NEXT_PUBLIC_UMAMI_URL              Encrypted           Production                          13d ago    
+ NEXT_PUBLIC_UMAMI_WEBSITE_ID       Encrypted           Production                          13d ago    
+
+Common next commands:
+- `vercel env add`
+- `vercel env rm`
+- `vercel env pull`
