@@ -3,28 +3,28 @@ gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: Editorial Redesign
 current_phase: 8
-status: executing
+status: ready_to_plan
 last_updated: "2026-05-21T04:10:00.000Z"
 last_activity: 2026-05-21
 progress:
   total_phases: 6
-  completed_phases: 0
+  completed_phases: 1
   total_plans: 7
   completed_plans: 7
-  percent: 100
+  percent: 17
 ---
 
 # Project State
 
 **Current Milestone:** v2.0 Editorial Redesign (Phases 8-13)
-**Current Phase:** 8
+**Current Phase:** 9
 **Last Updated:** 2026-05-20
 
 ## Phase Status
 
 | Phase | Status | Started | Completed |
 |-------|--------|---------|-----------|
-| 8 — Motion Subtractions | in_progress | 2026-05-21 | — |
+| 8 — Motion Subtractions | code_complete (HUMAN-UAT pending) | 2026-05-21 | 2026-05-21 |
 | 9 — Design Tokens & Editorial Primitives | not_started | — | — |
 | 10 — Editorial Homepage | not_started | — | — |
 | 11 — Archive Pages | not_started | — | — |
@@ -108,13 +108,16 @@ Bookkeeping drift from v1.0, acknowledged at milestone close 2026-05-20. All are
 
 ## Current Position
 
-Phase: 8 (Motion Subtractions) — EXECUTING
-Plan: 7 of 7 (Plan 01 PhotoCarousel deleted, commit ced6df2, MOTION-01 ✓ · Plan 02 RotatingTagline deleted, commit 31ae6b9, MOTION-02 ✓ · Plan 03 WorksCarousel deleted + minimal `<ul>` Link-list fallback, commit 1670fc9, MOTION-03 ✓ · Plan 04 WritingsCarousel deleted + minimal `<ul>` Link-list fallback + orphan `scroll-left` CSS keyframes/utilities purged from globals.css, commit 7486a68, MOTION-04 ✓ · Plan 05 animate-ping wrapper deleted from FeaturedUpcoming (src/components/events/event-cards.tsx) — site-wide four-class sweep animate-ping|pulse|bounce|spin now 0 hits in src/, commit 7c1c942, MOTION-05 ✓ · Plan 06 cascading delay props flattened — 4 accumulator JSX props removed from src/app/page.tsx + src/app/events/page.tsx, `delay` dropped from FeaturedUpcoming/UpcomingMini/PastEventCard signatures, site-wide cascade-pattern sweep `delay=\{?\d?\.\d+\s*\+\s*i\s*\*` now 0 hits in src/, commit 0e62122, MOTION-06 ✓)
-Status: All 7 plans complete (code work shipped); Phase 8 awaiting human UAT (vercel build --prod + Lenis/fade smoke test) per 08-HUMAN-UAT.md
-Last activity: 2026-05-21 -- Plan 08-07 complete (MOTION-08 preservation verification — automated portion). `git diff origin/main -- <3 preserved files>` returns 0 lines (D-12 contract). All 5 preservation Vitest tests pass (template.test.tsx 2/2, scroll-reveal.test.tsx 2/2, lenis-provider.test.tsx 1/1). `vercel build --prod` (D-11 phase gate) and the manual Lenis/page-load-fade smoke test (autonomous: false) are DEFERRED to Monty's local environment via 08-HUMAN-UAT.md. Phase 8 status: code-complete, human-verify-pending — verifier will mark `human_needed`. Wave 2 closes. All Phase 8 work shipped in 14 commits on main; phase ready for `/gsd:verify-work` rollup and `/gsd:phase-complete 8` after Monty's UAT.
+Phase: 8 (Motion Subtractions) — CODE COMPLETE; HUMAN-UAT PENDING
+Plan: 7 of 7 shipped (Plans 01-07 all have SUMMARY.md; 08-VERIFICATION.md `status: human_needed`; 08-HUMAN-UAT.md holds 2 pending items)
+Status: Code work complete. Waiting on Monty's local Mac UAT before formal milestone advance:
+  1. `npx vercel build --prod` exits 0 (D-11 phase gate)
+  2. Manual Lenis + 200-300ms page-load-fade smoke test in Chrome (Plan-07 Task 2 — autonomous: false by plan design)
+Last activity: 2026-05-21 -- Phase 8 verifier returned `status: human_needed` (3/5 must-haves fully verified, 0 failed truths, 2 items legitimately pending in 08-HUMAN-UAT.md for Monty's local environment). Phase 8 ships in 16 commits on `main` (ced6df2 → ae954a4 + ROADMAP/STATE close-out). Wave 1 (Plans 01-06): motion-deletion work shipped. Wave 2 (Plan-07): preservation contract verified via empty `git diff origin/main` on the 3 preserved files + all 5 Vitest preservation tests green. Sandbox node_modules blocked `vercel build --prod` and the rendered-browser smoke test; both deferred via 08-HUMAN-UAT.md per user's pre-approval at session resume.
 
 ## Operator Next Steps
 
-- Decompose Phase 8 (Motion Subtractions) into plans: `/gsd:plan-phase 8`
-- Phase 8 is the recommended first phase because deletions are reversible and unblock the visual work in Phases 9-12 without depending on new tokens
-- After Phase 8 ships, proceed to Phase 9 (tokens + primitives), then Phase 10 (homepage), then Phases 11/12 (can be partially parallelized), then Phase 13 (QA + GO/NO-GO + `/gsd:complete-milestone` AT the GO verdict)
+- **First, on Mac:** clear the two HUMAN-UAT items per `.planning/phases/08-motion-subtractions/08-HUMAN-UAT.md` (vercel build + Lenis/fade smoke). Update the "## Resolution" section with PASS/FAIL.
+- **If both PASS:** Run `gsd-sdk query phase.complete 08` again (or just `/gsd:phase-complete 08`) — phase.complete should clear the warning and finalize REQUIREMENTS.md status table.
+- **Then:** `/gsd:discuss-phase 9` to start Design Tokens & Editorial Primitives (CONTEXT.md already exists per pre-phase docs check — discuss-phase will re-validate decisions before plan-phase auto-advances).
+- **If HUMAN-UAT FAILs:** gap closure — `/gsd:plan-phase 8 --gaps` will read 08-VERIFICATION.md and create fix plans for the regression.

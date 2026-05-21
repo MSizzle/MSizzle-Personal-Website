@@ -24,7 +24,7 @@ Full milestone detail: [milestones/v1.0-ROADMAP.md](./milestones/v1.0-ROADMAP.md
 
 ### 🚧 v2.0 Editorial Redesign (Phases 8-13)
 
-- [ ] **Phase 8: Motion Subtractions** — Delete v1.0 animation loops, pulsing dots, hover-carousels, cascading reveals; preserve Lenis + page-fade
+- [x] **Phase 8: Motion Subtractions** — Delete v1.0 animation loops, pulsing dots, hover-carousels, cascading reveals; preserve Lenis + page-fade *(code-complete 2026-05-21; HUMAN-UAT pending for vercel build + Lenis/fade smoke per 08-HUMAN-UAT.md)*
 - [ ] **Phase 9: Design Tokens & Editorial Primitives** — Warm-paper palette tokens, editorial type scale utilities, 7 shared primitive components
 - [ ] **Phase 10: Editorial Homepage** — Manifesto-anchored homepage with 5 labeled sections, ink footer, mobile parity, manifesto letter-stagger signature interaction
 - [ ] **Phase 11: Archive Pages** — `/writing`, `/events`, `/photos` year-grouped archive pages
