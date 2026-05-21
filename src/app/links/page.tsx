@@ -21,7 +21,7 @@ const LINKS = [
   { href: 'https://x.com/thefullmonty0', label: 'Twitter / X' },
   { href: 'https://linkedin.com/in/monty-singer', label: 'LinkedIn' },
   { href: 'https://github.com/MSizzle', label: 'GitHub' },
-  { href: '/blog', label: 'Newsletter' },
+  { href: '/newsletter', label: 'Newsletter' },
 ]
 
 export default function LinksPage() {
@@ -30,7 +30,7 @@ export default function LinksPage() {
       <Breadcrumbs items={[{ name: 'Home', href: '/' }, { name: 'Links' }]} />
       <div className="mx-auto max-w-[66ch] px-6 pb-24 pt-8 md:px-0">
         <ScrollReveal delay={0}>
-          <h1 className="text-sm font-normal uppercase tracking-widest">
+          <h1 className="text-label uppercase text-muted">
             Links
           </h1>
         </ScrollReveal>
@@ -48,7 +48,7 @@ export default function LinksPage() {
                     target={opensNewTab ? '_blank' : undefined}
                     rel={opensNewTab ? 'noopener noreferrer' : undefined}
                     {...(isHttp ? { 'data-umami-event': `links-click-${link.label.toLowerCase().replace(/[\s/]+/g, '-')}` } : {})}
-                    className="text-3xl underline transition-opacity hover:opacity-60 sm:text-lg"
+                    className="text-body-lead text-ink underline transition-opacity hover:opacity-60"
                   >
                     {link.label}
                   </a>
