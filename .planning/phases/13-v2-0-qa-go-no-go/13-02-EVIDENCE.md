@@ -6,18 +6,89 @@
 
 ---
 
-## Result: PARTIAL — Preview Deployed, Lighthouse Runs Pending
+## Result: FAIL — 2 routes PASS, 3 routes FAIL thresholds
 
 | Step | Status |
 |------|--------|
 | `vercel build --prod` in main tree | ✓ DONE (HEAD `ef05f24`, exit 0, 40 pages) |
 | `vercel deploy` to preview | ✓ DONE |
 | Preview URL captured | ✓ DONE |
-| Preview URL publicly accessible | ✗ **401 Authentication Required** (Vercel Deployment Protection enabled) |
-| Lighthouse CLI installed | ✗ not installed |
-| 15 Lighthouse runs (5 routes × 3) | **NOT RUN** |
-| Median calculation | **NOT COMPUTED** |
-| QA-V2-02 verdict | **PENDING** |
+| Preview URL publicly accessible | ✗ 401 (Vercel Deployment Protection) — fell back to Path C (localhost:3000) |
+| Lighthouse CLI installed | ✓ DONE (`lighthouse@13.3.0` global) |
+| `npm run start` local prod server | ✓ DONE (HTTP 200) |
+| 15 Lighthouse runs (5 routes × 3) | ✓ DONE (all JSONs in `lighthouse/`) |
+| Median calculation | ✓ DONE |
+| **QA-V2-02 verdict** | **✗ FAIL** (3 of 5 routes below thresholds) |
+
+## Lighthouse Median Results (local prod server, 2026-05-21)
+
+| Route | Perf | A11y | BP | SEO | Verdict |
+|-------|------|------|----|----|---------|
+| `/` | **98** | **94** | 100 | 100 | ✗ FAIL (A11y 94 < 95) |
+| `/about` | **100** | **96** | 100 | 100 | ✓ PASS |
+| `/prometheus` | **100** | **96** | 100 | 100 | ✓ PASS |
+| `/blog` | **69** | **96** | 100 | 100 | ✗ FAIL (Perf 69 < 90 — major) |
+| `/blog/pursuit-of-happierness` | **99** | **94** | 100 | 100 | ✗ FAIL (A11y 94 < 95) |
+
+**Thresholds:** Performance ≥ 90 / Accessibility ≥ 95 / Best Practices ≥ 95 / SEO = 100.
+
+## Raw Per-Run Scores
+
+| Route | Perf runs | A11y runs | BP runs | SEO runs |
+|-------|-----------|-----------|---------|----------|
+| `/` | 98 / 98 / 98 | 94 / 94 / 94 | 100 / 100 / 100 | 100 / 100 / 100 |
+| `/about` | 100 / 100 / 100 | 96 / 96 / 96 | 100 / 100 / 100 | 100 / 100 / 100 |
+| `/prometheus` | 100 / 100 / 100 | 96 / 96 / 96 | 100 / 100 / 100 | 100 / 100 / 100 |
+| `/blog` | 74 / 69 / 69 | 96 / 96 / 96 | 100 / 100 / 100 | 100 / 100 / 100 |
+| `/blog/pursuit-of-happierness` | 99 / 99 / 99 | 94 / 94 / 94 | 100 / 100 / 100 | 100 / 100 / 100 |
+
+## Core Web Vitals (medians, local server)
+
+| Route | LCP (ms) | CLS | FCP (ms) | TBT (ms) |
+|-------|----------|-----|----------|----------|
+| `/` | 1066 | 0.000 | 209 | 0 |
+| `/about` | 620 | 0.000 | 207 | 0 |
+| `/prometheus` | 795 | 0.000 | 207 | 0 |
+| `/blog` | **1805** | **0.685** | 247 | 0 |
+| `/blog/pursuit-of-happierness` | 876 | 0.000 | 208 | 0 |
+
+## Failure Analysis
+
+### 🔴 `/blog` — Performance 69, CLS 0.685 (BLOCKING)
+
+The blog index page exhibits **severe Cumulative Layout Shift** (0.685 vs Google's "good" threshold of 0.1). LCP of 1805ms is acceptable but the CLS dominates the Perf score. Likely cause: the `<TagFilter>` component or related list rendering shifts content after first paint. This is the **only true regression** of the 5 routes — and it traces to Phase 12-04's restyle of `/blog`.
+
+**Reproduction:** `http://localhost:3000/blog` — observe layout shift as the page hydrates.
+
+**Likely fix:** Reserve space for the tag filter before hydration, or load tags server-side and skip the post-mount filter rendering.
+
+### 🟡 `/` and `/blog/[slug]` — Accessibility 94 (1 point below 95)
+
+Both routes score 94 instead of the required 95. The Phase 9 `/about` and `/prometheus` score 96 with the same primitives, suggesting the homepage manifesto and blog post body have one isolated a11y audit failure each (likely a contrast pair, missing aria-label, or a heading-order violation). A 1-point gap is borderline; depending on which audit is failing, this may be a documentation-vs-blocking call.
+
+**Diagnosis:** open the JSON files in the `lighthouse/` directory or run `lighthouse {url} --view` to see exactly which audits failed.
+
+## Note on Measurement Path
+
+This run used Path C (local `npm run start`) instead of Path A (Vercel preview with bypass token). The Vercel CDN typically improves TTFB and FCP by ~50-200ms — i.e., real production scores would likely be **higher** than localhost. So:
+
+- The PASSES (`/about`, `/prometheus`) are robust — they pass even without the CDN advantage.
+- The `/blog` CLS failure is NOT a CDN issue — layout shift is purely client-side rendering. This will reproduce in production.
+- The `/` and `/blog/[slug]` a11y misses are also purely client (DOM/markup) issues — not CDN-dependent.
+
+For final certainty before promote, re-run Path A or Path B against the Vercel preview after granting bypass access. The localhost results are a faithful lower-bound estimate.
+
+## What This Means for v2.0 GO
+
+- 2 routes (`/about`, `/prometheus`) cleared all thresholds with margin.
+- 1 route (`/blog`) has a **real performance regression** (CLS 0.685) that should be fixed before GO, or explicitly ship-with-known.
+- 2 routes (`/`, `/blog/[slug]`) miss accessibility by 1 point — investigate the specific failed audit before deciding.
+
+**Recommendation: GO-with-knowns** if operator accepts the `/blog` CLS regression as a v2.1 fix; otherwise **NO-GO** until CLS is remediated.
+
+---
+
+**Status: COMPLETE (measurement) — verdict is documented for operator GO decision.**
 
 ## Preview Deployment
 

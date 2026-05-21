@@ -16,9 +16,9 @@ key_files:
   modified: []
 decisions:
   - D-01: vercel build --prod + Vercel preview — VERIFIED (preview deployed)
-  - D-02: Lighthouse desktop median-of-3 — PENDING (preview protected by Vercel Deployment Protection)
+  - D-02: Lighthouse desktop median-of-3 — VERIFIED (Path C, localhost prod server, 15 runs)
 metrics:
-  duration: ~3 minutes (vercel build + vercel deploy)
+  duration: ~12 minutes (vercel build + deploy + 15 Lighthouse runs)
   completed: 2026-05-21
   commit_sha: pending
 ---
@@ -27,11 +27,11 @@ metrics:
 
 ## One-Liner
 
-Vercel preview deploy ✓ DONE. Lighthouse runs PENDING — preview URL is gated by Vercel Deployment Protection (401), so the autonomous run was blocked. Three explicit paths forward documented in `13-02-EVIDENCE.md`; operator picks one and runs.
+Lighthouse desktop median-of-3 captured for all 5 routes against local prod server (fallback Path C — Vercel preview was 401-protected). **Result: 2 PASS / 3 FAIL.** `/about` and `/prometheus` cleared all thresholds; `/blog` failed Performance (69 < 90, severe CLS 0.685); `/` and `/blog/[slug]` missed Accessibility by 1 point (94 vs 95).
 
 ## Verdict
 
-**QA-V2-02: PENDING** — preview deployed, but Lighthouse measurement requires either a Vercel bypass token, disabling deployment protection, or a local-server fallback.
+**QA-V2-02: FAIL** — `/blog` has a real CLS regression that should be fixed before GO (or shipped as known-issue with explicit v2.1 follow-up). `/` and `/blog/[slug]` a11y misses are 1-point gaps worth investigating.
 
 ## Preview URL
 

@@ -37,14 +37,14 @@ signed_date:
 | ID | Requirement | Verdict | Evidence |
 |----|-------------|---------|----------|
 | **QA-V2-01** | `vercel build --prod` exits 0, zero TS/ESLint/429 errors | ✅ **PASS** | [13-01-EVIDENCE.md](./13-01-EVIDENCE.md) — exit 0, 40 pages, zero errors |
-| **QA-V2-02** | Lighthouse desktop ≥ 90/95/95/100 on 5 routes | ⏳ **PENDING** | [13-02-EVIDENCE.md](./13-02-EVIDENCE.md) — preview deployed, Lighthouse runs blocked by deployment protection; 3 paths documented |
+| **QA-V2-02** | Lighthouse desktop ≥ 90/95/95/100 on 5 routes | ⚠ **FAIL** | [13-02-EVIDENCE.md](./13-02-EVIDENCE.md) — 2 routes PASS, 3 FAIL: `/blog` CLS 0.685 (major), `/` and `/blog/[slug]` A11y 94 (1pt) |
 | **QA-V2-03** | PSI mobile ≥ 75 on homepage | ⏳ **PENDING** | [13-03-EVIDENCE.md](./13-03-EVIDENCE.md) — PSI API rate-limited; manual run at pagespeed.web.dev required |
 | **QA-V2-04** | Visual QA at 375px on `/`, `/writing`, `/events`, `/photos` | ⏳ **PENDING** | [13-04-EVIDENCE.md](./13-04-EVIDENCE.md) — 4-route checklist + Chrome DevTools setup |
 | **QA-V2-05** | Dark-mode FOUC pass OR light-only ship recorded | ✅ **PASS** (light-only) | [13-05-EVIDENCE.md](./13-05-EVIDENCE.md) — verified 0 dark tokens, 0 theme provider; deferred to future requirement |
 | **QA-V2-06** | D-14 client-bundle secret scan returns 0 leaks | ✅ **PASS** | [13-05-EVIDENCE.md](./13-05-EVIDENCE.md) — 0 hits in both client-chunk trees; server-only refs preserved |
 | **QA-V2-07** | Signed GO doc + `/gsd:complete-milestone` invoked AT verdict | ⏳ **THIS DOC** | once signed, the milestone closes |
 
-**Score: 3 PASS / 4 PENDING / 0 FAIL** (as of 2026-05-21 autonomous execution)
+**Score: 3 PASS / 1 FAIL (QA-V2-02) / 2 PENDING (QA-V2-03 PSI, QA-V2-04 visual) / 1 SIGN-OFF (QA-V2-07)** (as of 2026-05-21 autonomous execution)
 
 ---
 
@@ -83,17 +83,36 @@ The server/client boundary established in v1.0 Phase 2 still holds. v2.0 Phases 
 
 ## What's Left (Manual)
 
-### 1. QA-V2-02 — Lighthouse Desktop Median-of-3 (5 routes)
+### 1. QA-V2-02 — Lighthouse Desktop (RESOLVED — autonomous Path C run)
 
-The Vercel preview URL is behind Deployment Protection. Pick a path from `13-02-EVIDENCE.md`:
+Lighthouse desktop median-of-3 was captured against local prod server (`npm run start` → `localhost:3000`). Full breakdown in `13-02-EVIDENCE.md`. Summary:
 
-- **Path A (recommended):** Generate a Vercel Protection Bypass secret at https://vercel.com/msizzles-projects/m-sizzle-personal-website/settings/deployment-protection, then run Lighthouse with the bypass header.
-- **Path B:** Disable deployment protection for previews temporarily.
-- **Path C:** `npm run start` locally + Lighthouse against `http://localhost:3000`. Same compiled output, just no CDN delta.
+| Route | Perf | A11y | BP | SEO | Verdict |
+|-------|------|------|----|----|---------|
+| `/` | 98 | **94** | 100 | 100 | ✗ A11y 1pt short |
+| `/about` | 100 | 96 | 100 | 100 | ✓ PASS |
+| `/prometheus` | 100 | 96 | 100 | 100 | ✓ PASS |
+| `/blog` | **69** | 96 | 100 | 100 | ✗ Perf low (CLS 0.685) |
+| `/blog/[slug]` | 99 | **94** | 100 | 100 | ✗ A11y 1pt short |
 
-Run the median-of-3 loop in `13-02-EVIDENCE.md`. Capture the median table and paste into that file's "Lighthouse Median Results" section.
+**Decision points for the operator:**
 
-**Pass thresholds:** Performance ≥ 90 / Accessibility ≥ 95 / Best Practices ≥ 95 / SEO = 100.
+- **Block GO on `/blog` CLS regression** — fix the layout shift before promoting, then re-run Lighthouse. The CLS of 0.685 is severe (target is < 0.1) and very likely traces to Phase 12-04's `/blog` restyle (TagFilter or post-list hydration). Fix would be in a new `12.1` style follow-up phase or done inline before GO.
+
+- **OR ship-with-known** — accept the CLS regression as a documented v2.1 fix item and proceed to GO. The `/` and `/blog/[slug]` A11y 94s are borderline (1 point); inspect the failed audit (open the lighthouse JSONs in `lighthouse/`) before deciding.
+
+  - To investigate: `lighthouse http://localhost:3000/ --view --quiet` (re-run with `--view` opens an HTML report)
+  - Or open `lighthouse/home-1.json` → `audits` keys with `score: null` or `score: 0`
+
+**Optional re-validate against Vercel preview** (for production-fidelity numbers):
+
+```bash
+# Generate bypass token at:
+# https://vercel.com/msizzles-projects/m-sizzle-personal-website/settings/deployment-protection
+BYPASS=YOUR_TOKEN
+PREVIEW=https://m-sizzle-personal-website-h5zzgtecg-msizzles-projects.vercel.app
+lighthouse "$PREVIEW" --preset=desktop --extra-headers='{"x-vercel-protection-bypass":"'"$BYPASS"'"}' --output=json --output-path=/tmp/preview-home.json --quiet
+```
 
 ### 2. QA-V2-03 — PSI Mobile (homepage)
 
