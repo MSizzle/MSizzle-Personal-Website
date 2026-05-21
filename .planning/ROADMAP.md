@@ -159,5 +159,5 @@ Full milestone detail: [milestones/v1.0-ROADMAP.md](./milestones/v1.0-ROADMAP.md
 | 9. Design Tokens & Editorial Primitives | v2.0 | 9/9 | Complete    | 2026-05-21 |
 | 10. Editorial Homepage | v2.0 | 7/7 | Complete    | 2026-05-21 |
 | 11. Archive Pages | v2.0 | 5/5 | Complete   | 2026-05-21 |
-| 12. Sub-page Restyle Sweep | v2.0 | 0/7 | Planned    |  |
+| 12. Sub-page Restyle Sweep | v2.0 | 1/7 | In Progress|  |
 | 13. v2.0 QA & GO/NO-GO | v2.0 | 0/? | Not started | — |
