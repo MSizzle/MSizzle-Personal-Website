@@ -46,8 +46,8 @@ export default function PrometheusPage() {
       <JsonLd data={buildFaqPageSchema(FAQS)} />
 
       <article className="mx-auto max-w-[66ch] px-6 pt-8 pb-16 md:px-0">
-        <h1 className="text-2xl font-normal tracking-tight sm:text-3xl">Prometheus</h1>
-        <p className="mt-2 text-sm uppercase tracking-widest opacity-75">
+        <h1 className="text-section-feature text-ink">Prometheus</h1>
+        <p className="mt-2 text-label uppercase text-muted">
           AI Integrations and Education
         </p>
 
