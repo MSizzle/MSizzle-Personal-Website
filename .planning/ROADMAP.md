@@ -87,7 +87,7 @@ Full milestone detail: [milestones/v1.0-ROADMAP.md](./milestones/v1.0-ROADMAP.md
   5. At 390px viewport the homepage renders single-column with manifesto at 56px / 4 lines, photographs as a 2×2 grid, inverted footer with per-column hairline dividers, and every tap target ≥ 44px
 **Plans**: 7 plans
 - [x] 10-01-PLAN.md — header + hero manifesto + meta row + epigraph (+ D-42 global chrome gate Task 0)
-- [ ] 10-02-PLAN.md — letter-style intro paragraph + BUILDING section (Prometheus + Selected Works)
+- [x] 10-02-PLAN.md — letter-style intro paragraph + BUILDING section (Prometheus + Selected Works)
 - [ ] 10-03-PLAN.md — WRITING + EVENTS sections + new src/lib/dates.ts helper
 - [ ] 10-04-PLAN.md — PHOTOGRAPHS 12-col asymmetric grid + 6 plates + mix-blend captions
 - [ ] 10-05-PLAN.md — PERSONAL 3-card grid + inverted ink footer
@@ -152,7 +152,7 @@ Full milestone detail: [milestones/v1.0-ROADMAP.md](./milestones/v1.0-ROADMAP.md
 | 7. SEO Overhaul | v1.0 | 11/11 | Complete | 2026-04-16 |
 | 8. Motion Subtractions | v2.0 | 5/7 | In Progress|  |
 | 9. Design Tokens & Editorial Primitives | v2.0 | 9/9 | Complete    | 2026-05-21 |
-| 10. Editorial Homepage | v2.0 | 1/7 | In Progress|  |
+| 10. Editorial Homepage | v2.0 | 2/7 | In Progress|  |
 | 11. Archive Pages | v2.0 | 0/? | Not started | — |
 | 12. Sub-page Restyle Sweep | v2.0 | 0/? | Not started | — |
 | 13. v2.0 QA & GO/NO-GO | v2.0 | 0/? | Not started | — |
