@@ -53,5 +53,6 @@ None — plan executed exactly as written.
 ## Self-Check: PASSED
 
 - File exists: src/components/editorial/rule.tsx
-- feat commit: cbf4862
+- feat commit: 469eca8 (backfilled after the initial docs(09-02) commit shipped without staging the source file; corrected post-sweep)
+- docs commit: 8f9abfb
 - Build: green
