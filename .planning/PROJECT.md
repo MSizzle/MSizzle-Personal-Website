@@ -12,9 +12,24 @@ A personal site that feels alive and memorable, *and* legible — not another te
 
 - **Live:** https://montysinger.com (Vercel, Namecheap DNS, Super disconnected)
 - **Last shipped:** v1.0 Build & Launch — 2026-04-16 (GO per Phase 6 QA, 0 UAT failures, Lighthouse desktop 100/96/96/100, mobile PSI 77 accepted non-blocking)
+- **In flight (v2.0):** Phase 8 Motion Subtractions code-complete 2026-05-21 (7/7 plans, 4 carousels + rotating tagline + animate-ping + cascade-delay props deleted; Lenis + page-fade preserved via empty `git diff origin/main` on 3 preserved files). Pending Mac-side HUMAN-UAT: `vercel build --prod` + manual Lenis/fade smoke (see `.planning/phases/08-motion-subtractions/08-HUMAN-UAT.md`).
 - **Stack in production:** Next.js 16 App Router + React 19 + Tailwind v4 + Inter (next/font/google) + Motion (motion/react) + GSAP + Lenis + `@notionhq/client` v5
 - **Analytics:** Self-hosted Umami at https://analytics.montysinger.com (Neon Postgres, separate Vercel project)
 - **Routes:** `/`, `/about`, `/projects` + `/projects/[slug]`, `/blog` + `/blog/[slug]` + `/blog/feed.xml`, `/events`, `/links`, `/newsletter`, `/prometheus`, `/uses` (redirects to `/about` post-v1.0)
+
+## Current Milestone: v2.0 Editorial Redesign
+
+**Goal:** Replace v1.0's competing-animation homepage with a vanschneider-inspired minimal editorial system, add dedicated archive pages, and apply a lightweight palette/typography pass to sub-pages — without sacrificing the personal-site "alive" feel.
+
+**Target features:**
+- Editorial homepage anchored on the "BRING FIRE / TO HUMANITY." manifesto with five labeled vertical sections (Building / Writing / Events / Photographs / Personal)
+- Warm-paper monochrome design system (#F4F2EC paper / #0E0E0C ink / #9A9690 muted) implemented as Tailwind v4 `@theme` tokens
+- New archive pages: `/writing` (year-grouped), `/events` (upcoming + past), `/photos` (year-grouped grid)
+- Lightweight palette+typography restyle of every sub-page (no layout changes)
+- Strict motion budget: zero loops, zero auto-scrollers, one signature interaction per page (manifesto letter-stagger on first paint)
+- Shared editorial component primitives reusable across all pages
+
+**Key context:** Full Claude Design handoff at `.planning/research/editorial-redesign-handoff/` is the canonical design contract. Manifesto override (BRING FIRE / TO HUMANITY) and typeface override (keep Inter, do not switch to Helvetica Neue) take precedence over the handoff README.
 
 ## Next Milestone Goals — v2.0 Editorial Redesign
 
@@ -124,4 +139,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-05-20 after v1.0 milestone close · v2.0 Editorial Redesign queued*
+*Last updated: 2026-05-21 — Phase 8 (Motion Subtractions) code-complete; Mac-side HUMAN-UAT pending before milestone advance to Phase 9*

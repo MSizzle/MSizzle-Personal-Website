@@ -1,13 +1,7 @@
-import fs from "fs";
-import path from "path";
 import Link from "next/link";
 import { getPublishedPosts } from "@/lib/notion";
 import { getFeaturedProjects } from "@/lib/notion-projects";
 import { getUpcomingEvents, getPastEvents } from "@/lib/notion-events";
-import { PhotoCarousel } from "@/components/home/photo-carousel";
-import { WritingsCarousel } from "@/components/home/writings-carousel";
-import { WorksCarousel } from "@/components/home/works-carousel";
-import { RotatingTagline } from "@/components/home/rotating-tagline";
 import {
   FeaturedUpcoming,
   UpcomingMini,
@@ -15,19 +9,6 @@ import {
 } from "@/components/events/event-cards";
 import { JsonLd } from "@/components/seo/json-ld";
 import { buildPersonSchema } from "@/lib/seo/schemas";
-
-function getCarouselPhotos(): string[] {
-  try {
-    const dir = path.join(process.cwd(), "public", "MSizzle-website-photos");
-    return fs
-      .readdirSync(dir)
-      .filter((f) => /\.(jpg|jpeg|png|webp|gif)$/i.test(f))
-      .sort()
-      .map((f) => `/MSizzle-website-photos/${f}`);
-  } catch {
-    return [];
-  }
-}
 
 export const revalidate = 1800;
 
@@ -50,18 +31,9 @@ export default async function Home() {
     pastEvents = await getPastEvents();
   } catch {}
 
-  const carouselPhotos = getCarouselPhotos();
-
   return (
     <>
       <JsonLd data={buildPersonSchema()} />
-
-      {/* Photo carousel - full bleed, above hero */}
-      {carouselPhotos.length > 0 && (
-        <section className="pt-8 pb-6 overflow-hidden">
-          <PhotoCarousel photos={carouselPhotos} />
-        </section>
-      )}
 
       {/* Hero - editorial intro */}
       <section className="px-6 pt-6 pb-20 md:px-24">
@@ -73,9 +45,6 @@ export default async function Home() {
             I&rsquo;m Monty Singer, founder of Prometheus, an AI integrations and education company.
             I build software, write essays, and tinker with whatever is interesting.
           </p>
-          <div className="mt-4">
-            <RotatingTagline />
-          </div>
           <div className="mt-8 flex items-center gap-6">
             <a
               href="https://prometheus.today"
@@ -111,9 +80,18 @@ export default async function Home() {
             Writings &#8600;
           </Link>
           {posts.length > 0 ? (
-            <div className="mt-6">
-              <WritingsCarousel posts={posts} />
-            </div>
+            <ul className="mt-6 space-y-3">
+              {posts.slice(0, 3).map((post) => (
+                <li key={post.id}>
+                  <Link
+                    href={`/blog/${post.slug}`}
+                    className="text-xs uppercase tracking-widest underline transition-opacity hover:opacity-60"
+                  >
+                    {post.title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           ) : (
             <p className="mt-4 opacity-75">More posts coming soon.</p>
           )}
@@ -130,9 +108,18 @@ export default async function Home() {
             Works &#8600;
           </Link>
           {projects.length > 0 ? (
-            <div className="mt-6">
-              <WorksCarousel projects={projects} referenceCount={posts.length} />
-            </div>
+            <ul className="mt-6 space-y-3">
+              {projects.slice(0, 3).map((project) => (
+                <li key={project.id}>
+                  <Link
+                    href={`/projects/${project.slug}`}
+                    className="text-xs uppercase tracking-widest underline transition-opacity hover:opacity-60"
+                  >
+                    {project.title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           ) : (
             <p className="mt-4 opacity-75">Projects coming soon.</p>
           )}
@@ -168,11 +155,10 @@ export default async function Home() {
                       Also Coming Up
                     </h2>
                     <div className="mt-4 grid grid-cols-1 gap-6 sm:grid-cols-2">
-                      {moreUpcoming.slice(0, 4).map((event, i) => (
+                      {moreUpcoming.slice(0, 4).map((event) => (
                         <UpcomingMini
                           key={event.id}
                           event={event}
-                          delay={0.2 + i * 0.05}
                         />
                       ))}
                     </div>
@@ -185,11 +171,10 @@ export default async function Home() {
                       Past
                     </h2>
                     <div className="mt-4 columns-1 gap-5 sm:columns-2">
-                      {recentPast.map((event, i) => (
+                      {recentPast.map((event) => (
                         <PastEventCard
                           key={event.id}
                           event={event}
-                          delay={0.25 + i * 0.03}
                         />
                       ))}
                     </div>

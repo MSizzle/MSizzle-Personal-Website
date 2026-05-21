@@ -1,25 +1,37 @@
 ---
 gsd_state_version: 1.0
-milestone: v1.0
-milestone_name: milestone
-current_phase: 06 (closed)
-status: Awaiting next milestone
-last_updated: "2026-05-21T02:13:47.704Z"
-last_activity: 2026-05-21 — Milestone v1.0 completed and archived
+milestone: v2.0
+milestone_name: Editorial Redesign
+current_phase: 8
+status: ready_to_plan
+last_updated: "2026-05-21T04:10:00.000Z"
+last_activity: 2026-05-21
 progress:
-  total_phases: 7
-  completed_phases: 7
-  total_plans: 28
-  completed_plans: 28
-  percent: 100
+  total_phases: 6
+  completed_phases: 1
+  total_plans: 7
+  completed_plans: 7
+  percent: 17
 ---
 
 # Project State
 
-**Current Phase:** 06 (closed)
+**Current Milestone:** v2.0 Editorial Redesign (Phases 8-13)
+**Current Phase:** 9
 **Last Updated:** 2026-05-20
 
 ## Phase Status
+
+| Phase | Status | Started | Completed |
+|-------|--------|---------|-----------|
+| 8 — Motion Subtractions | code_complete (HUMAN-UAT pending) | 2026-05-21 | 2026-05-21 |
+| 9 — Design Tokens & Editorial Primitives | not_started | — | — |
+| 10 — Editorial Homepage | not_started | — | — |
+| 11 — Archive Pages | not_started | — | — |
+| 12 — Sub-page Restyle Sweep | not_started | — | — |
+| 13 — v2.0 QA & GO/NO-GO | not_started | — | — |
+
+v1.0 Phase Status (archived, see `milestones/v1.0-ROADMAP.md`):
 
 | Phase | Status | Started | Completed |
 |-------|--------|---------|-----------|
@@ -33,11 +45,22 @@ progress:
 
 ## Active Work
 
-All 7 phases complete. v1.0 GO approved 2026-04-16 per `06-GO-NO-GO.md` (signed off by user after full QA walkthrough — visual fixes session covered nav, breadcrumbs, project images, newsletter carousel, subscribe CTA, Prometheus link; mobile PSI 77 accepted as non-blocking caveat for personal site). Site live at https://montysinger.com. Ready for `/gsd:complete-milestone` (archive v1.0) and `/gsd:new-milestone` (kick off v2.0 Editorial Redesign — see `.planning/research/editorial-redesign-handoff/` once imported).
+v2.0 ROADMAP.md drafted 2026-05-20. 46 requirements mapped across 6 phases (Phase 8 Motion Subtractions → Phase 13 v2.0 QA & GO/NO-GO). Phase 8 selected as the first v2.0 phase per the "delete noise first to unblock visual work" strategy carried forward from the design-handoff motion budget.
+
+Next action: `/gsd:plan-phase 8` to decompose Motion Subtractions into plans.
 
 ## Accumulated Context
 
-### Decisions
+### v2.0 Roadmap Decisions
+
+- **Phase ordering:** Motion deletions (Phase 8) ship before design tokens (Phase 9) because deletions are reversible and unblock visual work without coupling to new tokens. Manifesto stagger (MOTION-07) was *split off* from the rest of MOTION and assigned to Phase 10 since the manifesto element it animates only exists once HOME-V2-02 is built.
+- **Phase 10 is the largest single phase by requirement count (13)** — homepage is the centerpiece and benefits from being shipped as one coherent unit rather than split across phases. Plan-phase decomposition will determine plan count.
+- **Phase 12 (Restyle Sweep) is highly parallelizable** — 6 sub-page restyles can ship as 6 plans, but a "restyle recipe" plan should land first to prevent palette-token drift across routes.
+- **Phase 13 QA defaults to the GO/NO-GO doc format** per v1.0 retrospective lesson: per-plan SUMMARYs were inconsistent in v1.0 Phase 6; the GO/NO-GO doc was the artifact that mattered. Future QA phases follow the same pattern.
+- **PSI is authoritative for mobile, not local Lighthouse** (QA-V2-03) — carried from v1.0 D-04 finding that local Lighthouse mobile variance was ±15 points.
+- **`vercel build --prod` is the production-readiness gate** (QA-V2-01) — carried from v1.0 Phase 6 plan 06-01.
+
+### v1.0 Carryforward (still active context)
 
 - Next.js 16.2.1 used instead of 15.2.x (works fine)
 - Provider hierarchy: ThemeProvider > LenisProvider > MotionProvider
@@ -45,31 +68,13 @@ All 7 phases complete. v1.0 GO approved 2026-04-16 per `06-GO-NO-GO.md` (signed 
 - notion.dataSources.query (v5 API) used — databases.query deprecated in v5
 - Direct block rendering instead of markdown conversion for richer output
 - ISR revalidation at 30 minutes
-- [Phase 03]: Used inline SVGs for brand social icons (X, LinkedIn, GitHub) — lucide-react v4 removed brand icons
-- [Phase 03]: Added Notion API env var guards to blog pages — build now succeeds without NOTION_TOKEN set
-- [Phase 03]: estimateReadingTime used on listing from description — no extra API calls per D-09
-- [Phase 03]: calculateReadingTime used on detail from already-fetched blocks — zero extra API calls
-- [Phase 03, Plan 06]: Used next/og ImageResponse built into Next.js — no @vercel/og package needed
-- [Phase 03, Plan 06]: Blog OG image shows title AND date per locked decision D-14
-- [Phase 03, Plan 06]: Sitemap try/catch around Notion calls — degrades gracefully without API access
-- [Phase 04]: GSAP ticker drives Lenis — prevents animation desyncs with ScrollTrigger
-- [Phase 04]: MotionConfig reducedMotion='user' applied at provider level — all m.* components inherit a11y behavior
-- [Phase 04-animation-polish]: Writing section heading uses ParallaxLayer nested inside ScrollReveal — rotation [-2,2] continues post-reveal
-- [Phase 04-animation-polish]: Contact section ScrollReveal only — avoids scroll-end parallax jank
-- [Phase 04-animation-polish]: ProjectCard converted to use client for AnimatePresence overlay — useState, useEffect, and Motion AnimatePresence require client context
-- [Phase 04-animation-polish]: Blog/About/Links/Projects pages remain Server Components with ScrollReveal client child — no use client needed on page files
-- [Phase 05-analytics]: vi.doMock used after vi.resetModules() for per-test env var isolation in analytics tests
-- [Phase 05-analytics]: data-umami-event declarative click tracking on footer, project-card, and links page outbound links
-- [Phase 05-analytics]: Umami deployed as separate Vercel project (fork of umami-software/umami) backed by Neon Postgres, now reachable at https://analytics.montysinger.com (custom subdomain D-04 completed 2026-04-10 via Namecheap CNAME → cname.vercel-dns.com); legacy *.vercel.app alias preserved
-- [Phase 05-analytics]: Production domain is montysinger.com (Namecheap registrar/DNS), NOT msizzle.com — earlier planning docs were incorrect
-- [Phase 06]: Plan 06-01 classified broader-sweep NOTION_TOKEN variable-name hits as INFO (not LEAK) since they are process.env reads in server Edge functions; D-14 blocking gate applies to client chunks and to literal secret VALUES only
-- [Phase 06]: All 6 plans shipped (06-01..06-06); GO/NO-GO verdict GO 2026-04-16; v1.0 approved for launch; PSI mobile 77 (home) accepted as non-blocking caveat for a personal site — optimization continues post-launch; DSGN-02 mobile responsive + dark-mode FOUC visually confirmed during user QA walkthrough session
+- GSAP ticker drives Lenis — prevents animation desyncs with ScrollTrigger
+- MotionConfig reducedMotion='user' applied at provider level — all m.* components inherit a11y behavior
+- Production domain is montysinger.com (Namecheap registrar/DNS), NOT msizzle.com
+- Umami deployed as separate Vercel project at https://analytics.montysinger.com (Neon Postgres, custom subdomain via Namecheap CNAME)
+- D-14 blocking gate applies to client chunks and to literal secret VALUES only — process.env reads in server Edge functions are INFO, not LEAK
 
-### Roadmap Evolution
-
-- Phase 7 added: SEO Overhaul
-
-### Quick Tasks Completed
+### v1.0 Quick Tasks (post-launch)
 
 | # | Description | Date | Commit | Directory |
 |---|-------------|------|--------|-----------|
@@ -80,34 +85,39 @@ All 7 phases complete. v1.0 GO approved 2026-04-16 per `06-GO-NO-GO.md` (signed 
 
 - Notion env vars (NOTION_TOKEN, NOTION_DATABASE_ID) — set in production, still useful to verify locally for dev
 - Planning artifacts in `.planning/phases/` reference msizzle.com in places — should be swept to montysinger.com in a future docs cleanup (Phase 07 handled all src/ code; planning docs intentionally left alone for historical fidelity)
-- STATE.md was bookkeeping-stale until 2026-05-20: Phase 6 had been shipped 2026-04-16 (per `06-GO-NO-GO.md` final GO) but the Phase Status table still read `planned`. Reconciled when prepping v2.0 milestone kickoff.
 
-## Deferred Items
+## v1.0 Deferred Items (closed)
 
-Items acknowledged and deferred at v1.0 milestone close on 2026-05-20. All are bookkeeping drift, not real outstanding work — surfaced by `gsd-sdk query audit-open` during `/gsd:complete-milestone`.
+Bookkeeping drift from v1.0, acknowledged at milestone close 2026-05-20. All are either superseded by v2.0 redesign or already-shipped work missing only paperwork closure. Retained here for traceability.
 
 | Category | Item | Status | Disposition |
 |----------|------|--------|-------------|
-| quick_task | 260409-js5-restyle-visit-survey-from-modal-to-chat- | missing | Completed (commit 9fd193c) — quick task dir lacks SUMMARY.md but work shipped |
-| quick_task | 260409-lle-add-notion-powered-events-feature-with-e | missing | Completed (commit 7207e6a) — quick task dir lacks SUMMARY.md but work shipped |
-| quick_task | 260417-2h5-move-carousel-above-hero-text-stretch-fu | missing | Empty stub directory — work either rolled into later carousel commits (31f0589) or abandoned; safe to delete |
-| quick_task | 260417-3fn-shrink-works-logos-remove-boxes-make-log | missing | Empty stub directory — likely superseded by works-carousel rewrite (31f0589); safe to delete |
-| uat_gap | Phase 04 04-HUMAN-UAT.md (6 pending scenarios) | partial | Superseded — Phase 04 animations are being explicitly *deleted* in v2.0 Editorial Redesign per the redesign handoff motion budget |
-| uat_gap | Phase 06 06-UAT.md (0 pending scenarios) | partial | False positive — UAT shipped (4a36aab "28-requirement UAT — 0 failures, 1 human-needed"); status marker stale |
-| verification_gap | Phase 04 04-VERIFICATION.md | human_needed | Superseded — verifies animations that are being deleted in v2.0 |
+| quick_task | 260409-js5-restyle-visit-survey-from-modal-to-chat- | missing | Completed (commit 9fd193c) — dir lacks SUMMARY.md but work shipped |
+| quick_task | 260409-lle-add-notion-powered-events-feature-with-e | missing | Completed (commit 7207e6a) — dir lacks SUMMARY.md but work shipped |
+| quick_task | 260417-2h5-move-carousel-above-hero-text-stretch-fu | missing | Empty stub directory — superseded by works-carousel rewrite (31f0589); safe to delete |
+| quick_task | 260417-3fn-shrink-works-logos-remove-boxes-make-log | missing | Empty stub directory — superseded by works-carousel rewrite (31f0589); safe to delete |
+| uat_gap | Phase 04 04-HUMAN-UAT.md (6 pending scenarios) | partial | Superseded — Phase 04 animations are explicitly *deleted* in v2.0 (MOTION-01..06) |
+| uat_gap | Phase 06 06-UAT.md (0 pending scenarios) | partial | False positive — UAT shipped (4a36aab "28-requirement UAT — 0 failures") |
+| verification_gap | Phase 04 04-VERIFICATION.md | human_needed | Superseded — verifies animations being deleted in v2.0 |
 
 ---
 
 *State initialized: 2026-03-31*
 *v1.0 closed: 2026-04-16 (GO per Phase 6) · bookkeeping reconciled 2026-05-20*
+*v2.0 roadmap drafted: 2026-05-20*
 
 ## Current Position
 
-Phase: Milestone v1.0 complete
-Plan: —
-Status: Awaiting next milestone
-Last activity: 2026-05-21 — Milestone v1.0 completed and archived
+Phase: 8 (Motion Subtractions) — CODE COMPLETE; HUMAN-UAT PENDING
+Plan: 7 of 7 shipped (Plans 01-07 all have SUMMARY.md; 08-VERIFICATION.md `status: human_needed`; 08-HUMAN-UAT.md holds 2 pending items)
+Status: Code work complete. Waiting on Monty's local Mac UAT before formal milestone advance:
+  1. `npx vercel build --prod` exits 0 (D-11 phase gate)
+  2. Manual Lenis + 200-300ms page-load-fade smoke test in Chrome (Plan-07 Task 2 — autonomous: false by plan design)
+Last activity: 2026-05-21 -- Phase 8 verifier returned `status: human_needed` (3/5 must-haves fully verified, 0 failed truths, 2 items legitimately pending in 08-HUMAN-UAT.md for Monty's local environment). Phase 8 ships in 16 commits on `main` (ced6df2 → ae954a4 + ROADMAP/STATE close-out). Wave 1 (Plans 01-06): motion-deletion work shipped. Wave 2 (Plan-07): preservation contract verified via empty `git diff origin/main` on the 3 preserved files + all 5 Vitest preservation tests green. Sandbox node_modules blocked `vercel build --prod` and the rendered-browser smoke test; both deferred via 08-HUMAN-UAT.md per user's pre-approval at session resume.
 
 ## Operator Next Steps
 
-- Start the next milestone with /gsd-new-milestone
+- **First, on Mac:** clear the two HUMAN-UAT items per `.planning/phases/08-motion-subtractions/08-HUMAN-UAT.md` (vercel build + Lenis/fade smoke). Update the "## Resolution" section with PASS/FAIL.
+- **If both PASS:** Run `gsd-sdk query phase.complete 08` again (or just `/gsd:phase-complete 08`) — phase.complete should clear the warning and finalize REQUIREMENTS.md status table.
+- **Then:** `/gsd:discuss-phase 9` to start Design Tokens & Editorial Primitives (CONTEXT.md already exists per pre-phase docs check — discuss-phase will re-validate decisions before plan-phase auto-advances).
+- **If HUMAN-UAT FAILs:** gap closure — `/gsd:plan-phase 8 --gaps` will read 08-VERIFICATION.md and create fix plans for the regression.

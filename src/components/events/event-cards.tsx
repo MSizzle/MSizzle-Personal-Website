@@ -23,15 +23,13 @@ function formatShortDate(dateStr: string | null): string {
 
 export function FeaturedUpcoming({
   event,
-  delay = 0.15,
   priority = false,
 }: {
   event: EventItem;
-  delay?: number;
   priority?: boolean;
 }) {
   return (
-    <ScrollReveal delay={delay}>
+    <ScrollReveal>
       <article className="mt-6">
         {event.image && (
           <div className="mb-6">
@@ -50,7 +48,6 @@ export function FeaturedUpcoming({
 
         <h3 className="flex items-center gap-2 text-xs font-normal uppercase tracking-widest">
           <span className="relative flex h-2 w-2 shrink-0">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-60" />
             <span className="relative inline-flex h-2 w-2 rounded-full bg-red-500" />
           </span>
           Upcoming
@@ -89,10 +86,8 @@ export function FeaturedUpcoming({
 
 export function UpcomingMini({
   event,
-  delay,
 }: {
   event: EventItem;
-  delay: number;
 }) {
   const inner = (
     <article className="group">
@@ -124,7 +119,7 @@ export function UpcomingMini({
   );
 
   return (
-    <ScrollReveal delay={delay}>
+    <ScrollReveal>
       {event.link ? (
         <a
           href={event.link}
@@ -143,10 +138,8 @@ export function UpcomingMini({
 
 export function PastEventCard({
   event,
-  delay,
 }: {
   event: EventItem;
-  delay: number;
 }) {
   const inner = (
     <article className="group mb-6 break-inside-avoid">
@@ -175,7 +168,7 @@ export function PastEventCard({
   );
 
   return (
-    <ScrollReveal delay={delay}>
+    <ScrollReveal>
       {event.link ? (
         <a
           href={event.link}
