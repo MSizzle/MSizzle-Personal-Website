@@ -19,5 +19,8 @@ import type { ReactNode } from 'react'
 export function MainOffset({ children }: { children: ReactNode }) {
   const pathname = usePathname()
   const isV2Route = ['/', '/writing', '/events', '/photos'].includes(pathname)
-  return <main className={isV2Route ? '' : 'pt-16'}>{children}</main>
+  // Mobile always needs pt-16 (Navigation is fixed across all routes on mobile per
+  // Phase 13 mobile-nav fix). Desktop only needs pt-16 on v1.0 routes — v2.0 routes
+  // render EditorialHeader inline (no fixed-nav offset needed).
+  return <main className={isV2Route ? 'pt-16 md:pt-0' : 'pt-16'}>{children}</main>
 }

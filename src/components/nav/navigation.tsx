@@ -5,61 +5,50 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/utils/cn'
 
-const NAV_LINKS = [
+// Desktop nav (v1.0 sub-pages only — v2.0 routes use EditorialHeader)
+const DESKTOP_LINKS = [
   { href: '/about', label: 'About' },
   { href: '#contact', label: 'Contact' },
+]
+
+// Mobile drawer — unified link set across all routes per Phase 13 mobile-nav fix.
+// Confirmed by operator: 6 destinations including Home (no brand link in mobile bar).
+const MOBILE_LINKS = [
+  { href: '/',         label: 'Home'     },
+  { href: '/projects', label: 'Building' },
+  { href: '/writing',  label: 'Writing'  },
+  { href: '/events',   label: 'Events'   },
+  { href: '/about',    label: 'About'    },
+  { href: '/links',    label: 'Links'    },
 ]
 
 export function Navigation() {
   const [open, setOpen] = useState(false)
   const pathname = usePathname()
 
-  // D-42 + D-26: v2.0 routes (/, /writing, /events, /photos) render their own
-  // editorial chrome — suppress v1.0 nav. Phase 11 extends Phase 10 D-42 from
-  // `pathname === '/'` to an inclusion check covering all 4 v2.0 routes.
-  if (['/', '/writing', '/events', '/photos'].includes(pathname)) return null
+  // v2.0 routes own their desktop chrome via EditorialHeader. On mobile, this
+  // component is the only nav across all routes (EditorialHeader is desktop-only
+  // after Phase 13 mobile-nav fix).
+  const isV2Route = ['/', '/writing', '/events', '/photos'].includes(pathname)
 
   return (
     <>
-      <header className="fixed inset-x-0 top-0 z-50 bg-[var(--bg)]">
-        <nav className="mx-auto flex h-16 max-w-[66ch] items-center justify-between px-6 md:px-0">
-          <Link
-            href="/"
-            className="text-base font-normal uppercase tracking-widest"
-          >
-            Monty Singer
-          </Link>
-
-          {/* Desktop links */}
-          <ul className="hidden items-center gap-8 md:flex">
-            {NAV_LINKS.map((link) => (
-              <li key={link.href}>
-                <Link
-                  href={link.href}
-                  className={cn(
-                    'text-sm uppercase tracking-wide transition-opacity hover:opacity-80',
-                    pathname === link.href ? 'opacity-100' : 'opacity-75'
-                  )}
-                >
-                  {link.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-
-          {/* Mobile hamburger */}
+      {/* Mobile header — always render across all routes; hamburger-only per operator decision */}
+      <header className="fixed inset-x-0 top-0 z-50 bg-[var(--bg)] md:hidden">
+        <nav className="flex h-16 items-center justify-end px-6">
           <button
-            className="flex min-h-[44px] min-w-[44px] items-center justify-center md:hidden"
+            className="flex min-h-[44px] min-w-[44px] items-center justify-center"
             onClick={() => setOpen(!open)}
             aria-label={open ? 'Close navigation menu' : 'Open navigation menu'}
+            aria-expanded={open}
           >
             {open ? (
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
                 <line x1="4" y1="4" x2="20" y2="20" />
                 <line x1="20" y1="4" x2="4" y2="20" />
               </svg>
             ) : (
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
                 <line x1="4" y1="7" x2="20" y2="7" />
                 <line x1="4" y1="17" x2="20" y2="17" />
               </svg>
@@ -68,11 +57,37 @@ export function Navigation() {
         </nav>
       </header>
 
-      {/* Mobile drawer */}
+      {/* Desktop header — only on v1.0 sub-pages; v2.0 routes render EditorialHeader instead */}
+      {!isV2Route && (
+        <header className="fixed inset-x-0 top-0 z-50 hidden bg-[var(--bg)] md:block">
+          <nav className="mx-auto flex h-16 max-w-[66ch] items-center justify-between px-6 md:px-0">
+            <Link href="/" className="text-base font-normal uppercase tracking-widest">
+              Monty Singer
+            </Link>
+            <ul className="flex items-center gap-8">
+              {DESKTOP_LINKS.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className={cn(
+                      'text-sm uppercase tracking-wide transition-opacity hover:opacity-80',
+                      pathname === link.href ? 'opacity-100' : 'opacity-75'
+                    )}
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </header>
+      )}
+
+      {/* Mobile drawer — opens on hamburger tap; instant per operator decision (no animation) */}
       {open && (
         <div className="fixed inset-0 top-16 z-40 bg-[var(--bg)] md:hidden">
           <nav className="flex flex-col px-6 py-4">
-            {NAV_LINKS.map((link) => (
+            {MOBILE_LINKS.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
