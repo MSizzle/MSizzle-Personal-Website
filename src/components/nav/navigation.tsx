@@ -90,15 +90,15 @@ export function Navigation() {
         </header>
       )}
 
-      {/* Mobile drawer — opens on hamburger tap; instant per operator decision (no animation) */}
+      {/* Mobile drawer — opens on hamburger tap; content-height (only as tall as the link list) */}
       {open && (
-        <div className="fixed inset-0 top-16 z-40 bg-[var(--bg)] md:hidden">
+        <div className="fixed left-0 right-0 top-16 z-40 border-b border-[var(--border)] bg-[var(--bg)] shadow-lg md:hidden">
           <nav className="flex flex-col px-6 py-4">
             {MOBILE_LINKS.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="flex min-h-[48px] items-center border-b border-[var(--border)] py-3 text-base uppercase tracking-wide"
+                className="flex min-h-[48px] items-center border-b border-[var(--border)] py-3 text-base uppercase tracking-wide last:border-b-0"
                 onClick={() => setOpen(false)}
               >
                 {link.label}
