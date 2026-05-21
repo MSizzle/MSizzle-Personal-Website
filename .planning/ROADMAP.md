@@ -143,7 +143,7 @@ Full milestone detail: [milestones/v1.0-ROADMAP.md](./milestones/v1.0-ROADMAP.md
   7. A signed `13-GO-NO-GO.md` exists with an explicit GO verdict, and `/gsd:complete-milestone` is run AT that verdict (carried forward from v1.0 retrospective lesson #1)
 **Plans**: 6 plans
 Plans:
-- [ ] 13-01-PLAN.md — vercel build --prod gate (QA-V2-01)
+- [x] 13-01-PLAN.md — vercel build --prod gate (QA-V2-01)
 - [ ] 13-02-PLAN.md — Lighthouse desktop median-of-3 on 5 routes (QA-V2-02)
 - [ ] 13-03-PLAN.md — PSI mobile homepage gate (QA-V2-03)
 - [ ] 13-04-PLAN.md — 375px visual QA on /, /writing, /events, /photos (QA-V2-04)
@@ -167,4 +167,4 @@ Plans:
 | 10. Editorial Homepage | v2.0 | 7/7 | Complete    | 2026-05-21 |
 | 11. Archive Pages | v2.0 | 5/5 | Complete   | 2026-05-21 |
 | 12. Sub-page Restyle Sweep | v2.0 | 7/7 | Complete    | 2026-05-21 |
-| 13. v2.0 QA & GO/NO-GO | v2.0 | 0/6 | Not started | — |
+| 13. v2.0 QA & GO/NO-GO | v2.0 | 1/6 | In Progress|  |
