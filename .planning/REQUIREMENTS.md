@@ -59,7 +59,7 @@ The redesign is a *subtraction* from v1.0, not an addition. Vanschneider-inspire
 - [x] **MOTION-01**: Delete photo auto-scroll carousel (`components/home/photo-carousel.tsx`) and all references
 - [x] **MOTION-02**: Delete rotating tagline (`components/home/rotating-tagline.tsx`) and all references
 - [x] **MOTION-03**: Delete hover-triggered works carousel (`components/home/works-carousel.tsx`) and all references
-- [ ] **MOTION-04**: Delete hover-triggered writings carousel (`components/home/writings-carousel.tsx`) and all references
+- [x] **MOTION-04**: Delete hover-triggered writings carousel (`components/home/writings-carousel.tsx`) and all references
 - [ ] **MOTION-05**: Remove `animate-ping` pulsing indicator from featured event card (`components/events/event-cards.tsx:53`) and any other always-on CSS animations site-wide
 - [ ] **MOTION-06**: Flatten cascading ScrollReveal delays on event and blog card lists — same-time reveal or simple per-item fade only
 - [ ] **MOTION-07**: Manifesto letter-stagger signature interaction — per-character `translateY(110%)→0` + opacity 0→1, 18ms per-letter stagger, 500-700ms duration, fires ONCE on first paint of `/` (sessionStorage flag to skip on route returns), respects `useReducedMotion()` (300ms full-line fade fallback)
