@@ -6,6 +6,10 @@ import { getUpcomingEvents } from "@/lib/notion-events";
 import { JsonLd } from "@/components/seo/json-ld";
 import { buildPersonSchema } from "@/lib/seo/schemas";
 import { IntroLink } from "@/components/editorial/intro-link";
+import { RuleStrong } from "@/components/editorial/rule-strong";
+import { Rule } from "@/components/editorial/rule";
+import { SectionLabel } from "@/components/editorial/section-label";
+import { AllLink } from "@/components/editorial/all-link";
 
 export const revalidate = 1800;
 
@@ -15,7 +19,6 @@ export default async function Home() {
   // so a transient Notion API failure cannot break the homepage render.
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let posts: Awaited<ReturnType<typeof getPublishedPosts>> = [];
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let projects: Awaited<ReturnType<typeof getFeaturedProjects>> = [];
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let upcomingEvents: Awaited<ReturnType<typeof getUpcomingEvents>> = [];
@@ -114,7 +117,51 @@ export default async function Home() {
         </p>
       </section>
 
-      {/* PLAN-10-02 INTRO + BUILDING */}
+      {/* BUILDING — HOME-V2-06 / D-13–D-16 */}
+      <RuleStrong />
+      <section className="px-6 pt-[120px] pb-[120px] md:px-40">
+        <SectionLabel numeral="01 — Studio">Building</SectionLabel>
+
+        <div className="mt-[72px]">
+          {/* Row 1 — Prometheus */}
+          <div className="grid grid-cols-1 gap-6 py-9 md:grid-cols-[180px_1fr_1fr] md:gap-12">
+            <div className="text-meta uppercase text-muted">Active · AI Studio</div>
+            <div className="text-feature text-ink">Prometheus</div>
+            <div className="text-body text-ink">
+              <p className="text-ink">
+                Recent work: orthodontic + hospitality clients running custom AI pipelines designed to outlive the next platform shift.
+              </p>
+              <div className="mt-4">
+                <AllLink href="https://prometheus.today">prometheus.today →</AllLink>
+              </div>
+            </div>
+          </div>
+
+          <Rule />
+
+          {/* Row 2 — Selected Works */}
+          <div className="grid grid-cols-1 gap-6 py-9 md:grid-cols-[180px_1fr_1fr] md:gap-12">
+            <div className="text-meta uppercase text-muted">
+              Archive · {projects.length} projects
+            </div>
+            <div className="text-feature text-ink">Selected Works</div>
+            <div className="text-body text-ink">
+              {projects.length === 0 ? (
+                <p className="text-muted">Recent work coming soon.</p>
+              ) : (
+                <p className="text-ink">
+                  {projects.slice(0, 8).map((p) => p.title).join(", ")}
+                  {projects.length > 8 ? ` +${projects.length - 8} more` : ""}
+                </p>
+              )}
+              <div className="mt-4">
+                <AllLink href="/projects">View all works →</AllLink>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* PLAN-10-03 WRITING + EVENTS */}
       {/* PLAN-10-04 PHOTOGRAPHS */}
       {/* PLAN-10-05 PERSONAL + FOOTER */}
