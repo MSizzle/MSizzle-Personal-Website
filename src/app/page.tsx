@@ -1,22 +1,23 @@
 import Link from "next/link";
+import Image from "next/image";
 import { getPublishedPosts } from "@/lib/notion";
 import { getFeaturedProjects } from "@/lib/notion-projects";
-import { getUpcomingEvents, getPastEvents } from "@/lib/notion-events";
-import {
-  FeaturedUpcoming,
-  UpcomingMini,
-  PastEventCard,
-} from "@/components/events/event-cards";
+import { getUpcomingEvents } from "@/lib/notion-events";
 import { JsonLd } from "@/components/seo/json-ld";
 import { buildPersonSchema } from "@/lib/seo/schemas";
 
 export const revalidate = 1800;
 
 export default async function Home() {
+  // Notion getters preserved from v1.0 — consumed by Plans 10-02 (projects),
+  // 10-03 (posts + upcomingEvents). Defensive try/catch mirrors the v1.0 pattern
+  // so a transient Notion API failure cannot break the homepage render.
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let posts: Awaited<ReturnType<typeof getPublishedPosts>> = [];
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let projects: Awaited<ReturnType<typeof getFeaturedProjects>> = [];
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let upcomingEvents: Awaited<ReturnType<typeof getUpcomingEvents>> = [];
-  let pastEvents: Awaited<ReturnType<typeof getPastEvents>> = [];
 
   try {
     posts = await getPublishedPosts();
@@ -27,165 +28,85 @@ export default async function Home() {
   try {
     upcomingEvents = await getUpcomingEvents();
   } catch {}
-  try {
-    pastEvents = await getPastEvents();
-  } catch {}
 
   return (
     <>
       <JsonLd data={buildPersonSchema()} />
 
-      {/* Hero - editorial intro */}
-      <section className="px-6 pt-6 pb-20 md:px-24">
-        <div className="mx-auto max-w-[66ch]">
-          <h1 className="text-4xl font-normal uppercase tracking-tight sm:text-5xl">
-            Monty Singer
-          </h1>
-          <p className="mt-6 text-lg leading-relaxed opacity-80">
-            I&rsquo;m Monty Singer, founder of Prometheus, an AI integrations and education company.
-            I build software, write essays, and tinker with whatever is interesting.
-          </p>
-          <div className="mt-8 flex items-center gap-6">
-            <a
-              href="https://prometheus.today"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="underline transition-opacity hover:opacity-60"
-            >
-              Prometheus
-            </a>
-            <Link
-              href="/about"
-              className="underline transition-opacity hover:opacity-60"
-            >
-              More About Me
-            </Link>
-            <a
-              href="#contact"
-              className="underline transition-opacity hover:opacity-60"
-            >
-              Get in Touch
-            </a>
-          </div>
+      {/* Editorial header — HOME-V2-01 (D-07 + D-08) */}
+      <header className="flex items-baseline justify-between px-6 pt-7 md:px-40 md:pt-9">
+        <Link href="/" className="text-[15px] font-bold tracking-tight text-ink">
+          Monty Singer
+        </Link>
+        <nav>
+          <ul className="flex list-none items-baseline gap-8 text-nav text-ink">
+            <li>
+              <Link href="/projects" className="transition-opacity hover:opacity-60">
+                Building
+              </Link>
+            </li>
+            <li>
+              <Link href="/blog" className="transition-opacity hover:opacity-60">
+                Writing
+              </Link>
+            </li>
+            <li>
+              <Link href="/events" className="transition-opacity hover:opacity-60">
+                Events
+              </Link>
+            </li>
+            <li>
+              <Link href="/about" className="transition-opacity hover:opacity-60">
+                About
+              </Link>
+            </li>
+            <li>
+              <Link href="/links" className="transition-opacity hover:opacity-60">
+                Links
+              </Link>
+            </li>
+          </ul>
+        </nav>
+      </header>
+
+      {/* Hero — HOME-V2-02 manifesto + HOME-V2-03 meta row + HOME-V2-04 epigraph */}
+      <section className="px-6 pt-16 md:px-40 md:pt-24">
+        <h1 className="text-display uppercase text-ink">
+          <span className="block whitespace-nowrap">BRING FIRE</span>
+          <span className="block whitespace-nowrap">TO HUMANITY.</span>
+        </h1>
+        {/* Plan 10-07 wraps this h1 with <ManifestoReveal lines={...} /> */}
+
+        {/* Meta row — D-06 */}
+        <div className="mt-14 flex items-center gap-3">
+          <span aria-hidden="true" className="inline-block h-px w-8 bg-ink" />
+          <span className="text-meta uppercase text-muted">
+            EST. 2026 · WASHINGTON, D.C.
+          </span>
         </div>
+
+        {/* Epigraph — D-09 + D-10 */}
+        <figure className="mt-20">
+          <Image
+            src="/MSizzle-website-photos/000092530012.jpeg"
+            alt="A year in motion, on film"
+            width={1120}
+            height={540}
+            priority
+            sizes="(max-width: 768px) 100vw, 1120px"
+            className="aspect-[1120/540] w-full object-cover"
+          />
+          <figcaption className="mt-4 flex justify-between text-meta uppercase text-muted">
+            <span>Plate I — A year in motion · 2025–26</span>
+            <span>Photographed on film</span>
+          </figcaption>
+        </figure>
       </section>
 
-      {/* Writings */}
-      <section className="px-6 pb-20 md:px-24">
-        <div className="mx-auto max-w-[66ch]">
-          <Link
-            href="/blog"
-            className="text-base font-normal uppercase tracking-widest transition-opacity hover:opacity-60"
-          >
-            Writings &#8600;
-          </Link>
-          {posts.length > 0 ? (
-            <ul className="mt-6 space-y-3">
-              {posts.slice(0, 3).map((post) => (
-                <li key={post.id}>
-                  <Link
-                    href={`/blog/${post.slug}`}
-                    className="text-xs uppercase tracking-widest underline transition-opacity hover:opacity-60"
-                  >
-                    {post.title}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p className="mt-4 opacity-75">More posts coming soon.</p>
-          )}
-        </div>
-      </section>
-
-      {/* Works */}
-      <section className="px-6 pb-20 md:px-24">
-        <div className="mx-auto max-w-[66ch]">
-          <Link
-            href="/projects"
-            className="text-base font-normal uppercase tracking-widest transition-opacity hover:opacity-60"
-          >
-            Works &#8600;
-          </Link>
-          {projects.length > 0 ? (
-            <ul className="mt-6 space-y-3">
-              {projects.slice(0, 3).map((project) => (
-                <li key={project.id}>
-                  <Link
-                    href={`/projects/${project.slug}`}
-                    className="text-xs uppercase tracking-widest underline transition-opacity hover:opacity-60"
-                  >
-                    {project.title}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p className="mt-4 opacity-75">Projects coming soon.</p>
-          )}
-        </div>
-      </section>
-
-      {/* Events */}
-      <section className="px-6 pb-20 md:px-24">
-        <div className="mx-auto max-w-[66ch]">
-          <Link
-            href="/events"
-            className="text-base font-normal uppercase tracking-widest transition-opacity hover:opacity-60"
-          >
-            Events &#8600;
-          </Link>
-
-          {(() => {
-            const [featured, ...moreUpcoming] = upcomingEvents;
-            const recentPast = pastEvents.slice(0, 6);
-            const hasAny = upcomingEvents.length > 0 || recentPast.length > 0;
-
-            if (!hasAny) {
-              return <p className="mt-4 opacity-75">Events coming soon.</p>;
-            }
-
-            return (
-              <>
-                {featured && <FeaturedUpcoming event={featured} />}
-
-                {moreUpcoming.length > 0 && (
-                  <div className="mt-10">
-                    <h2 className="text-xs font-normal uppercase tracking-widest opacity-75">
-                      Also Coming Up
-                    </h2>
-                    <div className="mt-4 grid grid-cols-1 gap-6 sm:grid-cols-2">
-                      {moreUpcoming.slice(0, 4).map((event) => (
-                        <UpcomingMini
-                          key={event.id}
-                          event={event}
-                        />
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {recentPast.length > 0 && (
-                  <div className="mt-10">
-                    <h2 className="text-xs font-normal uppercase tracking-widest opacity-75">
-                      Past
-                    </h2>
-                    <div className="mt-4 columns-1 gap-5 sm:columns-2">
-                      {recentPast.map((event) => (
-                        <PastEventCard
-                          key={event.id}
-                          event={event}
-                        />
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </>
-            );
-          })()}
-        </div>
-      </section>
-
+      {/* PLAN-10-02 INTRO + BUILDING */}
+      {/* PLAN-10-03 WRITING + EVENTS */}
+      {/* PLAN-10-04 PHOTOGRAPHS */}
+      {/* PLAN-10-05 PERSONAL + FOOTER */}
     </>
   );
 }
