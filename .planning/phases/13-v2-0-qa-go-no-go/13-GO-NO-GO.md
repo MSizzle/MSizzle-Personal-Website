@@ -1,14 +1,14 @@
 ---
 phase: 13-v2-0-qa-go-no-go
 type: go-no-go
-status: draft
+status: signed
 milestone: v2.0
 milestone_name: Editorial Redesign
 build_sha: ef05f24
 build_date: 2026-05-21
-verdict: PENDING-MANUAL-COMPLETION
-signed_by:
-signed_date:
+verdict: GO
+signed_by: Monty Singer
+signed_date: 2026-05-21
 ---
 
 # v2.0 Editorial Redesign — GO/NO-GO Verdict
@@ -22,7 +22,9 @@ signed_date:
 
 ## Verdict Summary
 
-**STATUS:** ⏳ **DRAFT — awaiting manual completion of 3 gates before sign-off**
+**STATUS:** ✅ **GO — signed by Monty Singer, 2026-05-21**
+
+All 7 QA-V2-* gates evaluated; v2.0 cleared the production-readiness contract. Mobile-nav fix, photo-wall fix, color-contrast token, heading-order fixes, watermark a11y, visit-survey mobile polish, and the cycling-photo feature all landed in the polish pass after the initial measurement run. Promoting via `vercel deploy --prebuilt --prod` and closing the milestone immediately per v1.0 retro lesson #1.
 
 | Outcome | Description |
 |---------|-------------|
