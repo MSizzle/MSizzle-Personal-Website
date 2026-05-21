@@ -155,11 +155,10 @@ export default async function Home() {
                       Also Coming Up
                     </h2>
                     <div className="mt-4 grid grid-cols-1 gap-6 sm:grid-cols-2">
-                      {moreUpcoming.slice(0, 4).map((event, i) => (
+                      {moreUpcoming.slice(0, 4).map((event) => (
                         <UpcomingMini
                           key={event.id}
                           event={event}
-                          delay={0.2 + i * 0.05}
                         />
                       ))}
                     </div>
@@ -172,11 +171,10 @@ export default async function Home() {
                       Past
                     </h2>
                     <div className="mt-4 columns-1 gap-5 sm:columns-2">
-                      {recentPast.map((event, i) => (
+                      {recentPast.map((event) => (
                         <PastEventCard
                           key={event.id}
                           event={event}
-                          delay={0.25 + i * 0.03}
                         />
                       ))}
                     </div>

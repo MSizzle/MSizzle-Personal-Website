@@ -59,11 +59,10 @@ export default async function EventsPage() {
                   </h2>
                 </ScrollReveal>
                 <div className="mt-6 grid grid-cols-1 gap-8 sm:grid-cols-2">
-                  {moreUpcoming.map((event, i) => (
+                  {moreUpcoming.map((event) => (
                     <UpcomingMini
                       key={event.id}
                       event={event}
-                      delay={0.25 + i * 0.05}
                     />
                   ))}
                 </div>
@@ -78,11 +77,10 @@ export default async function EventsPage() {
                   </h2>
                 </ScrollReveal>
                 <div className="mt-6 columns-1 gap-6 sm:columns-2 lg:columns-3">
-                  {past.map((event, i) => (
+                  {past.map((event) => (
                     <PastEventCard
                       key={event.id}
                       event={event}
-                      delay={0.35 + i * 0.03}
                     />
                   ))}
                 </div>
