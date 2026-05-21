@@ -3,20 +3,20 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 current_phase: 06
-status: Phase 07 complete; Phase 06 planned (CONTEXT + 6 PLANs staged)
-last_updated: "2026-04-16T19:48:53.987Z"
+status: v1.0 complete — Phase 6 GO approved 2026-04-16; ready for milestone close + v2.0 kickoff
+last_updated: "2026-05-20T00:00:00Z"
 progress:
   total_phases: 7
-  completed_phases: 4
+  completed_phases: 7
   total_plans: 28
-  completed_plans: 25
-  percent: 89
+  completed_plans: 28
+  percent: 100
 ---
 
 # Project State
 
-**Current Phase:** 06
-**Last Updated:** 2026-04-16
+**Current Phase:** 06 (closed)
+**Last Updated:** 2026-05-20
 
 ## Phase Status
 
@@ -27,12 +27,12 @@ progress:
 | 3 — Core Pages | complete | 2026-04-02 | 2026-04-02 |
 | 4 — Animation & Polish | complete | 2026-04-02 | 2026-04-03 |
 | 5 — Analytics | complete | 2026-04-03 | 2026-04-03 |
+| 6 — Pre-Launch QA | complete | 2026-04-16 | 2026-04-16 |
 | 7 — SEO Overhaul | complete | 2026-04-14 | 2026-04-16 |
-| 6 — Pre-Launch QA | planned | 2026-04-16 | — |
 
 ## Active Work
 
-Phases 1-5 and 7 complete. Phase 7 (SEO Overhaul) shipped all 11 plans (07-01..07-11): SEO infrastructure, Substack RSS pipeline, homepage/about rewrites, `/prometheus` + `/newsletter` + `/uses` routes, per-blog-post and per-project metadata, RSS feed at `/blog/feed.xml`, styled 404, and final em-dash sweep. Phase 6 (Pre-Launch QA) now has CONTEXT + 6 PLAN files staged (06-01 through 06-06) covering doc reconciliation, `vercel build` gate + bundle-secret scan, Lighthouse triple coverage (desktop CLI, mobile CLI, PSI mobile), 28-requirement UAT, Notion long-tail + dark-mode FOUC + Safari checks, SEO re-audit against live HTML, and GO/NO-GO aggregation.
+All 7 phases complete. v1.0 GO approved 2026-04-16 per `06-GO-NO-GO.md` (signed off by user after full QA walkthrough — visual fixes session covered nav, breadcrumbs, project images, newsletter carousel, subscribe CTA, Prometheus link; mobile PSI 77 accepted as non-blocking caveat for personal site). Site live at https://montysinger.com. Ready for `/gsd:complete-milestone` (archive v1.0) and `/gsd:new-milestone` (kick off v2.0 Editorial Redesign — see `.planning/research/editorial-redesign-handoff/` once imported).
 
 ## Accumulated Context
 
@@ -62,6 +62,7 @@ Phases 1-5 and 7 complete. Phase 7 (SEO Overhaul) shipped all 11 plans (07-01..0
 - [Phase 05-analytics]: Umami deployed as separate Vercel project (fork of umami-software/umami) backed by Neon Postgres, now reachable at https://analytics.montysinger.com (custom subdomain D-04 completed 2026-04-10 via Namecheap CNAME → cname.vercel-dns.com); legacy *.vercel.app alias preserved
 - [Phase 05-analytics]: Production domain is montysinger.com (Namecheap registrar/DNS), NOT msizzle.com — earlier planning docs were incorrect
 - [Phase 06]: Plan 06-01 classified broader-sweep NOTION_TOKEN variable-name hits as INFO (not LEAK) since they are process.env reads in server Edge functions; D-14 blocking gate applies to client chunks and to literal secret VALUES only
+- [Phase 06]: All 6 plans shipped (06-01..06-06); GO/NO-GO verdict GO 2026-04-16; v1.0 approved for launch; PSI mobile 77 (home) accepted as non-blocking caveat for a personal site — optimization continues post-launch; DSGN-02 mobile responsive + dark-mode FOUC visually confirmed during user QA walkthrough session
 
 ### Roadmap Evolution
 
@@ -78,7 +79,9 @@ Phases 1-5 and 7 complete. Phase 7 (SEO Overhaul) shipped all 11 plans (07-01..0
 
 - Notion env vars (NOTION_TOKEN, NOTION_DATABASE_ID) — set in production, still useful to verify locally for dev
 - Planning artifacts in `.planning/phases/` reference msizzle.com in places — should be swept to montysinger.com in a future docs cleanup (Phase 07 handled all src/ code; planning docs intentionally left alone for historical fidelity)
+- STATE.md was bookkeeping-stale until 2026-05-20: Phase 6 had been shipped 2026-04-16 (per `06-GO-NO-GO.md` final GO) but the Phase Status table still read `planned`. Reconciled when prepping v2.0 milestone kickoff.
 
 ---
 
 *State initialized: 2026-03-31*
+*v1.0 closed: 2026-04-16 (GO per Phase 6) · bookkeeping reconciled 2026-05-20*
