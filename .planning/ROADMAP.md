@@ -27,7 +27,7 @@ Full milestone detail: [milestones/v1.0-ROADMAP.md](./milestones/v1.0-ROADMAP.md
 - [x] **Phase 8: Motion Subtractions** — Delete v1.0 animation loops, pulsing dots, hover-carousels, cascading reveals; preserve Lenis + page-fade *(code-complete 2026-05-21; HUMAN-UAT pending for vercel build + Lenis/fade smoke per 08-HUMAN-UAT.md)*
 - [x] **Phase 9: Design Tokens & Editorial Primitives** — Warm-paper palette tokens, editorial type scale utilities, 7 shared primitive components (completed 2026-05-21)
 - [x] **Phase 10: Editorial Homepage** — Manifesto-anchored homepage with 5 labeled sections, ink footer, mobile parity, manifesto letter-stagger signature interaction (completed 2026-05-21)
-- [ ] **Phase 11: Archive Pages** — `/writing`, `/events`, `/photos` year-grouped archive pages
+- [x] **Phase 11: Archive Pages** — `/writing`, `/events`, `/photos` year-grouped archive pages (completed 2026-05-21)
 - [ ] **Phase 12: Sub-page Restyle Sweep** — Lightweight palette+typography pass on `/about`, `/projects`, `/blog`, `/links`, `/prometheus`, `/newsletter`
 - [ ] **Phase 13: v2.0 QA & GO/NO-GO** — Production build gate, Lighthouse re-baseline (desktop + mobile PSI), mobile visual QA, dark-mode FOUC, secret scan, GO verdict
 
@@ -110,8 +110,8 @@ Full milestone detail: [milestones/v1.0-ROADMAP.md](./milestones/v1.0-ROADMAP.md
 - [x] 11-01-PLAN.md — NEW <YearBlock> primitive at src/components/editorial/year-block.tsx (sticky-left-year layout via md:sticky md:top-9 md:self-start)
 - [x] 11-02-PLAN.md — NEW src/lib/photos.ts (PHOTOS_BY_YEAR empirical 3×2023 + 3×2025 + groupPhotosByYear) + formatDayNumeral helper added to src/lib/dates.ts
 - [x] 11-03-PLAN.md — ARCH-01 /writing route + NEW src/components/home-v2/editorial-header.tsx extraction + Phase 10 D-42 chrome gate extension to /writing|/events|/photos + homepage /blog→/writing href swap (3 places)
-- [ ] 11-04-PLAN.md — ARCH-02 /events route REWRITE (84px featured / 56px non-featured day numerals + 3-col dense Past per D-20 REVISED) + delete orphaned src/components/events/event-cards.tsx
-- [ ] 11-05-PLAN.md — ARCH-03 /photos route (year-grouped YearBlock grid using PHOTOS_BY_YEAR; unblocks homepage Photographs AllLink + PERSONAL Photo Archive card per D-06)
+- [x] 11-04-PLAN.md — ARCH-02 /events route REWRITE (84px featured / 56px non-featured day numerals + 3-col dense Past per D-20 REVISED) + delete orphaned src/components/events/event-cards.tsx
+- [x] 11-05-PLAN.md — ARCH-03 /photos route (year-grouped YearBlock grid using PHOTOS_BY_YEAR; unblocks homepage Photographs AllLink + PERSONAL Photo Archive card per D-06)
 **UI hint**: yes
 **Risks**: `/events` requires upcoming events in Notion for the giant-numeral section to look right — verify Notion DB has at least one upcoming event before plan kickoff, or ship a graceful empty state. `/photos` has no Notion source; year grouping must be derived from photo metadata or filename convention — decide and document the source-of-truth at plan-check. The email-subscribe footer on `/writing` should reuse the existing newsletter integration, not introduce a second pipeline.
 
@@ -158,6 +158,6 @@ Full milestone detail: [milestones/v1.0-ROADMAP.md](./milestones/v1.0-ROADMAP.md
 | 8. Motion Subtractions | v2.0 | 5/7 | In Progress|  |
 | 9. Design Tokens & Editorial Primitives | v2.0 | 9/9 | Complete    | 2026-05-21 |
 | 10. Editorial Homepage | v2.0 | 7/7 | Complete    | 2026-05-21 |
-| 11. Archive Pages | v2.0 | 3/5 | In Progress|  |
+| 11. Archive Pages | v2.0 | 5/5 | Complete   | 2026-05-21 |
 | 12. Sub-page Restyle Sweep | v2.0 | 0/? | Not started | — |
 | 13. v2.0 QA & GO/NO-GO | v2.0 | 0/? | Not started | — |

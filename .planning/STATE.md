@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: Editorial Redesign
 current_phase: 11
-status: executing
-last_updated: "2026-05-21T14:50:05.413Z"
-last_activity: 2026-05-21 -- Phase 11 execution started
+status: completed
+last_updated: "2026-05-21T15:01:11.637Z"
+last_activity: 2026-05-21 -- Phase 11 marked complete
 progress:
   total_phases: 6
-  completed_phases: 3
+  completed_phases: 4
   total_plans: 28
-  completed_plans: 26
-  percent: 50
+  completed_plans: 28
+  percent: 67
 ---
 
 # Project State
@@ -27,7 +27,7 @@ progress:
 | 8 — Motion Subtractions | code_complete (HUMAN-UAT pending) | 2026-05-21 | 2026-05-21 |
 | 9 — Design Tokens & Editorial Primitives | code_complete (ready for verification) | 2026-05-21 | 2026-05-21 |
 | 10 — Editorial Homepage | code_complete (ready for verification) | 2026-05-21 | 2026-05-21 |
-| 11 — Archive Pages | not_started | — | — |
+| 11 — Archive Pages | code_complete (HUMAN-UAT pending) | 2026-05-21 | 2026-05-21 |
 | 12 — Sub-page Restyle Sweep | not_started | — | — |
 | 13 — v2.0 QA & GO/NO-GO | not_started | — | — |
 
@@ -47,7 +47,7 @@ v1.0 Phase Status (archived, see `milestones/v1.0-ROADMAP.md`):
 
 v2.0 ROADMAP.md drafted 2026-05-20. 46 requirements mapped across 6 phases (Phase 8 Motion Subtractions → Phase 13 v2.0 QA & GO/NO-GO). Phase 8 selected as the first v2.0 phase per the "delete noise first to unblock visual work" strategy carried forward from the design-handoff motion budget.
 
-Next action: `/gsd:plan-phase 8` to decompose Motion Subtractions into plans.
+Next action: Phase 11 code-complete with 11-VERIFICATION.md PASS verdict. Operator must run HUMAN-UAT (Vercel preview deploy → perceptual smoke on /writing, /events, /photos at 1440px + 390px). After UAT passes, `/gsd:plan-phase 12` to decompose Sub-page Restyle Sweep into plans.
 
 ## Accumulated Context
 
@@ -108,9 +108,9 @@ Bookkeeping drift from v1.0, acknowledged at milestone close 2026-05-20. All are
 
 ## Current Position
 
-Phase: 11 (archive-pages) — EXECUTING
+Phase: 11 — COMPLETE
 Plan: 1 of 5
-Status: Executing Phase 11
+Status: Phase 11 complete
 
 All Phase 9 plans (09-01 through 09-09) shipped:
 
@@ -130,7 +130,7 @@ Phase 10 progress (7 of 7 plans shipped — Phase 10 feature-complete):
 
 D-40 (`vercel build --prod`) deferred to Vercel preview deploy on next branch push (Phase 8 precedent).
 
-Last activity: 2026-05-21 -- Phase 11 execution started
+Last activity: 2026-05-21 -- Phase 11 marked complete
 
 ## Operator Next Steps
 
