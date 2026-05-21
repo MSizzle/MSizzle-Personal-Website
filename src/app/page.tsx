@@ -10,6 +10,8 @@ import { RuleStrong } from "@/components/editorial/rule-strong";
 import { Rule } from "@/components/editorial/rule";
 import { SectionLabel } from "@/components/editorial/section-label";
 import { AllLink } from "@/components/editorial/all-link";
+import { ListRow } from "@/components/editorial/list-row";
+import { formatMonthYear } from "@/lib/dates";
 
 export const revalidate = 1800;
 
@@ -17,7 +19,6 @@ export default async function Home() {
   // Notion getters preserved from v1.0 — consumed by Plans 10-02 (projects),
   // 10-03 (posts + upcomingEvents). Defensive try/catch mirrors the v1.0 pattern
   // so a transient Notion API failure cannot break the homepage render.
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let posts: Awaited<ReturnType<typeof getPublishedPosts>> = [];
   let projects: Awaited<ReturnType<typeof getFeaturedProjects>> = [];
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -158,6 +159,34 @@ export default async function Home() {
                 <AllLink href="/projects">View all works →</AllLink>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* WRITING — HOME-V2-07 / D-13–D-18 */}
+      <RuleStrong />
+      <section className="px-6 pt-[120px] pb-[120px] md:px-40">
+        <SectionLabel numeral="02 — Library">Writing</SectionLabel>
+
+        <div className="mt-[72px]">
+          {posts.length === 0 ? (
+            <p className="text-caption text-muted">More essays coming soon.</p>
+          ) : (
+            <div>
+              {posts.slice(0, 3).map((post) => (
+                <ListRow
+                  key={post.id}
+                  big
+                  href={`/blog/${post.slug}`}
+                  title={post.title}
+                  extra={post.description}
+                  meta={formatMonthYear(post.date)}
+                />
+              ))}
+            </div>
+          )}
+          <div className="mt-12">
+            <AllLink href="/blog">All writing →</AllLink>
           </div>
         </div>
       </section>
