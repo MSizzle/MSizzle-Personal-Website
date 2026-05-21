@@ -49,7 +49,7 @@ Full milestone detail: [milestones/v1.0-ROADMAP.md](./milestones/v1.0-ROADMAP.md
 - [x] 08-03-PLAN.md — Delete `WorksCarousel` (MOTION-03): remove component file, import, JSX; replace with minimal first-3-projects `<Link>` list or empty-state copy
 - [x] 08-04-PLAN.md — Delete `WritingsCarousel` (MOTION-04) + purge orphaned `scroll-left` keyframe + `.animate-scroll-*` utility classes from `globals.css`
 - [x] 08-05-PLAN.md — Remove `animate-ping` wrapper from `FeaturedUpcoming` (MOTION-05) + site-wide sweep for `animate-(ping|pulse|bounce|spin)`
-- [ ] 08-06-PLAN.md — Flatten cascading ScrollReveal delays (MOTION-06): drop 4 accumulator-style `delay=` JSX props in `src/app/page.tsx` + `src/app/events/page.tsx` and clean 3 component prop signatures in `event-cards.tsx`
+- [x] 08-06-PLAN.md — Flatten cascading ScrollReveal delays (MOTION-06): drop 4 accumulator-style `delay=` JSX props in `src/app/page.tsx` + `src/app/events/page.tsx` and clean 3 component prop signatures in `event-cards.tsx`
 - [ ] 08-07-PLAN.md — Verify MOTION-08 preservation: `git diff main` byte-equality for Lenis/template/ScrollReveal + Vitest preservation tests + `vercel build --prod` phase gate + human smoke test
 **Risks**: v1.0 components are currently imported by `app/page.tsx` and possibly other routes; sweeping deletion without grep-replacing call sites will break the build. Each motion-deletion plan must run a `rg <ComponentName>` sweep before removing the file. The `animate-ping` removal must also catch any other always-on CSS animations introduced after v1.0 close.
 

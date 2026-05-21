@@ -4,14 +4,14 @@ milestone: v2.0
 milestone_name: Editorial Redesign
 current_phase: 8
 status: executing
-last_updated: "2026-05-21T03:33:46.411Z"
+last_updated: "2026-05-21T03:50:00.000Z"
 last_activity: 2026-05-21
 progress:
   total_phases: 6
   completed_phases: 0
   total_plans: 7
-  completed_plans: 5
-  percent: 71
+  completed_plans: 6
+  percent: 86
 ---
 
 # Project State
@@ -109,9 +109,9 @@ Bookkeeping drift from v1.0, acknowledged at milestone close 2026-05-20. All are
 ## Current Position
 
 Phase: 8 (Motion Subtractions) — EXECUTING
-Plan: 6 of 7 (Plan 01 PhotoCarousel deleted, commit ced6df2, MOTION-01 ✓ · Plan 02 RotatingTagline deleted, commit 31ae6b9, MOTION-02 ✓ · Plan 03 WorksCarousel deleted + minimal `<ul>` Link-list fallback, commit 1670fc9, MOTION-03 ✓ · Plan 04 WritingsCarousel deleted + minimal `<ul>` Link-list fallback + orphan `scroll-left` CSS keyframes/utilities purged from globals.css, commit 7486a68, MOTION-04 ✓ · Plan 05 animate-ping wrapper deleted from FeaturedUpcoming (src/components/events/event-cards.tsx) — site-wide four-class sweep animate-ping|pulse|bounce|spin now 0 hits in src/, commit 7c1c942, MOTION-05 ✓)
-Status: Ready to execute Plan 06
-Last activity: 2026-05-21 -- Plan 08-05 complete (MOTION-05 / animate-ping element-level deletion from FeaturedUpcoming per D-07; D-06 four-class sweep contract now satisfied site-wide — always-on Tailwind animation utility category fully closed). animate-pulse, animate-bounce, animate-spin were already 0 hits before AND after (RESEARCH.md verification matched). Plan-06 inherits clean event-cards.tsx; remaining Phase 8 motion work (Plan-06) is prop-shape simplification on UpcomingMini + PastEventCard, not motion-class removal.
+Plan: 7 of 7 (Plan 01 PhotoCarousel deleted, commit ced6df2, MOTION-01 ✓ · Plan 02 RotatingTagline deleted, commit 31ae6b9, MOTION-02 ✓ · Plan 03 WorksCarousel deleted + minimal `<ul>` Link-list fallback, commit 1670fc9, MOTION-03 ✓ · Plan 04 WritingsCarousel deleted + minimal `<ul>` Link-list fallback + orphan `scroll-left` CSS keyframes/utilities purged from globals.css, commit 7486a68, MOTION-04 ✓ · Plan 05 animate-ping wrapper deleted from FeaturedUpcoming (src/components/events/event-cards.tsx) — site-wide four-class sweep animate-ping|pulse|bounce|spin now 0 hits in src/, commit 7c1c942, MOTION-05 ✓ · Plan 06 cascading delay props flattened — 4 accumulator JSX props removed from src/app/page.tsx + src/app/events/page.tsx, `delay` dropped from FeaturedUpcoming/UpcomingMini/PastEventCard signatures, site-wide cascade-pattern sweep `delay=\{?\d?\.\d+\s*\+\s*i\s*\*` now 0 hits in src/, commit 0e62122, MOTION-06 ✓)
+Status: Ready to execute Plan 07 (Wave 2 — MOTION-08 preservation verification)
+Last activity: 2026-05-21 -- Plan 08-06 complete (MOTION-06 / drop-the-prop deletion of `delay` from event-card consumers AND signatures per D-04). D-05 cascade-pattern sweep contract satisfied site-wide (0 hits). ScrollReveal component untouched (D-12). `npx tsc --noEmit` clean for Plan-06 files; `npm run build` not verified in resume sandbox due to environmental block (Turbopack ENFILE; webpack framer-motion ESM) — substitution pre-approved by user, Plan-07's `vercel build --prod` will provide canonical confirmation per D-11. Wave 1 (Plans 01–06) closed; all motion-deletion work shipped. Plan-07 is verification-only (preservation + human smoke test).
 
 ## Operator Next Steps
 
