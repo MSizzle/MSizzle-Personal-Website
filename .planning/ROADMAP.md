@@ -28,7 +28,7 @@ Full milestone detail: [milestones/v1.0-ROADMAP.md](./milestones/v1.0-ROADMAP.md
 - [x] **Phase 9: Design Tokens & Editorial Primitives** — Warm-paper palette tokens, editorial type scale utilities, 7 shared primitive components (completed 2026-05-21)
 - [x] **Phase 10: Editorial Homepage** — Manifesto-anchored homepage with 5 labeled sections, ink footer, mobile parity, manifesto letter-stagger signature interaction (completed 2026-05-21)
 - [x] **Phase 11: Archive Pages** — `/writing`, `/events`, `/photos` year-grouped archive pages (completed 2026-05-21)
-- [ ] **Phase 12: Sub-page Restyle Sweep** — Lightweight palette+typography pass on `/about`, `/projects`, `/blog`, `/links`, `/prometheus`, `/newsletter`
+- [x] **Phase 12: Sub-page Restyle Sweep** — Lightweight palette+typography pass on `/about`, `/projects`, `/blog`, `/links`, `/prometheus`, `/newsletter` (completed 2026-05-21)
 - [ ] **Phase 13: v2.0 QA & GO/NO-GO** — Production build gate, Lighthouse re-baseline (desktop + mobile PSI), mobile visual QA, dark-mode FOUC, secret scan, GO verdict
 
 ## Phase Details
@@ -159,5 +159,5 @@ Full milestone detail: [milestones/v1.0-ROADMAP.md](./milestones/v1.0-ROADMAP.md
 | 9. Design Tokens & Editorial Primitives | v2.0 | 9/9 | Complete    | 2026-05-21 |
 | 10. Editorial Homepage | v2.0 | 7/7 | Complete    | 2026-05-21 |
 | 11. Archive Pages | v2.0 | 5/5 | Complete   | 2026-05-21 |
-| 12. Sub-page Restyle Sweep | v2.0 | 1/7 | In Progress|  |
+| 12. Sub-page Restyle Sweep | v2.0 | 7/7 | Complete   | 2026-05-21 |
 | 13. v2.0 QA & GO/NO-GO | v2.0 | 0/? | Not started | — |
