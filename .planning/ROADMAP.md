@@ -45,7 +45,7 @@ Full milestone detail: [milestones/v1.0-ROADMAP.md](./milestones/v1.0-ROADMAP.md
   5. Lenis smooth scroll and the 200-300ms page-load fade still work on every existing route
 **Plans**: 7 plans
 - [x] 08-01-PLAN.md — Delete `PhotoCarousel` (MOTION-01): remove component file, import, JSX, `getCarouselPhotos()` helper, and orphaned `fs`/`path` imports in `src/app/page.tsx`
-- [ ] 08-02-PLAN.md — Delete `RotatingTagline` (MOTION-02): remove component file, import, and `<RotatingTagline />` JSX block from Hero section
+- [x] 08-02-PLAN.md — Delete `RotatingTagline` (MOTION-02): remove component file, import, and `<RotatingTagline />` JSX block from Hero section
 - [ ] 08-03-PLAN.md — Delete `WorksCarousel` (MOTION-03): remove component file, import, JSX; replace with minimal first-3-projects `<Link>` list or empty-state copy
 - [ ] 08-04-PLAN.md — Delete `WritingsCarousel` (MOTION-04) + purge orphaned `scroll-left` keyframe + `.animate-scroll-*` utility classes from `globals.css`
 - [ ] 08-05-PLAN.md — Remove `animate-ping` wrapper from `FeaturedUpcoming` (MOTION-05) + site-wide sweep for `animate-(ping|pulse|bounce|spin)`
@@ -134,7 +134,7 @@ Full milestone detail: [milestones/v1.0-ROADMAP.md](./milestones/v1.0-ROADMAP.md
 | 5. Analytics | v1.0 | 2/2 | Complete | 2026-04-03 |
 | 6. Pre-Launch QA | v1.0 | 6/6 | Complete | 2026-04-16 |
 | 7. SEO Overhaul | v1.0 | 11/11 | Complete | 2026-04-16 |
-| 8. Motion Subtractions | v2.0 | 1/7 | In Progress|  |
+| 8. Motion Subtractions | v2.0 | 2/7 | In Progress|  |
 | 9. Design Tokens & Editorial Primitives | v2.0 | 0/? | Not started | — |
 | 10. Editorial Homepage | v2.0 | 0/? | Not started | — |
 | 11. Archive Pages | v2.0 | 0/? | Not started | — |

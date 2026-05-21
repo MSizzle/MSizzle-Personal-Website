@@ -4,14 +4,14 @@ milestone: v2.0
 milestone_name: Editorial Redesign
 current_phase: 8
 status: executing
-last_updated: "2026-05-21T03:17:42.241Z"
+last_updated: "2026-05-21T03:21:05.226Z"
 last_activity: 2026-05-21
 progress:
   total_phases: 6
   completed_phases: 0
   total_plans: 7
-  completed_plans: 1
-  percent: 14
+  completed_plans: 2
+  percent: 29
 ---
 
 # Project State
@@ -109,9 +109,9 @@ Bookkeeping drift from v1.0, acknowledged at milestone close 2026-05-20. All are
 ## Current Position
 
 Phase: 8 (Motion Subtractions) — EXECUTING
-Plan: 2 of 7 (Plan 01 complete — PhotoCarousel deleted, commit ced6df2; MOTION-01 marked complete)
-Status: Executing Phase 8
-Last activity: 2026-05-21 -- Plan 08-01 complete (MOTION-01 / PhotoCarousel deletion)
+Plan: 3 of 7 (Plan 01 PhotoCarousel deleted, commit ced6df2, MOTION-01 ✓ · Plan 02 RotatingTagline deleted, commit 31ae6b9, MOTION-02 ✓)
+Status: Ready to execute Plan 03
+Last activity: 2026-05-21 -- Plan 08-02 complete (MOTION-02 / RotatingTagline deletion)
 
 ## Operator Next Steps
 
