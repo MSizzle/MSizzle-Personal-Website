@@ -4,13 +4,13 @@ milestone: v2.0
 milestone_name: Editorial Redesign
 current_phase: 11
 status: executing
-last_updated: "2026-05-21T14:38:13.709Z"
-last_activity: 2026-05-21
+last_updated: "2026-05-21T14:50:05.413Z"
+last_activity: 2026-05-21 -- Phase 11 execution started
 progress:
   total_phases: 6
   completed_phases: 3
   total_plans: 28
-  completed_plans: 25
+  completed_plans: 26
   percent: 50
 ---
 
@@ -108,9 +108,9 @@ Bookkeeping drift from v1.0, acknowledged at milestone close 2026-05-20. All are
 
 ## Current Position
 
-Phase: 11 (Archive Pages) — EXECUTING
-Plan: 3 of 5
-Status: Ready to execute
+Phase: 11 (archive-pages) — EXECUTING
+Plan: 1 of 5
+Status: Executing Phase 11
 
 All Phase 9 plans (09-01 through 09-09) shipped:
 
@@ -130,7 +130,7 @@ Phase 10 progress (7 of 7 plans shipped — Phase 10 feature-complete):
 
 D-40 (`vercel build --prod`) deferred to Vercel preview deploy on next branch push (Phase 8 precedent).
 
-Last activity: 2026-05-21
+Last activity: 2026-05-21 -- Phase 11 execution started
 
 ## Operator Next Steps
 
