@@ -1,4 +1,7 @@
+'use client'
+
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
 const LINKS = [
   { href: '/about', label: 'About' },
@@ -16,6 +19,11 @@ const SOCIALS = [
 ]
 
 export function Footer() {
+  const pathname = usePathname()
+
+  // D-42: v2.0 homepage renders its own ink footer — suppress v1.0 footer on `/`
+  if (pathname === '/') return null
+
   return (
     <footer className="px-6 md:px-24">
       <div className="mx-auto max-w-[66ch] py-16">

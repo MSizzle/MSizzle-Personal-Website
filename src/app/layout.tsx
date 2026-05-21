@@ -4,6 +4,7 @@ import { LenisProvider } from "@/components/providers/lenis-provider";
 import { MotionProvider } from "@/components/providers/motion-provider";
 import { Navigation } from "@/components/nav/navigation";
 import { Footer } from "@/components/footer";
+import { MainOffset } from "@/components/main-offset";
 import { UmamiAnalytics } from "@/components/analytics/umami-analytics";
 import { VisitSurvey } from "@/components/visit-survey";
 import { SITE_URL } from "@/lib/seo/site";
@@ -67,7 +68,7 @@ export default function RootLayout({
         <LenisProvider>
           <MotionProvider>
             <Navigation />
-            <main className="pt-16">{children}</main>
+            <MainOffset>{children}</MainOffset>
             <Footer />
           </MotionProvider>
         </LenisProvider>

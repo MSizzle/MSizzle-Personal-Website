@@ -14,6 +14,9 @@ export function Navigation() {
   const [open, setOpen] = useState(false)
   const pathname = usePathname()
 
+  // D-42: v2.0 homepage renders its own editorial chrome — suppress v1.0 nav on `/`
+  if (pathname === '/') return null
+
   return (
     <>
       <header className="fixed inset-x-0 top-0 z-50 bg-[var(--bg)]">
