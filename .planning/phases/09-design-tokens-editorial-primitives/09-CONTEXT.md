@@ -111,13 +111,17 @@ Phase 9 builds the **foundation** the entire v2.0 redesign composes with. Two de
 - **D-11:** **PRIM components are `'use client'` only if they need event handlers.** None of the 7 primitives have interactive state (they're presentational). Default to Server Components — no `'use client'` directive. Hover styles are CSS-only (`hover:` Tailwind variants), which work in Server Components.
 
 ### Specimen Page (SC1 of Phase 9 success criteria)
-- **D-12:** **Route: `/_specimen`** at `src/app/_specimen/page.tsx`. Underscore prefix excludes it from sitemap by convention; manual `noindex` metadata as belt-and-suspenders. Permanent dev resource — useful for ongoing design QA in Phases 10–13 and post-ship.
+- **D-12 (REVISED post-research):** **Route: `/specimen` (no underscore prefix)** at `src/app/specimen/page.tsx`. **Original D-12 was wrong:** Next.js 16 treats `_`-prefixed folders as **private folders opted out of routing entirely** (verified against official Next.js 16 docs, lastUpdated 2026-05-19) — `src/app/_specimen/page.tsx` returns 404. Use the no-underscore path with triple-defense discoverability suppression instead (D-14).
 - **D-13:** **Specimen content:** Render a section per token category:
   - Palette swatches (10 swatches with role name + hex + `bg-paper`/`bg-ink`/etc. class)
   - Type scale specimens (one line of representative text per `text-*` utility — "The quick brown fox" for body sizes, "BUILDING" for label/meta)
   - Each of the 7 primitive components rendered with sensible default props
   - A "no animations" note confirming Phase 8's motion budget holds on this page (no auto-anything)
-- **D-14:** **Specimen page metadata:** `export const metadata = { robots: { index: false, follow: false } }` on the Next.js metadata export. Also add to `app/sitemap.ts` exclusion list if that file exists.
+- **D-14 (REVISED post-research):** **Triple-defense discoverability suppression** for the `/specimen` route (replaces the now-impossible underscore-prefix convention):
+  1. **Metadata noindex:** `export const metadata = { robots: { index: false, follow: false } }` on the page.tsx metadata export.
+  2. **Sitemap exclusion:** If `src/app/sitemap.ts` exists, exclude `/specimen` from the returned list. If it doesn't exist yet, no action needed.
+  3. **robots.ts Disallow:** Add or extend `src/app/robots.ts` to include `disallow: ['/specimen']`. If robots.ts doesn't exist yet, create it with a `User-agent: *` rule + the disallow.
+- **D-14a:** **Add `--text-caption: 13px` to Plan 09-01's `@theme` block** (researcher recommendation). The handoff lists 13–15px captions but `text-meta` (11px) is too small and `text-body` (16–18px) is too big. `text-caption` at 13px with line-height 1.5 covers handoff's caption sizes. Plan 09-01 includes this token alongside the other 9.
 
 ### Existing Code (CONTEXT.md D-12/D-13 from Phase 8 still apply)
 - **D-15:** **Preserve from Phase 8:** `src/components/animations/scroll-reveal.tsx`, `src/components/providers/lenis-provider.tsx`, `src/app/template.tsx` — DO NOT touch in Phase 9. These are the only surviving site-wide motion components per the v2.0 motion budget. Phase 10 still depends on them.
@@ -179,7 +183,7 @@ Phase 9 builds the **foundation** the entire v2.0 redesign composes with. Two de
 - `src/app/globals.css` — current `@theme inline { --color-background, --color-foreground, --color-accent, --color-accent-warm }` block + `:root { --bg, --fg, ... }` block + `.dark` block + body/prose rules. This is THE file Plan 09-01 rewrites.
 - `src/app/layout.tsx` — `inter = Inter({ variable: '--font-inter', subsets: ['latin'], weight: ['400', '700'] })` (line 13–17). TOKEN-03 already satisfied at the font-loader level. Plan 09-01 verifies + removes the `<ThemeProvider>` wrap if it sits in this file.
 - `src/components/providers/theme-provider.tsx` — to be deleted by Plan 09-01 (D-04).
-- `src/components/theme-toggle.tsx` — to be deleted by Plan 09-01 (D-04). Also need to find + remove the `<ThemeToggle>` usage site (likely in a nav component under `src/components/nav/`).
+- `src/components/theme-toggle.tsx` — to be deleted by Plan 09-01 (D-04). **Researcher verified: ZERO consumer call sites** — `rg "ThemeToggle|theme-toggle" src/` returns only the definition file. No nav-component sweep needed; delete the two files and the `<ThemeProvider>` wrap and done.
 - `src/components/editorial/` — does NOT exist. Plans 09-02..09-08 create files in this new directory.
 - `src/app/_specimen/` — does NOT exist. Plan 09-09 creates this route.
 
@@ -189,8 +193,8 @@ Phase 9 builds the **foundation** the entire v2.0 redesign composes with. Two de
 ## Existing Code Insights
 
 ### Reusable Assets
-- **`cn` utility helper** — Project likely already has a `clsx + tailwind-merge` helper (typical shadcn/ui setup). Primitives should `import { cn } from "@/lib/utils"` (or wherever it lives) to handle conditional className merging in the `ListRow big` variant. If no `cn` exists yet, primitives can use template literals + `clsx` directly; do NOT add new dependencies.
-- **Existing `next/font/google` Inter loader** — Phase 9 reuses as-is.
+- **`cn` utility helper** — Confirmed at `src/utils/cn.ts` (NOT `@/lib/utils`). Pattern: `cn(...inputs: ClassValue[])` via `clsx + tailwind-merge`. Two existing consumers (`navigation.tsx`, `tag-filter.tsx`). Primitives that need conditional className merging (mainly `ListRow` for the `big` variant) import: `import { cn } from "@/utils/cn"`.
+- **Existing `next/font/google` Inter loader** — Phase 9 reuses as-is (weights 400/700 already loaded at `src/app/layout.tsx:13–17`).
 - **Existing `<Link>` from `next/link`** — used by `ListRow`, `AllLink`, `IntroLink`, `FooterCol` for navigation.
 
 ### Established Patterns
