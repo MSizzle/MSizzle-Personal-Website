@@ -34,7 +34,7 @@ The redesign is a *subtraction* from v1.0, not an addition. Vanschneider-inspire
 - [x] **HOME-V2-06**: BUILDING section — 2 rows (Prometheus, Selected Works) in 3-column grid (180px tag / 1fr title / 1fr blurb+link); Selected Works pulls live names from `notion-projects.ts` (8 real projects)
 - [x] **HOME-V2-07**: WRITING section — 3 latest essays as `ListRow big` with title + 13px muted extra blurb + 11px tracked date right; "All writing →" link
 - [x] **HOME-V2-08**: EVENTS section — featured upcoming event in 3-column grid (180px date / content / RSVP CTA) + 2 secondary `ListRow` entries + "All events →" link; **no `animate-ping` indicator**
-- [ ] **HOME-V2-09**: PHOTOGRAPHS section — 12-column asymmetric grid with 6 plates per the handoff layout spec, `mix-blend-mode: difference` caption overlays, `Photo Archive →` link
+- [x] **HOME-V2-09**: PHOTOGRAPHS section — 12-column asymmetric grid with 6 plates per the handoff layout spec, `mix-blend-mode: difference` caption overlays, `Photo Archive →` link
 - [ ] **HOME-V2-10**: PERSONAL section — 3-column card grid (Photo Archive, Links & Elsewhere, About) with top 1px ink border per card
 - [ ] **HOME-V2-11**: Inverted ink footer with 4-column layout — colophon ("A calling card, not a billboard.") + 3 grouped link columns (Studio / Library / Person) + bottom row (copyright + socials)
 - [ ] **HOME-V2-12**: Mobile homepage — same sections in single-column at 390px reference, manifesto at 56px / 4 lines, photographs as 2×2 grid, footer inverts with per-column hairline dividers, tap targets ≥ 44px
