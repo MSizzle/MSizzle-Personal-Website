@@ -1,10 +1,7 @@
-import fs from "fs";
-import path from "path";
 import Link from "next/link";
 import { getPublishedPosts } from "@/lib/notion";
 import { getFeaturedProjects } from "@/lib/notion-projects";
 import { getUpcomingEvents, getPastEvents } from "@/lib/notion-events";
-import { PhotoCarousel } from "@/components/home/photo-carousel";
 import { WritingsCarousel } from "@/components/home/writings-carousel";
 import { WorksCarousel } from "@/components/home/works-carousel";
 import { RotatingTagline } from "@/components/home/rotating-tagline";
@@ -15,19 +12,6 @@ import {
 } from "@/components/events/event-cards";
 import { JsonLd } from "@/components/seo/json-ld";
 import { buildPersonSchema } from "@/lib/seo/schemas";
-
-function getCarouselPhotos(): string[] {
-  try {
-    const dir = path.join(process.cwd(), "public", "MSizzle-website-photos");
-    return fs
-      .readdirSync(dir)
-      .filter((f) => /\.(jpg|jpeg|png|webp|gif)$/i.test(f))
-      .sort()
-      .map((f) => `/MSizzle-website-photos/${f}`);
-  } catch {
-    return [];
-  }
-}
 
 export const revalidate = 1800;
 
@@ -50,18 +34,9 @@ export default async function Home() {
     pastEvents = await getPastEvents();
   } catch {}
 
-  const carouselPhotos = getCarouselPhotos();
-
   return (
     <>
       <JsonLd data={buildPersonSchema()} />
-
-      {/* Photo carousel - full bleed, above hero */}
-      {carouselPhotos.length > 0 && (
-        <section className="pt-8 pb-6 overflow-hidden">
-          <PhotoCarousel photos={carouselPhotos} />
-        </section>
-      )}
 
       {/* Hero - editorial intro */}
       <section className="px-6 pt-6 pb-20 md:px-24">
