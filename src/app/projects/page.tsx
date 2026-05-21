@@ -28,14 +28,14 @@ export default async function ProjectsPage() {
       <Breadcrumbs items={[{ name: "Home", href: "/" }, { name: "Works" }]} />
       <div className="mx-auto max-w-[66ch] px-6 pb-16 pt-8 md:px-0">
         <ScrollReveal delay={0}>
-          <h1 className="text-sm font-normal uppercase tracking-widest">
+          <h1 className="text-label uppercase text-muted">
             Works
           </h1>
         </ScrollReveal>
 
         {projects.length === 0 ? (
           <ScrollReveal delay={0.15}>
-            <p className="mt-8 opacity-75">Projects coming soon.</p>
+            <p className="mt-8 text-muted">Projects coming soon.</p>
           </ScrollReveal>
         ) : (
           <ScrollReveal delay={0.15}>
