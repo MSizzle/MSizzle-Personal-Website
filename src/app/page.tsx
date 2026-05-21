@@ -1,4 +1,3 @@
-import Link from "next/link";
 import Image from "next/image";
 import { getPublishedPosts } from "@/lib/notion";
 import { getFeaturedProjects } from "@/lib/notion-projects";
@@ -13,6 +12,7 @@ import { AllLink } from "@/components/editorial/all-link";
 import { ListRow } from "@/components/editorial/list-row";
 import { FooterCol } from "@/components/editorial/footer-col";
 import { ManifestoReveal } from "@/components/home-v2/manifesto-reveal";
+import { EditorialHeader } from "@/components/home-v2/editorial-header";
 import { formatMonthYear, formatMonthDay } from "@/lib/dates";
 
 // Per-plate className contains literal `md:col-span-N md:row-span-M` tokens so the
@@ -57,41 +57,11 @@ export default async function Home() {
     <>
       <JsonLd data={buildPersonSchema()} />
 
-      {/* Editorial header — HOME-V2-01 (D-07 + D-08) */}
-      <header className="flex items-baseline justify-between px-6 pt-7 md:px-40 md:pt-9">
-        <Link href="/" className="text-[15px] font-bold tracking-tight text-ink">
-          Monty Singer
-        </Link>
-        <nav>
-          <ul className="flex list-none flex-wrap items-baseline gap-x-6 gap-y-2 text-nav text-ink md:gap-x-8">
-            <li>
-              <Link href="/projects" className="flex min-h-11 items-center transition-opacity hover:opacity-60">
-                Building
-              </Link>
-            </li>
-            <li>
-              <Link href="/blog" className="flex min-h-11 items-center transition-opacity hover:opacity-60">
-                Writing
-              </Link>
-            </li>
-            <li>
-              <Link href="/events" className="flex min-h-11 items-center transition-opacity hover:opacity-60">
-                Events
-              </Link>
-            </li>
-            <li>
-              <Link href="/about" className="flex min-h-11 items-center transition-opacity hover:opacity-60">
-                About
-              </Link>
-            </li>
-            <li>
-              <Link href="/links" className="flex min-h-11 items-center transition-opacity hover:opacity-60">
-                Links
-              </Link>
-            </li>
-          </ul>
-        </nav>
-      </header>
+      {/* Editorial header — HOME-V2-01 (D-07 + D-08); extracted to shared
+          component per D-25. Homepage renders no `active` prop (handoff §1
+          does not bold any nav link on /; Writing/Events are bolded only on
+          their respective archive routes). */}
+      <EditorialHeader />
 
       {/* Hero — HOME-V2-02 manifesto + HOME-V2-03 meta row + HOME-V2-04 epigraph */}
       <section className="px-6 pt-16 md:px-40 md:pt-24">
@@ -202,7 +172,7 @@ export default async function Home() {
             </div>
           )}
           <div className="mt-12">
-            <AllLink href="/blog">All writing →</AllLink>
+            <AllLink href="/writing">All writing →</AllLink>
           </div>
         </div>
       </section>
@@ -347,7 +317,7 @@ export default async function Home() {
               title="Library"
               links={[
                 { label: "Monty Monthly", href: "/newsletter" },
-                { label: "Essays",        href: "/blog" },
+                { label: "Essays",        href: "/writing" },
                 { label: "Reading List",  href: "/links" },
               ]}
             />
