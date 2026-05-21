@@ -2,9 +2,10 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-current_phase: 06
-status: v1.0 complete — Phase 6 GO approved 2026-04-16; ready for milestone close + v2.0 kickoff
-last_updated: "2026-05-20T00:00:00Z"
+current_phase: 06 (closed)
+status: Awaiting next milestone
+last_updated: "2026-05-21T02:13:47.704Z"
+last_activity: 2026-05-21 — Milestone v1.0 completed and archived
 progress:
   total_phases: 7
   completed_phases: 7
@@ -81,7 +82,32 @@ All 7 phases complete. v1.0 GO approved 2026-04-16 per `06-GO-NO-GO.md` (signed 
 - Planning artifacts in `.planning/phases/` reference msizzle.com in places — should be swept to montysinger.com in a future docs cleanup (Phase 07 handled all src/ code; planning docs intentionally left alone for historical fidelity)
 - STATE.md was bookkeeping-stale until 2026-05-20: Phase 6 had been shipped 2026-04-16 (per `06-GO-NO-GO.md` final GO) but the Phase Status table still read `planned`. Reconciled when prepping v2.0 milestone kickoff.
 
+## Deferred Items
+
+Items acknowledged and deferred at v1.0 milestone close on 2026-05-20. All are bookkeeping drift, not real outstanding work — surfaced by `gsd-sdk query audit-open` during `/gsd:complete-milestone`.
+
+| Category | Item | Status | Disposition |
+|----------|------|--------|-------------|
+| quick_task | 260409-js5-restyle-visit-survey-from-modal-to-chat- | missing | Completed (commit 9fd193c) — quick task dir lacks SUMMARY.md but work shipped |
+| quick_task | 260409-lle-add-notion-powered-events-feature-with-e | missing | Completed (commit 7207e6a) — quick task dir lacks SUMMARY.md but work shipped |
+| quick_task | 260417-2h5-move-carousel-above-hero-text-stretch-fu | missing | Empty stub directory — work either rolled into later carousel commits (31f0589) or abandoned; safe to delete |
+| quick_task | 260417-3fn-shrink-works-logos-remove-boxes-make-log | missing | Empty stub directory — likely superseded by works-carousel rewrite (31f0589); safe to delete |
+| uat_gap | Phase 04 04-HUMAN-UAT.md (6 pending scenarios) | partial | Superseded — Phase 04 animations are being explicitly *deleted* in v2.0 Editorial Redesign per the redesign handoff motion budget |
+| uat_gap | Phase 06 06-UAT.md (0 pending scenarios) | partial | False positive — UAT shipped (4a36aab "28-requirement UAT — 0 failures, 1 human-needed"); status marker stale |
+| verification_gap | Phase 04 04-VERIFICATION.md | human_needed | Superseded — verifies animations that are being deleted in v2.0 |
+
 ---
 
 *State initialized: 2026-03-31*
 *v1.0 closed: 2026-04-16 (GO per Phase 6) · bookkeeping reconciled 2026-05-20*
+
+## Current Position
+
+Phase: Milestone v1.0 complete
+Plan: —
+Status: Awaiting next milestone
+Last activity: 2026-05-21 — Milestone v1.0 completed and archived
+
+## Operator Next Steps
+
+- Start the next milestone with /gsd-new-milestone
