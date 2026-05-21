@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Monty Singer — v1 Design Reference</title>
+<style>
+  html, body { margin:0; padding:0; background:#dcd8cd; }
+  body { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
+  .label {
+    max-width: 1440px; margin: 0 auto;
+    padding: 28px 0 12px;
+    font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: #4a4640; font-weight: 700;
+  }
+  .frame {
+    margin: 0 auto 40px;
+    background: #F4F2EC;
+    box-shadow: 0 0 0 1px rgba(0,0,0,.08), 0 30px 80px -20px rgba(0,0,0,.18);
+  }
+  .frame--1440 { max-width: 1440px; }
+  .frame--390  { max-width: 390px; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<script type="text/babel" src="src/shared.jsx"></script>
+<script type="text/babel" src="src/home-desktop.jsx"></script>
+<script type="text/babel" src="src/home-mobile.jsx"></script>
+<script type="text/babel" src="src/writing-index.jsx"></script>
+<script type="text/babel" src="src/events-index.jsx"></script>
+<script type="text/babel" src="src/spec-card.jsx"></script>
+<script type="text/babel" src="src/manifesto-card.jsx"></script>
+
+<script type="text/babel">
+function Reference() {
+  return (
+    <div>
+      <div className="label" style={{ maxWidth: 1440 }}>01 · Homepage — Desktop (1440)</div>
+      <div className="frame frame--1440"><HomeDesktop /></div>
+
+      <div className="label" style={{ maxWidth: 390 }}>02 · Homepage — Mobile (390)</div>
+      <div className="frame frame--390"><HomeMobile /></div>
+
+      <div className="label" style={{ maxWidth: 1440 }}>03 · /writing — Index</div>
+      <div className="frame frame--1440"><WritingIndex /></div>
+
+      <div className="label" style={{ maxWidth: 1440 }}>04 · /events — Index</div>
+      <div className="frame frame--1440"><EventsIndex /></div>
+
+      <div className="label" style={{ maxWidth: 980 }}>05 · Manifesto — 3 candidate lines</div>
+      <div className="frame" style={{ maxWidth: 980 }}><ManifestoCard /></div>
+
+      <div className="label" style={{ maxWidth: 980 }}>06 · Specimen — type, color, motion</div>
+      <div className="frame" style={{ maxWidth: 980 }}><SpecCard /></div>
+
+      <div style={{ height: 80 }} />
+    </div>
+  );
+}
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<Reference />);
+</script>
+</body>
+</html>
