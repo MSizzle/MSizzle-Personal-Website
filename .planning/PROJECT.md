@@ -12,7 +12,7 @@ A personal site that feels alive and memorable, *and* legible — not another te
 
 - **Live:** https://montysinger.com (Vercel, Namecheap DNS, Super disconnected)
 - **Last shipped:** v1.0 Build & Launch — 2026-04-16 (GO per Phase 6 QA, 0 UAT failures, Lighthouse desktop 100/96/96/100, mobile PSI 77 accepted non-blocking)
-- **In flight (v2.0):** Phase 12 Sub-page Restyle Sweep complete 2026-05-21 (7/7 plans, all 6 sub-pages — `/about`, `/projects`+slug, `/blog`+slug, `/links`, `/prometheus`, `/newsletter` — migrated to `bg-paper` + `text-ink` + editorial type scale; newsletter carousel replaced with full-width issue grid per D-NEWSLETTER-REDESIGN; build green, 8/8 must-haves verified). Next: Phase 13 v2.0 QA & GO/NO-GO.
+- **v2.0 shipped 2026-05-21:** Editorial Redesign milestone complete. 6 phases (8-13), 41 plans. Vanschneider-inspired manifesto homepage, warm-paper palette, 7 shared editorial primitives, archive pages (`/writing`, `/events`, `/photos`), sub-page restyle sweep, mobile nav restructure, modern browserslist (Chrome 92+/Safari 15.4+ — dropped ~14 KiB legacy polyfills). Lighthouse desktop median 96-100, PSI mobile 95 (up from 82). GO verdict signed by Monty Singer.
 - **Stack in production:** Next.js 16 App Router + React 19 + Tailwind v4 + Inter (next/font/google) + Motion (motion/react) + GSAP + Lenis + `@notionhq/client` v5
 - **Analytics:** Self-hosted Umami at https://analytics.montysinger.com (Neon Postgres, separate Vercel project)
 - **Routes:** `/`, `/about`, `/projects` + `/projects/[slug]`, `/blog` + `/blog/[slug]` + `/blog/feed.xml`, `/events`, `/links`, `/newsletter`, `/prometheus`, `/uses` (redirects to `/about` post-v1.0)
@@ -139,4 +139,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-05-21 — Phase 12 (Sub-page Restyle Sweep) complete; 8/8 must-haves verified; advancing to Phase 13 (v2.0 QA & GO/NO-GO)*
+*Last updated: 2026-05-21 — v2.0 Editorial Redesign milestone complete. Next milestone planning open.*

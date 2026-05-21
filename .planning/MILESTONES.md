@@ -1,5 +1,45 @@
 # Milestones
 
+## v2.0 Editorial Redesign (Shipped: 2026-05-21)
+
+**Phases completed:** 6 phases, 41 plans, 16 tasks
+
+**Key accomplishments:**
+
+- One-liner:
+- One-liner:
+- One-liner:
+- One-liner:
+- One-liner:
+- One-liner:
+- One-liner:
+- One-liner:
+- Commit `ccd2ae6`
+- Commit `7f2ca22`
+- Commit `703b485`
+- Commit `45f6ceb`
+- Commit `ab005f6`
+- Commit `2f5fe73`
+- Commit `35ffd51`
+- One-liner:
+- One-liner:
+- One-liner:
+- One-liner:
+- One-liner:
+- One-liner:
+- One-liner:
+- One-liner:
+- One-liner:
+- One-liner:
+- One-liner:
+- Result: PASS
+- QA-V2-02: ✅ PASS
+- QA-V2-03: ✅ PASS
+- QA-V2-04: PENDING
+- QA-V2-07: PENDING
+
+---
+
 ## v1.0 Build & Launch
 
 **Shipped:** 2026-04-16 (GO verdict per `phases/06-pre-launch-qa/06-GO-NO-GO.md`)
