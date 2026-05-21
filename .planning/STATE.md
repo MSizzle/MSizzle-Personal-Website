@@ -2,14 +2,14 @@
 gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: Editorial Redesign
-current_phase: 8
-status: ready_to_plan
-last_updated: "2026-05-21T04:10:00.000Z"
-last_activity: 2026-05-21
+current_phase: 9
+status: executing
+last_updated: "2026-05-21T05:23:32.203Z"
+last_activity: 2026-05-21 -- Phase 9 planning complete
 progress:
   total_phases: 6
   completed_phases: 1
-  total_plans: 7
+  total_plans: 16
   completed_plans: 7
   percent: 17
 ---
@@ -110,10 +110,12 @@ Bookkeeping drift from v1.0, acknowledged at milestone close 2026-05-20. All are
 
 Phase: 8 (Motion Subtractions) — CODE COMPLETE; HUMAN-UAT PENDING
 Plan: 7 of 7 shipped (Plans 01-07 all have SUMMARY.md; 08-VERIFICATION.md `status: human_needed`; 08-HUMAN-UAT.md holds 2 pending items)
-Status: Code work complete. Waiting on Monty's local Mac UAT before formal milestone advance:
+Status: Ready to execute
+
   1. `npx vercel build --prod` exits 0 (D-11 phase gate)
   2. Manual Lenis + 200-300ms page-load-fade smoke test in Chrome (Plan-07 Task 2 — autonomous: false by plan design)
-Last activity: 2026-05-21 -- Phase 8 verifier returned `status: human_needed` (3/5 must-haves fully verified, 0 failed truths, 2 items legitimately pending in 08-HUMAN-UAT.md for Monty's local environment). Phase 8 ships in 16 commits on `main` (ced6df2 → ae954a4 + ROADMAP/STATE close-out). Wave 1 (Plans 01-06): motion-deletion work shipped. Wave 2 (Plan-07): preservation contract verified via empty `git diff origin/main` on the 3 preserved files + all 5 Vitest preservation tests green. Sandbox node_modules blocked `vercel build --prod` and the rendered-browser smoke test; both deferred via 08-HUMAN-UAT.md per user's pre-approval at session resume.
+
+Last activity: 2026-05-21 -- Phase 9 planning complete
 
 ## Operator Next Steps
 

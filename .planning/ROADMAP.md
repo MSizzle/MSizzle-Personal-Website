@@ -62,7 +62,16 @@ Full milestone detail: [milestones/v1.0-ROADMAP.md](./milestones/v1.0-ROADMAP.md
   2. Inter at weights 400/700 renders the 124px manifesto with letter-spacing -0.045em and line-height 0.96 — no Helvetica Neue swap, no font-loading flash
   3. Each of the 7 primitive components (`Rule`, `RuleStrong`, `SectionLabel`, `ListRow` + `big` variant, `AllLink`, `IntroLink`, `FooterCol`) renders in isolation with documented props and Tailwind-token-driven styling — zero arbitrary color or size values
   4. `vercel build --prod` exits 0 and the primitives type-check with zero TS errors
-**Plans**: TBD
+**Plans**: 9 plans (Wave 1: 09-01..09-08 fully parallel; Wave 2: 09-09 depends on all Wave 1)
+- [ ] 09-01-PLAN.md — Rewrite `@theme inline` block in `globals.css` with 10 v2.0 palette tokens + 10 typography roles incl. `--text-caption` (D-14a) + v1.0 alias bridge (D-02); delete `.dark` block; remove `<ThemeProvider>` wrap from `layout.tsx`; delete `theme-provider.tsx` + `theme-toggle.tsx` (D-04); TOKEN-01 + TOKEN-02 + TOKEN-03
+- [ ] 09-02-PLAN.md — Create `src/components/editorial/rule.tsx` — `Rule` primitive (1px hairline horizontal divider via `bg-rule`); PRIM-01
+- [ ] 09-03-PLAN.md — Create `src/components/editorial/rule-strong.tsx` — `RuleStrong` primitive (1px bold horizontal section divider via `bg-rule-strong`); PRIM-02
+- [ ] 09-04-PLAN.md — Create `src/components/editorial/section-label.tsx` — `SectionLabel` primitive (11px tracked uppercase heading + optional right-aligned numeral); PRIM-03
+- [ ] 09-05-PLAN.md — Create `src/components/editorial/list-row.tsx` — `ListRow` primitive with `big?: boolean` variant (D-10); imports `cn` from `@/utils/cn`; PRIM-04
+- [ ] 09-06-PLAN.md — Create `src/components/editorial/all-link.tsx` — `AllLink` primitive (tracked uppercase 'All X →' link with 1px ink bottom-border); PRIM-05
+- [ ] 09-07-PLAN.md — Create `src/components/editorial/intro-link.tsx` — `IntroLink` primitive (inline link with 1px ink bottom-border, no hover color shift); PRIM-06
+- [ ] 09-08-PLAN.md — Create `src/components/editorial/footer-col.tsx` — `FooterCol` primitive (tracked uppercase title + link list + optional grey sub-line); PRIM-07
+- [ ] 09-09-PLAN.md — Create `src/app/specimen/page.tsx` (NO underscore — D-12 revised) rendering all 10 swatches + 12 type-scale specimens + all 7 primitives + `metadata.robots: { index: false, follow: false }`; extend `src/app/robots.ts` with `disallow: ['/specimen', '/api/']` (D-14); confirm `src/app/sitemap.ts` excludes /specimen; run `vercel build --prod` as Phase 9 production-readiness gate (D-19)
 **UI hint**: yes
 **Risks**: Tailwind v4 `@theme` block must be in `globals.css` (or equivalent) and the type-scale utilities must be authored as Tailwind v4 utilities, not arbitrary classes. Mis-placing the `@theme` block silently no-ops the tokens. Inter weight 700 must be explicitly requested in the `next/font/google` call — verify in `src/app/layout.tsx` before claiming TOKEN-03 complete.
 
@@ -135,7 +144,7 @@ Full milestone detail: [milestones/v1.0-ROADMAP.md](./milestones/v1.0-ROADMAP.md
 | 6. Pre-Launch QA | v1.0 | 6/6 | Complete | 2026-04-16 |
 | 7. SEO Overhaul | v1.0 | 11/11 | Complete | 2026-04-16 |
 | 8. Motion Subtractions | v2.0 | 5/7 | In Progress|  |
-| 9. Design Tokens & Editorial Primitives | v2.0 | 0/? | Not started | — |
+| 9. Design Tokens & Editorial Primitives | v2.0 | 0/9 | Not started | — |
 | 10. Editorial Homepage | v2.0 | 0/? | Not started | — |
 | 11. Archive Pages | v2.0 | 0/? | Not started | — |
 | 12. Sub-page Restyle Sweep | v2.0 | 0/? | Not started | — |
