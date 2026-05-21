@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: Editorial Redesign
 current_phase: 13
-status: planning
-last_updated: "2026-05-21T18:52:30.209Z"
-last_activity: 2026-05-21
+status: executing
+last_updated: "2026-05-21T19:23:41.402Z"
+last_activity: 2026-05-21 -- Phase 13 execution started
 progress:
   total_phases: 6
   completed_phases: 5
-  total_plans: 35
+  total_plans: 41
   completed_plans: 35
   percent: 83
 ---
@@ -110,9 +110,9 @@ Bookkeeping drift from v1.0, acknowledged at milestone close 2026-05-20. All are
 
 ## Current Position
 
-Phase: 12 (sub-page-restyle-sweep) — EXECUTING
-Plan: Not started
-Status: Ready to plan
+Phase: 13 (v2-0-qa-go-no-go) — EXECUTING
+Plan: 1 of 6
+Status: Executing Phase 13
 
 All Phase 9 plans (09-01 through 09-09) shipped:
 
@@ -132,7 +132,7 @@ Phase 10 progress (7 of 7 plans shipped — Phase 10 feature-complete):
 
 D-40 (`vercel build --prod`) deferred to Vercel preview deploy on next branch push (Phase 8 precedent).
 
-Last activity: 2026-05-21
+Last activity: 2026-05-21 -- Phase 13 execution started
 
 ## Operator Next Steps
 

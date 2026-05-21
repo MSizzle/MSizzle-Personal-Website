@@ -141,7 +141,14 @@ Full milestone detail: [milestones/v1.0-ROADMAP.md](./milestones/v1.0-ROADMAP.md
   5. Dark-mode FOUC test passes in incognito Chrome — system theme controls first paint with no flash (or a dark-mode dropped decision is explicitly recorded if v2.0 ships light-only)
   6. D-14 client-bundle secret scan re-run against both `.next/static/chunks/` and `.vercel/output/static/_next/static/chunks/` trees returns zero literal-secret leaks
   7. A signed `13-GO-NO-GO.md` exists with an explicit GO verdict, and `/gsd:complete-milestone` is run AT that verdict (carried forward from v1.0 retrospective lesson #1)
-**Plans**: TBD
+**Plans**: 6 plans
+Plans:
+- [ ] 13-01-PLAN.md — vercel build --prod gate (QA-V2-01)
+- [ ] 13-02-PLAN.md — Lighthouse desktop median-of-3 on 5 routes (QA-V2-02)
+- [ ] 13-03-PLAN.md — PSI mobile homepage gate (QA-V2-03)
+- [ ] 13-04-PLAN.md — 375px visual QA on /, /writing, /events, /photos (QA-V2-04)
+- [ ] 13-05-PLAN.md — D-14 secret scan + dark-mode light-only decision (QA-V2-05, QA-V2-06)
+- [ ] 13-06-PLAN.md — compile GO/NO-GO doc, human sign-off, /gsd:complete-milestone v2.0 (QA-V2-07)
 **Risks**: PSI scores can fluctuate; QA-V2-03 must use PSI not local mobile Lighthouse. The GO/NO-GO doc is the canonical phase-close artifact for this QA phase per the v1.0 retrospective — per-plan SUMMARYs are optional; the GO doc is mandatory. Dark-mode decision: if no dark-mode editorial palette has been built by this phase, the GO doc must explicitly record "light-only ship, dark dropped to future requirement" rather than silently fail the FOUC test.
 
 ## Progress
@@ -160,4 +167,4 @@ Full milestone detail: [milestones/v1.0-ROADMAP.md](./milestones/v1.0-ROADMAP.md
 | 10. Editorial Homepage | v2.0 | 7/7 | Complete    | 2026-05-21 |
 | 11. Archive Pages | v2.0 | 5/5 | Complete   | 2026-05-21 |
 | 12. Sub-page Restyle Sweep | v2.0 | 7/7 | Complete    | 2026-05-21 |
-| 13. v2.0 QA & GO/NO-GO | v2.0 | 0/? | Not started | — |
+| 13. v2.0 QA & GO/NO-GO | v2.0 | 0/6 | Not started | — |
