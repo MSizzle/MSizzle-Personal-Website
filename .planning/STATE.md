@@ -4,13 +4,13 @@ milestone: v2.0
 milestone_name: Editorial Redesign
 current_phase: 10
 status: executing
-last_updated: "2026-05-21T08:53:42.515Z"
+last_updated: "2026-05-21T09:03:31.909Z"
 last_activity: 2026-05-21
 progress:
   total_phases: 6
   completed_phases: 2
   total_plans: 23
-  completed_plans: 21
+  completed_plans: 22
   percent: 33
 ---
 
@@ -109,7 +109,7 @@ Bookkeeping drift from v1.0, acknowledged at milestone close 2026-05-20. All are
 ## Current Position
 
 Phase: 10 (Editorial Homepage) — EXECUTING
-Plan: 6 of 7
+Plan: 7 of 7
 Status: Ready to execute
 
 All Phase 9 plans (09-01 through 09-09) shipped:
