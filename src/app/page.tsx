@@ -13,6 +13,7 @@ import { ListRow } from "@/components/editorial/list-row";
 import { FooterCol } from "@/components/editorial/footer-col";
 import { ManifestoReveal } from "@/components/home-v2/manifesto-reveal";
 import { EditorialHeader } from "@/components/home-v2/editorial-header";
+import { CyclingPhoto } from "@/components/home-v2/cycling-photo";
 import { formatMonthYear, formatMonthDay } from "@/lib/dates";
 
 // Per-plate className contains literal `md:col-span-N md:row-span-M` tokens so the
@@ -247,20 +248,28 @@ export default async function Home() {
 
         <div className="mt-[72px]">
           <div className="grid grid-cols-2 gap-2 md:grid-cols-12 md:grid-rows-[180px] md:auto-rows-[180px] md:gap-3">
-            {HOME_PHOTOS.map((p) => (
-              <div key={p.no} className={p.className}>
-                <Image
-                  src={p.src}
-                  alt=""
-                  fill
-                  className="object-cover saturate-[0.92]"
-                  sizes="(max-width: 768px) 50vw, 50vw"
+            {HOME_PHOTOS.map((p, idx) =>
+              idx === 0 ? (
+                <CyclingPhoto
+                  key={p.no}
+                  photos={[...HOME_PHOTOS]}
+                  className={p.className}
                 />
-                <span className="absolute left-3.5 bottom-3 text-[10px] uppercase tracking-[0.2em] font-bold text-paper mix-blend-difference">
-                  No. {p.no}
-                </span>
-              </div>
-            ))}
+              ) : (
+                <div key={p.no} className={p.className}>
+                  <Image
+                    src={p.src}
+                    alt=""
+                    fill
+                    className="object-cover saturate-[0.92]"
+                    sizes="(max-width: 768px) 50vw, 50vw"
+                  />
+                  <span className="absolute left-3.5 bottom-3 text-[10px] uppercase tracking-[0.2em] font-bold text-paper mix-blend-difference">
+                    No. {p.no}
+                  </span>
+                </div>
+              )
+            )}
           </div>
 
           {/* TODO: /photos route lands in Phase 11 (ARCH-03) — current target is 404 until then. */}
