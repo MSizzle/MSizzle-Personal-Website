@@ -1,4 +1,3 @@
-import { Suspense } from 'react'
 import { getPublishedPosts, getPostExcerpt } from '@/lib/notion'
 import { TagFilter } from '@/components/blog/tag-filter'
 import { estimateReadingTime } from '@/utils/reading-time'
@@ -65,9 +64,7 @@ export default async function BlogPage() {
         ) : (
           <>
             <ScrollReveal delay={0.15}>
-              <Suspense fallback={<div className="mt-8">Loading...</div>}>
-                <TagFilter posts={posts} readingTimes={readingTimes} excerpts={excerpts} />
-              </Suspense>
+              <TagFilter posts={posts} readingTimes={readingTimes} excerpts={excerpts} />
             </ScrollReveal>
           </>
         )}

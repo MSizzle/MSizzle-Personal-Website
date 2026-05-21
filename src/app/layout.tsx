@@ -74,7 +74,7 @@ export default function RootLayout({
         </LenisProvider>
         <UmamiAnalytics />
         <VisitSurvey />
-        <span className="fixed right-3 bottom-3 z-50 text-xs opacity-20 select-none">
+        <span aria-hidden="true" className="fixed right-3 bottom-3 z-50 text-xs opacity-20 select-none">
           Prometheus
         </span>
       </body>

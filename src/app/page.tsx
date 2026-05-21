@@ -278,7 +278,7 @@ export default async function Home() {
         <div className="mt-[72px] grid grid-cols-1 gap-10 md:grid-cols-3 md:gap-12">
           {PERSONAL_CARDS.map((card) => (
             <div key={card.href} className="border-t border-ink pt-8">
-              <h3 className="text-list-title-home font-bold text-ink">{card.title}</h3>
+              <h2 className="text-list-title-home font-bold text-ink">{card.title}</h2>
               <p className="mt-3 text-caption text-muted">{card.description}</p>
               <div className="mt-6">
                 <AllLink href={card.href}>Enter →</AllLink>
