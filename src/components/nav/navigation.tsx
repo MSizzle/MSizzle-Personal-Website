@@ -90,22 +90,31 @@ export function Navigation() {
         </header>
       )}
 
-      {/* Mobile drawer — opens on hamburger tap; content-height (only as tall as the link list) */}
+      {/* Mobile drawer — opens on hamburger tap; content-height with tap-outside-to-close backdrop */}
       {open && (
-        <div className="fixed left-0 right-0 top-16 z-40 border-b border-[var(--border)] bg-[var(--bg)] shadow-lg md:hidden">
-          <nav className="flex flex-col px-6 py-4">
-            {MOBILE_LINKS.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="flex min-h-[48px] items-center border-b border-[var(--border)] py-3 text-base uppercase tracking-wide last:border-b-0"
-                onClick={() => setOpen(false)}
-              >
-                {link.label}
-              </Link>
-            ))}
-          </nav>
-        </div>
+        <>
+          {/* Backdrop — dims page below drawer; tap anywhere here closes the drawer */}
+          <div
+            className="fixed inset-0 top-16 z-30 bg-black/20 md:hidden"
+            onClick={() => setOpen(false)}
+            aria-hidden="true"
+          />
+          {/* Drawer — sits above backdrop */}
+          <div className="fixed left-0 right-0 top-16 z-40 border-b border-[var(--border)] bg-[var(--bg)] shadow-lg md:hidden">
+            <nav className="flex flex-col px-6 py-4">
+              {MOBILE_LINKS.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="flex min-h-[48px] items-center border-b border-[var(--border)] py-3 text-base uppercase tracking-wide last:border-b-0"
+                  onClick={() => setOpen(false)}
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </nav>
+          </div>
+        </>
       )}
     </>
   )
