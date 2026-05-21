@@ -2,7 +2,6 @@ import Link from "next/link";
 import { getPublishedPosts } from "@/lib/notion";
 import { getFeaturedProjects } from "@/lib/notion-projects";
 import { getUpcomingEvents, getPastEvents } from "@/lib/notion-events";
-import { WritingsCarousel } from "@/components/home/writings-carousel";
 import {
   FeaturedUpcoming,
   UpcomingMini,
@@ -81,9 +80,18 @@ export default async function Home() {
             Writings &#8600;
           </Link>
           {posts.length > 0 ? (
-            <div className="mt-6">
-              <WritingsCarousel posts={posts} />
-            </div>
+            <ul className="mt-6 space-y-3">
+              {posts.slice(0, 3).map((post) => (
+                <li key={post.id}>
+                  <Link
+                    href={`/blog/${post.slug}`}
+                    className="text-xs uppercase tracking-widest underline transition-opacity hover:opacity-60"
+                  >
+                    {post.title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           ) : (
             <p className="mt-4 opacity-75">More posts coming soon.</p>
           )}
