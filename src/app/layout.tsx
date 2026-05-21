@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Inter, Geist_Mono } from "next/font/google";
-import { ThemeProvider } from "@/components/providers/theme-provider";
 import { LenisProvider } from "@/components/providers/lenis-provider";
 import { MotionProvider } from "@/components/providers/motion-provider";
 import { Navigation } from "@/components/nav/navigation";
@@ -65,15 +64,13 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-screen bg-background text-foreground antialiased">
-        <ThemeProvider>
-          <LenisProvider>
-            <MotionProvider>
-              <Navigation />
-              <main className="pt-16">{children}</main>
-              <Footer />
-            </MotionProvider>
-          </LenisProvider>
-        </ThemeProvider>
+        <LenisProvider>
+          <MotionProvider>
+            <Navigation />
+            <main className="pt-16">{children}</main>
+            <Footer />
+          </MotionProvider>
+        </LenisProvider>
         <UmamiAnalytics />
         <VisitSurvey />
         <span className="fixed right-3 bottom-3 z-50 text-xs opacity-20 select-none">
