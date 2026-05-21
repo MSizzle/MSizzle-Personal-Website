@@ -3,7 +3,6 @@ import { getPublishedPosts } from "@/lib/notion";
 import { getFeaturedProjects } from "@/lib/notion-projects";
 import { getUpcomingEvents, getPastEvents } from "@/lib/notion-events";
 import { WritingsCarousel } from "@/components/home/writings-carousel";
-import { WorksCarousel } from "@/components/home/works-carousel";
 import {
   FeaturedUpcoming,
   UpcomingMini,
@@ -101,9 +100,18 @@ export default async function Home() {
             Works &#8600;
           </Link>
           {projects.length > 0 ? (
-            <div className="mt-6">
-              <WorksCarousel projects={projects} referenceCount={posts.length} />
-            </div>
+            <ul className="mt-6 space-y-3">
+              {projects.slice(0, 3).map((project) => (
+                <li key={project.id}>
+                  <Link
+                    href={`/projects/${project.slug}`}
+                    className="text-xs uppercase tracking-widest underline transition-opacity hover:opacity-60"
+                  >
+                    {project.title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           ) : (
             <p className="mt-4 opacity-75">Projects coming soon.</p>
           )}
