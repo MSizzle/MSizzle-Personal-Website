@@ -162,6 +162,20 @@ Per CONTEXT.md D-09 / D-10, the following are explicitly NON-BLOCKING for v2.0 G
 
 3. **Dark-mode dropped to future requirement:** Per D-05, v2.0 ships light-only. Dark variant of warm-paper palette is a v2.1+ design task.
 
+## Lighthouse Findings — Decide Block or Ship-with-Known
+
+Lighthouse desktop run (15 passes against local prod server) surfaced 3 real findings. See `13-02-EVIDENCE.md` for per-audit detail. Summary:
+
+| Finding | Route(s) | Severity | Suggested action |
+|---------|----------|----------|------------------|
+| **CLS 0.685 from un-sized blog cover images** | `/blog` | **Major** (Perf 69) | Fix before GO: add `width`/`height` to `<Image>` in blog index. ~30 min effort. |
+| **Color-contrast: text-muted (#9A9690) on text-paper (#F4F2EC) ~2.5:1** | `/`, `/blog`, `/blog/[slug]` | Minor | Darken `--muted` to ~#8A8680 in `globals.css` (one-token change). Lifts a11y 94→96. |
+| **Heading-order skips levels** | `/`, `/blog/[slug]` | Minor | Audit headings on manifesto homepage + blog post body. |
+
+The CLS finding is the only real regression from v1.0. The color-contrast and heading-order issues likely existed in earlier phases too and were not previously gated by Lighthouse desktop.
+
+**Operator decision required:** fix `/blog` CLS before GO, OR ship-with-known with explicit v2.1 follow-up phase scoped.
+
 ---
 
 ## Promotion Plan (Conditional on GO)

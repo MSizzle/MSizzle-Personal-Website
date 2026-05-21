@@ -68,6 +68,47 @@ Both routes score 94 instead of the required 95. The Phase 9 `/about` and `/prom
 
 **Diagnosis:** open the JSON files in the `lighthouse/` directory or run `lighthouse {url} --view` to see exactly which audits failed.
 
+## Specific Failed Audits (per route)
+
+Extracted from the lighthouse JSONs:
+
+### `/` (home) — Accessibility 94
+- **`color-contrast`** ✗ — Background/foreground colors lack sufficient contrast.
+  - Likely culprit: `text-muted` (#9A9690) on `text-paper` (#F4F2EC) — contrast ratio ~2.5:1, below the 4.5:1 WCAG AA minimum. Editorial palette tradeoff.
+- **`heading-order`** ✗ — Heading elements skip a level (e.g., `h1` → `h3`, no `h2`).
+  - Likely culprit: editorial homepage's manifesto + 5 vertical sections; the section labels may be using `h3` directly without an `h2` wrapper.
+
+### `/` — Performance 98 (still passes, but worth noting)
+- `lcp-discovery-insight`, `unused-javascript`, `network-dependency-tree-insight` are advisory warnings; perf still ≥ 90.
+
+### `/blog` (index) — Performance 69 (BLOCKING)
+- **`layout-shifts`** ✗ — 1 large layout shift observed; total CLS 0.685.
+- **`cls-culprits-insight`** ✗ — Layout shift culprits identified by Lighthouse.
+- **`image-delivery-insight`** ✗ — Est savings 743 KiB. Blog post cover images likely not optimized or not reserving space.
+  - Likely fix: explicit `width`/`height` on `<Image>` components for blog post covers (matches Phase 12-04 code review warning WR-02).
+- **`unused-javascript`** ✗ — Est savings 50 KiB.
+- **`legacy-javascript-insight`** ✗ — Polyfill bytes for older browsers (~13 KiB).
+
+### `/blog` — Accessibility 96 (passes)
+- `color-contrast` ✗ — same warm-paper palette issue, but route passes by margin.
+
+### `/blog/[slug]` (post) — Accessibility 94
+- **`color-contrast`** ✗ — same palette issue.
+- **`heading-order`** ✗ — post body heading hierarchy may skip levels.
+
+## Recommended Fix Plan (for a `12.1` polish phase, post-v2.0 GO)
+
+The findings collectively suggest a focused polish phase:
+
+| Fix | Routes affected | Effort | Impact |
+|-----|-----------------|--------|--------|
+| Reserve `<Image>` dimensions on blog index covers (closes WR-02 too) | `/blog` | Small | Closes `/blog` CLS 0.685 → likely Perf 95+ |
+| Audit `text-muted` color contrast against `text-paper`; consider darkening muted to #8A8680 or similar | `/`, `/blog`, `/blog/[slug]` | Small | Closes color-contrast a11y audits (94→96 on `/` and `/blog/[slug]`) |
+| Verify heading hierarchy on `/` (manifesto + section labels) and blog post body | `/`, `/blog/[slug]` | Small | Closes heading-order audits |
+| (Optional) modern-browser build target to skip legacy polyfills | all | Medium | -13 KiB JS bundle |
+
+These are all small textual changes; the entire polish phase could ship in a single small PLAN.md.
+
 ## Note on Measurement Path
 
 This run used Path C (local `npm run start`) instead of Path A (Vercel preview with bypass token). The Vercel CDN typically improves TTFB and FCP by ~50-200ms — i.e., real production scores would likely be **higher** than localhost. So:
