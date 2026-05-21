@@ -25,7 +25,7 @@ Full milestone detail: [milestones/v1.0-ROADMAP.md](./milestones/v1.0-ROADMAP.md
 ### 🚧 v2.0 Editorial Redesign (Phases 8-13)
 
 - [x] **Phase 8: Motion Subtractions** — Delete v1.0 animation loops, pulsing dots, hover-carousels, cascading reveals; preserve Lenis + page-fade *(code-complete 2026-05-21; HUMAN-UAT pending for vercel build + Lenis/fade smoke per 08-HUMAN-UAT.md)*
-- [ ] **Phase 9: Design Tokens & Editorial Primitives** — Warm-paper palette tokens, editorial type scale utilities, 7 shared primitive components
+- [x] **Phase 9: Design Tokens & Editorial Primitives** — Warm-paper palette tokens, editorial type scale utilities, 7 shared primitive components (completed 2026-05-21)
 - [ ] **Phase 10: Editorial Homepage** — Manifesto-anchored homepage with 5 labeled sections, ink footer, mobile parity, manifesto letter-stagger signature interaction
 - [ ] **Phase 11: Archive Pages** — `/writing`, `/events`, `/photos` year-grouped archive pages
 - [ ] **Phase 12: Sub-page Restyle Sweep** — Lightweight palette+typography pass on `/about`, `/projects`, `/blog`, `/links`, `/prometheus`, `/newsletter`
@@ -71,7 +71,7 @@ Full milestone detail: [milestones/v1.0-ROADMAP.md](./milestones/v1.0-ROADMAP.md
 - [x] 09-06-PLAN.md — Create `src/components/editorial/all-link.tsx` — `AllLink` primitive (tracked uppercase 'All X →' link with 1px ink bottom-border); PRIM-05
 - [x] 09-07-PLAN.md — Create `src/components/editorial/intro-link.tsx` — `IntroLink` primitive (inline link with 1px ink bottom-border, no hover color shift); PRIM-06
 - [x] 09-08-PLAN.md — Create `src/components/editorial/footer-col.tsx` — `FooterCol` primitive (tracked uppercase title + link list + optional grey sub-line); PRIM-07
-- [ ] 09-09-PLAN.md — Create `src/app/specimen/page.tsx` (NO underscore — D-12 revised) rendering all 10 swatches + 12 type-scale specimens + all 7 primitives + `metadata.robots: { index: false, follow: false }`; extend `src/app/robots.ts` with `disallow: ['/specimen', '/api/']` (D-14); confirm `src/app/sitemap.ts` excludes /specimen; run `vercel build --prod` as Phase 9 production-readiness gate (D-19)
+- [x] 09-09-PLAN.md — Create `src/app/specimen/page.tsx` (NO underscore — D-12 revised) rendering all 10 swatches + 12 type-scale specimens + all 7 primitives + `metadata.robots: { index: false, follow: false }`; extend `src/app/robots.ts` with `disallow: ['/specimen', '/api/']` (D-14); confirm `src/app/sitemap.ts` excludes /specimen; run `vercel build --prod` as Phase 9 production-readiness gate (D-19)
 **UI hint**: yes
 **Risks**: Tailwind v4 `@theme` block must be in `globals.css` (or equivalent) and the type-scale utilities must be authored as Tailwind v4 utilities, not arbitrary classes. Mis-placing the `@theme` block silently no-ops the tokens. Inter weight 700 must be explicitly requested in the `next/font/google` call — verify in `src/app/layout.tsx` before claiming TOKEN-03 complete.
 
@@ -144,7 +144,7 @@ Full milestone detail: [milestones/v1.0-ROADMAP.md](./milestones/v1.0-ROADMAP.md
 | 6. Pre-Launch QA | v1.0 | 6/6 | Complete | 2026-04-16 |
 | 7. SEO Overhaul | v1.0 | 11/11 | Complete | 2026-04-16 |
 | 8. Motion Subtractions | v2.0 | 5/7 | In Progress|  |
-| 9. Design Tokens & Editorial Primitives | v2.0 | 8/9 | In Progress|  |
+| 9. Design Tokens & Editorial Primitives | v2.0 | 9/9 | Complete   | 2026-05-21 |
 | 10. Editorial Homepage | v2.0 | 0/? | Not started | — |
 | 11. Archive Pages | v2.0 | 0/? | Not started | — |
 | 12. Sub-page Restyle Sweep | v2.0 | 0/? | Not started | — |

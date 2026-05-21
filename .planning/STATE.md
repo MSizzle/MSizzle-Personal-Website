@@ -3,29 +3,29 @@ gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: Editorial Redesign
 current_phase: 9
-status: executing
-last_updated: "2026-05-21T05:34:13.812Z"
+status: verifying
+last_updated: "2026-05-21T05:41:15.139Z"
 last_activity: 2026-05-21
 progress:
   total_phases: 6
-  completed_phases: 1
+  completed_phases: 2
   total_plans: 16
-  completed_plans: 15
-  percent: 17
+  completed_plans: 16
+  percent: 33
 ---
 
 # Project State
 
 **Current Milestone:** v2.0 Editorial Redesign (Phases 8-13)
 **Current Phase:** 9
-**Last Updated:** 2026-05-20
+**Last Updated:** 2026-05-21
 
 ## Phase Status
 
 | Phase | Status | Started | Completed |
 |-------|--------|---------|-----------|
 | 8 — Motion Subtractions | code_complete (HUMAN-UAT pending) | 2026-05-21 | 2026-05-21 |
-| 9 — Design Tokens & Editorial Primitives | in_progress | 2026-05-21 | — |
+| 9 — Design Tokens & Editorial Primitives | code_complete (ready for verification) | 2026-05-21 | 2026-05-21 |
 | 10 — Editorial Homepage | not_started | — | — |
 | 11 — Archive Pages | not_started | — | — |
 | 12 — Sub-page Restyle Sweep | not_started | — | — |
@@ -108,18 +108,26 @@ Bookkeeping drift from v1.0, acknowledged at milestone close 2026-05-20. All are
 
 ## Current Position
 
-Phase: 9 (Design Tokens & Editorial Primitives) — EXECUTING
-Plan: 9 of 9
-Status: Ready to execute
+Phase: 9 (Design Tokens & Editorial Primitives) — CODE COMPLETE
+Plan: 9 of 9 (all plans shipped)
+Status: Phase complete — ready for verification
 
-  1. `npx vercel build --prod` exits 0 (D-11 phase gate)
-  2. Manual Lenis + 200-300ms page-load-fade smoke test in Chrome (Plan-07 Task 2 — autonomous: false by plan design)
+All Phase 9 plans (09-01 through 09-09) shipped:
+- Tokens: paper/ink/muted/faint/rule/rule-strong/footer-* palette + 12 type-scale utilities (09-01)
+- Primitives: Rule, RuleStrong, SectionLabel, ListRow, AllLink, IntroLink, FooterCol (09-02..09-08)
+- Integration: /specimen route + triple-defense discoverability + local build gate (09-09)
+
+D-19 (`vercel build --prod`) deferred to Vercel preview deploy on next branch push (Phase 8 precedent).
 
 Last activity: 2026-05-21
 
 ## Operator Next Steps
 
-- **First, on Mac:** clear the two HUMAN-UAT items per `.planning/phases/08-motion-subtractions/08-HUMAN-UAT.md` (vercel build + Lenis/fade smoke). Update the "## Resolution" section with PASS/FAIL.
-- **If both PASS:** Run `gsd-sdk query phase.complete 08` again (or just `/gsd:phase-complete 08`) — phase.complete should clear the warning and finalize REQUIREMENTS.md status table.
-- **Then:** `/gsd:discuss-phase 9` to start Design Tokens & Editorial Primitives (CONTEXT.md already exists per pre-phase docs check — discuss-phase will re-validate decisions before plan-phase auto-advances).
-- **If HUMAN-UAT FAILs:** gap closure — `/gsd:plan-phase 8 --gaps` will read 08-VERIFICATION.md and create fix plans for the regression.
+- **Phase 9 verification:** Run `/gsd:verify-phase 9` to validate all plan SUMMARYs, requirements, and acceptance criteria against shipped code.
+- **D-19 closure:** Push the current branch to remote. Confirm the Vercel preview deploy:
+  - Exits 0 (build green)
+  - Serves `/specimen` correctly (renders palette + type scale + primitives)
+  - Preview `/robots.txt` contains `Disallow: /specimen`
+  - Preview `/sitemap.xml` does NOT contain `/specimen`
+- **Phase 8 backlog (still open from prior phase):** Clear the two HUMAN-UAT items per `.planning/phases/08-motion-subtractions/08-HUMAN-UAT.md` (vercel build + Lenis/fade smoke) before closing v2.0.
+- **After Phase 9 verifies:** `/gsd:discuss-phase 10` (Editorial Homepage — largest single phase, 13 requirements).
