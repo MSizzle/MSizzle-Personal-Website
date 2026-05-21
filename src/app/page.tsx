@@ -294,9 +294,6 @@ export default async function Home() {
           {/* Col 1 — Colophon */}
           <div className="border-b border-footer-rule pb-6 md:border-b-0 md:pb-0">
             <div className="text-label uppercase text-footer-mute">MONTY SINGER</div>
-            <h2 className="mt-6 max-w-[20rem] text-section-feature text-footer-fg">
-              A calling card, not a billboard.
-            </h2>
           </div>
 
           {/* Col 2 — Studio */}
