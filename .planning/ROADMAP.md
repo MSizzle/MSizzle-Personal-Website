@@ -65,7 +65,7 @@ Full milestone detail: [milestones/v1.0-ROADMAP.md](./milestones/v1.0-ROADMAP.md
 **Plans**: 9 plans (Wave 1: 09-01..09-08 fully parallel; Wave 2: 09-09 depends on all Wave 1)
 - [x] 09-01-PLAN.md — Rewrite `@theme inline` block in `globals.css` with 10 v2.0 palette tokens + 10 typography roles incl. `--text-caption` (D-14a) + v1.0 alias bridge (D-02); delete `.dark` block; remove `<ThemeProvider>` wrap from `layout.tsx`; delete `theme-provider.tsx` + `theme-toggle.tsx` (D-04); TOKEN-01 + TOKEN-02 + TOKEN-03
 - [x] 09-02-PLAN.md — Create `src/components/editorial/rule.tsx` — `Rule` primitive (1px hairline horizontal divider via `bg-rule`); PRIM-01
-- [ ] 09-03-PLAN.md — Create `src/components/editorial/rule-strong.tsx` — `RuleStrong` primitive (1px bold horizontal section divider via `bg-rule-strong`); PRIM-02
+- [x] 09-03-PLAN.md — Create `src/components/editorial/rule-strong.tsx` — `RuleStrong` primitive (1px bold horizontal section divider via `bg-rule-strong`); PRIM-02
 - [ ] 09-04-PLAN.md — Create `src/components/editorial/section-label.tsx` — `SectionLabel` primitive (11px tracked uppercase heading + optional right-aligned numeral); PRIM-03
 - [ ] 09-05-PLAN.md — Create `src/components/editorial/list-row.tsx` — `ListRow` primitive with `big?: boolean` variant (D-10); imports `cn` from `@/utils/cn`; PRIM-04
 - [ ] 09-06-PLAN.md — Create `src/components/editorial/all-link.tsx` — `AllLink` primitive (tracked uppercase 'All X →' link with 1px ink bottom-border); PRIM-05
@@ -144,7 +144,7 @@ Full milestone detail: [milestones/v1.0-ROADMAP.md](./milestones/v1.0-ROADMAP.md
 | 6. Pre-Launch QA | v1.0 | 6/6 | Complete | 2026-04-16 |
 | 7. SEO Overhaul | v1.0 | 11/11 | Complete | 2026-04-16 |
 | 8. Motion Subtractions | v2.0 | 5/7 | In Progress|  |
-| 9. Design Tokens & Editorial Primitives | v2.0 | 2/9 | In Progress|  |
+| 9. Design Tokens & Editorial Primitives | v2.0 | 3/9 | In Progress|  |
 | 10. Editorial Homepage | v2.0 | 0/? | Not started | — |
 | 11. Archive Pages | v2.0 | 0/? | Not started | — |
 | 12. Sub-page Restyle Sweep | v2.0 | 0/? | Not started | — |
