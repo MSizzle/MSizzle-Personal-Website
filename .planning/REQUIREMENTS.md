@@ -16,13 +16,13 @@ The redesign is a *subtraction* from v1.0, not an addition. Vanschneider-inspire
 
 ### Shared Editorial Primitives
 
-- [ ] **PRIM-01**: `Rule` component — 1px hairline horizontal divider (`border-rule`)
-- [ ] **PRIM-02**: `RuleStrong` component — 1px bold horizontal section divider (`border-rule-strong`)
-- [ ] **PRIM-03**: `SectionLabel` component — 11px tracked uppercase section heading with optional right-aligned numeral
-- [ ] **PRIM-04**: `ListRow` component — linked row with title + optional `extra` blurb + right-aligned tracked meta; `big` variant for archive pages
-- [ ] **PRIM-05**: `AllLink` component — tracked uppercase "All X →" link with 1px ink bottom-border
-- [ ] **PRIM-06**: `IntroLink` component — inline link with 1px ink bottom-border (used in letter-style intro)
-- [ ] **PRIM-07**: `FooterCol` component — footer column with tracked uppercase title + list of links with grey sub-line
+- [x] **PRIM-01**: `Rule` component — 1px hairline horizontal divider (`border-rule`)
+- [x] **PRIM-02**: `RuleStrong` component — 1px bold horizontal section divider (`border-rule-strong`)
+- [x] **PRIM-03**: `SectionLabel` component — 11px tracked uppercase section heading with optional right-aligned numeral
+- [x] **PRIM-04**: `ListRow` component — linked row with title + optional `extra` blurb + right-aligned tracked meta; `big` variant for archive pages
+- [x] **PRIM-05**: `AllLink` component — tracked uppercase "All X →" link with 1px ink bottom-border
+- [x] **PRIM-06**: `IntroLink` component — inline link with 1px ink bottom-border (used in letter-style intro)
+- [x] **PRIM-07**: `FooterCol` component — footer column with tracked uppercase title + list of links with grey sub-line
 
 ### New Homepage
 
