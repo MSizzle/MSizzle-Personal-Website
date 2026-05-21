@@ -49,9 +49,9 @@ export default async function BlogPage() {
   return (
     <>
       <Breadcrumbs items={[{ name: 'Home', href: '/' }, { name: 'Writings' }]} />
-      <div className="mx-auto max-w-3xl px-6 pb-16 pt-24 md:px-0">
+      <div className="mx-auto max-w-[66ch] px-6 pb-16 pt-8 md:px-0">
         <ScrollReveal delay={0}>
-          <h1 className="text-sm font-normal uppercase tracking-widest">
+          <h1 className="text-label uppercase text-muted">
             Writings
           </h1>
         </ScrollReveal>
