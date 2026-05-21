@@ -14,13 +14,16 @@ import { ListRow } from "@/components/editorial/list-row";
 import { FooterCol } from "@/components/editorial/footer-col";
 import { formatMonthYear, formatMonthDay } from "@/lib/dates";
 
+// Per-plate className contains literal `md:col-span-N md:row-span-M` tokens so the
+// Tailwind v4 scanner picks them up at build time (no dynamic-class interpolation).
+// Mobile default: `aspect-square` in the 2-col grid; at md: revert to grid-rows-driven asymmetric layout.
 const HOME_PHOTOS = [
-  { src: "/MSizzle-website-photos/000092530012.jpeg",      no: "01", span: "col-span-7 row-span-3" },
-  { src: "/MSizzle-website-photos/20230928%20MSB_0114.jpg", no: "02", span: "col-span-5 row-span-2" },
-  { src: "/MSizzle-website-photos/IMG_0028.jpeg",          no: "03", span: "col-span-3 row-span-1" },
-  { src: "/MSizzle-website-photos/IMG_1075.JPG",           no: "04", span: "col-span-2 row-span-1" },
-  { src: "/MSizzle-website-photos/IMG_2129.jpeg",          no: "05", span: "col-span-5 row-span-2" },
-  { src: "/MSizzle-website-photos/Patricof09.jpg",         no: "06", span: "col-span-7 row-span-2" },
+  { src: "/MSizzle-website-photos/000092530012.jpeg",      no: "01", className: "relative aspect-square md:aspect-auto md:col-span-7 md:row-span-3" },
+  { src: "/MSizzle-website-photos/20230928%20MSB_0114.jpg", no: "02", className: "relative aspect-square md:aspect-auto md:col-span-5 md:row-span-2" },
+  { src: "/MSizzle-website-photos/IMG_0028.jpeg",          no: "03", className: "relative aspect-square md:aspect-auto md:col-span-3 md:row-span-1" },
+  { src: "/MSizzle-website-photos/IMG_1075.JPG",           no: "04", className: "relative aspect-square md:aspect-auto md:col-span-2 md:row-span-1" },
+  { src: "/MSizzle-website-photos/IMG_2129.jpeg",          no: "05", className: "relative aspect-square md:aspect-auto md:col-span-5 md:row-span-2" },
+  { src: "/MSizzle-website-photos/Patricof09.jpg",         no: "06", className: "relative aspect-square md:aspect-auto md:col-span-7 md:row-span-2" },
 ] as const;
 
 const PERSONAL_CARDS = [
@@ -59,29 +62,29 @@ export default async function Home() {
           Monty Singer
         </Link>
         <nav>
-          <ul className="flex list-none items-baseline gap-8 text-nav text-ink">
+          <ul className="flex list-none flex-wrap items-baseline gap-x-6 gap-y-2 text-nav text-ink md:gap-x-8">
             <li>
-              <Link href="/projects" className="transition-opacity hover:opacity-60">
+              <Link href="/projects" className="flex min-h-11 items-center transition-opacity hover:opacity-60">
                 Building
               </Link>
             </li>
             <li>
-              <Link href="/blog" className="transition-opacity hover:opacity-60">
+              <Link href="/blog" className="flex min-h-11 items-center transition-opacity hover:opacity-60">
                 Writing
               </Link>
             </li>
             <li>
-              <Link href="/events" className="transition-opacity hover:opacity-60">
+              <Link href="/events" className="flex min-h-11 items-center transition-opacity hover:opacity-60">
                 Events
               </Link>
             </li>
             <li>
-              <Link href="/about" className="transition-opacity hover:opacity-60">
+              <Link href="/about" className="flex min-h-11 items-center transition-opacity hover:opacity-60">
                 About
               </Link>
             </li>
             <li>
-              <Link href="/links" className="transition-opacity hover:opacity-60">
+              <Link href="/links" className="flex min-h-11 items-center transition-opacity hover:opacity-60">
                 Links
               </Link>
             </li>
@@ -91,11 +94,17 @@ export default async function Home() {
 
       {/* Hero — HOME-V2-02 manifesto + HOME-V2-03 meta row + HOME-V2-04 epigraph */}
       <section className="px-6 pt-16 md:px-40 md:pt-24">
-        <h1 className="text-display uppercase text-ink">
+        {/* Manifesto — D-32 REVISED: desktop 2 lines / mobile 3 lines */}
+        <h1 className="hidden text-display uppercase text-ink md:block">
           <span className="block whitespace-nowrap">BRING FIRE</span>
           <span className="block whitespace-nowrap">TO HUMANITY.</span>
         </h1>
-        {/* Plan 10-07 wraps this h1 with <ManifestoReveal lines={...} /> */}
+        <h1 className="block text-[56px] leading-[0.96] tracking-[-0.045em] font-bold uppercase text-ink md:hidden">
+          <span className="block whitespace-nowrap">BRING</span>
+          <span className="block whitespace-nowrap">FIRE TO</span>
+          <span className="block whitespace-nowrap">HUMANITY.</span>
+        </h1>
+        {/* Plan 10-07 replaces both h1s with a single <ManifestoReveal> using matchMedia-aware lines */}
 
         {/* Meta row — D-06 */}
         <div className="mt-14 flex items-center gap-3">
@@ -275,9 +284,9 @@ export default async function Home() {
         <SectionLabel numeral="04 — Archive">Photographs</SectionLabel>
 
         <div className="mt-[72px]">
-          <div className="grid grid-cols-12 grid-rows-[180px] gap-3">
+          <div className="grid grid-cols-2 gap-2 md:grid-cols-12 md:grid-rows-[180px] md:gap-3">
             {HOME_PHOTOS.map((p) => (
-              <div key={p.no} className={`relative ${p.span}`}>
+              <div key={p.no} className={p.className}>
                 <Image
                   src={p.src}
                   alt=""
@@ -321,7 +330,7 @@ export default async function Home() {
       <footer className="bg-footer-bg text-footer-fg px-7 py-14 md:px-40 md:py-20">
         <div className="grid grid-cols-1 gap-10 md:grid-cols-4 md:gap-12">
           {/* Col 1 — Colophon */}
-          <div>
+          <div className="border-b border-footer-rule pb-6 md:border-b-0 md:pb-0">
             <div className="text-label uppercase text-footer-mute">MONTY SINGER</div>
             <h2 className="mt-6 max-w-[20rem] text-section-feature text-footer-fg">
               A calling card, not a billboard.
@@ -329,34 +338,40 @@ export default async function Home() {
           </div>
 
           {/* Col 2 — Studio */}
-          <FooterCol
-            title="Studio"
-            links={[
-              { label: "Prometheus",     href: "https://prometheus.today" },
-              { label: "Selected Works", href: "/projects" },
-              { label: "Process Notes",  href: "/blog" },
-            ]}
-          />
+          <div className="border-b border-footer-rule pb-6 md:border-b-0 md:pb-0">
+            <FooterCol
+              title="Studio"
+              links={[
+                { label: "Prometheus",     href: "https://prometheus.today" },
+                { label: "Selected Works", href: "/projects" },
+                { label: "Process Notes",  href: "/blog" },
+              ]}
+            />
+          </div>
 
           {/* Col 3 — Library */}
-          <FooterCol
-            title="Library"
-            links={[
-              { label: "Monty Monthly", href: "/newsletter" },
-              { label: "Essays",        href: "/blog" },
-              { label: "Reading List",  href: "/links" },
-            ]}
-          />
+          <div className="border-b border-footer-rule pb-6 md:border-b-0 md:pb-0">
+            <FooterCol
+              title="Library"
+              links={[
+                { label: "Monty Monthly", href: "/newsletter" },
+                { label: "Essays",        href: "/blog" },
+                { label: "Reading List",  href: "/links" },
+              ]}
+            />
+          </div>
 
           {/* Col 4 — About */}
-          <FooterCol
-            title="About"
-            links={[
-              { label: "About",         href: "/about" },
-              { label: "Photo Archive", href: "/photos" },
-              { label: "Contact",       href: "mailto:montydsinger@gmail.com" },
-            ]}
-          />
+          <div className="border-b border-footer-rule pb-6 md:border-b-0 md:pb-0">
+            <FooterCol
+              title="About"
+              links={[
+                { label: "About",         href: "/about" },
+                { label: "Photo Archive", href: "/photos" },
+                { label: "Contact",       href: "mailto:montydsinger@gmail.com" },
+              ]}
+            />
+          </div>
         </div>
 
         {/* Bottom row — copyright + socials (D-31) */}
@@ -367,7 +382,7 @@ export default async function Home() {
           <div className="flex flex-wrap gap-6">
             <a
               href="https://x.com/thefullmonty0"
-              className="text-meta uppercase text-footer-fg hover:text-footer-fg/70"
+              className="flex min-h-11 items-center text-meta uppercase text-footer-fg hover:text-footer-fg/70"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -375,7 +390,7 @@ export default async function Home() {
             </a>
             <a
               href="https://github.com/MSizzle"
-              className="text-meta uppercase text-footer-fg hover:text-footer-fg/70"
+              className="flex min-h-11 items-center text-meta uppercase text-footer-fg hover:text-footer-fg/70"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -383,7 +398,7 @@ export default async function Home() {
             </a>
             <a
               href="https://linkedin.com/in/monty-singer"
-              className="text-meta uppercase text-footer-fg hover:text-footer-fg/70"
+              className="flex min-h-11 items-center text-meta uppercase text-footer-fg hover:text-footer-fg/70"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -391,7 +406,7 @@ export default async function Home() {
             </a>
             <a
               href="mailto:montydsinger@gmail.com"
-              className="text-meta uppercase text-footer-fg hover:text-footer-fg/70"
+              className="flex min-h-11 items-center text-meta uppercase text-footer-fg hover:text-footer-fg/70"
             >
               Email
             </a>
