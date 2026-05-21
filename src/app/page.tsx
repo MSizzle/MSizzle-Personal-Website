@@ -246,7 +246,7 @@ export default async function Home() {
         <SectionLabel numeral="04 — Archive">Photographs</SectionLabel>
 
         <div className="mt-[72px]">
-          <div className="grid grid-cols-2 gap-2 md:grid-cols-12 md:grid-rows-[180px] md:gap-3">
+          <div className="grid grid-cols-2 gap-2 md:grid-cols-12 md:grid-rows-[180px] md:auto-rows-[180px] md:gap-3">
             {HOME_PHOTOS.map((p) => (
               <div key={p.no} className={p.className}>
                 <Image
