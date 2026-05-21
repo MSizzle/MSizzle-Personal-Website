@@ -4,13 +4,13 @@ milestone: v2.0
 milestone_name: Editorial Redesign
 current_phase: 10
 status: executing
-last_updated: "2026-05-21T08:17:13.751Z"
-last_activity: 2026-05-21 -- Phase 10 planning complete
+last_updated: "2026-05-21T08:24:06.791Z"
+last_activity: 2026-05-21
 progress:
   total_phases: 6
   completed_phases: 2
   total_plans: 23
-  completed_plans: 16
+  completed_plans: 17
   percent: 33
 ---
 
@@ -108,9 +108,9 @@ Bookkeeping drift from v1.0, acknowledged at milestone close 2026-05-20. All are
 
 ## Current Position
 
-Phase: 9 (Design Tokens & Editorial Primitives) — CODE COMPLETE
-Plan: Not started
-Status: Ready to execute
+Phase: 10 (Editorial Homepage) — EXECUTING
+Plan: 2 of 7
+Status: Ready to execute Plan 10-02 (intro + BUILDING section)
 
 All Phase 9 plans (09-01 through 09-09) shipped:
 
@@ -118,9 +118,13 @@ All Phase 9 plans (09-01 through 09-09) shipped:
 - Primitives: Rule, RuleStrong, SectionLabel, ListRow, AllLink, IntroLink, FooterCol (09-02..09-08)
 - Integration: /specimen route + triple-defense discoverability + local build gate (09-09)
 
+Phase 10 progress:
+
+- 10-01 shipped (commits ccd2ae6 + a43c67f): v1.0 chrome gated to non-home routes via pathname check in Navigation, Footer, and new MainOffset client component. New v2.0 page.tsx scaffold ships HOME-V2-01 (editorial header) + HOME-V2-02 (static manifesto, animation deferred to 10-07) + HOME-V2-03 (meta row) + HOME-V2-04 (epigraph image). Section slot placeholders (PLAN-10-02 … PLAN-10-05) mark insertion points for downstream plans.
+
 D-19 (`vercel build --prod`) deferred to Vercel preview deploy on next branch push (Phase 8 precedent).
 
-Last activity: 2026-05-21 -- Phase 10 planning complete
+Last activity: 2026-05-21 — Plan 10-01 shipped
 
 ## Operator Next Steps
 

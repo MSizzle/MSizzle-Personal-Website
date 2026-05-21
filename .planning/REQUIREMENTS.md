@@ -26,10 +26,10 @@ The redesign is a *subtraction* from v1.0, not an addition. Vanschneider-inspire
 
 ### New Homepage
 
-- [ ] **HOME-V2-01**: Homepage header — name on left (15px bold), 5-link nav on right (Building · Writing · Events · About · Links) at 13px baseline-aligned
-- [ ] **HOME-V2-02**: Hero manifesto renders "BRING FIRE / TO HUMANITY." at 124px uppercase 700 weight, line-height 0.96, letter-spacing -0.045em, each line `white-space: nowrap`
-- [ ] **HOME-V2-03**: Meta row below manifesto with 32px hairline + "EST. 2026 · WASHINGTON, D.C." in 11px tracked uppercase muted
-- [ ] **HOME-V2-04**: Epigraph image — single full-width letterbox photo (1120 × 540) using `PHOTOS[0]` with figcaption row (caption left, "Photographed on film" right)
+- [x] **HOME-V2-01**: Homepage header — name on left (15px bold), 5-link nav on right (Building · Writing · Events · About · Links) at 13px baseline-aligned
+- [x] **HOME-V2-02**: Hero manifesto renders "BRING FIRE / TO HUMANITY." at 124px uppercase 700 weight, line-height 0.96, letter-spacing -0.045em, each line `white-space: nowrap`
+- [x] **HOME-V2-03**: Meta row below manifesto with 32px hairline + "EST. 2026 · WASHINGTON, D.C." in 11px tracked uppercase muted
+- [x] **HOME-V2-04**: Epigraph image — single full-width letterbox photo (1120 × 540) using `PHOTOS[0]` with figcaption row (caption left, "Photographed on film" right)
 - [ ] **HOME-V2-05**: Letter-style intro paragraph (max-width 720px, 22px body, line-height 1.55) with three inline `IntroLink`s to Prometheus / Monty Monthly / essays
 - [ ] **HOME-V2-06**: BUILDING section — 2 rows (Prometheus, Selected Works) in 3-column grid (180px tag / 1fr title / 1fr blurb+link); Selected Works pulls live names from `notion-projects.ts` (8 real projects)
 - [ ] **HOME-V2-07**: WRITING section — 3 latest essays as `ListRow big` with title + 13px muted extra blurb + 11px tracked date right; "All writing →" link
