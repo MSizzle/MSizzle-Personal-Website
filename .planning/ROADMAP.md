@@ -107,8 +107,8 @@ Full milestone detail: [milestones/v1.0-ROADMAP.md](./milestones/v1.0-ROADMAP.md
   4. The Photographs section on the homepage links to `/photos` and the click navigates successfully
   5. At 390px viewport all three archive pages render single-column with no horizontal overflow
 **Plans**: 5 plans
-- [ ] 11-01-PLAN.md — NEW <YearBlock> primitive at src/components/editorial/year-block.tsx (sticky-left-year layout via md:sticky md:top-9 md:self-start)
-- [ ] 11-02-PLAN.md — NEW src/lib/photos.ts (PHOTOS_BY_YEAR empirical 3×2023 + 3×2025 + groupPhotosByYear) + formatDayNumeral helper added to src/lib/dates.ts
+- [x] 11-01-PLAN.md — NEW <YearBlock> primitive at src/components/editorial/year-block.tsx (sticky-left-year layout via md:sticky md:top-9 md:self-start)
+- [x] 11-02-PLAN.md — NEW src/lib/photos.ts (PHOTOS_BY_YEAR empirical 3×2023 + 3×2025 + groupPhotosByYear) + formatDayNumeral helper added to src/lib/dates.ts
 - [ ] 11-03-PLAN.md — ARCH-01 /writing route + NEW src/components/home-v2/editorial-header.tsx extraction + Phase 10 D-42 chrome gate extension to /writing|/events|/photos + homepage /blog→/writing href swap (3 places)
 - [ ] 11-04-PLAN.md — ARCH-02 /events route REWRITE (84px featured / 56px non-featured day numerals + 3-col dense Past per D-20 REVISED) + delete orphaned src/components/events/event-cards.tsx
 - [ ] 11-05-PLAN.md — ARCH-03 /photos route (year-grouped YearBlock grid using PHOTOS_BY_YEAR; unblocks homepage Photographs AllLink + PERSONAL Photo Archive card per D-06)
@@ -158,6 +158,6 @@ Full milestone detail: [milestones/v1.0-ROADMAP.md](./milestones/v1.0-ROADMAP.md
 | 8. Motion Subtractions | v2.0 | 5/7 | In Progress|  |
 | 9. Design Tokens & Editorial Primitives | v2.0 | 9/9 | Complete    | 2026-05-21 |
 | 10. Editorial Homepage | v2.0 | 7/7 | Complete    | 2026-05-21 |
-| 11. Archive Pages | v2.0 | 0/5 | Not started | — |
+| 11. Archive Pages | v2.0 | 2/5 | In Progress|  |
 | 12. Sub-page Restyle Sweep | v2.0 | 0/? | Not started | — |
 | 13. v2.0 QA & GO/NO-GO | v2.0 | 0/? | Not started | — |
