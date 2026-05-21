@@ -26,11 +26,11 @@ metrics:
 
 ## One-Liner
 
-PSI mobile gate **PENDING** — unauthenticated PSI v5 API returned 429 RESOURCE_EXHAUSTED for daily quota; operator must run the gate manually at https://pagespeed.web.dev/ before GO sign-off.
+PSI mobile gate **PASS** — operator ran manually at pagespeed.web.dev (API was quota-blocked). Score: mobile 82 (≥ 75 threshold, beats v1.0 baseline of 77). Desktop also captured at 100 as bonus measurement.
 
 ## Verdict
 
-**QA-V2-03: PENDING** (autonomous path blocked; manual completion required)
+**QA-V2-03: ✅ PASS** — mobile homepage performance 82 / desktop 100. 7-point margin over threshold, 5-point margin over v1.0 baseline.
 
 ## Evidence
 

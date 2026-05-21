@@ -6,7 +6,33 @@
 
 ---
 
-## Result: PARTIAL — RATE LIMIT EXCEEDED (Autonomous Path Blocked)
+## Result: ✅ PASS — Manual PSI Run (Operator, 2026-05-21)
+
+**Update:** Operator ran PSI manually at https://pagespeed.web.dev/?url=https%3A%2F%2Fmontysinger.com after the autonomous API call hit the daily quota.
+
+### Final Result
+
+| Metric | Desktop | Mobile |
+|--------|---------|--------|
+| **Performance** | **100** | **82** |
+| Threshold | n/a (QA-V2-02 covers desktop) | ≥ 75 (QA-V2-03) |
+| v1.0 baseline | 100 | 77 |
+| Verdict | n/a | **PASS** (+5 vs v1.0 baseline; +7 over threshold) |
+
+**QA-V2-03: ✅ PASS** — Mobile homepage score 82 clears the 75 floor with margin and beats the v1.0 PSI baseline of 77.
+
+### Observation: 18-Point Desktop-vs-Mobile Gap
+
+Desktop = 100, mobile = 82. Typical sources of this gap on Vercel:
+- PSI mobile throttles CPU 4× and applies a Fast 3G network profile, so JS hydration cost weighs heavier
+- Same image bytes consume relatively more of the mobile budget
+- ManifestoReveal (motion/react) hydration likely accounts for a chunk
+
+Not a regression — same site, just different measurement floor. The gap can be narrowed in a follow-up perf phase if desired, but the gate is met.
+
+---
+
+## Original Result (pre-manual-run, kept for record): PARTIAL — RATE LIMIT EXCEEDED (Autonomous Path Blocked)
 
 | Metric | Value |
 |--------|-------|

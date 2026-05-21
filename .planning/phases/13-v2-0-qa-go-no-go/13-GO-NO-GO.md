@@ -38,13 +38,13 @@ signed_date:
 |----|-------------|---------|----------|
 | **QA-V2-01** | `vercel build --prod` exits 0, zero TS/ESLint/429 errors | ✅ **PASS** | [13-01-EVIDENCE.md](./13-01-EVIDENCE.md) — exit 0, 40 pages, zero errors |
 | **QA-V2-02** | Lighthouse desktop ≥ 90/95/95/100 on 5 routes | ✅ **PASS** | [13-02-EVIDENCE.md](./13-02-EVIDENCE.md) — all 5 routes PASS after polish (CLS fix + color-contrast token + heading-order + watermark aria-hidden) |
-| **QA-V2-03** | PSI mobile ≥ 75 on homepage | ⏳ **PENDING** | [13-03-EVIDENCE.md](./13-03-EVIDENCE.md) — PSI API rate-limited; manual run at pagespeed.web.dev required |
+| **QA-V2-03** | PSI mobile ≥ 75 on homepage | ✅ **PASS** | [13-03-EVIDENCE.md](./13-03-EVIDENCE.md) — manual PSI run: mobile **82** (+7 over floor), desktop **100** |
 | **QA-V2-04** | Visual QA at 375px on `/`, `/writing`, `/events`, `/photos` | ⏳ **PENDING** | [13-04-EVIDENCE.md](./13-04-EVIDENCE.md) — 4-route checklist + Chrome DevTools setup |
 | **QA-V2-05** | Dark-mode FOUC pass OR light-only ship recorded | ✅ **PASS** (light-only) | [13-05-EVIDENCE.md](./13-05-EVIDENCE.md) — verified 0 dark tokens, 0 theme provider; deferred to future requirement |
 | **QA-V2-06** | D-14 client-bundle secret scan returns 0 leaks | ✅ **PASS** | [13-05-EVIDENCE.md](./13-05-EVIDENCE.md) — 0 hits in both client-chunk trees; server-only refs preserved |
 | **QA-V2-07** | Signed GO doc + `/gsd:complete-milestone` invoked AT verdict | ⏳ **THIS DOC** | once signed, the milestone closes |
 
-**Score: 4 PASS (QA-V2-01/02/05/06) / 2 PENDING (QA-V2-03 PSI, QA-V2-04 visual) / 1 SIGN-OFF (QA-V2-07)** (as of 2026-05-21 autonomous execution, after operator-approved Lighthouse polish pass)
+**Score: 5 PASS (QA-V2-01/02/03/05/06) / 1 PENDING (QA-V2-04 visual) / 1 SIGN-OFF (QA-V2-07)** (as of 2026-05-21, after polish pass + manual PSI run)
 
 ---
 
