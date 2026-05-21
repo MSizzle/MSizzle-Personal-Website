@@ -92,55 +92,67 @@ The redesign is a *subtraction* from v1.0, not an addition. Vanschneider-inspire
 
 ## Traceability
 
-(To be populated by gsd-roadmapper — every REQ-ID mapped to exactly one phase.)
+Every v2.0 REQ-ID mapped to exactly one phase. 46/46 mapped · 0 orphans.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| TOKEN-01 | TBD | not_started |
-| TOKEN-02 | TBD | not_started |
-| TOKEN-03 | TBD | not_started |
-| PRIM-01 | TBD | not_started |
-| PRIM-02 | TBD | not_started |
-| PRIM-03 | TBD | not_started |
-| PRIM-04 | TBD | not_started |
-| PRIM-05 | TBD | not_started |
-| PRIM-06 | TBD | not_started |
-| PRIM-07 | TBD | not_started |
-| HOME-V2-01 | TBD | not_started |
-| HOME-V2-02 | TBD | not_started |
-| HOME-V2-03 | TBD | not_started |
-| HOME-V2-04 | TBD | not_started |
-| HOME-V2-05 | TBD | not_started |
-| HOME-V2-06 | TBD | not_started |
-| HOME-V2-07 | TBD | not_started |
-| HOME-V2-08 | TBD | not_started |
-| HOME-V2-09 | TBD | not_started |
-| HOME-V2-10 | TBD | not_started |
-| HOME-V2-11 | TBD | not_started |
-| HOME-V2-12 | TBD | not_started |
-| ARCH-01 | TBD | not_started |
-| ARCH-02 | TBD | not_started |
-| ARCH-03 | TBD | not_started |
-| RESTYLE-01 | TBD | not_started |
-| RESTYLE-02 | TBD | not_started |
-| RESTYLE-03 | TBD | not_started |
-| RESTYLE-04 | TBD | not_started |
-| RESTYLE-05 | TBD | not_started |
-| RESTYLE-06 | TBD | not_started |
-| MOTION-01 | TBD | not_started |
-| MOTION-02 | TBD | not_started |
-| MOTION-03 | TBD | not_started |
-| MOTION-04 | TBD | not_started |
-| MOTION-05 | TBD | not_started |
-| MOTION-06 | TBD | not_started |
-| MOTION-07 | TBD | not_started |
-| MOTION-08 | TBD | not_started |
-| QA-V2-01 | TBD | not_started |
-| QA-V2-02 | TBD | not_started |
-| QA-V2-03 | TBD | not_started |
-| QA-V2-04 | TBD | not_started |
-| QA-V2-05 | TBD | not_started |
-| QA-V2-06 | TBD | not_started |
-| QA-V2-07 | TBD | not_started |
+| TOKEN-01 | Phase 9 | not_started |
+| TOKEN-02 | Phase 9 | not_started |
+| TOKEN-03 | Phase 9 | not_started |
+| PRIM-01 | Phase 9 | not_started |
+| PRIM-02 | Phase 9 | not_started |
+| PRIM-03 | Phase 9 | not_started |
+| PRIM-04 | Phase 9 | not_started |
+| PRIM-05 | Phase 9 | not_started |
+| PRIM-06 | Phase 9 | not_started |
+| PRIM-07 | Phase 9 | not_started |
+| HOME-V2-01 | Phase 10 | not_started |
+| HOME-V2-02 | Phase 10 | not_started |
+| HOME-V2-03 | Phase 10 | not_started |
+| HOME-V2-04 | Phase 10 | not_started |
+| HOME-V2-05 | Phase 10 | not_started |
+| HOME-V2-06 | Phase 10 | not_started |
+| HOME-V2-07 | Phase 10 | not_started |
+| HOME-V2-08 | Phase 10 | not_started |
+| HOME-V2-09 | Phase 10 | not_started |
+| HOME-V2-10 | Phase 10 | not_started |
+| HOME-V2-11 | Phase 10 | not_started |
+| HOME-V2-12 | Phase 10 | not_started |
+| ARCH-01 | Phase 11 | not_started |
+| ARCH-02 | Phase 11 | not_started |
+| ARCH-03 | Phase 11 | not_started |
+| RESTYLE-01 | Phase 12 | not_started |
+| RESTYLE-02 | Phase 12 | not_started |
+| RESTYLE-03 | Phase 12 | not_started |
+| RESTYLE-04 | Phase 12 | not_started |
+| RESTYLE-05 | Phase 12 | not_started |
+| RESTYLE-06 | Phase 12 | not_started |
+| MOTION-01 | Phase 8 | not_started |
+| MOTION-02 | Phase 8 | not_started |
+| MOTION-03 | Phase 8 | not_started |
+| MOTION-04 | Phase 8 | not_started |
+| MOTION-05 | Phase 8 | not_started |
+| MOTION-06 | Phase 8 | not_started |
+| MOTION-07 | Phase 10 | not_started |
+| MOTION-08 | Phase 8 | not_started |
+| QA-V2-01 | Phase 13 | not_started |
+| QA-V2-02 | Phase 13 | not_started |
+| QA-V2-03 | Phase 13 | not_started |
+| QA-V2-04 | Phase 13 | not_started |
+| QA-V2-05 | Phase 13 | not_started |
+| QA-V2-06 | Phase 13 | not_started |
+| QA-V2-07 | Phase 13 | not_started |
 
-**Total:** 46 requirements across 6 categories.
+**Total:** 46 requirements across 6 categories, mapped to 6 phases (Phase 8-13).
+
+### Per-Phase Counts
+
+| Phase | Requirement Count | Categories |
+|-------|-------------------|------------|
+| Phase 8 — Motion Subtractions | 7 | MOTION (01-06, 08) |
+| Phase 9 — Design Tokens & Editorial Primitives | 10 | TOKEN (01-03) + PRIM (01-07) |
+| Phase 10 — Editorial Homepage | 13 | HOME-V2 (01-12) + MOTION-07 |
+| Phase 11 — Archive Pages | 3 | ARCH (01-03) |
+| Phase 12 — Sub-page Restyle Sweep | 6 | RESTYLE (01-06) |
+| Phase 13 — v2.0 QA & GO/NO-GO | 7 | QA-V2 (01-07) |
+| **Total** | **46** | — |
