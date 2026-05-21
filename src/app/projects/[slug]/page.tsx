@@ -47,7 +47,7 @@ export default async function ProjectPage({ params }: PageProps) {
       {/* Hero image — full width, above content */}
       {project.image && (
         <div className="mx-auto max-w-[66ch] px-6 pt-8 md:px-0">
-          <div className="w-full overflow-hidden rounded-lg bg-[var(--muted)]">
+          <div className="w-full overflow-hidden bg-muted">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={`/api/notion-cover?pageId=${project.id}`}
@@ -60,13 +60,13 @@ export default async function ProjectPage({ params }: PageProps) {
 
       <article className="mx-auto max-w-[66ch] px-6 pb-16 pt-8 md:px-0">
         <header className="mb-10">
-        <h1 className="text-2xl font-normal tracking-tight sm:text-3xl">
+        <h1 className="text-section-feature text-ink">
           {project.emoji && <span className="mr-2">{project.emoji}</span>}
           {project.title}
         </h1>
 
         {project.description && (
-          <p className="mt-3 opacity-80">
+          <p className="mt-3 text-muted">
             {project.description}
           </p>
         )}
@@ -76,7 +76,7 @@ export default async function ProjectPage({ params }: PageProps) {
             {project.tags.length > 0 && (
               <div className="flex flex-wrap gap-3">
                 {project.tags.map((tag) => (
-                  <span key={tag} className="text-sm opacity-75">
+                  <span key={tag} className="text-sm text-muted">
                     {tag}
                   </span>
                 ))}
