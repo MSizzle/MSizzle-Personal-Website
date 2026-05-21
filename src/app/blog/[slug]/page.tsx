@@ -54,12 +54,12 @@ export default async function BlogPostPage({ params }: PageProps) {
           { name: post.title },
         ]}
       />
-      <article className="mx-auto max-w-[66ch] px-6 pb-16 pt-24 md:px-0">
+      <article className="mx-auto max-w-[66ch] px-6 pb-16 pt-8 md:px-0">
         <header className="mb-12">
-          <h1 className="text-2xl font-normal tracking-tight sm:text-3xl">
+          <h1 className="text-section-feature text-ink">
             {post.emoji && <span className="mr-3">{post.emoji}</span>}{post.title}
           </h1>
-          <div className="mt-4 flex items-center gap-4 text-sm opacity-75">
+          <div className="mt-4 flex items-center gap-4 text-sm text-muted">
             {post.date && (
               <time dateTime={post.date}>
                 {new Date(post.date).toLocaleDateString('en-US', {
@@ -76,7 +76,7 @@ export default async function BlogPostPage({ params }: PageProps) {
                 <span>&middot;</span>
                 <div className="flex gap-2">
                   {post.tags.map((tag) => (
-                    <span key={tag} className="text-sm">
+                    <span key={tag} className="text-sm text-muted">
                       {tag}
                     </span>
                   ))}
@@ -85,7 +85,7 @@ export default async function BlogPostPage({ params }: PageProps) {
             )}
           </div>
           {post.description && (
-            <p className="mt-4 text-lg opacity-80">
+            <p className="mt-4 text-lg text-muted">
               {post.description}
             </p>
           )}
