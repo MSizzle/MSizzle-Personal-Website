@@ -4,14 +4,14 @@ milestone: v2.0
 milestone_name: Editorial Redesign
 current_phase: 8
 status: executing
-last_updated: "2026-05-21T03:21:05.226Z"
+last_updated: "2026-05-21T03:24:44.812Z"
 last_activity: 2026-05-21
 progress:
   total_phases: 6
   completed_phases: 0
   total_plans: 7
-  completed_plans: 2
-  percent: 29
+  completed_plans: 3
+  percent: 43
 ---
 
 # Project State
@@ -109,9 +109,9 @@ Bookkeeping drift from v1.0, acknowledged at milestone close 2026-05-20. All are
 ## Current Position
 
 Phase: 8 (Motion Subtractions) — EXECUTING
-Plan: 3 of 7 (Plan 01 PhotoCarousel deleted, commit ced6df2, MOTION-01 ✓ · Plan 02 RotatingTagline deleted, commit 31ae6b9, MOTION-02 ✓)
-Status: Ready to execute Plan 03
-Last activity: 2026-05-21 -- Plan 08-02 complete (MOTION-02 / RotatingTagline deletion)
+Plan: 4 of 7 (Plan 01 PhotoCarousel deleted, commit ced6df2, MOTION-01 ✓ · Plan 02 RotatingTagline deleted, commit 31ae6b9, MOTION-02 ✓ · Plan 03 WorksCarousel deleted + minimal `<ul>` Link-list fallback, commit 1670fc9, MOTION-03 ✓)
+Status: Ready to execute Plan 04
+Last activity: 2026-05-21 -- Plan 08-03 complete (MOTION-03 / WorksCarousel deletion + minimal `<ul>` fallback). Project type fields confirmed in src/lib/notion-projects.ts: `id`, `slug`, `title` (NOT `name` — plan text was wrong; documented in 08-03-SUMMARY for Plan-04 handoff)
 
 ## Operator Next Steps
 
