@@ -11,7 +11,7 @@ import { Rule } from "@/components/editorial/rule";
 import { SectionLabel } from "@/components/editorial/section-label";
 import { AllLink } from "@/components/editorial/all-link";
 import { ListRow } from "@/components/editorial/list-row";
-import { formatMonthYear } from "@/lib/dates";
+import { formatMonthYear, formatMonthDay } from "@/lib/dates";
 
 export const revalidate = 1800;
 
@@ -21,7 +21,6 @@ export default async function Home() {
   // so a transient Notion API failure cannot break the homepage render.
   let posts: Awaited<ReturnType<typeof getPublishedPosts>> = [];
   let projects: Awaited<ReturnType<typeof getFeaturedProjects>> = [];
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let upcomingEvents: Awaited<ReturnType<typeof getUpcomingEvents>> = [];
 
   try {
@@ -191,7 +190,69 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* PLAN-10-03 WRITING + EVENTS */}
+      {/* EVENTS — HOME-V2-08 / D-13–D-22 */}
+      <RuleStrong />
+      <section className="px-6 pt-[120px] pb-[120px] md:px-40">
+        <SectionLabel numeral="03 — Calendar">Events</SectionLabel>
+
+        <div className="mt-[72px]">
+          {upcomingEvents.length === 0 ? (
+            <p className="text-caption text-muted">No upcoming events.</p>
+          ) : (
+            (() => {
+              const featuredEvent = upcomingEvents[0];
+              const secondaryEvents = upcomingEvents.slice(1, 3);
+              return (
+                <>
+                  {/* Featured event — inline 3-column grid (D-19) */}
+                  <div className="grid grid-cols-1 gap-6 py-9 md:grid-cols-[180px_1fr_auto] md:gap-12">
+                    <div>
+                      <div className="text-meta uppercase text-ink">
+                        NEXT · {formatMonthDay(featuredEvent.date)}
+                      </div>
+                      <div className="mt-1 text-meta uppercase text-muted">
+                        {featuredEvent.location}
+                      </div>
+                    </div>
+                    <div>
+                      <div className="text-event-title text-ink">
+                        {featuredEvent.name}
+                      </div>
+                      <div className="mt-4 max-w-[34rem] text-body text-muted">
+                        {featuredEvent.description}
+                      </div>
+                    </div>
+                    <div className="md:self-start">
+                      <AllLink href={featuredEvent.link || "/events"}>
+                        RSVP →
+                      </AllLink>
+                    </div>
+                  </div>
+
+                  {/* Secondary events — 2 ListRow (non-big) per D-21 REVISED */}
+                  {secondaryEvents.length > 0 && (
+                    <div className="mt-12">
+                      {secondaryEvents.map((event) => (
+                        <ListRow
+                          key={event.id}
+                          href={event.link || "/events"}
+                          title={event.name}
+                          extra={event.description}
+                          meta={formatMonthYear(event.date)}
+                        />
+                      ))}
+                    </div>
+                  )}
+                </>
+              );
+            })()
+          )}
+          <div className="mt-12">
+            <AllLink href="/events">All events →</AllLink>
+          </div>
+        </div>
+      </section>
+
       {/* PLAN-10-04 PHOTOGRAPHS */}
       {/* PLAN-10-05 PERSONAL + FOOTER */}
     </>
