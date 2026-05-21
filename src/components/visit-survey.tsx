@@ -94,7 +94,7 @@ export function VisitSurvey() {
               alt="Pixel art Monty"
               width={405}
               height={558}
-              className="h-auto w-36 object-contain sm:w-[405px]"
+              className="h-auto w-64 object-contain sm:w-[405px]"
               priority
             />
           </motion.div>
