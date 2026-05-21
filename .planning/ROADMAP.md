@@ -25,9 +25,9 @@ Full milestone detail: [milestones/v1.0-ROADMAP.md](./milestones/v1.0-ROADMAP.md
 ### 🚧 v2.0 Editorial Redesign (Phases 8-13)
 
 - [x] **Phase 8: Motion Subtractions** — Delete v1.0 animation loops, pulsing dots, hover-carousels, cascading reveals; preserve Lenis + page-fade *(code-complete 2026-05-21; HUMAN-UAT pending for vercel build + Lenis/fade smoke per 08-HUMAN-UAT.md)*
-- [ ] **Phase 9: Design Tokens & Editorial Primitives** — Warm-paper palette tokens, editorial type scale utilities, 7 shared primitive components
-- [ ] **Phase 10: Editorial Homepage** — Manifesto-anchored homepage with 5 labeled sections, ink footer, mobile parity, manifesto letter-stagger signature interaction
-- [ ] **Phase 11: Archive Pages** — `/writing`, `/events`, `/photos` year-grouped archive pages
+- [x] **Phase 9: Design Tokens & Editorial Primitives** — Warm-paper palette tokens, editorial type scale utilities, 7 shared primitive components (completed 2026-05-21)
+- [x] **Phase 10: Editorial Homepage** — Manifesto-anchored homepage with 5 labeled sections, ink footer, mobile parity, manifesto letter-stagger signature interaction (completed 2026-05-21)
+- [x] **Phase 11: Archive Pages** — `/writing`, `/events`, `/photos` year-grouped archive pages (completed 2026-05-21)
 - [ ] **Phase 12: Sub-page Restyle Sweep** — Lightweight palette+typography pass on `/about`, `/projects`, `/blog`, `/links`, `/prometheus`, `/newsletter`
 - [ ] **Phase 13: v2.0 QA & GO/NO-GO** — Production build gate, Lighthouse re-baseline (desktop + mobile PSI), mobile visual QA, dark-mode FOUC, secret scan, GO verdict
 
@@ -62,7 +62,16 @@ Full milestone detail: [milestones/v1.0-ROADMAP.md](./milestones/v1.0-ROADMAP.md
   2. Inter at weights 400/700 renders the 124px manifesto with letter-spacing -0.045em and line-height 0.96 — no Helvetica Neue swap, no font-loading flash
   3. Each of the 7 primitive components (`Rule`, `RuleStrong`, `SectionLabel`, `ListRow` + `big` variant, `AllLink`, `IntroLink`, `FooterCol`) renders in isolation with documented props and Tailwind-token-driven styling — zero arbitrary color or size values
   4. `vercel build --prod` exits 0 and the primitives type-check with zero TS errors
-**Plans**: TBD
+**Plans**: 9 plans (Wave 1: 09-01..09-08 fully parallel; Wave 2: 09-09 depends on all Wave 1)
+- [x] 09-01-PLAN.md — Rewrite `@theme inline` block in `globals.css` with 10 v2.0 palette tokens + 10 typography roles incl. `--text-caption` (D-14a) + v1.0 alias bridge (D-02); delete `.dark` block; remove `<ThemeProvider>` wrap from `layout.tsx`; delete `theme-provider.tsx` + `theme-toggle.tsx` (D-04); TOKEN-01 + TOKEN-02 + TOKEN-03
+- [x] 09-02-PLAN.md — Create `src/components/editorial/rule.tsx` — `Rule` primitive (1px hairline horizontal divider via `bg-rule`); PRIM-01
+- [x] 09-03-PLAN.md — Create `src/components/editorial/rule-strong.tsx` — `RuleStrong` primitive (1px bold horizontal section divider via `bg-rule-strong`); PRIM-02
+- [x] 09-04-PLAN.md — Create `src/components/editorial/section-label.tsx` — `SectionLabel` primitive (11px tracked uppercase heading + optional right-aligned numeral); PRIM-03
+- [x] 09-05-PLAN.md — Create `src/components/editorial/list-row.tsx` — `ListRow` primitive with `big?: boolean` variant (D-10); imports `cn` from `@/utils/cn`; PRIM-04
+- [x] 09-06-PLAN.md — Create `src/components/editorial/all-link.tsx` — `AllLink` primitive (tracked uppercase 'All X →' link with 1px ink bottom-border); PRIM-05
+- [x] 09-07-PLAN.md — Create `src/components/editorial/intro-link.tsx` — `IntroLink` primitive (inline link with 1px ink bottom-border, no hover color shift); PRIM-06
+- [x] 09-08-PLAN.md — Create `src/components/editorial/footer-col.tsx` — `FooterCol` primitive (tracked uppercase title + link list + optional grey sub-line); PRIM-07
+- [x] 09-09-PLAN.md — Create `src/app/specimen/page.tsx` (NO underscore — D-12 revised) rendering all 10 swatches + 12 type-scale specimens + all 7 primitives + `metadata.robots: { index: false, follow: false }`; extend `src/app/robots.ts` with `disallow: ['/specimen', '/api/']` (D-14); confirm `src/app/sitemap.ts` excludes /specimen; run `vercel build --prod` as Phase 9 production-readiness gate (D-19)
 **UI hint**: yes
 **Risks**: Tailwind v4 `@theme` block must be in `globals.css` (or equivalent) and the type-scale utilities must be authored as Tailwind v4 utilities, not arbitrary classes. Mis-placing the `@theme` block silently no-ops the tokens. Inter weight 700 must be explicitly requested in the `next/font/google` call — verify in `src/app/layout.tsx` before claiming TOKEN-03 complete.
 
@@ -76,7 +85,14 @@ Full milestone detail: [milestones/v1.0-ROADMAP.md](./milestones/v1.0-ROADMAP.md
   3. The WRITING (3 latest essays), EVENTS (1 featured + 2 secondary), and BUILDING (Selected Works) sections pull real data from `notion.ts` / `notion-projects.ts` / `notion-events.ts` — no hardcoded essay titles, no hardcoded project names
   4. The Photographs grid renders 6 plates in the documented 12-column asymmetric layout with `mix-blend-mode: difference` caption overlays that stay legible over each image
   5. At 390px viewport the homepage renders single-column with manifesto at 56px / 4 lines, photographs as a 2×2 grid, inverted footer with per-column hairline dividers, and every tap target ≥ 44px
-**Plans**: TBD
+**Plans**: 7 plans
+- [x] 10-01-PLAN.md — header + hero manifesto + meta row + epigraph (+ D-42 global chrome gate Task 0)
+- [x] 10-02-PLAN.md — letter-style intro paragraph + BUILDING section (Prometheus + Selected Works)
+- [x] 10-03-PLAN.md — WRITING + EVENTS sections + new src/lib/dates.ts helper
+- [x] 10-04-PLAN.md — PHOTOGRAPHS 12-col asymmetric grid + 6 plates + mix-blend captions
+- [x] 10-05-PLAN.md — PERSONAL 3-card grid + inverted ink footer
+- [x] 10-06-PLAN.md — mobile parity sweep (3-line manifesto, 2x2 photo grid, footer dividers, 44px tap targets)
+- [x] 10-07-PLAN.md — ManifestoReveal client component (per-letter stagger + sessionStorage + reduced-motion)
 **UI hint**: yes
 **Risks**: BUILDING / Selected Works depends on `notion-projects.ts` returning at least 8 entries — verify Notion DB content before plan kickoff. The manifesto stagger is the *only* surviving signature interaction; any regression here violates the motion budget and must block ship. SessionStorage flag must be keyed per-tab (not localStorage) so the user can replay by re-opening; verify keying explicitly. Footer column copy (Studio / Library / Person) is static and must match the handoff exactly.
 
@@ -90,7 +106,12 @@ Full milestone detail: [milestones/v1.0-ROADMAP.md](./milestones/v1.0-ROADMAP.md
   3. `/photos` renders a year-grouped grid mirroring `/writing`'s `YearBlock` pattern using existing photos in `/public/MSizzle-website-photos/`
   4. The Photographs section on the homepage links to `/photos` and the click navigates successfully
   5. At 390px viewport all three archive pages render single-column with no horizontal overflow
-**Plans**: TBD
+**Plans**: 5 plans
+- [x] 11-01-PLAN.md — NEW <YearBlock> primitive at src/components/editorial/year-block.tsx (sticky-left-year layout via md:sticky md:top-9 md:self-start)
+- [x] 11-02-PLAN.md — NEW src/lib/photos.ts (PHOTOS_BY_YEAR empirical 3×2023 + 3×2025 + groupPhotosByYear) + formatDayNumeral helper added to src/lib/dates.ts
+- [x] 11-03-PLAN.md — ARCH-01 /writing route + NEW src/components/home-v2/editorial-header.tsx extraction + Phase 10 D-42 chrome gate extension to /writing|/events|/photos + homepage /blog→/writing href swap (3 places)
+- [x] 11-04-PLAN.md — ARCH-02 /events route REWRITE (84px featured / 56px non-featured day numerals + 3-col dense Past per D-20 REVISED) + delete orphaned src/components/events/event-cards.tsx
+- [x] 11-05-PLAN.md — ARCH-03 /photos route (year-grouped YearBlock grid using PHOTOS_BY_YEAR; unblocks homepage Photographs AllLink + PERSONAL Photo Archive card per D-06)
 **UI hint**: yes
 **Risks**: `/events` requires upcoming events in Notion for the giant-numeral section to look right — verify Notion DB has at least one upcoming event before plan kickoff, or ship a graceful empty state. `/photos` has no Notion source; year grouping must be derived from photo metadata or filename convention — decide and document the source-of-truth at plan-check. The email-subscribe footer on `/writing` should reuse the existing newsletter integration, not introduce a second pipeline.
 
@@ -135,8 +156,8 @@ Full milestone detail: [milestones/v1.0-ROADMAP.md](./milestones/v1.0-ROADMAP.md
 | 6. Pre-Launch QA | v1.0 | 6/6 | Complete | 2026-04-16 |
 | 7. SEO Overhaul | v1.0 | 11/11 | Complete | 2026-04-16 |
 | 8. Motion Subtractions | v2.0 | 5/7 | In Progress|  |
-| 9. Design Tokens & Editorial Primitives | v2.0 | 0/? | Not started | — |
-| 10. Editorial Homepage | v2.0 | 0/? | Not started | — |
-| 11. Archive Pages | v2.0 | 0/? | Not started | — |
+| 9. Design Tokens & Editorial Primitives | v2.0 | 9/9 | Complete    | 2026-05-21 |
+| 10. Editorial Homepage | v2.0 | 7/7 | Complete    | 2026-05-21 |
+| 11. Archive Pages | v2.0 | 5/5 | Complete   | 2026-05-21 |
 | 12. Sub-page Restyle Sweep | v2.0 | 0/? | Not started | — |
 | 13. v2.0 QA & GO/NO-GO | v2.0 | 0/? | Not started | — |

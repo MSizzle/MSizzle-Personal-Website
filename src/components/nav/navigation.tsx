@@ -14,6 +14,11 @@ export function Navigation() {
   const [open, setOpen] = useState(false)
   const pathname = usePathname()
 
+  // D-42 + D-26: v2.0 routes (/, /writing, /events, /photos) render their own
+  // editorial chrome — suppress v1.0 nav. Phase 11 extends Phase 10 D-42 from
+  // `pathname === '/'` to an inclusion check covering all 4 v2.0 routes.
+  if (['/', '/writing', '/events', '/photos'].includes(pathname)) return null
+
   return (
     <>
       <header className="fixed inset-x-0 top-0 z-50 bg-[var(--bg)]">

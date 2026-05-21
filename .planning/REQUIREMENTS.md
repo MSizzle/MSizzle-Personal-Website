@@ -10,34 +10,34 @@ The redesign is a *subtraction* from v1.0, not an addition. Vanschneider-inspire
 
 ### Design Tokens & Typography
 
-- [ ] **TOKEN-01**: Tailwind v4 `@theme` block defines the warm-paper palette as named tokens (`paper #F4F2EC`, `ink #0E0E0C`, `muted #9A9690`, `faint #C7C3BA`, `rule #E5E2D9`, `rule-strong #1A1A18`, `footer-bg`, `footer-fg`, `footer-mute`, `footer-rule`)
-- [ ] **TOKEN-02**: Custom Tailwind utilities exist for the editorial type scale (`text-display` 124px, page-title 120px, feature 44px, list-title 28px, body-lead 22px, body 16-18px, caption 13-15px, nav 13px, label 11px tracked 0.18-0.22em, meta 11px tracked 0.14-0.18em) — each utility bundles font-size + line-height + letter-spacing + weight per the handoff spec
-- [ ] **TOKEN-03**: Existing Inter font (already wired via `next/font/google` weights 400/700) is the typeface — Helvetica Neue spec values applied to Inter; no font swap
+- [x] **TOKEN-01**: Tailwind v4 `@theme` block defines the warm-paper palette as named tokens (`paper #F4F2EC`, `ink #0E0E0C`, `muted #9A9690`, `faint #C7C3BA`, `rule #E5E2D9`, `rule-strong #1A1A18`, `footer-bg`, `footer-fg`, `footer-mute`, `footer-rule`)
+- [x] **TOKEN-02**: Custom Tailwind utilities exist for the editorial type scale (`text-display` 124px, page-title 120px, feature 44px, list-title 28px, body-lead 22px, body 16-18px, caption 13-15px, nav 13px, label 11px tracked 0.18-0.22em, meta 11px tracked 0.14-0.18em) — each utility bundles font-size + line-height + letter-spacing + weight per the handoff spec
+- [x] **TOKEN-03**: Existing Inter font (already wired via `next/font/google` weights 400/700) is the typeface — Helvetica Neue spec values applied to Inter; no font swap
 
 ### Shared Editorial Primitives
 
-- [ ] **PRIM-01**: `Rule` component — 1px hairline horizontal divider (`border-rule`)
-- [ ] **PRIM-02**: `RuleStrong` component — 1px bold horizontal section divider (`border-rule-strong`)
-- [ ] **PRIM-03**: `SectionLabel` component — 11px tracked uppercase section heading with optional right-aligned numeral
-- [ ] **PRIM-04**: `ListRow` component — linked row with title + optional `extra` blurb + right-aligned tracked meta; `big` variant for archive pages
-- [ ] **PRIM-05**: `AllLink` component — tracked uppercase "All X →" link with 1px ink bottom-border
-- [ ] **PRIM-06**: `IntroLink` component — inline link with 1px ink bottom-border (used in letter-style intro)
-- [ ] **PRIM-07**: `FooterCol` component — footer column with tracked uppercase title + list of links with grey sub-line
+- [x] **PRIM-01**: `Rule` component — 1px hairline horizontal divider (`border-rule`)
+- [x] **PRIM-02**: `RuleStrong` component — 1px bold horizontal section divider (`border-rule-strong`)
+- [x] **PRIM-03**: `SectionLabel` component — 11px tracked uppercase section heading with optional right-aligned numeral
+- [x] **PRIM-04**: `ListRow` component — linked row with title + optional `extra` blurb + right-aligned tracked meta; `big` variant for archive pages
+- [x] **PRIM-05**: `AllLink` component — tracked uppercase "All X →" link with 1px ink bottom-border
+- [x] **PRIM-06**: `IntroLink` component — inline link with 1px ink bottom-border (used in letter-style intro)
+- [x] **PRIM-07**: `FooterCol` component — footer column with tracked uppercase title + list of links with grey sub-line
 
 ### New Homepage
 
-- [ ] **HOME-V2-01**: Homepage header — name on left (15px bold), 5-link nav on right (Building · Writing · Events · About · Links) at 13px baseline-aligned
-- [ ] **HOME-V2-02**: Hero manifesto renders "BRING FIRE / TO HUMANITY." at 124px uppercase 700 weight, line-height 0.96, letter-spacing -0.045em, each line `white-space: nowrap`
-- [ ] **HOME-V2-03**: Meta row below manifesto with 32px hairline + "EST. 2026 · WASHINGTON, D.C." in 11px tracked uppercase muted
-- [ ] **HOME-V2-04**: Epigraph image — single full-width letterbox photo (1120 × 540) using `PHOTOS[0]` with figcaption row (caption left, "Photographed on film" right)
-- [ ] **HOME-V2-05**: Letter-style intro paragraph (max-width 720px, 22px body, line-height 1.55) with three inline `IntroLink`s to Prometheus / Monty Monthly / essays
-- [ ] **HOME-V2-06**: BUILDING section — 2 rows (Prometheus, Selected Works) in 3-column grid (180px tag / 1fr title / 1fr blurb+link); Selected Works pulls live names from `notion-projects.ts` (8 real projects)
-- [ ] **HOME-V2-07**: WRITING section — 3 latest essays as `ListRow big` with title + 13px muted extra blurb + 11px tracked date right; "All writing →" link
-- [ ] **HOME-V2-08**: EVENTS section — featured upcoming event in 3-column grid (180px date / content / RSVP CTA) + 2 secondary `ListRow` entries + "All events →" link; **no `animate-ping` indicator**
-- [ ] **HOME-V2-09**: PHOTOGRAPHS section — 12-column asymmetric grid with 6 plates per the handoff layout spec, `mix-blend-mode: difference` caption overlays, `Photo Archive →` link
-- [ ] **HOME-V2-10**: PERSONAL section — 3-column card grid (Photo Archive, Links & Elsewhere, About) with top 1px ink border per card
-- [ ] **HOME-V2-11**: Inverted ink footer with 4-column layout — colophon ("A calling card, not a billboard.") + 3 grouped link columns (Studio / Library / Person) + bottom row (copyright + socials)
-- [ ] **HOME-V2-12**: Mobile homepage — same sections in single-column at 390px reference, manifesto at 56px / 4 lines, photographs as 2×2 grid, footer inverts with per-column hairline dividers, tap targets ≥ 44px
+- [x] **HOME-V2-01**: Homepage header — name on left (15px bold), 5-link nav on right (Building · Writing · Events · About · Links) at 13px baseline-aligned
+- [x] **HOME-V2-02**: Hero manifesto renders "BRING FIRE / TO HUMANITY." at 124px uppercase 700 weight, line-height 0.96, letter-spacing -0.045em, each line `white-space: nowrap`
+- [x] **HOME-V2-03**: Meta row below manifesto with 32px hairline + "EST. 2026 · WASHINGTON, D.C." in 11px tracked uppercase muted
+- [x] **HOME-V2-04**: Epigraph image — single full-width letterbox photo (1120 × 540) using `PHOTOS[0]` with figcaption row (caption left, "Photographed on film" right)
+- [x] **HOME-V2-05**: Letter-style intro paragraph (max-width 720px, 22px body, line-height 1.55) with three inline `IntroLink`s to Prometheus / Monty Monthly / essays
+- [x] **HOME-V2-06**: BUILDING section — 2 rows (Prometheus, Selected Works) in 3-column grid (180px tag / 1fr title / 1fr blurb+link); Selected Works pulls live names from `notion-projects.ts` (8 real projects)
+- [x] **HOME-V2-07**: WRITING section — 3 latest essays as `ListRow big` with title + 13px muted extra blurb + 11px tracked date right; "All writing →" link
+- [x] **HOME-V2-08**: EVENTS section — featured upcoming event in 3-column grid (180px date / content / RSVP CTA) + 2 secondary `ListRow` entries + "All events →" link; **no `animate-ping` indicator**
+- [x] **HOME-V2-09**: PHOTOGRAPHS section — 12-column asymmetric grid with 6 plates per the handoff layout spec, `mix-blend-mode: difference` caption overlays, `Photo Archive →` link
+- [x] **HOME-V2-10**: PERSONAL section — 3-column card grid (Photo Archive, Links & Elsewhere, About) with top 1px ink border per card
+- [x] **HOME-V2-11**: Inverted ink footer with 4-column layout — colophon ("A calling card, not a billboard.") + 3 grouped link columns (Studio / Library / Person) + bottom row (copyright + socials)
+- [x] **HOME-V2-12**: Mobile homepage — same sections in single-column at 390px reference, manifesto at 56px / 4 lines, photographs as 2×2 grid, footer inverts with per-column hairline dividers, tap targets ≥ 44px
 
 ### Archive Pages
 
@@ -62,7 +62,7 @@ The redesign is a *subtraction* from v1.0, not an addition. Vanschneider-inspire
 - [x] **MOTION-04**: Delete hover-triggered writings carousel (`components/home/writings-carousel.tsx`) and all references
 - [x] **MOTION-05**: Remove `animate-ping` pulsing indicator from featured event card (`components/events/event-cards.tsx:53`) and any other always-on CSS animations site-wide
 - [x] **MOTION-06**: Flatten cascading ScrollReveal delays on event and blog card lists — same-time reveal or simple per-item fade only
-- [ ] **MOTION-07**: Manifesto letter-stagger signature interaction — per-character `translateY(110%)→0` + opacity 0→1, 18ms per-letter stagger, 500-700ms duration, fires ONCE on first paint of `/` (sessionStorage flag to skip on route returns), respects `useReducedMotion()` (300ms full-line fade fallback)
+- [x] **MOTION-07**: Manifesto letter-stagger signature interaction — per-character `translateY(110%)→0` + opacity 0→1, 18ms per-letter stagger, 500-700ms duration, fires ONCE on first paint of `/` (sessionStorage flag to skip on route returns), respects `useReducedMotion()` (300ms full-line fade fallback)
 - [ ] **MOTION-08**: Lenis smooth scroll and 200-300ms page-load fade preserved as the only other site-wide motion
 
 ### QA & Launch

@@ -1,37 +1,101 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-background: var(--bg);
-  --color-foreground: var(--fg);
-  --color-bg-secondary: var(--bg-secondary);
-  --color-fg-muted: var(--fg-muted);
-  --color-border: var(--border);
-  --color-accent: var(--accent);
-  --color-accent-warm: var(--accent-warm);
+  /* v2.0 warm-paper palette (D-01) */
+  --color-paper: #F4F2EC;
+  --color-ink: #0E0E0C;
+  --color-muted: #9A9690;
+  --color-faint: #C7C3BA;
+  --color-rule: #E5E2D9;
+  --color-rule-strong: #1A1A18;
+  --color-footer-bg: #0E0E0C;
+  --color-footer-fg: #F4F2EC;
+  --color-footer-mute: #7A7770;
+  --color-footer-rule: rgba(244, 242, 236, 0.18);
+
+  /* v1.0 token compatibility aliases (D-02) — remove in Phase 12 */
+  --color-background: var(--color-paper);
+  --color-foreground: var(--color-ink);
+  --color-bg-secondary: var(--color-paper);
+  --color-fg-muted: var(--color-muted);
+  --color-border: var(--color-rule-strong);
+  --color-accent: var(--color-ink);
+  --color-accent-warm: var(--color-ink);
+
+  /* v2.0 editorial type scale (D-06 + D-14a) */
+  --text-display: 124px;
+  --text-display--line-height: 0.96;
+  --text-display--letter-spacing: -0.045em;
+  --text-display--font-weight: 700;
+
+  --text-page-title: 120px;
+  --text-page-title--line-height: 0.95;
+  --text-page-title--letter-spacing: -0.045em;
+  --text-page-title--font-weight: 700;
+
+  --text-feature: 44px;
+  --text-feature--line-height: 1.05;
+  --text-feature--letter-spacing: -0.03em;
+  --text-feature--font-weight: 700;
+
+  --text-event-title: 36px;
+  --text-event-title--line-height: 1.1;
+  --text-event-title--letter-spacing: -0.02em;
+  --text-event-title--font-weight: 700;
+
+  --text-section-feature: 28px;
+  --text-section-feature--line-height: 1.15;
+  --text-section-feature--letter-spacing: -0.025em;
+  --text-section-feature--font-weight: 700;
+
+  --text-list-title: 28px;
+  --text-list-title--line-height: 1.2;
+  --text-list-title--letter-spacing: -0.01em;
+  --text-list-title--font-weight: 400;
+
+  --text-list-title-home: 20px;
+  --text-list-title-home--line-height: 1.4;
+  --text-list-title-home--letter-spacing: -0.005em;
+  --text-list-title-home--font-weight: 400;
+
+  --text-body-lead: 22px;
+  --text-body-lead--line-height: 1.55;
+  --text-body-lead--letter-spacing: -0.005em;
+  --text-body-lead--font-weight: 400;
+
+  --text-caption: 13px;
+  --text-caption--line-height: 1.5;
+  --text-caption--font-weight: 400;
+
+  --text-nav: 13px;
+  --text-nav--line-height: 1.4;
+  --text-nav--letter-spacing: 0.02em;
+  --text-nav--font-weight: 400;
+
+  --text-label: 11px;
+  --text-label--line-height: 1;
+  --text-label--letter-spacing: 0.2em;
+  --text-label--font-weight: 700;
+
+  --text-meta: 11px;
+  --text-meta--line-height: 1;
+  --text-meta--letter-spacing: 0.16em;
+  --text-meta--font-weight: 400;
+
+  /* Fonts */
   --font-sans: var(--font-inter);
   --font-mono: var(--font-geist-mono);
 }
 
 :root {
-  --bg: #fffbfc;
-  --fg: #2d1724;
-  --bg-secondary: #fffbfc;
-  --fg-muted: #2d1724;
-  --border: #2d1724;
-  --accent: #2d1724;
-  --accent-warm: #2d1724;
-  --gold: #2d1724;
-}
-
-.dark {
-  --bg: #0a0a0a;
-  --fg: #fffbfc;
-  --bg-secondary: #111111;
-  --fg-muted: #fffbfc;
-  --border: #fffbfc;
-  --accent: #fffbfc;
-  --accent-warm: #fffbfc;
-  --gold: #fffbfc;
+  --bg: #F4F2EC;
+  --fg: #0E0E0C;
+  --bg-secondary: #F4F2EC;
+  --fg-muted: #9A9690;
+  --border: #1A1A18;
+  --accent: #0E0E0C;
+  --accent-warm: #0E0E0C;
+  --gold: #0E0E0C;
 }
 
 html {
@@ -87,27 +151,14 @@ a {
 
 /* Inverted color band for content sections below hero */
 .section-inverted {
-  --bg: #2d1724;
-  --fg: #fffbfc;
-  --bg-secondary: #2d1724;
-  --fg-muted: #fffbfc;
-  --border: #fffbfc;
-  --accent: #fffbfc;
-  --accent-warm: #fffbfc;
-  --muted: #3d2030;
-  background-color: var(--bg);
-  color: var(--fg);
-}
-
-.dark .section-inverted {
-  --bg: #fffbfc;
-  --fg: #2d1724;
-  --bg-secondary: #fffbfc;
-  --fg-muted: #2d1724;
-  --border: #2d1724;
-  --accent: #2d1724;
-  --accent-warm: #2d1724;
-  --muted: #e8e0e4;
+  --bg: #0E0E0C;
+  --fg: #F4F2EC;
+  --bg-secondary: #0E0E0C;
+  --fg-muted: #F4F2EC;
+  --border: #F4F2EC;
+  --accent: #F4F2EC;
+  --accent-warm: #F4F2EC;
+  --muted: #1A1A18;
   background-color: var(--bg);
   color: var(--fg);
 }

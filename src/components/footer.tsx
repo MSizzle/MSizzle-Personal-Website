@@ -1,9 +1,12 @@
+'use client'
+
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
 const LINKS = [
   { href: '/about', label: 'About' },
   { href: 'https://prometheus.today', label: 'Prometheus' },
-  { href: '/blog', label: 'Writings' },
+  { href: '/writing', label: 'Writings' },
   { href: '/projects', label: 'Works' },
   { href: '/newsletter', label: 'Monty Monthly' },
   { href: '/events', label: 'Events' },
@@ -16,6 +19,13 @@ const SOCIALS = [
 ]
 
 export function Footer() {
+  const pathname = usePathname()
+
+  // D-42 + D-26: v2.0 routes (/, /writing, /events, /photos) render their own
+  // editorial chrome — suppress v1.0 footer. Phase 11 extends Phase 10 D-42 from
+  // `pathname === '/'` to an inclusion check covering all 4 v2.0 routes.
+  if (['/', '/writing', '/events', '/photos'].includes(pathname)) return null
+
   return (
     <footer className="px-6 md:px-24">
       <div className="mx-auto max-w-[66ch] py-16">

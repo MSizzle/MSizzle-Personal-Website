@@ -2,32 +2,32 @@
 gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: Editorial Redesign
-current_phase: 8
-status: ready_to_plan
-last_updated: "2026-05-21T04:10:00.000Z"
-last_activity: 2026-05-21
+current_phase: 11
+status: completed
+last_updated: "2026-05-21T15:01:11.637Z"
+last_activity: 2026-05-21 -- Phase 11 marked complete
 progress:
   total_phases: 6
-  completed_phases: 1
-  total_plans: 7
-  completed_plans: 7
-  percent: 17
+  completed_phases: 4
+  total_plans: 28
+  completed_plans: 28
+  percent: 67
 ---
 
 # Project State
 
 **Current Milestone:** v2.0 Editorial Redesign (Phases 8-13)
-**Current Phase:** 9
-**Last Updated:** 2026-05-20
+**Current Phase:** 11
+**Last Updated:** 2026-05-21
 
 ## Phase Status
 
 | Phase | Status | Started | Completed |
 |-------|--------|---------|-----------|
 | 8 — Motion Subtractions | code_complete (HUMAN-UAT pending) | 2026-05-21 | 2026-05-21 |
-| 9 — Design Tokens & Editorial Primitives | not_started | — | — |
-| 10 — Editorial Homepage | not_started | — | — |
-| 11 — Archive Pages | not_started | — | — |
+| 9 — Design Tokens & Editorial Primitives | code_complete (ready for verification) | 2026-05-21 | 2026-05-21 |
+| 10 — Editorial Homepage | code_complete (ready for verification) | 2026-05-21 | 2026-05-21 |
+| 11 — Archive Pages | code_complete (HUMAN-UAT pending) | 2026-05-21 | 2026-05-21 |
 | 12 — Sub-page Restyle Sweep | not_started | — | — |
 | 13 — v2.0 QA & GO/NO-GO | not_started | — | — |
 
@@ -47,7 +47,7 @@ v1.0 Phase Status (archived, see `milestones/v1.0-ROADMAP.md`):
 
 v2.0 ROADMAP.md drafted 2026-05-20. 46 requirements mapped across 6 phases (Phase 8 Motion Subtractions → Phase 13 v2.0 QA & GO/NO-GO). Phase 8 selected as the first v2.0 phase per the "delete noise first to unblock visual work" strategy carried forward from the design-handoff motion budget.
 
-Next action: `/gsd:plan-phase 8` to decompose Motion Subtractions into plans.
+Next action: Phase 11 code-complete with 11-VERIFICATION.md PASS verdict. Operator must run HUMAN-UAT (Vercel preview deploy → perceptual smoke on /writing, /events, /photos at 1440px + 390px). After UAT passes, `/gsd:plan-phase 12` to decompose Sub-page Restyle Sweep into plans.
 
 ## Accumulated Context
 
@@ -108,16 +108,41 @@ Bookkeeping drift from v1.0, acknowledged at milestone close 2026-05-20. All are
 
 ## Current Position
 
-Phase: 8 (Motion Subtractions) — CODE COMPLETE; HUMAN-UAT PENDING
-Plan: 7 of 7 shipped (Plans 01-07 all have SUMMARY.md; 08-VERIFICATION.md `status: human_needed`; 08-HUMAN-UAT.md holds 2 pending items)
-Status: Code work complete. Waiting on Monty's local Mac UAT before formal milestone advance:
-  1. `npx vercel build --prod` exits 0 (D-11 phase gate)
-  2. Manual Lenis + 200-300ms page-load-fade smoke test in Chrome (Plan-07 Task 2 — autonomous: false by plan design)
-Last activity: 2026-05-21 -- Phase 8 verifier returned `status: human_needed` (3/5 must-haves fully verified, 0 failed truths, 2 items legitimately pending in 08-HUMAN-UAT.md for Monty's local environment). Phase 8 ships in 16 commits on `main` (ced6df2 → ae954a4 + ROADMAP/STATE close-out). Wave 1 (Plans 01-06): motion-deletion work shipped. Wave 2 (Plan-07): preservation contract verified via empty `git diff origin/main` on the 3 preserved files + all 5 Vitest preservation tests green. Sandbox node_modules blocked `vercel build --prod` and the rendered-browser smoke test; both deferred via 08-HUMAN-UAT.md per user's pre-approval at session resume.
+Phase: 11 — COMPLETE
+Plan: 1 of 5
+Status: Phase 11 complete
+
+All Phase 9 plans (09-01 through 09-09) shipped:
+
+- Tokens: paper/ink/muted/faint/rule/rule-strong/footer-* palette + 12 type-scale utilities (09-01)
+- Primitives: Rule, RuleStrong, SectionLabel, ListRow, AllLink, IntroLink, FooterCol (09-02..09-08)
+- Integration: /specimen route + triple-defense discoverability + local build gate (09-09)
+
+Phase 10 progress (7 of 7 plans shipped — Phase 10 feature-complete):
+
+- 10-01 shipped (commits ccd2ae6 + a43c67f): v1.0 chrome gated to non-home routes via pathname check in Navigation, Footer, and new MainOffset client component. New v2.0 page.tsx scaffold ships HOME-V2-01..04 + section slot placeholders.
+- 10-02 shipped (commits 7f2ca22 + d3138cc): Letter-style intro paragraph (HOME-V2-05) with 3 IntroLink components + BUILDING section (HOME-V2-06) with Prometheus + Selected Works rows using canonical D-13 section pattern. First Phase 9 primitives consumed in production: IntroLink, RuleStrong, Rule, SectionLabel, AllLink.
+- 10-03 shipped (6d095e9 + 8af72d2 + d202f45): WRITING section (HOME-V2-07) renders 3 latest essays as ListRow big. EVENTS section (HOME-V2-08) renders featured event in 3-col grid (date/content/RSVP) + 2 secondary ListRows. New src/lib/dates.ts helper (formatMonthYear, formatMonthDay).
+- 10-04 shipped (45f6ceb + 27706db): PHOTOGRAPHS section (HOME-V2-09) — 12-col asymmetric grid + 6 plates + mix-blend-difference captions + AllLink to /photos. HOME_PHOTOS module constant. Phase 9 D-09 exception documented for `text-[10px]` + `tracking-[0.2em]` caption overlay.
+- 10-05 shipped (ab005f6 + 4a22cc5): PERSONAL section (HOME-V2-10) — 3-card grid (Photo Archive / Links & Elsewhere / About) with top ink rule + AllLink Enter → CTAs. Inverted ink footer (HOME-V2-11) — 4-col grid (colophon + Studio/Library/About FooterCols) + bottom row with copyright and 4 social links. FooterCol primitive now consumed in production. Desktop homepage feature-complete (11 of 13 requirements).
+- 10-06 shipped (2f5fe73 + 0d9f100): Mobile parity sweep (HOME-V2-12) — 3-line mobile manifesto at 56px / 2-col photographs grid / footer column dividers / 44px tap targets on header nav + footer socials. Dual static h1 staged for Plan 10-07 collapse. 12 of 13 requirements complete.
+- **10-07 shipped (35ffd51 + 6cc69b3): Manifesto letter-stagger interaction (MOTION-07).** New `src/components/home-v2/manifesto-reveal.tsx` (155 lines, `'use client'`). Imports `m` from motion/react (LazyMotion strict trap avoided). Three-phase state machine (pending → animate or skip) for SSR-safe sessionStorage gating. sessionStorage key `gsd:manifesto-shown` tab-scoped. useReducedMotion fallback = 300ms opacity fade. matchMedia switches between DESKTOP_LINES (2 lines) and MOBILE_LINES (3 lines) internally — no props. `src/app/page.tsx` collapses Plan 10-06's dual static h1 into a single `<ManifestoReveal />` invocation. **All 13 Phase 10 requirements shipped (HOME-V2-01..12 + MOTION-07).**
+
+D-40 (`vercel build --prod`) deferred to Vercel preview deploy on next branch push (Phase 8 precedent).
+
+Last activity: 2026-05-21 -- Phase 11 marked complete
 
 ## Operator Next Steps
 
-- **First, on Mac:** clear the two HUMAN-UAT items per `.planning/phases/08-motion-subtractions/08-HUMAN-UAT.md` (vercel build + Lenis/fade smoke). Update the "## Resolution" section with PASS/FAIL.
-- **If both PASS:** Run `gsd-sdk query phase.complete 08` again (or just `/gsd:phase-complete 08`) — phase.complete should clear the warning and finalize REQUIREMENTS.md status table.
-- **Then:** `/gsd:discuss-phase 9` to start Design Tokens & Editorial Primitives (CONTEXT.md already exists per pre-phase docs check — discuss-phase will re-validate decisions before plan-phase auto-advances).
-- **If HUMAN-UAT FAILs:** gap closure — `/gsd:plan-phase 8 --gaps` will read 08-VERIFICATION.md and create fix plans for the regression.
+- **Phase 10 verification:** Run `/gsd:verify-phase 10` to validate all 7 plan SUMMARYs, the 13 requirements (HOME-V2-01..12 + MOTION-07), and acceptance criteria against shipped code. MOTION-07's perceptual stagger gate is HUMAN-UAT per D-41.
+- **Phase 9 verification (still open):** Run `/gsd:verify-phase 9` if not already complete.
+- **D-40 closure (Phase 10):** Push the current branch to remote. Confirm Vercel preview deploy:
+  - Vercel build exits 0
+  - Homepage `/` renders editorial layout (header + manifesto + meta + epigraph + 5 sections + footer)
+  - Manifesto stagger fires on first incognito visit
+  - sessionStorage flag `gsd:manifesto-shown=1` is set after first visit (DevTools → Application → Session Storage)
+  - Reload does NOT replay the animation
+  - macOS Reduce Motion ON renders the 300ms fade instead
+- **HUMAN-UAT smoke test (Phase 10):** 6 surfaces to verify in browser per 10-07-SUMMARY.md (desktop fresh tab @ 1440 / mobile fresh tab @ 390 / internal nav back / new incognito tab / macOS Reduce Motion / viewport resize across breakpoint).
+- **Phase 8 backlog (still open):** Clear the two HUMAN-UAT items per `.planning/phases/08-motion-subtractions/08-HUMAN-UAT.md` (vercel build + Lenis/fade smoke) before closing v2.0.
+- **After Phase 10 verifies:** `/gsd:discuss-phase 11` (Archive Pages — `/writing`, `/events`, `/photos`). The homepage's `/photos` AllLink currently 404s; Phase 11 makes it live.
