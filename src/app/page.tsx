@@ -13,6 +13,15 @@ import { AllLink } from "@/components/editorial/all-link";
 import { ListRow } from "@/components/editorial/list-row";
 import { formatMonthYear, formatMonthDay } from "@/lib/dates";
 
+const HOME_PHOTOS = [
+  { src: "/MSizzle-website-photos/000092530012.jpeg",      no: "01", span: "col-span-7 row-span-3" },
+  { src: "/MSizzle-website-photos/20230928%20MSB_0114.jpg", no: "02", span: "col-span-5 row-span-2" },
+  { src: "/MSizzle-website-photos/IMG_0028.jpeg",          no: "03", span: "col-span-3 row-span-1" },
+  { src: "/MSizzle-website-photos/IMG_1075.JPG",           no: "04", span: "col-span-2 row-span-1" },
+  { src: "/MSizzle-website-photos/IMG_2129.jpeg",          no: "05", span: "col-span-5 row-span-2" },
+  { src: "/MSizzle-website-photos/Patricof09.jpg",         no: "06", span: "col-span-7 row-span-2" },
+] as const;
+
 export const revalidate = 1800;
 
 export default async function Home() {
@@ -253,7 +262,36 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* PLAN-10-04 PHOTOGRAPHS */}
+      {/* PHOTOGRAPHS — HOME-V2-09 / D-13–D-14 + D-23–D-26 */}
+      <RuleStrong />
+      <section className="px-6 pt-[120px] pb-[120px] md:px-40">
+        <SectionLabel numeral="04 — Archive">Photographs</SectionLabel>
+
+        <div className="mt-[72px]">
+          <div className="grid grid-cols-12 grid-rows-[180px] gap-3">
+            {HOME_PHOTOS.map((p) => (
+              <div key={p.no} className={`relative ${p.span}`}>
+                <Image
+                  src={p.src}
+                  alt=""
+                  fill
+                  className="object-cover saturate-[0.92]"
+                  sizes="(max-width: 768px) 50vw, 50vw"
+                />
+                <span className="absolute left-3.5 bottom-3 text-[10px] uppercase tracking-[0.2em] font-bold text-paper mix-blend-difference">
+                  No. {p.no}
+                </span>
+              </div>
+            ))}
+          </div>
+
+          {/* TODO: /photos route lands in Phase 11 (ARCH-03) — current target is 404 until then. */}
+          <div className="mt-12">
+            <AllLink href="/photos">Photo Archive →</AllLink>
+          </div>
+        </div>
+      </section>
+
       {/* PLAN-10-05 PERSONAL + FOOTER */}
     </>
   );
