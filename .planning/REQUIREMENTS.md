@@ -56,7 +56,7 @@ The redesign is a *subtraction* from v1.0, not an addition. Vanschneider-inspire
 
 ### Motion Budget
 
-- [ ] **MOTION-01**: Delete photo auto-scroll carousel (`components/home/photo-carousel.tsx`) and all references
+- [x] **MOTION-01**: Delete photo auto-scroll carousel (`components/home/photo-carousel.tsx`) and all references
 - [ ] **MOTION-02**: Delete rotating tagline (`components/home/rotating-tagline.tsx`) and all references
 - [ ] **MOTION-03**: Delete hover-triggered works carousel (`components/home/works-carousel.tsx`) and all references
 - [ ] **MOTION-04**: Delete hover-triggered writings carousel (`components/home/writings-carousel.tsx`) and all references

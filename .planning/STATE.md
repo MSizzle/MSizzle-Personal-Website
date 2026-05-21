@@ -2,29 +2,29 @@
 gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: Editorial Redesign
-current_phase: "None — roadmap drafted, awaiting `/gsd:plan-phase 8`"
+current_phase: 8
 status: executing
-last_updated: "2026-05-21T03:12:15.362Z"
-last_activity: 2026-05-21 -- Phase 8 planning complete
+last_updated: "2026-05-21T03:17:42.241Z"
+last_activity: 2026-05-21
 progress:
   total_phases: 6
   completed_phases: 0
   total_plans: 7
-  completed_plans: 0
-  percent: 0
+  completed_plans: 1
+  percent: 14
 ---
 
 # Project State
 
 **Current Milestone:** v2.0 Editorial Redesign (Phases 8-13)
-**Current Phase:** None — roadmap drafted, awaiting `/gsd:plan-phase 8`
+**Current Phase:** 8
 **Last Updated:** 2026-05-20
 
 ## Phase Status
 
 | Phase | Status | Started | Completed |
 |-------|--------|---------|-----------|
-| 8 — Motion Subtractions | not_started | — | — |
+| 8 — Motion Subtractions | in_progress | 2026-05-21 | — |
 | 9 — Design Tokens & Editorial Primitives | not_started | — | — |
 | 10 — Editorial Homepage | not_started | — | — |
 | 11 — Archive Pages | not_started | — | — |
@@ -108,10 +108,10 @@ Bookkeeping drift from v1.0, acknowledged at milestone close 2026-05-20. All are
 
 ## Current Position
 
-Phase: Not started — v2.0 roadmap drafted, Phase 8 next
-Plan: —
-Status: Ready to execute
-Last activity: 2026-05-21 -- Phase 8 planning complete
+Phase: 8 (Motion Subtractions) — EXECUTING
+Plan: 2 of 7 (Plan 01 complete — PhotoCarousel deleted, commit ced6df2; MOTION-01 marked complete)
+Status: Executing Phase 8
+Last activity: 2026-05-21 -- Plan 08-01 complete (MOTION-01 / PhotoCarousel deletion)
 
 ## Operator Next Steps
 
