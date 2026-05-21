@@ -12,9 +12,9 @@ const DESKTOP_LINKS = [
 ]
 
 // Mobile drawer — unified link set across all routes per Phase 13 mobile-nav fix.
-// Confirmed by operator: 6 destinations including Home (no brand link in mobile bar).
+// Home is reachable via the "Monty Singer" brand link in the mobile bar (no
+// redundant Home entry in the drawer).
 const MOBILE_LINKS = [
-  { href: '/',         label: 'Home'     },
   { href: '/projects', label: 'Building' },
   { href: '/writing',  label: 'Writing'  },
   { href: '/events',   label: 'Events'   },
@@ -33,9 +33,16 @@ export function Navigation() {
 
   return (
     <>
-      {/* Mobile header — always render across all routes; hamburger-only per operator decision */}
+      {/* Mobile header — always render across all routes; "Monty Singer" brand link + hamburger */}
       <header className="fixed inset-x-0 top-0 z-50 bg-[var(--bg)] md:hidden">
-        <nav className="flex h-16 items-center justify-end px-6">
+        <nav className="flex h-16 items-center justify-between px-6">
+          <Link
+            href="/"
+            className="text-base font-normal uppercase tracking-widest"
+            onClick={() => setOpen(false)}
+          >
+            Monty Singer
+          </Link>
           <button
             className="flex min-h-[44px] min-w-[44px] items-center justify-center"
             onClick={() => setOpen(!open)}
