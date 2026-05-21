@@ -47,12 +47,12 @@ The redesign is a *subtraction* from v1.0, not an addition. Vanschneider-inspire
 
 ### Sub-page Lightweight Restyle (No Layout Changes)
 
-- [ ] **RESTYLE-01**: `/about` adopts warm-paper palette tokens + Inter at spec sizes; existing layout (Breadcrumbs + h1 + prose) preserved
-- [ ] **RESTYLE-02**: `/projects` (index + `/projects/[slug]`) adopts palette + typography tokens; existing project card layout preserved
-- [ ] **RESTYLE-03**: `/blog` and `/blog/[slug]` adopt palette + typography tokens; existing tag filter + post body preserved
-- [ ] **RESTYLE-04**: `/links` adopts palette + typography tokens; existing link list preserved
-- [ ] **RESTYLE-05**: `/prometheus` adopts palette + typography tokens; existing prose + FAQ preserved
-- [ ] **RESTYLE-06**: `/newsletter` adopts palette + typography tokens; existing carousel preserved as the one clickable-carousel exception
+- [x] **RESTYLE-01**: `/about` adopts warm-paper palette tokens + Inter at spec sizes; existing layout (Breadcrumbs + h1 + prose) preserved
+- [x] **RESTYLE-02**: `/projects` (index + `/projects/[slug]`) adopts palette + typography tokens; existing project card layout preserved
+- [x] **RESTYLE-03**: `/blog` and `/blog/[slug]` adopt palette + typography tokens; existing tag filter + post body preserved
+- [x] **RESTYLE-04**: `/links` adopts palette + typography tokens; existing link list preserved
+- [x] **RESTYLE-05**: `/prometheus` adopts palette + typography tokens; existing prose + FAQ preserved
+- [x] **RESTYLE-06**: `/newsletter` adopts palette + typography tokens; existing carousel preserved as the one clickable-carousel exception
 
 ### Motion Budget
 
