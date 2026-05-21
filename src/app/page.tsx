@@ -12,6 +12,7 @@ import { SectionLabel } from "@/components/editorial/section-label";
 import { AllLink } from "@/components/editorial/all-link";
 import { ListRow } from "@/components/editorial/list-row";
 import { FooterCol } from "@/components/editorial/footer-col";
+import { ManifestoReveal } from "@/components/home-v2/manifesto-reveal";
 import { formatMonthYear, formatMonthDay } from "@/lib/dates";
 
 // Per-plate className contains literal `md:col-span-N md:row-span-M` tokens so the
@@ -94,17 +95,8 @@ export default async function Home() {
 
       {/* Hero — HOME-V2-02 manifesto + HOME-V2-03 meta row + HOME-V2-04 epigraph */}
       <section className="px-6 pt-16 md:px-40 md:pt-24">
-        {/* Manifesto — D-32 REVISED: desktop 2 lines / mobile 3 lines */}
-        <h1 className="hidden text-display uppercase text-ink md:block">
-          <span className="block whitespace-nowrap">BRING FIRE</span>
-          <span className="block whitespace-nowrap">TO HUMANITY.</span>
-        </h1>
-        <h1 className="block text-[56px] leading-[0.96] tracking-[-0.045em] font-bold uppercase text-ink md:hidden">
-          <span className="block whitespace-nowrap">BRING</span>
-          <span className="block whitespace-nowrap">FIRE TO</span>
-          <span className="block whitespace-nowrap">HUMANITY.</span>
-        </h1>
-        {/* Plan 10-07 replaces both h1s with a single <ManifestoReveal> using matchMedia-aware lines */}
+        {/* Manifesto — MOTION-07: <ManifestoReveal> owns desktop (2 lines) + mobile (3 lines) via matchMedia, with per-letter stagger gated by sessionStorage + useReducedMotion fallback */}
+        <ManifestoReveal />
 
         {/* Meta row — D-06 */}
         <div className="mt-14 flex items-center gap-3">
