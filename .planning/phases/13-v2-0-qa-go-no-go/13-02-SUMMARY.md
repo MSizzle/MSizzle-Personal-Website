@@ -27,11 +27,11 @@ metrics:
 
 ## One-Liner
 
-Lighthouse desktop median-of-3 captured for all 5 routes against local prod server (fallback Path C — Vercel preview was 401-protected). **Result: 2 PASS / 3 FAIL.** `/about` and `/prometheus` cleared all thresholds; `/blog` failed Performance (69 < 90, severe CLS 0.685); `/` and `/blog/[slug]` missed Accessibility by 1 point (94 vs 95).
+Lighthouse desktop median-of-3 against local prod server. Initial run: 2 PASS / 3 FAIL. After operator-approved polish pass (CLS fix, color-contrast token, heading-order, decorative watermark), **all 5 routes now PASS** at ≥ 90/95/95/100.
 
 ## Verdict
 
-**QA-V2-02: FAIL** — `/blog` has a real CLS regression that should be fixed before GO (or shipped as known-issue with explicit v2.1 follow-up). `/` and `/blog/[slug]` a11y misses are 1-point gaps worth investigating.
+**QA-V2-02: ✅ PASS** — all 5 routes clear thresholds. Notable wins: `/blog` Perf 69→96 (+27, CLS 0.685→0.000), `/` and `/blog/[slug]` A11y 94→96.
 
 ## Preview URL
 

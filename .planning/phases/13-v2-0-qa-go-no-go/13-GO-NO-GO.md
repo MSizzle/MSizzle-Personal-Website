@@ -37,14 +37,14 @@ signed_date:
 | ID | Requirement | Verdict | Evidence |
 |----|-------------|---------|----------|
 | **QA-V2-01** | `vercel build --prod` exits 0, zero TS/ESLint/429 errors | ✅ **PASS** | [13-01-EVIDENCE.md](./13-01-EVIDENCE.md) — exit 0, 40 pages, zero errors |
-| **QA-V2-02** | Lighthouse desktop ≥ 90/95/95/100 on 5 routes | ⚠ **FAIL** | [13-02-EVIDENCE.md](./13-02-EVIDENCE.md) — 2 routes PASS, 3 FAIL: `/blog` CLS 0.685 (major), `/` and `/blog/[slug]` A11y 94 (1pt) |
+| **QA-V2-02** | Lighthouse desktop ≥ 90/95/95/100 on 5 routes | ✅ **PASS** | [13-02-EVIDENCE.md](./13-02-EVIDENCE.md) — all 5 routes PASS after polish (CLS fix + color-contrast token + heading-order + watermark aria-hidden) |
 | **QA-V2-03** | PSI mobile ≥ 75 on homepage | ⏳ **PENDING** | [13-03-EVIDENCE.md](./13-03-EVIDENCE.md) — PSI API rate-limited; manual run at pagespeed.web.dev required |
 | **QA-V2-04** | Visual QA at 375px on `/`, `/writing`, `/events`, `/photos` | ⏳ **PENDING** | [13-04-EVIDENCE.md](./13-04-EVIDENCE.md) — 4-route checklist + Chrome DevTools setup |
 | **QA-V2-05** | Dark-mode FOUC pass OR light-only ship recorded | ✅ **PASS** (light-only) | [13-05-EVIDENCE.md](./13-05-EVIDENCE.md) — verified 0 dark tokens, 0 theme provider; deferred to future requirement |
 | **QA-V2-06** | D-14 client-bundle secret scan returns 0 leaks | ✅ **PASS** | [13-05-EVIDENCE.md](./13-05-EVIDENCE.md) — 0 hits in both client-chunk trees; server-only refs preserved |
 | **QA-V2-07** | Signed GO doc + `/gsd:complete-milestone` invoked AT verdict | ⏳ **THIS DOC** | once signed, the milestone closes |
 
-**Score: 3 PASS / 1 FAIL (QA-V2-02) / 2 PENDING (QA-V2-03 PSI, QA-V2-04 visual) / 1 SIGN-OFF (QA-V2-07)** (as of 2026-05-21 autonomous execution)
+**Score: 4 PASS (QA-V2-01/02/05/06) / 2 PENDING (QA-V2-03 PSI, QA-V2-04 visual) / 1 SIGN-OFF (QA-V2-07)** (as of 2026-05-21 autonomous execution, after operator-approved Lighthouse polish pass)
 
 ---
 
@@ -162,19 +162,19 @@ Per CONTEXT.md D-09 / D-10, the following are explicitly NON-BLOCKING for v2.0 G
 
 3. **Dark-mode dropped to future requirement:** Per D-05, v2.0 ships light-only. Dark variant of warm-paper palette is a v2.1+ design task.
 
-## Lighthouse Findings — Decide Block or Ship-with-Known
+## Lighthouse Findings — RESOLVED (polish pass landed)
 
-Lighthouse desktop run (15 passes against local prod server) surfaced 3 real findings. See `13-02-EVIDENCE.md` for per-audit detail. Summary:
+Operator approved the polish pass; the following fixes landed and all 5 routes now PASS thresholds:
 
-| Finding | Route(s) | Severity | Suggested action |
-|---------|----------|----------|------------------|
-| **CLS 0.685 from un-sized blog cover images** | `/blog` | **Major** (Perf 69) | Fix before GO: add `width`/`height` to `<Image>` in blog index. ~30 min effort. |
-| **Color-contrast: text-muted (#9A9690) on text-paper (#F4F2EC) ~2.5:1** | `/`, `/blog`, `/blog/[slug]` | Minor | Darken `--muted` to ~#8A8680 in `globals.css` (one-token change). Lifts a11y 94→96. |
-| **Heading-order skips levels** | `/`, `/blog/[slug]` | Minor | Audit headings on manifesto homepage + blog post body. |
+| Original Finding | Fix Applied | File | Result |
+|------------------|-------------|------|--------|
+| CLS 0.685 on `/blog` | Removed `<Suspense>` wrapper around TagFilter; added `priority` to first 2 above-the-fold images | `src/app/blog/page.tsx`, `src/components/blog/tag-filter.tsx` | CLS 0.685 → 0.000; Perf 69 → 96 |
+| color-contrast `#9A9690` muted text (2.6:1) | Darkened `--color-muted` and `--fg-muted` to `#6E6A65` (4.9:1 contrast against paper) | `src/app/globals.css` | A11y 94 → 96 on `/` and `/blog/[slug]` |
+| heading-order skip on `/` (h1 → h3) | Personal cards `<h3>` → `<h2>` | `src/app/page.tsx` | heading-order audit passes |
+| heading-order skip on `/blog/[slug]` (h1 → h3) | NewsletterCta `<h3>` → `<h2>` | `src/components/blog/newsletter-cta.tsx` | heading-order audit passes |
+| color-contrast on decorative Prometheus watermark (1.55:1) | Added `aria-hidden="true"` so it's removed from a11y tree | `src/app/layout.tsx` | watermark no longer audited |
 
-The CLS finding is the only real regression from v1.0. The color-contrast and heading-order issues likely existed in earlier phases too and were not previously gated by Lighthouse desktop.
-
-**Operator decision required:** fix `/blog` CLS before GO, OR ship-with-known with explicit v2.1 follow-up phase scoped.
+**Visual delta to be aware of:** the `--muted` color change affects all `text-muted` usage across the site (captions, meta rows, secondary text). It's noticeably darker than the original editorial palette — `#6E6A65` vs `#9A9690`. Worth eyeballing in browser before final GO.
 
 ---
 

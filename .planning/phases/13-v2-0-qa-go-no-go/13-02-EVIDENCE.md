@@ -6,7 +6,31 @@
 
 ---
 
-## Result: FAIL — 2 routes PASS, 3 routes FAIL thresholds
+## Result: ✅ PASS — All 5 Routes Clear Thresholds (after polish fixes)
+
+**Update 2026-05-21 (post-fix run):** Operator approved a polish pass; 4 fixes applied (CLS removal, color-contrast token darken, two heading-order fixes, watermark `aria-hidden`). Re-ran Lighthouse on the 3 previously-failing routes — all now PASS.
+
+### Final Median Scores (after polish)
+
+| Route | Perf | A11y | BP | SEO | Verdict | Δ vs initial |
+|-------|------|------|----|----|---------|--------------|
+| `/` | **99** | **96** | 100 | 100 | ✓ PASS | A11y +2 (94→96) |
+| `/about` | 100 | 96 | 100 | 100 | ✓ PASS | (unchanged — was already passing) |
+| `/prometheus` | 100 | 96 | 100 | 100 | ✓ PASS | (unchanged) |
+| `/blog` | **96** | 96 | 100 | 100 | ✓ PASS | Perf **+27** (69→96), CLS **0.685→0.000** |
+| `/blog/[slug]` | 99 | **96** | 100 | 100 | ✓ PASS | A11y +2 (94→96) |
+
+**Fixes applied:**
+- `src/app/blog/page.tsx` — Removed `<Suspense>` wrapper (data is server-fetched; the streaming fallback was the CLS culprit per Lighthouse's `cls-culprits-insight`).
+- `src/components/blog/tag-filter.tsx` — Added `priority={idx < 2}` to first two `<Image>` covers (above-the-fold LCP discoverability).
+- `src/app/globals.css` — Darkened `--color-muted` and `--fg-muted` from `#9A9690` (contrast 2.6:1) to `#6E6A65` (contrast 4.9:1 against `#F4F2EC`). Clears WCAG AA color-contrast.
+- `src/app/page.tsx` — Personal cards `<h3>` → `<h2>` (manifesto h1 → h2 hierarchy).
+- `src/components/blog/newsletter-cta.tsx` — Monty Monthly `<h3>` → `<h2>` (under post `<h1>`).
+- `src/app/layout.tsx` — Added `aria-hidden="true"` to the Prometheus corner watermark (decorative branding; was failing color-contrast at 1.55:1 with `opacity-20`).
+
+---
+
+## Original Result (pre-fix, kept for record): FAIL — 2 routes PASS, 3 routes FAIL thresholds
 
 | Step | Status |
 |------|--------|
