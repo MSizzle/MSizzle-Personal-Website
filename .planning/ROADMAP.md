@@ -85,7 +85,14 @@ Full milestone detail: [milestones/v1.0-ROADMAP.md](./milestones/v1.0-ROADMAP.md
   3. The WRITING (3 latest essays), EVENTS (1 featured + 2 secondary), and BUILDING (Selected Works) sections pull real data from `notion.ts` / `notion-projects.ts` / `notion-events.ts` — no hardcoded essay titles, no hardcoded project names
   4. The Photographs grid renders 6 plates in the documented 12-column asymmetric layout with `mix-blend-mode: difference` caption overlays that stay legible over each image
   5. At 390px viewport the homepage renders single-column with manifesto at 56px / 4 lines, photographs as a 2×2 grid, inverted footer with per-column hairline dividers, and every tap target ≥ 44px
-**Plans**: TBD
+**Plans**: 7 plans
+- [ ] 10-01-PLAN.md — header + hero manifesto + meta row + epigraph (+ D-42 global chrome gate Task 0)
+- [ ] 10-02-PLAN.md — letter-style intro paragraph + BUILDING section (Prometheus + Selected Works)
+- [ ] 10-03-PLAN.md — WRITING + EVENTS sections + new src/lib/dates.ts helper
+- [ ] 10-04-PLAN.md — PHOTOGRAPHS 12-col asymmetric grid + 6 plates + mix-blend captions
+- [ ] 10-05-PLAN.md — PERSONAL 3-card grid + inverted ink footer
+- [ ] 10-06-PLAN.md — mobile parity sweep (3-line manifesto, 2x2 photo grid, footer dividers, 44px tap targets)
+- [ ] 10-07-PLAN.md — ManifestoReveal client component (per-letter stagger + sessionStorage + reduced-motion)
 **UI hint**: yes
 **Risks**: BUILDING / Selected Works depends on `notion-projects.ts` returning at least 8 entries — verify Notion DB content before plan kickoff. The manifesto stagger is the *only* surviving signature interaction; any regression here violates the motion budget and must block ship. SessionStorage flag must be keyed per-tab (not localStorage) so the user can replay by re-opening; verify keying explicitly. Footer column copy (Studio / Library / Person) is static and must match the handoff exactly.
 
@@ -145,7 +152,7 @@ Full milestone detail: [milestones/v1.0-ROADMAP.md](./milestones/v1.0-ROADMAP.md
 | 7. SEO Overhaul | v1.0 | 11/11 | Complete | 2026-04-16 |
 | 8. Motion Subtractions | v2.0 | 5/7 | In Progress|  |
 | 9. Design Tokens & Editorial Primitives | v2.0 | 9/9 | Complete    | 2026-05-21 |
-| 10. Editorial Homepage | v2.0 | 0/? | Not started | — |
+| 10. Editorial Homepage | v2.0 | 0/7 | Not started | — |
 | 11. Archive Pages | v2.0 | 0/? | Not started | — |
 | 12. Sub-page Restyle Sweep | v2.0 | 0/? | Not started | — |
 | 13. v2.0 QA & GO/NO-GO | v2.0 | 0/? | Not started | — |
