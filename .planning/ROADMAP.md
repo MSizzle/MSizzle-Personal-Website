@@ -167,4 +167,4 @@ Plans:
 | 10. Editorial Homepage | v2.0 | 7/7 | Complete    | 2026-05-21 |
 | 11. Archive Pages | v2.0 | 5/5 | Complete   | 2026-05-21 |
 | 12. Sub-page Restyle Sweep | v2.0 | 7/7 | Complete    | 2026-05-21 |
-| 13. v2.0 QA & GO/NO-GO | v2.0 | 6/6 | Complete   | 2026-05-21 |
+| 13. v2.0 QA & GO/NO-GO | v2.0 | 6/6 | Complete    | 2026-05-21 |

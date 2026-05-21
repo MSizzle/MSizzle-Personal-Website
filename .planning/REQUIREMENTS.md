@@ -67,13 +67,13 @@ The redesign is a *subtraction* from v1.0, not an addition. Vanschneider-inspire
 
 ### QA & Launch
 
-- [ ] **QA-V2-01**: `vercel build --prod` exits 0 with zero TS / ESLint / 429 errors on the redesigned codebase
-- [ ] **QA-V2-02**: Lighthouse desktop scores ≥ 90/95/95/100 on home / about / prometheus / blog index / blog post against the new design
-- [ ] **QA-V2-03**: Lighthouse mobile (PSI authoritative) ≥ 75 on homepage — accepted floor matching v1.0's PSI 77 baseline
-- [ ] **QA-V2-04**: Visual QA at 375px mobile viewport confirms editorial layout reads correctly on the homepage and all 3 archive pages with no horizontal overflow
-- [ ] **QA-V2-05**: Dark-mode FOUC test passes incognito Chrome — system theme controls first paint with no flash (warm-paper palette in light, ink-inverted equivalent in dark — or light-only with explicit decision recorded if dark dropped)
-- [ ] **QA-V2-06**: D-14 client-bundle secret scan re-run against new build, zero leaks (regression check post-restyle)
-- [ ] **QA-V2-07**: GO/NO-GO doc explicitly signed off before v2.0 close — `/gsd:complete-milestone` run AT the GO verdict, not weeks later (carryforward lesson from v1.0 retrospective)
+- [x] **QA-V2-01**: `vercel build --prod` exits 0 with zero TS / ESLint / 429 errors on the redesigned codebase
+- [x] **QA-V2-02**: Lighthouse desktop scores ≥ 90/95/95/100 on home / about / prometheus / blog index / blog post against the new design
+- [x] **QA-V2-03**: Lighthouse mobile (PSI authoritative) ≥ 75 on homepage — accepted floor matching v1.0's PSI 77 baseline
+- [x] **QA-V2-04**: Visual QA at 375px mobile viewport confirms editorial layout reads correctly on the homepage and all 3 archive pages with no horizontal overflow
+- [x] **QA-V2-05**: Dark-mode FOUC test passes incognito Chrome — system theme controls first paint with no flash (warm-paper palette in light, ink-inverted equivalent in dark — or light-only with explicit decision recorded if dark dropped)
+- [x] **QA-V2-06**: D-14 client-bundle secret scan re-run against new build, zero leaks (regression check post-restyle)
+- [x] **QA-V2-07**: GO/NO-GO doc explicitly signed off before v2.0 close — `/gsd:complete-milestone` run AT the GO verdict, not weeks later (carryforward lesson from v1.0 retrospective)
 
 ## Future Requirements (Deferred Beyond v2.0)
 
