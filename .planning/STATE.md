@@ -83,6 +83,12 @@ Next action: `/gsd:plan-phase 12` to decompose Sub-page Restyle Sweep into plans
 | 260409-js5 | Restyle visit-survey from modal to chat widget | 2026-04-09 | 9fd193c | [260409-js5-restyle-visit-survey-from-modal-to-chat-](./quick/260409-js5-restyle-visit-survey-from-modal-to-chat-/) |
 | 260409-lle | Add Notion-powered events feature with /events page | 2026-04-09 | 7207e6a | [260409-lle-add-notion-powered-events-feature-with-e](./quick/260409-lle-add-notion-powered-events-feature-with-e/) |
 
+### v2.0 Quick Tasks (post-launch)
+
+| # | Description | Date | Commit | Directory |
+|---|-------------|------|--------|-----------|
+| 260522-homepage-polish | Homepage polish — unify chrome (EditorialHeader + InkFooter global), 4 copy/markup edits, mobile-perf CyclingPhoto fix | 2026-05-22 | d0dae48..52a886d (6) | [260522-homepage-polish](./quick/260522-homepage-polish/) |
+
 ## Known Issues
 
 - Notion env vars (NOTION_TOKEN, NOTION_DATABASE_ID) — set in production, still useful to verify locally for dev
