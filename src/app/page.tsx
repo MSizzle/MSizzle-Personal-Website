@@ -76,9 +76,8 @@ export default async function Home() {
             className="relative aspect-[1120/540] w-full"
             alt="A year in motion, on film"
           />
-          <figcaption className="mt-4 flex justify-between text-meta uppercase text-muted">
-            <span>Plate I — A year in motion · 2025–26</span>
-            <span>Photographed on film</span>
+          <figcaption className="mt-4 text-meta uppercase text-muted">
+            A year in motion · 2025–26
           </figcaption>
         </figure>
       </section>
