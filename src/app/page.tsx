@@ -26,12 +26,6 @@ const HOME_PHOTOS = [
   { src: "/MSizzle-website-photos/Patricof09.jpg",         no: "06", className: "relative aspect-square md:aspect-auto md:col-span-7 md:row-span-2" },
 ] as const;
 
-const PERSONAL_CARDS = [
-  { title: "Photo Archive",     description: "A film-led survey of the year.", href: "/photos" },
-  { title: "Links & Elsewhere", description: "Where I show up online.",        href: "/links"  },
-  { title: "About",             description: "The longer version.",            href: "/about"  },
-] as const;
-
 export const revalidate = 1800;
 
 export default async function Home() {
@@ -255,23 +249,6 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* PERSONAL — HOME-V2-10 / D-13–D-14 + D-27–D-28 */}
-      <RuleStrong />
-      <section className="px-6 pt-[120px] pb-[120px] md:px-40">
-        <SectionLabel numeral="05 — Person">Personal</SectionLabel>
-
-        <div className="mt-[72px] grid grid-cols-1 gap-10 md:grid-cols-3 md:gap-12">
-          {PERSONAL_CARDS.map((card) => (
-            <div key={card.href} className="border-t border-ink pt-8">
-              <h2 className="text-list-title-home font-bold text-ink">{card.title}</h2>
-              <p className="mt-3 text-caption text-muted">{card.description}</p>
-              <div className="mt-6">
-                <AllLink href={card.href}>Enter →</AllLink>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
 
     </>
   );
