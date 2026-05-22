@@ -38,7 +38,7 @@ const LINKS = [
 export function EditorialHeader({ active }: Props) {
   return (
     <header className="hidden md:flex items-baseline justify-between px-6 pt-7 md:px-40 md:pt-9">
-      <Link href="/" className="text-[15px] font-bold tracking-tight text-ink">
+      <Link href="/" className="text-[22px] font-bold tracking-tight text-ink">
         Monty Singer
       </Link>
       <nav>
