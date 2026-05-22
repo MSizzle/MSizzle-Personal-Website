@@ -3,13 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { cn } from '@/utils/cn'
-
-// Desktop nav (v1.0 sub-pages only — v2.0 routes use EditorialHeader)
-const DESKTOP_LINKS = [
-  { href: '/about', label: 'About' },
-  { href: '#contact', label: 'Contact' },
-]
+import { EditorialHeader } from '@/components/home-v2/editorial-header'
 
 // Mobile drawer — unified link set across all routes per Phase 13 mobile-nav fix.
 // Home is reachable via the "Monty Singer" brand link in the mobile bar (no
@@ -26,10 +20,16 @@ export function Navigation() {
   const [open, setOpen] = useState(false)
   const pathname = usePathname()
 
-  // v2.0 routes own their desktop chrome via EditorialHeader. On mobile, this
-  // component is the only nav across all routes (EditorialHeader is desktop-only
-  // after Phase 13 mobile-nav fix).
-  const isV2Route = ['/', '/writing', '/events', '/photos'].includes(pathname)
+  // Derive the active EditorialHeader label from pathname (Path 2 — chrome
+  // unification). EditorialHeader is now globally rendered here; on routes
+  // not in this mapping the prop is undefined so no nav link gets bolded.
+  const activeLabel: 'Building' | 'Writing' | 'Events' | 'About' | 'Links' | undefined =
+    pathname === '/projects' ? 'Building'
+    : pathname === '/writing' || pathname.startsWith('/blog') ? 'Writing'
+    : pathname === '/events' ? 'Events'
+    : pathname === '/about' ? 'About'
+    : pathname === '/links' ? 'Links'
+    : undefined
 
   return (
     <>
@@ -64,31 +64,8 @@ export function Navigation() {
         </nav>
       </header>
 
-      {/* Desktop header — only on v1.0 sub-pages; v2.0 routes render EditorialHeader instead */}
-      {!isV2Route && (
-        <header className="fixed inset-x-0 top-0 z-50 hidden bg-[var(--bg)] md:block">
-          <nav className="mx-auto flex h-16 max-w-[66ch] items-center justify-between px-6 md:px-0">
-            <Link href="/" className="text-base font-normal uppercase tracking-widest">
-              Monty Singer
-            </Link>
-            <ul className="flex items-center gap-8">
-              {DESKTOP_LINKS.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className={cn(
-                      'text-sm uppercase tracking-wide transition-opacity hover:opacity-80',
-                      pathname === link.href ? 'opacity-100' : 'opacity-75'
-                    )}
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
-        </header>
-      )}
+      {/* Desktop header — globalized EditorialHeader (self-gates via `hidden md:flex`). */}
+      <EditorialHeader active={activeLabel} />
 
       {/* Mobile drawer — opens on hamburger tap; content-height with tap-outside-to-close backdrop */}
       {open && (

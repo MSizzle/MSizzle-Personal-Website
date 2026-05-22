@@ -7,7 +7,6 @@ import {
   type EventItem,
 } from "@/lib/notion-events";
 import { formatMonthYear, formatDayNumeral } from "@/lib/dates";
-import { EditorialHeader } from "@/components/home-v2/editorial-header";
 import { RuleStrong } from "@/components/editorial/rule-strong";
 import { SectionLabel } from "@/components/editorial/section-label";
 import { AllLink } from "@/components/editorial/all-link";
@@ -111,7 +110,9 @@ function UpcomingRow({
  * /events — editorial events archive page (ARCH-02).
  *
  * Layout per handoff §4 + D-16..D-21:
- *   1. <EditorialHeader active="Events" /> — shared 5-link nav, "Events" bolded.
+ *   1. The shared editorial nav is rendered globally via `Navigation` (Path 2) —
+ *      "Events" is bolded automatically via the pathname → active-label mapping
+ *      there. No inline header is rendered from this page.
  *   2. Title block — 2-col grid: tracked label · "Events." 120px page title ·
  *      muted blurb · 360×480 atmosphere photo IMG_1075.JPG (PHOTOS[3] per D-16).
  *      Photo hidden on mobile per RESEARCH § Pitfall 6.
@@ -136,8 +137,6 @@ export default async function EventsPage() {
 
   return (
     <>
-      <EditorialHeader active="Events" />
-
       {/* Title block — matches /writing skeleton with /events-specific content */}
       <section className="px-6 pt-40 pb-24 md:px-40 md:pt-[160px] md:pb-[100px]">
         <div className="grid grid-cols-1 items-end gap-10 md:grid-cols-[1fr_360px] md:gap-20">

@@ -10,9 +10,7 @@ import { Rule } from "@/components/editorial/rule";
 import { SectionLabel } from "@/components/editorial/section-label";
 import { AllLink } from "@/components/editorial/all-link";
 import { ListRow } from "@/components/editorial/list-row";
-import { FooterCol } from "@/components/editorial/footer-col";
 import { ManifestoReveal } from "@/components/home-v2/manifesto-reveal";
-import { EditorialHeader } from "@/components/home-v2/editorial-header";
 import { CyclingPhoto } from "@/components/home-v2/cycling-photo";
 import { formatMonthYear, formatMonthDay } from "@/lib/dates";
 
@@ -57,12 +55,6 @@ export default async function Home() {
   return (
     <>
       <JsonLd data={buildPersonSchema()} />
-
-      {/* Editorial header — HOME-V2-01 (D-07 + D-08); extracted to shared
-          component per D-25. Homepage renders no `active` prop (handoff §1
-          does not bold any nav link on /; Writing/Events are bolded only on
-          their respective archive routes). */}
-      <EditorialHeader />
 
       {/* Hero — HOME-V2-02 manifesto + HOME-V2-03 meta row + HOME-V2-04 epigraph */}
       <section className="px-6 pt-16 md:px-40 md:pt-24">
@@ -285,90 +277,6 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* Inverted ink footer — HOME-V2-11 / D-29–D-31 */}
-      <footer className="bg-footer-bg text-footer-fg px-7 py-14 md:px-40 md:py-20">
-        <div className="grid grid-cols-1 gap-10 md:grid-cols-4 md:gap-12">
-          {/* Col 1 — Colophon */}
-          <div className="border-b border-footer-rule pb-6 md:border-b-0 md:pb-0">
-            <div className="text-label uppercase text-footer-mute">MONTY SINGER</div>
-          </div>
-
-          {/* Col 2 — Studio */}
-          <div className="border-b border-footer-rule pb-6 md:border-b-0 md:pb-0">
-            <FooterCol
-              title="Studio"
-              links={[
-                { label: "Prometheus",     href: "https://prometheus.today" },
-                { label: "Selected Works", href: "/projects" },
-                { label: "Process Notes",  href: "/blog" },
-              ]}
-            />
-          </div>
-
-          {/* Col 3 — Library */}
-          <div className="border-b border-footer-rule pb-6 md:border-b-0 md:pb-0">
-            <FooterCol
-              title="Library"
-              links={[
-                { label: "Monty Monthly", href: "/newsletter" },
-                { label: "Essays",        href: "/writing" },
-                { label: "Reading List",  href: "/links" },
-              ]}
-            />
-          </div>
-
-          {/* Col 4 — About */}
-          <div className="border-b border-footer-rule pb-6 md:border-b-0 md:pb-0">
-            <FooterCol
-              title="About"
-              links={[
-                { label: "About",         href: "/about" },
-                { label: "Photo Archive", href: "/photos" },
-                { label: "Contact",       href: "mailto:montydsinger@gmail.com" },
-              ]}
-            />
-          </div>
-        </div>
-
-        {/* Bottom row — copyright + socials (D-31) */}
-        <div className="mt-24 pt-7 border-t border-footer-rule flex flex-col gap-6 md:flex-row md:items-baseline md:justify-between">
-          <span className="text-meta uppercase text-footer-fg">
-            © 2026 Monty Singer · Washington, D.C.
-          </span>
-          <div className="flex flex-wrap gap-6">
-            <a
-              href="https://x.com/thefullmonty0"
-              className="flex min-h-11 items-center text-meta uppercase text-footer-fg hover:text-footer-fg/70"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Twitter
-            </a>
-            <a
-              href="https://github.com/MSizzle"
-              className="flex min-h-11 items-center text-meta uppercase text-footer-fg hover:text-footer-fg/70"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              GitHub
-            </a>
-            <a
-              href="https://linkedin.com/in/monty-singer"
-              className="flex min-h-11 items-center text-meta uppercase text-footer-fg hover:text-footer-fg/70"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              LinkedIn
-            </a>
-            <a
-              href="mailto:montydsinger@gmail.com"
-              className="flex min-h-11 items-center text-meta uppercase text-footer-fg hover:text-footer-fg/70"
-            >
-              Email
-            </a>
-          </div>
-        </div>
-      </footer>
     </>
   );
 }

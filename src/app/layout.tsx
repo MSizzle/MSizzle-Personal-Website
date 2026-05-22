@@ -3,7 +3,7 @@ import { Inter, Geist_Mono } from "next/font/google";
 import { LenisProvider } from "@/components/providers/lenis-provider";
 import { MotionProvider } from "@/components/providers/motion-provider";
 import { Navigation } from "@/components/nav/navigation";
-import { Footer } from "@/components/footer";
+import { InkFooter } from "@/components/home-v2/ink-footer";
 import { MainOffset } from "@/components/main-offset";
 import { UmamiAnalytics } from "@/components/analytics/umami-analytics";
 import { VisitSurvey } from "@/components/visit-survey";
@@ -69,7 +69,7 @@ export default function RootLayout({
           <MotionProvider>
             <Navigation />
             <MainOffset>{children}</MainOffset>
-            <Footer />
+            <InkFooter />
           </MotionProvider>
         </LenisProvider>
         <UmamiAnalytics />

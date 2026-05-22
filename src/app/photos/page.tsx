@@ -2,7 +2,6 @@ import { Fragment } from "react";
 import Image from "next/image";
 import type { Metadata } from "next";
 import { groupPhotosByYear } from "@/lib/photos";
-import { EditorialHeader } from "@/components/home-v2/editorial-header";
 import { RuleStrong } from "@/components/editorial/rule-strong";
 import { YearBlock } from "@/components/editorial/year-block";
 
@@ -44,9 +43,6 @@ export default function PhotosPage() {
 
   return (
     <Fragment>
-      {/* Shared editorial header — no active prop: no nav link bolded on /photos per Assumption A4 */}
-      <EditorialHeader />
-
       {/* Title block — matching /writing skeleton per RESEARCH Pattern 1 */}
       <section className="px-6 pt-40 pb-24 md:px-40 md:pt-[160px] md:pb-[100px]">
         <div className="grid grid-cols-1 items-end gap-10 md:grid-cols-[1fr_360px] md:gap-20">
