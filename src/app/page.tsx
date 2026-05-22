@@ -83,7 +83,7 @@ export default async function Home() {
       </section>
 
       {/* Letter-style intro — HOME-V2-05 / D-11 + D-12 */}
-      <section className="px-6 pt-20 md:px-40 md:pt-24">
+      <section className="px-6 pt-20 pb-[120px] md:px-40 md:pt-24">
         <p className="max-w-[45rem] text-body-lead text-ink">
           I&rsquo;m Monty. I build, write, learn, and lift. I run{" "}
           <IntroLink href="https://prometheus.today" external>Prometheus</IntroLink>, a startup that AI-enables enterprise businesses. We automate processes, build agentic systems, and increase operating leverage. (Check out our{" "}
