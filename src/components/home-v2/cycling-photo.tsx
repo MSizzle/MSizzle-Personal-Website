@@ -12,8 +12,12 @@ interface Props {
   photos: Photo[]
   /** Auto-advance interval in ms. Default 10s. Set 0 to disable timer. */
   intervalMs?: number
-  /** Outer wrapper className — passes through the grid col-span/row-span tokens from HOME_PHOTOS. */
+  /** Outer wrapper className — passes through layout classes (aspect ratio, col/row spans, etc.). */
   className?: string
+  /** When true, renders the "No. XX" corner badge. Default false (clean for hero usage). */
+  showBadge?: boolean
+  /** Alt text for the current image. Default empty (decorative). */
+  alt?: string
 }
 
 /**
@@ -32,7 +36,7 @@ interface Props {
  * the cycling photo will visually match one of the static slots. Accepted tradeoff
  * pending more assets in `/public/MSizzle-website-photos/`.
  */
-export function CyclingPhoto({ photos, intervalMs = 10000, className }: Props) {
+export function CyclingPhoto({ photos, intervalMs = 10000, className, showBadge = false, alt = '' }: Props) {
   const [idx, setIdx] = useState(0)
   const [isDesktop, setIsDesktop] = useState(false)
 
@@ -78,18 +82,20 @@ export function CyclingPhoto({ photos, intervalMs = 10000, className }: Props) {
           <Image
             key={p.src}
             src={p.src}
-            alt=""
+            alt={i === idx ? alt : ''}
             fill
-            sizes="(max-width: 768px) 50vw, 50vw"
+            sizes="(max-width: 768px) 100vw, 1120px"
             priority={i === 0}
             className={`object-cover saturate-[0.92] transition-opacity duration-[400ms] ease-in-out ${
               i === idx ? 'opacity-100' : 'opacity-0'
             }`}
           />
         ))}
-        <span className="pointer-events-none absolute left-3.5 bottom-3 text-[10px] font-bold uppercase tracking-[0.2em] text-paper mix-blend-difference">
-          No. {photos[idx].no}
-        </span>
+        {showBadge && (
+          <span className="pointer-events-none absolute left-3.5 bottom-3 text-[10px] font-bold uppercase tracking-[0.2em] text-paper mix-blend-difference">
+            No. {photos[idx].no}
+          </span>
+        )}
       </button>
     </div>
   )

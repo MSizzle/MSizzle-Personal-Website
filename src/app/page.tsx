@@ -77,16 +77,12 @@ export default async function Home() {
           </span>
         </div>
 
-        {/* Epigraph — D-09 + D-10 */}
+        {/* Epigraph — D-09 + D-10. Cycling hero (desktop: click + 10s timer; mobile: static). */}
         <figure className="mt-20">
-          <Image
-            src="/MSizzle-website-photos/000092530012.jpeg"
+          <CyclingPhoto
+            photos={[...HOME_PHOTOS]}
+            className="relative aspect-[1120/540] w-full"
             alt="A year in motion, on film"
-            width={1120}
-            height={540}
-            priority
-            sizes="(max-width: 768px) 100vw, 1120px"
-            className="aspect-[1120/540] w-full object-cover"
           />
           <figcaption className="mt-4 flex justify-between text-meta uppercase text-muted">
             <span>Plate I — A year in motion · 2025–26</span>
@@ -248,28 +244,20 @@ export default async function Home() {
 
         <div className="mt-[72px]">
           <div className="grid grid-cols-2 gap-2 md:grid-cols-12 md:grid-rows-[180px] md:auto-rows-[180px] md:gap-3">
-            {HOME_PHOTOS.map((p, idx) =>
-              idx === 0 ? (
-                <CyclingPhoto
-                  key={p.no}
-                  photos={[...HOME_PHOTOS]}
-                  className={p.className}
+            {HOME_PHOTOS.map((p) => (
+              <div key={p.no} className={p.className}>
+                <Image
+                  src={p.src}
+                  alt=""
+                  fill
+                  className="object-cover saturate-[0.92]"
+                  sizes="(max-width: 768px) 50vw, 50vw"
                 />
-              ) : (
-                <div key={p.no} className={p.className}>
-                  <Image
-                    src={p.src}
-                    alt=""
-                    fill
-                    className="object-cover saturate-[0.92]"
-                    sizes="(max-width: 768px) 50vw, 50vw"
-                  />
-                  <span className="absolute left-3.5 bottom-3 text-[10px] uppercase tracking-[0.2em] font-bold text-paper mix-blend-difference">
-                    No. {p.no}
-                  </span>
-                </div>
-              )
-            )}
+                <span className="absolute left-3.5 bottom-3 text-[10px] uppercase tracking-[0.2em] font-bold text-paper mix-blend-difference">
+                  No. {p.no}
+                </span>
+              </div>
+            ))}
           </div>
 
           {/* TODO: /photos route lands in Phase 11 (ARCH-03) — current target is 404 until then. */}
