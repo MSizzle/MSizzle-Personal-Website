@@ -85,10 +85,10 @@ export default async function Home() {
       {/* Letter-style intro — HOME-V2-05 / D-11 + D-12 */}
       <section className="px-6 pt-20 md:px-40 md:pt-24">
         <p className="max-w-[45rem] text-body-lead text-ink">
-          I&rsquo;m Monty — a builder and a writer. I run{" "}
-          <IntroLink href="https://prometheus.today">Prometheus</IntroLink>, a studio that designs custom AI pipelines for businesses that have outgrown off-the-shelf tools. Outside the studio I publish{" "}
-          <IntroLink href="/newsletter">Monty Monthly</IntroLink>, a newsletter of long-form{" "}
-          <IntroLink href="/blog">essays</IntroLink> on philosophy, technology, and the texture of an attentive life. Most of what I make is an attempt to slow something down enough to see it clearly.
+          I&rsquo;m Monty. I build, write, learn, and lift. I run{" "}
+          <IntroLink href="https://prometheus.today" external>Prometheus</IntroLink>, a startup that AI-enables enterprise businesses. We automate processes, build agentic systems, and increase operating leverage. (Check out our{" "}
+          <IntroLink href="https://prometheus.today/case-studies.html" external>case studies</IntroLink>.) Once a month I publish{" "}
+          <IntroLink href="/newsletter">Monty Monthly</IntroLink>. If you like science, technology, agriculture, fitness, finance, culture, and beekeeping, we&rsquo;ll get along.
         </p>
       </section>
 
