@@ -100,7 +100,7 @@ export default async function Home() {
         <div className="mt-[72px]">
           {/* Row 1 — Prometheus */}
           <div className="grid grid-cols-1 gap-6 py-9 md:grid-cols-[180px_1fr_1fr] md:gap-12">
-            <div className="text-meta uppercase text-muted">Active · AI Studio</div>
+            <div className="text-meta uppercase text-muted">Active · AI Startup</div>
             <div className="text-feature text-ink">Prometheus</div>
             <div className="text-body text-ink">
               <p className="text-ink">
