@@ -22,7 +22,7 @@ export default function AboutPage() {
   return (
     <>
       <section className="px-6 pt-16 pb-15 md:px-40 md:pt-40 md:pb-25">
-        <div className="grid grid-cols-1 items-end gap-10 md:grid-cols-[1fr_360px] md:gap-20">
+        <div className="grid grid-cols-1 items-start gap-10 md:grid-cols-[1fr_360px] md:gap-20">
           <div>
             <div className="text-label uppercase text-muted">── The Person · 05</div>
             <h1 className="mt-6 text-page-title uppercase text-ink">About.</h1>
