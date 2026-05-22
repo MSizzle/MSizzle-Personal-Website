@@ -78,19 +78,31 @@ export function CyclingPhoto({ photos, intervalMs = 10000, className, showBadge 
             : `Photograph No. ${photos[idx].no}`
         }
       >
-        {photos.map((p, i) => (
+        {isDesktop ? (
+          photos.map((p, i) => (
+            <Image
+              key={p.src}
+              src={p.src}
+              alt={i === idx ? alt : ''}
+              fill
+              sizes="(max-width: 768px) 100vw, 1120px"
+              priority={i === 0}
+              className={`object-cover saturate-[0.92] transition-opacity duration-[400ms] ease-in-out ${
+                i === idx ? 'opacity-100' : 'opacity-0'
+              }`}
+            />
+          ))
+        ) : (
           <Image
-            key={p.src}
-            src={p.src}
-            alt={i === idx ? alt : ''}
+            key={photos[0].src}
+            src={photos[0].src}
+            alt={alt}
             fill
+            priority
             sizes="(max-width: 768px) 100vw, 1120px"
-            priority={i === 0}
-            className={`object-cover saturate-[0.92] transition-opacity duration-[400ms] ease-in-out ${
-              i === idx ? 'opacity-100' : 'opacity-0'
-            }`}
+            className="object-cover saturate-[0.92]"
           />
-        ))}
+        )}
         {showBadge && (
           <span className="pointer-events-none absolute left-3.5 bottom-3 text-[10px] font-bold uppercase tracking-[0.2em] text-paper mix-blend-difference">
             No. {photos[idx].no}
