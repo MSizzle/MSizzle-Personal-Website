@@ -28,9 +28,9 @@
     "tailwind-merge": "^3.5.0"
   },
   "browserslist": [
-    "Chrome >= 92",
-    "Edge >= 92",
-    "Firefox >= 92",
+    "Chrome >= 100",
+    "Edge >= 100",
+    "Firefox >= 100",
     "Safari >= 15.4",
     "iOS >= 15.4",
     "not dead",
