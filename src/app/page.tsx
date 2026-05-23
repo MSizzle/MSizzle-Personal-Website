@@ -68,13 +68,18 @@ export default async function Home() {
             in server-component contexts — closes the PSI "LCP request discovery" audit).
             Desktop keeps the cycling photo with click + 10s auto-advance. */}
         <figure className="mt-20">
-          {/* Mobile: server-rendered single image with explicit priority for LCP */}
+          {/* Mobile: server-rendered single image with explicit priority for LCP.
+              fetchPriority="high" is set explicitly because Next.js 16's Image doesn't
+              auto-emit the attribute from `priority` alone — closes the PSI
+              "LCP request discovery" / "fetchpriority=high should be applied" audit. */}
           <div className="relative aspect-[1120/540] w-full md:hidden">
             <Image
               src={HOME_PHOTOS[0].src}
               alt="A year in motion, on film"
               fill
               priority
+              fetchPriority="high"
+              loading="eager"
               sizes="100vw"
               className="object-cover saturate-[0.92]"
             />
