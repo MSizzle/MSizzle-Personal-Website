@@ -65,10 +65,10 @@ export default function RootLayout({
             <Navigation />
             <MainOffset>{children}</MainOffset>
             <InkFooter />
+            <VisitSurvey />
           </MotionProvider>
         </LenisProvider>
         <UmamiAnalytics />
-        <VisitSurvey />
         <span aria-hidden="true" className="fixed right-3 bottom-3 z-50 text-xs opacity-20 select-none">
           Prometheus
         </span>

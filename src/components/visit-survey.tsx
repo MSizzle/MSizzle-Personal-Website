@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
-import { motion, AnimatePresence, useReducedMotion } from 'motion/react'
+import { m, AnimatePresence, useReducedMotion } from 'motion/react'
 
 const OPTIONS = [
   { label: 'X', value: 'x' },
@@ -77,7 +77,7 @@ export function VisitSurvey() {
       {/* Large pixel-art Monty, above the box */}
       <AnimatePresence>
         {(widgetState === 'open' || widgetState === 'thankyou') && (
-          <motion.div
+          <m.div
             key="monty-avatar"
             className="pointer-events-none relative -mb-2"
             {...(prefersReducedMotion
@@ -97,13 +97,13 @@ export function VisitSurvey() {
               className="h-auto w-64 object-contain sm:w-[405px]"
               priority
             />
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
 
       <AnimatePresence>
         {(widgetState === 'open' || widgetState === 'thankyou') && (
-          <motion.div
+          <m.div
             key="chat-window"
             {...windowMotion}
             className="w-64 border border-[var(--border)] bg-[var(--bg)] shadow-lg sm:w-80"
@@ -139,7 +139,7 @@ export function VisitSurvey() {
             {/* Message area */}
             <div className="p-4">
               {widgetState === 'open' && (
-                <motion.div key="question" {...messageMotion}>
+                <m.div key="question" {...messageMotion}>
                   <p className="text-sm leading-relaxed">
                     Thanks for checking out my site! What brought you here?
                   </p>
@@ -157,24 +157,24 @@ export function VisitSurvey() {
                       </button>
                     ))}
                   </div>
-                </motion.div>
+                </m.div>
               )}
 
               {widgetState === 'thankyou' && (
-                <motion.div key="thankyou" {...messageMotion}>
+                <m.div key="thankyou" {...messageMotion}>
                   <p className="text-sm leading-relaxed">
                     Awesome, welcome! Enjoy exploring.
                   </p>
-                </motion.div>
+                </m.div>
               )}
             </div>
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
 
       {/* Chat bubble trigger (visible briefly before auto-opening) */}
       {widgetState === 'bubble' && (
-        <motion.button
+        <m.button
           key="bubble"
           {...bubbleMotion}
           onClick={() => setWidgetState('open')}
@@ -197,7 +197,7 @@ export function VisitSurvey() {
               strokeLinejoin="round"
             />
           </svg>
-        </motion.button>
+        </m.button>
       )}
     </div>
   )
