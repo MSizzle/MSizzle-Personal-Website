@@ -14,7 +14,11 @@ export default function Template({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <AnimatePresence mode="wait">
+    // `initial={false}` skips the enter animation on first mount so the SSR
+    // payload no longer wraps the page in `opacity:0;transform:translateY(20px)`
+    // — that wrapper was hiding the LCP image until motion features loaded and
+    // the fade-in ran. Route transitions still animate (exit → initial → animate).
+    <AnimatePresence mode="wait" initial={false}>
       <m.div
         key={pathname}
         variants={variants}
