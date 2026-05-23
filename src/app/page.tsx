@@ -63,13 +63,30 @@ export default async function Home() {
           </span>
         </div>
 
-        {/* Epigraph — D-09 + D-10. Cycling hero (desktop: click + 10s timer; mobile: static). */}
+        {/* Epigraph — D-09 + D-10. Mobile renders a server-rendered <Image priority>
+            (Next.js `priority` only reliably emits fetchpriority="high" + loading="eager"
+            in server-component contexts — closes the PSI "LCP request discovery" audit).
+            Desktop keeps the cycling photo with click + 10s auto-advance. */}
         <figure className="mt-20">
-          <CyclingPhoto
-            photos={[...HOME_PHOTOS]}
-            className="relative aspect-[1120/540] w-full"
-            alt="A year in motion, on film"
-          />
+          {/* Mobile: server-rendered single image with explicit priority for LCP */}
+          <div className="relative aspect-[1120/540] w-full md:hidden">
+            <Image
+              src={HOME_PHOTOS[0].src}
+              alt="A year in motion, on film"
+              fill
+              priority
+              sizes="100vw"
+              className="object-cover saturate-[0.92]"
+            />
+          </div>
+          {/* Desktop: cycling photo with click + 10s timer */}
+          <div className="relative hidden aspect-[1120/540] w-full md:block">
+            <CyclingPhoto
+              photos={[...HOME_PHOTOS]}
+              className="h-full w-full"
+              alt="A year in motion, on film"
+            />
+          </div>
           <figcaption className="mt-4 text-meta uppercase text-muted">
             A year in motion · 2025–26
           </figcaption>
