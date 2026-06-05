@@ -25,7 +25,7 @@ export function buildRssXml(posts: BlogPost[]): string {
       <guid isPermaLink="true">${escapeXml(url)}</guid>
       <pubDate>${toRfc822(post.date)}</pubDate>
       <description>${escapeXml(post.description ?? '')}</description>
-      <author>montydsinger@gmail.com (Monty Singer)</author>
+      <author>monty@prometheus.today (Monty Singer)</author>
     </item>`
     })
     .join('\n')
@@ -34,7 +34,7 @@ export function buildRssXml(posts: BlogPost[]): string {
 <rss version="2.0">
   <channel>
     <title>Monty Singer | Writings</title>
-    <link>${canonical('/blog')}</link>
+    <link>${canonical('/writing')}</link>
     <description>Essays by Monty Singer on philosophy, technology, AI, entrepreneurship, and life.</description>
     <language>en-us</language>
     <atom:link xmlns:atom="http://www.w3.org/2005/Atom" href="${SITE_URL}/blog/feed.xml" rel="self" type="application/rss+xml"/>

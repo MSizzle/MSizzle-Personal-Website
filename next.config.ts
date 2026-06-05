@@ -1,9 +1,22 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // Next.js bundles `next-polyfill-module` unconditionally, ignoring browserslist
+  // (vercel/next.js#86785, discussion #64330). The Next client imports it via
+  // a relative path (`../build/polyfills/polyfill-module`), so alias both the
+  // relative form AND the package form to a noop. Our browserslist already
+  // targets Chrome 100+/Safari 15.4+ which support Array.prototype.at,
+  // Object.hasOwn, String.prototype.trim{Start,End}, etc. natively.
+  turbopack: {
+    resolveAlias: {
+      "../build/polyfills/polyfill-module": "./src/lib/noop-polyfill.js",
+      "next/dist/build/polyfills/polyfill-module": "./src/lib/noop-polyfill.js",
+    },
+  },
   async redirects() {
     return [
       { source: '/uses', destination: '/about', permanent: true },
+      { source: '/blog', destination: '/writing', permanent: true },
     ]
   },
   images: {

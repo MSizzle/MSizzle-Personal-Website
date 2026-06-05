@@ -17,6 +17,8 @@ export function TagFilter({ posts, readingTimes, excerpts }: TagFilterProps) {
 
   const allTags = Array.from(new Set(posts.flatMap((p) => p.tags))).sort()
   const filtered = activeTag ? posts.filter((p) => p.tags.includes(activeTag)) : posts
+  // Above-the-fold count: prioritize first row (2 cards on desktop, 1 on mobile)
+  const ABOVE_THE_FOLD = 2
 
   return (
     <div>
@@ -52,7 +54,7 @@ export function TagFilter({ posts, readingTimes, excerpts }: TagFilterProps) {
         </p>
       ) : (
         <div className="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2">
-          {filtered.map((post) => (
+          {filtered.map((post, idx) => (
             <Link
               key={post.id}
               href={`/blog/${post.slug}`}
@@ -65,6 +67,7 @@ export function TagFilter({ posts, readingTimes, excerpts }: TagFilterProps) {
                     alt={post.title}
                     fill
                     sizes="(max-width: 640px) 100vw, 50vw"
+                    priority={idx < ABOVE_THE_FOLD}
                     className="object-cover transition-transform duration-300 group-hover:scale-105"
                   />
                 ) : post.emoji ? (

@@ -3,63 +3,59 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { cn } from '@/utils/cn'
+import { EditorialHeader } from '@/components/home-v2/editorial-header'
 
-const NAV_LINKS = [
-  { href: '/about', label: 'About' },
-  { href: '#contact', label: 'Contact' },
+// Mobile drawer — unified link set across all routes per Phase 13 mobile-nav fix.
+// Home is reachable via the "Monty Singer" brand link in the mobile bar (no
+// redundant Home entry in the drawer).
+const MOBILE_LINKS = [
+  { href: '/projects', label: 'Building' },
+  { href: '/writing',  label: 'Writing'  },
+  { href: '/events',   label: 'Events'   },
+  { href: '/about',    label: 'About'    },
+  { href: '/links',    label: 'Links'    },
 ]
 
 export function Navigation() {
   const [open, setOpen] = useState(false)
   const pathname = usePathname()
 
-  // D-42 + D-26: v2.0 routes (/, /writing, /events, /photos) render their own
-  // editorial chrome — suppress v1.0 nav. Phase 11 extends Phase 10 D-42 from
-  // `pathname === '/'` to an inclusion check covering all 4 v2.0 routes.
-  if (['/', '/writing', '/events', '/photos'].includes(pathname)) return null
+  // Derive the active EditorialHeader label from pathname (Path 2 — chrome
+  // unification). EditorialHeader is now globally rendered here; on routes
+  // not in this mapping the prop is undefined so no nav link gets bolded.
+  const activeLabel: 'Building' | 'Writing' | 'Events' | 'About' | 'Links' | undefined =
+    pathname === '/projects' ? 'Building'
+    : pathname === '/writing' || pathname.startsWith('/blog') ? 'Writing'
+    : pathname === '/events' ? 'Events'
+    : pathname === '/about' ? 'About'
+    : pathname === '/links' ? 'Links'
+    : undefined
 
   return (
     <>
-      <header className="fixed inset-x-0 top-0 z-50 bg-[var(--bg)]">
-        <nav className="mx-auto flex h-16 max-w-[66ch] items-center justify-between px-6 md:px-0">
+      {/* Mobile header — always render across all routes; "Monty Singer" brand link + hamburger */}
+      <header className="fixed inset-x-0 top-0 z-50 bg-[var(--bg)] md:hidden">
+        <nav className="flex h-16 items-center justify-between px-6">
           <Link
             href="/"
             className="text-base font-normal uppercase tracking-widest"
+            onClick={() => setOpen(false)}
           >
             Monty Singer
           </Link>
-
-          {/* Desktop links */}
-          <ul className="hidden items-center gap-8 md:flex">
-            {NAV_LINKS.map((link) => (
-              <li key={link.href}>
-                <Link
-                  href={link.href}
-                  className={cn(
-                    'text-sm uppercase tracking-wide transition-opacity hover:opacity-80',
-                    pathname === link.href ? 'opacity-100' : 'opacity-75'
-                  )}
-                >
-                  {link.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-
-          {/* Mobile hamburger */}
           <button
-            className="flex min-h-[44px] min-w-[44px] items-center justify-center md:hidden"
+            className="flex min-h-[44px] min-w-[44px] items-center justify-center"
             onClick={() => setOpen(!open)}
             aria-label={open ? 'Close navigation menu' : 'Open navigation menu'}
+            aria-expanded={open}
           >
             {open ? (
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
                 <line x1="4" y1="4" x2="20" y2="20" />
                 <line x1="20" y1="4" x2="4" y2="20" />
               </svg>
             ) : (
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
                 <line x1="4" y1="7" x2="20" y2="7" />
                 <line x1="4" y1="17" x2="20" y2="17" />
               </svg>
@@ -68,22 +64,34 @@ export function Navigation() {
         </nav>
       </header>
 
-      {/* Mobile drawer */}
+      {/* Desktop header — globalized EditorialHeader (self-gates via `hidden md:flex`). */}
+      <EditorialHeader active={activeLabel} />
+
+      {/* Mobile drawer — opens on hamburger tap; content-height with tap-outside-to-close backdrop */}
       {open && (
-        <div className="fixed inset-0 top-16 z-40 bg-[var(--bg)] md:hidden">
-          <nav className="flex flex-col px-6 py-4">
-            {NAV_LINKS.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="flex min-h-[48px] items-center border-b border-[var(--border)] py-3 text-base uppercase tracking-wide"
-                onClick={() => setOpen(false)}
-              >
-                {link.label}
-              </Link>
-            ))}
-          </nav>
-        </div>
+        <>
+          {/* Backdrop — dims page below drawer; tap anywhere here closes the drawer */}
+          <div
+            className="fixed inset-0 top-16 z-30 bg-black/20 md:hidden"
+            onClick={() => setOpen(false)}
+            aria-hidden="true"
+          />
+          {/* Drawer — sits above backdrop */}
+          <div className="fixed left-0 right-0 top-16 z-40 border-b border-[var(--border)] bg-[var(--bg)] shadow-lg md:hidden">
+            <nav className="flex flex-col px-6 py-4">
+              {MOBILE_LINKS.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="flex min-h-[48px] items-center border-b border-[var(--border)] py-3 text-base uppercase tracking-wide last:border-b-0"
+                  onClick={() => setOpen(false)}
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </nav>
+          </div>
+        </>
       )}
     </>
   )

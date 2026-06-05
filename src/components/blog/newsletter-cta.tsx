@@ -3,9 +3,9 @@ import Link from 'next/link'
 export function NewsletterCta() {
   return (
     <section className="mt-16 border-t border-[var(--border)] pt-8">
-      <h3 className="text-sm font-normal uppercase tracking-widest">
+      <h2 className="text-sm font-normal uppercase tracking-widest">
         Monty Monthly
-      </h3>
+      </h2>
       <p className="mt-2 opacity-75">
         Essays on AI, entrepreneurship, philosophy, and building. Delivered monthly.
       </p>

@@ -4,7 +4,7 @@
   /* v2.0 warm-paper palette (D-01) */
   --color-paper: #F4F2EC;
   --color-ink: #0E0E0C;
-  --color-muted: #9A9690;
+  --color-muted: #6E6A65;
   --color-faint: #C7C3BA;
   --color-rule: #E5E2D9;
   --color-rule-strong: #1A1A18;
@@ -28,7 +28,7 @@
   --text-display--letter-spacing: -0.045em;
   --text-display--font-weight: 700;
 
-  --text-page-title: 120px;
+  --text-page-title: clamp(40px, 12vw, 120px);
   --text-page-title--line-height: 0.95;
   --text-page-title--letter-spacing: -0.045em;
   --text-page-title--font-weight: 700;
@@ -84,14 +84,14 @@
 
   /* Fonts */
   --font-sans: var(--font-inter);
-  --font-mono: var(--font-geist-mono);
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
 :root {
   --bg: #F4F2EC;
   --fg: #0E0E0C;
   --bg-secondary: #F4F2EC;
-  --fg-muted: #9A9690;
+  --fg-muted: #6E6A65;
   --border: #1A1A18;
   --accent: #0E0E0C;
   --accent-warm: #0E0E0C;

@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { Inter, Geist_Mono } from "next/font/google";
+import { Inter } from "next/font/google";
 import { LenisProvider } from "@/components/providers/lenis-provider";
 import { MotionProvider } from "@/components/providers/motion-provider";
 import { Navigation } from "@/components/nav/navigation";
-import { Footer } from "@/components/footer";
+import { InkFooter } from "@/components/home-v2/ink-footer";
 import { MainOffset } from "@/components/main-offset";
 import { UmamiAnalytics } from "@/components/analytics/umami-analytics";
 import { VisitSurvey } from "@/components/visit-survey";
@@ -14,11 +14,6 @@ const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
   weight: ["400", "700"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
 });
 
 const SITE_DESCRIPTION =
@@ -61,7 +56,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${geistMono.variable}`}
+      className={inter.variable}
       suppressHydrationWarning
     >
       <body className="min-h-screen bg-background text-foreground antialiased">
@@ -69,12 +64,12 @@ export default function RootLayout({
           <MotionProvider>
             <Navigation />
             <MainOffset>{children}</MainOffset>
-            <Footer />
+            <InkFooter />
+            <VisitSurvey />
           </MotionProvider>
         </LenisProvider>
         <UmamiAnalytics />
-        <VisitSurvey />
-        <span className="fixed right-3 bottom-3 z-50 text-xs opacity-20 select-none">
+        <span aria-hidden="true" className="fixed right-3 bottom-3 z-50 text-xs opacity-20 select-none">
           Prometheus
         </span>
       </body>

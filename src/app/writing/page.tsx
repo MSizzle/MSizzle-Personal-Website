@@ -3,12 +3,12 @@ import { Fragment } from "react";
 import type { Metadata } from "next";
 import { getPublishedPosts, type BlogPost } from "@/lib/notion";
 import { formatMonthYear } from "@/lib/dates";
-import { EditorialHeader } from "@/components/home-v2/editorial-header";
 import { RuleStrong } from "@/components/editorial/rule-strong";
 import { Rule } from "@/components/editorial/rule";
 import { IntroLink } from "@/components/editorial/intro-link";
 import { ListRow } from "@/components/editorial/list-row";
 import { YearBlock } from "@/components/editorial/year-block";
+import { WritingSubscribeCTA } from "@/components/home-v2/writing-subscribe-cta";
 
 // ISR — matches /, /events cadence (RESEARCH § Pitfall 9). 30 minutes balances
 // fresh Notion-sourced essays against Vercel build minutes on the free tier.
@@ -51,7 +51,9 @@ function groupPostsByYear(posts: BlogPost[]): Map<number, BlogPost[]> {
  * /writing — editorial archive page (ARCH-01).
  *
  * Layout per handoff §3 + D-13/D-14/D-15 REVISED:
- *   1. <EditorialHeader active="Writing" /> — shared 5-link nav with Writing bolded.
+ *   1. The shared editorial nav is rendered globally via `Navigation` (Path 2) —
+ *      "Writing" is bolded automatically via the pathname → active-label mapping
+ *      there. No inline header is rendered from this page.
  *   2. Title block — 2-col grid: tracked label · "Writing." 120px page title ·
  *      muted blurb with IntroLink to Monty Monthly · 360×480 atmosphere photo
  *      (Patricof09.jpg per D-13). Photo hidden on mobile so the page title
@@ -81,8 +83,6 @@ export default async function WritingPage() {
 
   return (
     <>
-      <EditorialHeader active="Writing" />
-
       {/* Title block — handoff §3 padding `160px 160px 100px` desktop / `64px 24px 60px` mobile */}
       <section className="px-6 pt-16 pb-15 md:px-40 md:pt-40 md:pb-25">
         <div className="grid grid-cols-1 items-end gap-10 md:grid-cols-[1fr_360px] md:gap-20">
@@ -147,32 +147,7 @@ export default async function WritingPage() {
 
       <RuleStrong />
 
-      {/* Substack-outbound subscribe footer — D-15 REVISED.
-          A styled anchor to the same endpoint /newsletter uses (verified at
-          src/app/newsletter/page.tsx:39). NOT a markup form, NO email field,
-          NO in-house subscribe endpoint — the Substack outbound IS the pipeline. */}
-      <footer className="bg-footer-bg text-footer-fg px-7 py-12 md:px-40 md:py-16">
-        <div className="text-label uppercase text-footer-mute">── End of archive</div>
-        <h2 className="mt-6 max-w-[40rem] text-section-feature text-footer-fg">
-          Receive new essays the morning they&rsquo;re published.
-        </h2>
-        <p className="mt-6 max-w-[34rem] text-body-lead text-footer-mute">
-          Monty Monthly is a long-form newsletter on Substack. No spam, no firehose — just one essay each month.
-        </p>
-        <div className="mt-10">
-          <a
-            href="https://montymonthly.substack.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block border border-footer-fg/40 px-7 py-3 text-label uppercase text-footer-fg transition-opacity hover:opacity-80"
-          >
-            Subscribe on Substack →
-          </a>
-        </div>
-        <div className="mt-16 text-meta uppercase text-footer-mute">
-          © 2026 Monty Singer · montymonthly.substack.com
-        </div>
-      </footer>
+      <WritingSubscribeCTA />
     </>
   );
 }

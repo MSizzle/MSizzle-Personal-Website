@@ -16,7 +16,7 @@ export default function NotFound() {
       </p>
       <p className="mt-6">
         <Link href="/" className="underline">Go home</Link>, or read the{' '}
-        <Link href="/blog" className="underline">writings</Link>.
+        <Link href="/writing" className="underline">writings</Link>.
       </p>
     </div>
   )
