@@ -4,8 +4,8 @@ milestone: v2.0
 milestone_name: Editorial Redesign
 current_phase: 13
 status: Awaiting next milestone
-last_updated: "2026-06-05T17:50:00.000Z"
-last_activity: 2026-06-05 — Quick task 260605-jdy: unify contact email + footer label fix
+last_updated: "2026-06-05T18:20:00.000Z"
+last_activity: 2026-06-05 — Quick tasks jqp/jqq: editorial migration of /links, /newsletter, /prometheus + Events copy
 progress:
   total_phases: 6
   completed_phases: 6
@@ -114,6 +114,9 @@ Bookkeeping drift from v1.0, acknowledged at milestone close 2026-05-20. All are
 |----|------|--------|------|--------|
 | 260605-ivl | Resolve /blog ↔ /writing duplicate index + fix sitemap | complete | 2026-06-05 | 457cd7a |
 | 260605-jdy | Unify contact email → monty@prometheus.today + relabel footer "Reading List" → "Links" | complete | 2026-06-05 | 3aabd74 |
+| 260605-jqp | Restyle /links to editorial layout | complete | 2026-06-05 | c9e8117 |
+| 260605-jqp | Migrate /newsletter + /prometheus to editorial layout | complete | 2026-06-05 | 756b0bd |
+| 260605-jqq | Soften homepage Events empty-state copy | complete | 2026-06-05 | bde1ae5 |
 
 ---
 
