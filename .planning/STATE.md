@@ -4,8 +4,8 @@ milestone: v2.0
 milestone_name: Editorial Redesign
 current_phase: 13
 status: Awaiting next milestone
-last_updated: "2026-06-05T17:35:30.542Z"
-last_activity: 2026-06-05 — Quick task 260605-ivl: /blog → /writing redirect + sitemap fix
+last_updated: "2026-06-05T17:50:00.000Z"
+last_activity: 2026-06-05 — Quick task 260605-jdy: unify contact email + footer label fix
 progress:
   total_phases: 6
   completed_phases: 6
@@ -113,6 +113,7 @@ Bookkeeping drift from v1.0, acknowledged at milestone close 2026-05-20. All are
 | ID | Task | Status | Date | Commit |
 |----|------|--------|------|--------|
 | 260605-ivl | Resolve /blog ↔ /writing duplicate index + fix sitemap | complete | 2026-06-05 | 457cd7a |
+| 260605-jdy | Unify contact email → monty@prometheus.today + relabel footer "Reading List" → "Links" | complete | 2026-06-05 | 3aabd74 |
 
 ---
 
