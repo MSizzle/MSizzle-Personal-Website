@@ -4,8 +4,8 @@ milestone: v2.0
 milestone_name: Editorial Redesign
 current_phase: 13
 status: Awaiting next milestone
-last_updated: "2026-05-21T23:50:56.296Z"
-last_activity: 2026-05-21 — Milestone v2.0 completed and archived
+last_updated: "2026-06-05T17:35:30.542Z"
+last_activity: 2026-06-05 — Quick task 260605-ivl: /blog → /writing redirect + sitemap fix
 progress:
   total_phases: 6
   completed_phases: 6
@@ -107,6 +107,12 @@ Bookkeeping drift from v1.0, acknowledged at milestone close 2026-05-20. All are
 | uat_gap | Phase 04 04-HUMAN-UAT.md (6 pending scenarios) | partial | Superseded — Phase 04 animations are explicitly *deleted* in v2.0 (MOTION-01..06) |
 | uat_gap | Phase 06 06-UAT.md (0 pending scenarios) | partial | False positive — UAT shipped (4a36aab "28-requirement UAT — 0 failures") |
 | verification_gap | Phase 04 04-VERIFICATION.md | human_needed | Superseded — verifies animations being deleted in v2.0 |
+
+## Quick Tasks Completed
+
+| ID | Task | Status | Date | Commit |
+|----|------|--------|------|--------|
+| 260605-ivl | Resolve /blog ↔ /writing duplicate index + fix sitemap | complete | 2026-06-05 | 457cd7a |
 
 ---
 
