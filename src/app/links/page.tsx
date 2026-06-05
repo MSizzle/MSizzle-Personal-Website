@@ -37,8 +37,7 @@ export default function LinksPage() {
             <div className="text-label uppercase text-muted">── The Index · 06</div>
             <h1 className="mt-6 text-page-title uppercase text-ink">Links.</h1>
             <p className="mt-10 max-w-[35rem] text-body-lead text-muted">
-              Every way to reach me or follow along — email, the socials, and the
-              monthly letter. Let&rsquo;s be friends.
+              Let&rsquo;s be friends.
             </p>
           </div>
           <div className="hidden md:block">
