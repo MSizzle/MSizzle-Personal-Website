@@ -188,7 +188,19 @@ export default async function Home() {
 
         <div className="mt-[72px]">
           {upcomingEvents.length === 0 ? (
-            <p className="text-caption text-muted">No upcoming events.</p>
+            <p className="text-caption text-muted">
+              Next gathering is being planned — small, intentional evenings on
+              AI and building. Subscribe to{" "}
+              <a
+                href="https://montymonthly.substack.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="border-b border-ink text-ink"
+              >
+                Monty Monthly
+              </a>{" "}
+              to hear first.
+            </p>
           ) : (
             (() => {
               const featuredEvent = upcomingEvents[0];
