@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 }
 
 const LINKS = [
-  { href: 'mailto:mds345@georgetown.edu', label: 'Email' },
+  { href: 'mailto:monty@prometheus.today', label: 'Email' },
   { href: 'https://x.com/thefullmonty0', label: 'Twitter / X' },
   { href: 'https://linkedin.com/in/monty-singer', label: 'LinkedIn' },
   { href: 'https://github.com/MSizzle', label: 'GitHub' },

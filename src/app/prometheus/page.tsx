@@ -86,7 +86,7 @@ export default function PrometheusPage() {
               prometheus.today
             </a>{' '}
             to learn more, or{' '}
-            <a href="mailto:mds345@georgetown.edu">get in touch</a>{' '}
+            <a href="mailto:monty@prometheus.today">get in touch</a>{' '}
             to discuss a project.
           </p>
         </div>

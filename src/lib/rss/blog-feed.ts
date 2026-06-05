@@ -25,7 +25,7 @@ export function buildRssXml(posts: BlogPost[]): string {
       <guid isPermaLink="true">${escapeXml(url)}</guid>
       <pubDate>${toRfc822(post.date)}</pubDate>
       <description>${escapeXml(post.description ?? '')}</description>
-      <author>montydsinger@gmail.com (Monty Singer)</author>
+      <author>monty@prometheus.today (Monty Singer)</author>
     </item>`
     })
     .join('\n')

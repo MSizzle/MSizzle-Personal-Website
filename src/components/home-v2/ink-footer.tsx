@@ -35,7 +35,7 @@ export function InkFooter() {
             links={[
               { label: "Monty Monthly", href: "/newsletter" },
               { label: "Essays",        href: "/writing" },
-              { label: "Reading List",  href: "/links" },
+              { label: "Links",         href: "/links" },
             ]}
           />
         </div>
@@ -47,7 +47,7 @@ export function InkFooter() {
             links={[
               { label: "About",         href: "/about" },
               { label: "Photo Archive", href: "/photos" },
-              { label: "Contact",       href: "mailto:montydsinger@gmail.com" },
+              { label: "Contact",       href: "mailto:monty@prometheus.today" },
             ]}
           />
         </div>
@@ -84,7 +84,7 @@ export function InkFooter() {
             LinkedIn
           </a>
           <a
-            href="mailto:montydsinger@gmail.com"
+            href="mailto:monty@prometheus.today"
             className="flex min-h-11 items-center text-meta uppercase text-footer-fg hover:text-footer-fg/70"
           >
             Email
