@@ -23,7 +23,7 @@ export function InkFooter() {
             links={[
               { label: "Prometheus",     href: "https://prometheus.today" },
               { label: "Selected Works", href: "/projects" },
-              { label: "Process Notes",  href: "/blog" },
+              { label: "Process Notes",  href: "/writing" },
             ]}
           />
         </div>
