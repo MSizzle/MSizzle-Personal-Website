@@ -22,6 +22,7 @@ branch, previewed on Vercel, promoted to production via alias swap when it reach
 | # | Name | Design Question | Winner | Tags |
 |---|------|----------------|--------|------|
 | 001 | dark-kinetic-home | What does the dark, kinetic homepage feel like? | **D · Synthesis** | home, motion, dark, 3d, slides |
+| 002 | full-site-model | Does the language hold across the whole site? | _in review_ | full-site, prototype, nav |
 
 ## Locked Decisions (from 001)
 - **Direction:** dark canvas, brutalist uppercase grotesk type, autonomous (non-cursor-reactive) motion.
