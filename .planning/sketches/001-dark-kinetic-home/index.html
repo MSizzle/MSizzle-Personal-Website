@@ -220,6 +220,9 @@
   .d-herogrid{display:grid;grid-template-columns:1.05fr 0.95fr;gap:40px;align-items:center;width:100%}
   .scene{perspective:1200px;display:flex;align-items:center;justify-content:center;min-height:52vh;position:relative}
   .scene::before{content:'';position:absolute;width:60%;height:60%;border-radius:50%;background:var(--grad);filter:blur(80px);opacity:0.45;animation:drift3 20s ease-in-out infinite}
+  #webgl{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:1}
+  .scene .fallback{display:none} /* shown via JS only if WebGL init fails */
+  .scene.no-webgl .fallback{display:block} .scene.no-webgl #webgl{display:none}
   .obj{transform-style:preserve-3d;animation:spin 28s linear infinite;position:relative;width:min(34vh,260px);height:min(34vh,260px)}
   @keyframes spin{to{transform:rotateX(360deg) rotateY(720deg)}}
   .cube{position:absolute;inset:0;transform-style:preserve-3d}
@@ -412,7 +415,9 @@
         </div>
       </div>
       <div class="scene">
-        <div class="obj">
+        <canvas id="webgl"></canvas>
+        <!-- CSS fallback object (shows if WebGL fails to load) -->
+        <div class="obj fallback">
           <div class="cube"><div class="f f1"></div><div class="f f2"></div><div class="f f3"></div><div class="f f4"></div><div class="f f5"></div><div class="f f6"></div></div>
           <div class="ring"></div>
         </div>
@@ -475,6 +480,7 @@
   <button onclick="setVP('100%')">▢ full</button>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
 /* ── Variant switching ───────────────────────────── */
 function showVariant(id, btn){
@@ -537,6 +543,69 @@ function setVP(w){document.querySelectorAll('.variant').forEach(v=>{v.style.maxW
 bindMagnetic(); initReveals();
 document.getElementById('mesh').style.opacity='0'; // default view is D (autonomous orbs)
 document.body.classList.add('snap'); // default D uses slide snapping
+
+/* ── WebGL hero object: autonomous morphing molten blob (Three.js) ──
+   Loaded from CDN, no build step. In production this becomes an R3F component.
+   Motion is self-driven only — it warps and rotates on its own, never the cursor. */
+function initBlob(){
+  const canvas=document.getElementById('webgl');
+  const scene3=canvas&&canvas.closest('.scene');
+  if(!canvas||typeof THREE==='undefined'){ if(scene3) scene3.classList.add('no-webgl'); return; }
+  let renderer;
+  try{ renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true}); }
+  catch(e){ scene3.classList.add('no-webgl'); return; }
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+  renderer.outputEncoding=THREE.sRGBEncoding;
+  renderer.toneMapping=THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure=1.15;
+
+  const scene=new THREE.Scene();
+  const camera=new THREE.PerspectiveCamera(42,1,0.1,100);
+  camera.position.set(0,0,4.4);
+
+  // molten orange blob
+  const geo=new THREE.IcosahedronGeometry(1.3,12);
+  const base=geo.attributes.position.array.slice();
+  const mat=new THREE.MeshStandardMaterial({color:0xff5a33,emissive:0x4a1200,emissiveIntensity:0.5,metalness:0.35,roughness:0.32});
+  const blob=new THREE.Mesh(geo,mat); scene.add(blob);
+
+  // faint gold wireframe shell for depth
+  const wire=new THREE.Mesh(new THREE.IcosahedronGeometry(1.62,2),
+    new THREE.MeshBasicMaterial({color:0xffb23c,wireframe:true,transparent:true,opacity:0.10}));
+  scene.add(wire);
+
+  // lights — warm key + gold rim + orange fill
+  const key=new THREE.DirectionalLight(0xffffff,1.7); key.position.set(3,4,5); scene.add(key);
+  const rim=new THREE.DirectionalLight(0xffb23c,1.3); rim.position.set(-4,-2,-4); scene.add(rim);
+  const fill=new THREE.DirectionalLight(0xff5a33,0.7); fill.position.set(-3,2,3); scene.add(fill);
+  scene.add(new THREE.AmbientLight(0x2a1206,0.7));
+
+  function resize(){
+    const p=canvas.parentElement.getBoundingClientRect();
+    const w=Math.max(p.width,100), h=Math.max(p.height,100);
+    renderer.setSize(w,h,false); camera.aspect=w/h; camera.updateProjectionMatrix();
+  }
+  resize();
+  if(window.ResizeObserver) new ResizeObserver(resize).observe(canvas.parentElement);
+
+  const pos=geo.attributes.position; let t=0;
+  (function tick(){
+    t+=0.006;
+    for(let i=0;i<pos.count;i++){
+      const ix=i*3, bx=base[ix], by=base[ix+1], bz=base[ix+2];
+      const l=Math.hypot(bx,by,bz)||1, nx=bx/l, ny=by/l, nz=bz/l;
+      const n=Math.sin(bx*2.0+t*1.6)+Math.sin(by*2.3+t*1.2)+Math.sin(bz*2.1+t*1.9);
+      const d=1.3+n*0.11;
+      pos.array[ix]=nx*d; pos.array[ix+1]=ny*d; pos.array[ix+2]=nz*d;
+    }
+    pos.needsUpdate=true; geo.computeVertexNormals();
+    blob.rotation.y+=0.0035; blob.rotation.x=Math.sin(t*0.3)*0.22;
+    wire.rotation.y-=0.0018; wire.rotation.z+=0.0010;
+    renderer.render(scene,camera);
+    requestAnimationFrame(tick);
+  })();
+}
+if(document.readyState!=='loading') initBlob(); else addEventListener('DOMContentLoaded',initBlob);
 /* allow deep-linking a variant via #a/#b/#c/#d (used for screenshots) */
 (function(){const h=(location.hash||'').replace('#','').toLowerCase();
   if(['a','b','c','d'].includes(h)){const btn=document.querySelector(`.variant-tab[onclick*="'${h}'"]`);showVariant(h,btn);}
