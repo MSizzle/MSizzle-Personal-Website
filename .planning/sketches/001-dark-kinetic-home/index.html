@@ -150,7 +150,8 @@
      VARIANT D — SYNTHESIS (A layout + B type, autonomous motion)
      ========================================================= */
   /* autonomous drifting orbs — move on their own, ignore cursor */
-  .d-orbs{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+  /* fixed atmosphere — stays static while content scrolls over it */
+  .d-orbs{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:0}
   .d-orbs i{position:absolute;border-radius:50%;filter:blur(70px);opacity:0.5;mix-blend-mode:screen}
   .d-orbs i:nth-child(1){width:46vmax;height:46vmax;background:radial-gradient(circle,var(--main-1) 0%,transparent 65%);top:-12vmax;left:-8vmax;animation:drift1 26s ease-in-out infinite}
   .d-orbs i:nth-child(2){width:40vmax;height:40vmax;background:radial-gradient(circle,var(--main-2) 0%,transparent 65%);bottom:-12vmax;right:-6vmax;animation:drift2 32s ease-in-out infinite}
@@ -220,9 +221,14 @@
   .d-herogrid{display:grid;grid-template-columns:1.05fr 0.95fr;gap:40px;align-items:center;width:100%}
   .scene{perspective:1200px;display:flex;align-items:center;justify-content:center;min-height:52vh;position:relative}
   .scene::before{content:'';position:absolute;width:60%;height:60%;border-radius:50%;background:var(--grad);filter:blur(80px);opacity:0.45;animation:drift3 20s ease-in-out infinite}
-  #webgl{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:1}
-  .scene .fallback{display:none} /* shown via JS only if WebGL init fails */
-  .scene.no-webgl .fallback{display:block} .scene.no-webgl #webgl{display:none}
+  /* 3D object lives on its own FIXED stage so it can travel across the page on scroll,
+     independent of the scrolling text. Sits behind content (z1), above atmosphere (z0). */
+  #objstage{position:fixed;inset:0;z-index:1;pointer-events:none;display:flex;align-items:center;justify-content:center}
+  .objwrap{position:relative;width:min(46vh,460px);height:min(46vh,460px);will-change:transform;transition:transform 0.08s linear}
+  #webgl{position:absolute;inset:0;width:100%;height:100%;display:block}
+  .scene{position:relative} /* now just a layout spacer + glow in the hero right column */
+  .scene .fallback{display:none}
+  .scene.no-webgl .fallback{display:block}
   .obj{transform-style:preserve-3d;animation:spin 28s linear infinite;position:relative;width:min(34vh,260px);height:min(34vh,260px)}
   @keyframes spin{to{transform:rotateX(360deg) rotateY(720deg)}}
   .cube{position:absolute;inset:0;transform-style:preserve-3d}
@@ -401,6 +407,9 @@
 
 <!-- ============ VARIANT D — SYNTHESIS ============ -->
 <section id="variant-d" class="variant active content">
+  <!-- fixed travelling 3D object stage (scroll-driven: slides off right, returns from left) -->
+  <div id="objstage"><div class="objwrap"><canvas id="webgl"></canvas></div></div>
+
   <!-- SLIDE 1 — hero: type left, autonomous 3D object right -->
   <div class="wrap d-hero d-slide">
     <div class="d-orbs"><i></i><i></i><i></i></div>
@@ -414,14 +423,7 @@
           <a class="btn-static" href="#">What is Prometheus</a>
         </div>
       </div>
-      <div class="scene">
-        <canvas id="webgl"></canvas>
-        <!-- CSS fallback object (shows if WebGL fails to load) -->
-        <div class="obj fallback">
-          <div class="cube"><div class="f f1"></div><div class="f f2"></div><div class="f f3"></div><div class="f f4"></div><div class="f f5"></div><div class="f f6"></div></div>
-          <div class="ring"></div>
-        </div>
-      </div>
+      <div class="scene"><!-- spacer: object is rendered on the fixed #objstage --></div>
     </div>
     <div class="d-scrollcue">↓ SCROLL</div>
   </div>
@@ -493,7 +495,6 @@ function showVariant(id, btn){
   if(id==='c') scramble(document.querySelector('#variant-c [data-scramble]'));
   // Variant D uses autonomous drifting orbs, not the cursor-following mesh — hide it.
   document.getElementById('mesh').style.opacity = (id==='d') ? '0' : '';
-  document.body.classList.toggle('snap', id==='d'); // D = full-screen slides
 }
 
 /* ── Cursor-reactive gradient mesh (lerped) ──────── */
@@ -542,18 +543,36 @@ function setVP(w){document.querySelectorAll('.variant').forEach(v=>{v.style.maxW
 /* ── Init ────────────────────────────────────────── */
 bindMagnetic(); initReveals();
 document.getElementById('mesh').style.opacity='0'; // default view is D (autonomous orbs)
-document.body.classList.add('snap'); // default D uses slide snapping
+
+/* ── Scroll-driven object travel ──────────────────
+   As you scroll through the first viewport: the object slides off to the RIGHT,
+   then re-enters from the LEFT and settles on the left side. Text scrolls up over
+   the fixed background; the object's stage is fixed, so it appears to travel. */
+const objwrap=document.querySelector('.objwrap');
+function travel(){
+  if(!objwrap) return;
+  const vw=innerWidth/100;
+  const p=Math.min(Math.max(window.scrollY/innerHeight,0),1);
+  let xvw;
+  if(p<0.5) xvw = 26 + (78-26)*(p/0.5);          // rest-right (26vw) → off-right (78vw)
+  else      xvw = -78 + (-26+78)*((p-0.5)/0.5);  // off-left (-78vw) → rest-left (-26vw)
+  objwrap.style.transform=`translateX(${(xvw*vw).toFixed(1)}px)`;
+}
+addEventListener('scroll',travel,{passive:true});
+addEventListener('resize',travel);
+travel();
 
 /* ── WebGL hero object: autonomous morphing molten blob (Three.js) ──
    Loaded from CDN, no build step. In production this becomes an R3F component.
    Motion is self-driven only — it warps and rotates on its own, never the cursor. */
 function initBlob(){
   const canvas=document.getElementById('webgl');
-  const scene3=canvas&&canvas.closest('.scene');
-  if(!canvas||typeof THREE==='undefined'){ if(scene3) scene3.classList.add('no-webgl'); return; }
+  const sceneEl=document.querySelector('#variant-d .scene');
+  const failBlob=()=>{ if(sceneEl) sceneEl.classList.add('no-webgl'); };
+  if(!canvas||typeof THREE==='undefined'){ failBlob(); return; }
   let renderer;
   try{ renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true}); }
-  catch(e){ scene3.classList.add('no-webgl'); return; }
+  catch(e){ failBlob(); return; }
   renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
   renderer.outputEncoding=THREE.sRGBEncoding;
   renderer.toneMapping=THREE.ACESFilmicToneMapping;
