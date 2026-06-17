@@ -152,9 +152,9 @@
   /* autonomous drifting orbs — move on their own, ignore cursor */
   .d-orbs{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
   .d-orbs i{position:absolute;border-radius:50%;filter:blur(70px);opacity:0.5;mix-blend-mode:screen}
-  .d-orbs i:nth-child(1){width:46vmax;height:46vmax;background:radial-gradient(circle,var(--accent) 0%,transparent 65%);top:-12vmax;left:-8vmax;animation:drift1 26s ease-in-out infinite}
-  .d-orbs i:nth-child(2){width:40vmax;height:40vmax;background:radial-gradient(circle,var(--accent-2) 0%,transparent 65%);bottom:-12vmax;right:-6vmax;animation:drift2 32s ease-in-out infinite}
-  .d-orbs i:nth-child(3){width:30vmax;height:30vmax;background:radial-gradient(circle,var(--accent-3) 0%,transparent 65%);top:40%;left:55%;animation:drift3 38s ease-in-out infinite}
+  .d-orbs i:nth-child(1){width:46vmax;height:46vmax;background:radial-gradient(circle,var(--main-1) 0%,transparent 65%);top:-12vmax;left:-8vmax;animation:drift1 26s ease-in-out infinite}
+  .d-orbs i:nth-child(2){width:40vmax;height:40vmax;background:radial-gradient(circle,var(--main-2) 0%,transparent 65%);bottom:-12vmax;right:-6vmax;animation:drift2 32s ease-in-out infinite}
+  .d-orbs i:nth-child(3){width:26vmax;height:26vmax;background:radial-gradient(circle,var(--accent) 0%,transparent 65%);top:42%;left:56%;opacity:0.4;animation:drift3 38s ease-in-out infinite}
   @keyframes drift1{0%,100%{transform:translate(0,0)}33%{transform:translate(14vw,8vh)}66%{transform:translate(6vw,-6vh)}}
   @keyframes drift2{0%,100%{transform:translate(0,0)}50%{transform:translate(-16vw,-10vh)}}
   @keyframes drift3{0%,100%{transform:translate(0,0)}40%{transform:translate(-10vw,6vh)}80%{transform:translate(8vw,4vh)}}
@@ -465,7 +465,10 @@
 <div id="sketch-tools">
   <span>theme</span>
   <select onchange="document.querySelector('link[href*=themes]').href='../themes/'+this.value+'.css'">
-    <option value="default">midnight</option>
+    <option value="default">prometheus (orange + black)</option>
+    <option value="nocturne">nocturne (indigo+teal / orange)</option>
+    <option value="ember">ember (crimson+amber / mint)</option>
+    <option value="halogen">halogen (graphite+slate / orange)</option>
   </select>
   <button onclick="setVP('375px')">▢ phone</button>
   <button onclick="setVP('768px')">▢ tablet</button>

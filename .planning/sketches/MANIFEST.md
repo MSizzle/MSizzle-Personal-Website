@@ -28,4 +28,7 @@ branch, previewed on Vercel, promoted to production via alias swap when it reach
 - **Hero:** oversized name (filled + outline-stroke), type left / autonomous 3D object right (real build → Three.js/R3F).
 - **Structure:** homepage as full-screen scroll-snap slides; second slide is a brutalist clickable Index (hover-invert rows).
 - **Motion rule:** things move on their own (drifting orbs, breathing name, running marquee). No cursor-follow, no magnetic, hover = color only.
-- **Palette:** electric orange / violet / cyan on near-black — still open to tightening to a single-hue + one accent.
+- **Palette:** LOCKED → "Prometheus" — orange + black, bright. Two warm mains (coral-orange `#ff5a33`
+  + gold `#ffb23c`) drive the glowing atmosphere / 3D object; one punchy orange accent (`#ff7a1f`)
+  for links, labels, hover. Brand-anchored to prometheus.today coral-vermilion, brightened for dark canvas.
+  (Alt palettes kept for reference: themes/nocturne.css, ember.css, halogen.css — switchable via toolbar.)
