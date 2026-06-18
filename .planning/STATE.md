@@ -1,17 +1,16 @@
 ---
 gsd_state_version: 1.0
-milestone: v2.0
-milestone_name: Editorial Redesign
-current_phase: 13
-status: Awaiting next milestone
-last_updated: "2026-06-05T18:20:00.000Z"
-last_activity: 2026-06-05 — Quick tasks jqp/jqq: editorial migration of /links, /newsletter, /prometheus + Events copy
+milestone: v3.0
+milestone_name: Dark Brutalist Rebuild
+status: planning
+last_updated: "2026-06-18T19:11:31.325Z"
+last_activity: 2026-06-18
 progress:
-  total_phases: 6
-  completed_phases: 6
-  total_plans: 41
-  completed_plans: 41
-  percent: 100
+  total_phases: 0
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
+  percent: 0
 ---
 
 # Project State
@@ -126,10 +125,10 @@ Bookkeeping drift from v1.0, acknowledged at milestone close 2026-05-20. All are
 
 ## Current Position
 
-Phase: Milestone v2.0 complete
+Phase: Not started (defining requirements)
 Plan: —
-Status: Awaiting next milestone
-Last activity: 2026-05-21 — Milestone v2.0 completed and archived
+Status: Defining requirements
+Last activity: 2026-06-18 — Milestone v3.0 started
 
 ## Operator Next Steps
 

@@ -17,7 +17,20 @@ A personal site that feels alive and memorable, *and* legible — not another te
 - **Analytics:** Self-hosted Umami at https://analytics.montysinger.com (Neon Postgres, separate Vercel project)
 - **Routes:** `/`, `/about`, `/projects` + `/projects/[slug]`, `/blog` + `/blog/[slug]` + `/blog/feed.xml`, `/events`, `/links`, `/newsletter`, `/prometheus`, `/uses` (redirects to `/about` post-v1.0)
 
-## Current Milestone: v2.0 Editorial Redesign
+## Current Milestone: v3.0 Dark Brutalist Rebuild
+
+**Goal:** Rebuild the presentation layer of montysinger.com as a dark, flat, brutalist site (crimson-poster palette, a wheel-driven slide-deck homepage, a lazy-loaded 3D hero object) while preserving all existing infrastructure. Built on a branch and swapped via Vercel alias when at parity.
+
+**Target features:**
+- "Crimson Poster" design system: crimson-orange field (#d93c1e); display type in the same crimson lifted by a hard black shadow; black as the only accent; near-black supporting text; no gradients. Space Grotesk display, JetBrains Mono labels.
+- Slide-deck homepage: CHOMP-style wheel controller (one gesture = one slide, fresh-gesture detection, 820ms reversal-bypass cool-down), static background, big-type signature slides, keyboard and touch input.
+- 3D hero object (morphing icosahedron, near-black glossy with a crimson rim) as a lazy-loaded React-Three-Fiber component; spawns on the right and flies in from the left per slide; reduced-motion fallback; respects the LCP/PSI budget.
+- Rebuilt interior pages on native scroll, wired to existing Notion data: writing index, essay reading view, works, project detail, about, prometheus, newsletter, events, links, /uses (new), /watching (new, favorite YouTube videos).
+- Preserve infrastructure: Notion pipeline, image proxy routes, SEO (sitemap/robots/feed/JSON-LD), Umami analytics, Notion render components.
+
+**Key context:** Design fully specified by the committed prototype at `.planning/sketches/002-full-site-model/` and `.planning/sketches/MANIFEST.md`. Deck mechanic ported from CHOMP (`~/PrometheusUltra/Client Projects/Chomp`, `components/Slideshow.tsx`). Delivery: long-lived `v3` branch, Vercel preview, promote the production alias at parity and QA (watch alias drift; never `--prebuilt --prod`). Site copy rules: no em dashes, no location, "Georgetown University" only, sole professional identity is Founder of Prometheus.
+
+## Previous Milestone: v2.0 Editorial Redesign (shipped 2026-05-21)
 
 **Goal:** Replace v1.0's competing-animation homepage with a vanschneider-inspired minimal editorial system, add dedicated archive pages, and apply a lightweight palette/typography pass to sub-pages — without sacrificing the personal-site "alive" feel.
 
