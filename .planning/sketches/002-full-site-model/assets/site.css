@@ -12,15 +12,13 @@ body{
 a{color:inherit;text-decoration:none}
 .wrap{max-width:1180px;margin:0 auto;padding:0 clamp(20px,5vw,64px)}
 .mono{font-family:var(--font-mono);font-size:var(--text-xs);letter-spacing:0.14em;text-transform:uppercase;color:var(--color-text-muted)}
-.grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.grad-text{color:var(--accent)} /* no gradients — solid accent */
 .accent{color:var(--accent)}
 
 /* ── fixed atmosphere (static background) ── */
-.atmosphere{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:0}
-.atmosphere i{position:absolute;border-radius:50%;filter:blur(80px);opacity:0.42;mix-blend-mode:screen}
-.atmosphere i:nth-child(1){width:46vmax;height:46vmax;background:radial-gradient(circle,var(--main-1) 0%,transparent 65%);top:-14vmax;left:-8vmax;animation:drift1 26s ease-in-out infinite}
-.atmosphere i:nth-child(2){width:40vmax;height:40vmax;background:radial-gradient(circle,var(--main-2) 0%,transparent 65%);bottom:-14vmax;right:-6vmax;animation:drift2 32s ease-in-out infinite}
-.atmosphere i:nth-child(3){width:26vmax;height:26vmax;background:radial-gradient(circle,var(--accent) 0%,transparent 65%);top:44%;left:56%;opacity:0.32;animation:drift3 38s ease-in-out infinite}
+/* flat background — no gradient glows */
+.atmosphere{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:0;background:var(--color-bg)}
+.atmosphere i{display:none}
 @keyframes drift1{0%,100%{transform:translate(0,0)}33%{transform:translate(12vw,8vh)}66%{transform:translate(6vw,-6vh)}}
 @keyframes drift2{0%,100%{transform:translate(0,0)}50%{transform:translate(-14vw,-10vh)}}
 @keyframes drift3{0%,100%{transform:translate(0,0)}40%{transform:translate(-10vw,6vh)}80%{transform:translate(8vw,4vh)}}
@@ -106,7 +104,8 @@ main,.site-footer{position:relative;z-index:2}
 /* ── newsletter carousel ── */
 .carousel{display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:18px;scrollbar-width:thin}
 .issue{flex:0 0 300px;scroll-snap-align:start;border:1px solid var(--color-border);background:var(--color-bg-2)}
-.issue .thumb{aspect-ratio:3/2;background:var(--grad);opacity:0.85}
+.issue .thumb{aspect-ratio:3/2;background:var(--color-surface);border-bottom:2px solid var(--accent);display:flex;align-items:center;justify-content:center}
+.issue .thumb::after{content:'MM';font-family:var(--font-display);font-weight:700;font-size:var(--text-2xl);color:var(--color-text-muted)}
 .issue .body{padding:18px}
 .issue h3{font-family:var(--font-display);font-weight:500;font-size:var(--text-base);margin-bottom:8px}
 .issue .d{font-family:var(--font-mono);font-size:var(--text-xs);color:var(--color-text-muted)}
