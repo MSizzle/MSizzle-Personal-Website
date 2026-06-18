@@ -55,4 +55,35 @@ presentation-layer rebuild: infrastructure is preserved, not rebuilt.
 - New backend features, auth, or comments.
 
 ## Traceability
-_(filled by roadmap — REQ-ID → Phase)_
+
+REQ-ID → Phase. All 21 v3.0 requirements mapped to exactly one phase (100% coverage, no orphans, no duplicates).
+
+| Requirement | Phase | Status |
+|-------------|-------|--------|
+| DS-01 | Phase 14 | Pending |
+| DS-02 | Phase 14 | Pending |
+| DS-03 | Phase 14 | Pending |
+| DS-04 | Phase 14 | Pending |
+| DS-05 | Phase 14 | Pending |
+| HD-01 | Phase 15 | Pending |
+| HD-02 | Phase 15 | Pending |
+| HD-03 | Phase 15 | Pending |
+| HD-04 | Phase 15 | Pending |
+| HD-05 | Phase 15 | Pending |
+| TD-01 | Phase 15 | Pending |
+| TD-02 | Phase 15 | Pending |
+| TD-03 | Phase 15 | Pending |
+| PG-01 | Phase 16 | Pending |
+| PG-02 | Phase 16 | Pending |
+| PG-03 | Phase 16 | Pending |
+| PG-04 | Phase 16 | Pending |
+| PG-05 | Phase 16 | Pending |
+| IN-01 | Phase 16 | Pending |
+| IN-02 | Phase 16 | Pending |
+| IN-03 | Phase 17 | Pending |
+| IN-04 | Phase 17 | Pending |
+| DQ-01 | Phase 14 | Pending |
+| DQ-02 | Phase 18 | Pending |
+| DQ-03 | Phase 18 | Pending |
+| DQ-04 | Phase 18 | Pending |
+</content>
