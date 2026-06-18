@@ -123,11 +123,11 @@
     function objEnter(){
       if(!objwrap) return; const vw=innerWidth/100;
       objwrap.style.transition='none';
-      objwrap.style.transform=`translateX(${(5*vw).toFixed(1)}px)`;
+      objwrap.style.transform=`translateX(${(20*vw).toFixed(1)}px)`;
       objwrap.style.opacity='0';
       requestAnimationFrame(()=>requestAnimationFrame(()=>{
         objwrap.style.transition='transform 1s cubic-bezier(.16,1,.3,1),opacity .55s ease';
-        objwrap.style.transform=`translateX(${(28*vw).toFixed(1)}px)`;
+        objwrap.style.transform=`translateX(${(38*vw).toFixed(1)}px)`;
         objwrap.style.opacity='1';
       }));
     }

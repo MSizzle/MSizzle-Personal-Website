@@ -135,7 +135,25 @@ main,.site-footer{position:relative;z-index:2}
 /* ── home hero + travelling 3D object ── */
 .home-hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center}
 .home-hero .grid{display:grid;grid-template-columns:1.05fr 0.95fr;gap:40px;align-items:center;width:100%}
-.home-name{font-family:var(--font-display);font-weight:700;text-transform:uppercase;line-height:0.82;letter-spacing:-0.04em;font-size:var(--text-mega)}
+.home-name{font-family:var(--font-display);font-weight:700;text-transform:uppercase;line-height:0.82;letter-spacing:-0.04em;font-size:clamp(2.8rem,11vw,10rem)}
+/* keep hero type anchored left so it clears the object on the right */
+.hero-grid{grid-template-columns:minmax(0,1fr) minmax(0,0.85fr)}
+.hero-grid > div:first-child{max-width:60ch}
+
+/* ── big-type slide (B / hero-b style): huge stacked clickable lines ── */
+.big-list a{display:flex;align-items:center;justify-content:space-between;gap:24px;
+  border-top:1px solid var(--color-border);padding:1.4vh 0;
+  font-family:var(--font-display);font-weight:700;text-transform:uppercase;
+  font-size:clamp(2rem,9.5vw,8rem);line-height:1.02;letter-spacing:-0.03em;
+  color:var(--color-text-muted);transition:color var(--dur-fast)}
+.big-list a:last-child{border-bottom:1px solid var(--color-border)}
+.big-list a:hover{color:var(--color-text)}
+.big-list a.out{-webkit-text-stroke:2px var(--color-text);color:transparent}
+.big-list a.out:hover{-webkit-text-stroke-color:var(--accent);color:transparent}
+.big-list a .tag{font-family:var(--font-mono);font-weight:400;font-size:var(--text-xs);letter-spacing:0.12em;
+  color:var(--color-text-muted);white-space:nowrap;transition:color var(--dur-fast)}
+.big-list a:hover .tag{color:var(--accent)}
+@media(max-width:760px){.big-list a .tag{display:none}}
 .home-name .word{display:block;animation:bob-name 11s ease-in-out infinite}
 .home-name .word:nth-child(2){animation-delay:-3.5s}
 .home-name .out{-webkit-text-stroke:2px var(--color-text);color:transparent}
