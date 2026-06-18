@@ -29,7 +29,8 @@ branch, previewed on Vercel, promoted to production via alias swap when it reach
 - **Hero:** oversized name (filled + outline-stroke), type left / autonomous 3D object right (real build → Three.js/R3F).
 - **Structure:** homepage as full-screen scroll-snap slides; second slide is a brutalist clickable Index (hover-invert rows).
 - **Motion rule:** things move on their own (drifting orbs, breathing name, running marquee). No cursor-follow, no magnetic, hover = color only.
-- **Palette:** LOCKED → "Prometheus" — orange + black, bright. Two warm mains (coral-orange `#ff5a33`
-  + gold `#ffb23c`) drive the glowing atmosphere / 3D object; one punchy orange accent (`#ff7a1f`)
-  for links, labels, hover. Brand-anchored to prometheus.today coral-vermilion, brightened for dark canvas.
-  (Alt palettes kept for reference: themes/nocturne.css, ember.css, halogen.css — switchable via toolbar.)
+- **Palette:** LOCKED → "Crimson Poster" — crimson-orange field (`#d93c1e`). Display type is the SAME
+  crimson, lifted off the background by a hard BLACK shadow (`0.055em` offset). Black is the accent
+  (borders, labels, supporting ink near-black). 3D object is a near-black glossy blob with a crimson
+  rim light. No gradients. Supersedes the earlier orange-on-black "Prometheus" palette.
+- **YouTube favorites:** a "Watching" page/section listing favorite videos (added per user request).

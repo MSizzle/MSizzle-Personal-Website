@@ -42,8 +42,8 @@
         <a href="writing.html">Writing</a><a href="works.html">Works</a>
         <a href="prometheus.html">Prometheus</a><a href="about.html">About</a></div>
       <div><h4>More</h4>
-        <a href="newsletter.html">Monty Monthly</a><a href="uses.html">Uses</a>
-        <a href="events.html">Events</a><a href="links.html">Links</a></div>
+        <a href="newsletter.html">Monty Monthly</a><a href="watching.html">Watching</a>
+        <a href="uses.html">Uses</a><a href="events.html">Events</a><a href="links.html">Links</a></div>
       <div><h4>Elsewhere</h4>
         <a href="#">Substack ↗</a><a href="#">GitHub ↗</a>
         <a href="#">LinkedIn ↗</a><a href="#">X / Twitter ↗</a></div>
@@ -80,14 +80,14 @@
     const cam=new THREE.PerspectiveCamera(42,1,0.1,100); cam.position.set(0,0,4.4);
     const geo=new THREE.IcosahedronGeometry(1.3,12);
     const base=geo.attributes.position.array.slice();
-    const blob=new THREE.Mesh(geo,new THREE.MeshStandardMaterial({color:0xff5a33,emissive:0x4a1200,emissiveIntensity:0.5,metalness:0.35,roughness:0.32}));
+    const blob=new THREE.Mesh(geo,new THREE.MeshStandardMaterial({color:0x140805,emissive:0x000000,metalness:0.5,roughness:0.26}));
     scene.add(blob);
-    const wire=new THREE.Mesh(new THREE.IcosahedronGeometry(1.62,2),new THREE.MeshBasicMaterial({color:0xffb23c,wireframe:true,transparent:true,opacity:0.10}));
+    const wire=new THREE.Mesh(new THREE.IcosahedronGeometry(1.62,2),new THREE.MeshBasicMaterial({color:0x0a0503,wireframe:true,transparent:true,opacity:0.16}));
     scene.add(wire);
-    const key=new THREE.DirectionalLight(0xffffff,1.7);key.position.set(3,4,5);scene.add(key);
-    const rim=new THREE.DirectionalLight(0xffb23c,1.3);rim.position.set(-4,-2,-4);scene.add(rim);
-    const fill=new THREE.DirectionalLight(0xff5a33,0.7);fill.position.set(-3,2,3);scene.add(fill);
-    scene.add(new THREE.AmbientLight(0x2a1206,0.7));
+    const key=new THREE.DirectionalLight(0xffffff,1.9);key.position.set(3,4,5);scene.add(key);
+    const rim=new THREE.DirectionalLight(0xff6a3a,1.7);rim.position.set(-4,-2,-4);scene.add(rim);
+    const fill=new THREE.DirectionalLight(0xffffff,0.45);fill.position.set(-3,2,3);scene.add(fill);
+    scene.add(new THREE.AmbientLight(0x1a0a06,0.5));
     function resize(){const p=canvas.parentElement.getBoundingClientRect();const w=Math.max(p.width,100),h=Math.max(p.height,100);renderer.setSize(w,h,false);cam.aspect=w/h;cam.updateProjectionMatrix();}
     resize(); if(window.ResizeObserver) new ResizeObserver(resize).observe(canvas.parentElement);
     const pos=geo.attributes.position; let t=0;
