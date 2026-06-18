@@ -42,6 +42,20 @@ Switch palettes live from the bottom-right toolbar.
 - Navigation coherence: nav active states, breadcrumbs, footer, cross-links.
 - Whether interior pages need their own moment of motion / 3D, or stay calm and let the home lead.
 
+## Home Slide Deck (CHOMP-style)
+The home page is a wheel-driven full-page slide deck, ported from the CHOMP project's
+`components/Slideshow.tsx` controller (`~/PrometheusUltra/Client Projects/Chomp`):
+- **One gesture = one slide.** The wheel handler only advances on a *fresh* gesture (a pause
+  >110ms, a re-acceleration, or a direction change). Decaying trackpad momentum is ignored, so a
+  single flick can't blast through multiple slides.
+- **Minimal cool-down.** An 820ms lock covers the 800ms easeInOutCubic tween — but direction
+  **reversals bypass the lock**, so up/down stays instant and it never feels like it's pausing you.
+- **Static background.** Slides scroll inside `#scroller`; the atmosphere + 3D object sit fixed behind.
+- **Object entrance.** On every slide change the 3D object spawns in the right portion and flies in
+  from the left, settling on the right (a contained entrance, not a full-screen traverse).
+- Keyboard (arrows/space/PageUp-Down/Home/End) and touch (swipe) supported; progress dots on the right.
+Interior pages stay on normal native scroll (reading-friendly).
+
 ## Notes
 - Throwaway HTML. Production rebuilds this on the existing Next.js + Notion stack; the blob becomes
   an R3F component; reading content comes from Notion. Motion must respect the LCP/PSI perf budget.

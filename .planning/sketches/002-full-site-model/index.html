@@ -7,65 +7,85 @@
 <link rel="stylesheet" href="assets/site.css">
 </head>
 <body data-page="home">
-<main>
-  <!-- travelling 3D object (fixed stage) -->
+  <!-- travelling 3D object (fixed stage; flies in from the left on each slide) -->
   <div id="objstage"><div class="objwrap"><canvas id="webgl"></canvas></div></div>
 
-  <section class="wrap home-hero">
-    <p class="mono" style="margin-bottom:24px">Portfolio © 2026 — montysinger.com</p>
-    <div class="grid">
-      <div>
-        <h1 class="home-name"><span class="word">Monty</span><span class="word out">Singer</span></h1>
-        <div class="home-sub"><span>Founder of Prometheus</span><span>Builder</span><span>Writer</span></div>
-        <div style="margin-top:36px;display:flex;gap:12px;flex-wrap:wrap">
-          <a class="btn btn-accent" href="writing.html">Read the writing →</a>
-          <a class="btn" href="prometheus.html">What is Prometheus</a>
+  <div id="scroller">
+    <!-- SLIDE 1 — hero -->
+    <section class="deck-slide">
+      <div class="wrap">
+        <p class="mono" style="margin-bottom:24px">Portfolio © 2026 — montysinger.com</p>
+        <div class="hero-grid">
+          <div>
+            <h1 class="home-name"><span class="word">Monty</span><span class="word out">Singer</span></h1>
+            <div class="home-sub"><span>Founder of Prometheus</span><span>Builder</span><span>Writer</span></div>
+            <div style="margin-top:36px;display:flex;gap:12px;flex-wrap:wrap">
+              <a class="btn btn-accent" href="writing.html">Read the writing →</a>
+              <a class="btn" href="prometheus.html">What is Prometheus</a>
+            </div>
+            <div class="scrollcue">↓ SCROLL</div>
+          </div>
+          <div aria-hidden="true"></div>
         </div>
-        <div class="scrollcue">↓ SCROLL</div>
       </div>
-      <div aria-hidden="true"></div>
-    </div>
-  </section>
+    </section>
 
-  <div class="marquee"><div class="track">
-    <span>WRITING</span><span class="hot">PROMETHEUS</span><span>BUILDING</span><span class="hot">AI</span><span>ESSAYS</span><span class="hot">MONTY MONTHLY</span>
-    <span>WRITING</span><span class="hot">PROMETHEUS</span><span>BUILDING</span><span class="hot">AI</span><span>ESSAYS</span><span class="hot">MONTY MONTHLY</span>
-  </div></div>
-
-  <section class="wrap home-slide">
-    <span class="slabel reveal">(01) — Writing &amp; Works</span>
-    <div class="shead reveal"><h2>Index</h2><a class="mono" href="writing.html">All writing →</a></div>
-    <div class="rows">
-      <a class="row reveal" href="essay.html"><span class="n">01</span><span class="ti">AI is Nibbling the World <span class="ar">↗</span></span><span class="m">Essay · 2026</span></a>
-      <a class="row reveal" href="project.html"><span class="n">02</span><span class="ti">MAHealth Scanner <span class="ar">↗</span></span><span class="m">Work · 2026</span></a>
-      <a class="row reveal" href="essay.html"><span class="n">03</span><span class="ti">Defiant Optimism <span class="ar">↗</span></span><span class="m">Essay · 2025</span></a>
-      <a class="row reveal" href="project.html"><span class="n">04</span><span class="ti">Insider Trader <span class="ar">↗</span></span><span class="m">Work · 2025</span></a>
-      <a class="row reveal" href="essay.html"><span class="n">05</span><span class="ti">The Pursuit of Happierness <span class="ar">↗</span></span><span class="m">Essay · 2025</span></a>
-      <a class="row reveal" href="project.html"><span class="n">06</span><span class="ti">Goaltender <span class="ar">↗</span></span><span class="m">Work · 2025</span></a>
-    </div>
-  </section>
-
-  <section class="wrap home-slide">
-    <div style="display:grid;grid-template-columns:1.1fr 1fr;gap:40px;align-items:center" class="reveal feat">
-      <div>
-        <span class="slabel">(02) — Prometheus</span>
-        <h2 style="font-family:var(--font-display);font-weight:700;text-transform:uppercase;font-size:clamp(2.2rem,6vw,4.4rem);line-height:0.94;letter-spacing:-0.03em">AI Integrations<br>&amp; Education</h2>
-        <p style="color:var(--color-text-dim);margin-top:20px;max-width:46ch">Custom automation pipelines, AI tool implementation, and hands-on training. Bridging what AI can do and what businesses actually need.</p>
-        <a class="btn" style="margin-top:24px" href="prometheus.html">prometheus.today →</a>
+    <!-- SLIDE 2 — index -->
+    <section class="deck-slide">
+      <div class="wrap">
+        <span class="slabel">(01) — Writing &amp; Works</span>
+        <div class="shead"><h2>Index</h2><a class="mono" href="writing.html">All writing →</a></div>
+        <div class="rows">
+          <a class="row" href="essay.html"><span class="n">01</span><div class="mid"><span class="ti">AI is Nibbling the World <span class="ar">↗</span></span></div><span class="m">Essay · 2026</span></a>
+          <a class="row" href="project.html"><span class="n">02</span><div class="mid"><span class="ti">MAHealth Scanner <span class="ar">↗</span></span></div><span class="m">Work · 2026</span></a>
+          <a class="row" href="essay.html"><span class="n">03</span><div class="mid"><span class="ti">Defiant Optimism <span class="ar">↗</span></span></div><span class="m">Essay · 2025</span></a>
+          <a class="row" href="project.html"><span class="n">04</span><div class="mid"><span class="ti">Insider Trader <span class="ar">↗</span></span></div><span class="m">Work · 2025</span></a>
+          <a class="row" href="essay.html"><span class="n">05</span><div class="mid"><span class="ti">The Pursuit of Happierness <span class="ar">↗</span></span></div><span class="m">Essay · 2025</span></a>
+        </div>
       </div>
-      <div style="aspect-ratio:1;border:1px solid var(--color-border);position:relative;overflow:hidden">
-        <i style="position:absolute;width:62%;height:62%;border-radius:50%;background:var(--grad);filter:blur(34px);top:19%;left:19%;animation:drift3 22s ease-in-out infinite"></i>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="wrap home-slide" style="text-align:left">
-    <span class="slabel reveal">(03) — Newsletter</span>
-    <h2 class="reveal" style="font-family:var(--font-display);font-weight:700;text-transform:uppercase;font-size:var(--text-3xl)">Monty Monthly</h2>
-    <p class="reveal" style="font-family:var(--font-display);font-size:var(--text-2xl);max-width:30ch;margin:18px 0 26px">A monthly dispatch on building, AI, and life.</p>
-    <a class="btn btn-accent reveal" href="newsletter.html">See the issues →</a>
-  </section>
-</main>
+    <!-- SLIDE 3 — Prometheus -->
+    <section class="deck-slide">
+      <div class="wrap">
+        <div class="hero-grid">
+          <div>
+            <span class="slabel">(02) — Prometheus</span>
+            <h2 style="font-family:var(--font-display);font-weight:700;text-transform:uppercase;font-size:clamp(2.2rem,6vw,4.4rem);line-height:0.94;letter-spacing:-0.03em">AI Integrations<br>&amp; Education</h2>
+            <p style="color:var(--color-text-dim);margin-top:20px;max-width:46ch">Custom automation pipelines, AI tool implementation, and hands-on training. Bridging what AI can do and what businesses actually need.</p>
+            <a class="btn" style="margin-top:24px" href="prometheus.html">prometheus.today →</a>
+          </div>
+          <div aria-hidden="true"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 4 — Newsletter -->
+    <section class="deck-slide">
+      <div class="wrap">
+        <span class="slabel">(03) — Newsletter</span>
+        <h2 style="font-family:var(--font-display);font-weight:700;text-transform:uppercase;font-size:var(--text-3xl)">Monty Monthly</h2>
+        <p style="font-family:var(--font-display);font-size:var(--text-2xl);max-width:30ch;margin:18px 0 26px">A monthly dispatch on building, AI, and life.</p>
+        <a class="btn btn-accent" href="newsletter.html">See the issues →</a>
+      </div>
+    </section>
+
+    <!-- SLIDE 5 — footer -->
+    <section class="deck-slide deck-foot">
+      <footer class="site-footer" style="margin-top:0;border-top:0">
+        <div class="wrap">
+          <a href="links.html" class="big grad-text">Let's be friends.</a>
+          <div class="cols">
+            <div><h4>Site</h4><a href="writing.html">Writing</a><a href="works.html">Works</a><a href="prometheus.html">Prometheus</a><a href="about.html">About</a></div>
+            <div><h4>More</h4><a href="newsletter.html">Monty Monthly</a><a href="uses.html">Uses</a><a href="events.html">Events</a><a href="links.html">Links</a></div>
+            <div><h4>Elsewhere</h4><a href="#">Substack ↗</a><a href="#">GitHub ↗</a><a href="#">LinkedIn ↗</a><a href="#">X / Twitter ↗</a></div>
+            <div><h4>Contact</h4><a href="#">monty@prometheus.today</a><a href="prometheus.html">Work with Prometheus</a></div>
+          </div>
+          <div class="colophon"><span>© 2026 Monty Singer</span><span>Founder of Prometheus · Builder · Writer</span></div>
+        </div>
+      </footer>
+    </section>
+  </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="assets/site.js"></script>

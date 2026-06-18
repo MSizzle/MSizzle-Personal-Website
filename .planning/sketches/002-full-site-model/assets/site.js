@@ -52,7 +52,7 @@
     </div>
     <div class="colophon"><span>© 2026 Monty Singer</span><span>Founder of Prometheus · Builder · Writer</span></div>
   </div>`;
-  document.body.appendChild(foot);
+  if(PAGE!=='home') document.body.appendChild(foot); // home includes footer as the last deck slide
 
   /* ── reveal on scroll ── */
   const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:0.12});
@@ -102,16 +102,69 @@
     })();
   }
 
-  /* ── scroll travel: object slides off right → re-enters from left ── */
-  function travelInit(){
-    const objwrap=document.querySelector('.objwrap'); if(!objwrap) return;
-    function travel(){
-      const vw=innerWidth/100, p=Math.min(Math.max(scrollY/innerHeight,0),1);
-      let x = p<0.5 ? 26+(78-26)*(p/0.5) : -78+(52)*((p-0.5)/0.5);
-      objwrap.style.transform=`translateX(${(x*vw).toFixed(1)}px)`;
+  /* ── slide deck (home): ported from CHOMP's Slideshow controller ──
+     One gesture = one slide. Wheel only advances on a FRESH gesture (a pause,
+     a re-acceleration, or a direction change); decaying trackpad momentum is
+     ignored. An 820ms lock covers the 800ms tween so one push = one slide, but
+     direction REVERSALS bypass the lock so up/down stays instant. */
+  function deckInit(){
+    const sc=document.getElementById('scroller'); if(!sc) return;
+    const objwrap=document.querySelector('.objwrap');
+    const slides=()=>Array.from(sc.querySelectorAll('.deck-slide'));
+    let idx=0;
+
+    // progress dots
+    const dots=document.createElement('div'); dots.className='deck-dots';
+    slides().forEach((_,i)=>{const b=document.createElement('b'); if(i===0)b.className='on'; dots.appendChild(b);});
+    document.body.appendChild(dots);
+    const markDots=i=>dots.querySelectorAll('b').forEach((b,j)=>b.classList.toggle('on',j===i));
+
+    // object entrance: spawn in the right portion, fly in from the left, settle right
+    function objEnter(){
+      if(!objwrap) return; const vw=innerWidth/100;
+      objwrap.style.transition='none';
+      objwrap.style.transform=`translateX(${(5*vw).toFixed(1)}px)`;
+      objwrap.style.opacity='0';
+      requestAnimationFrame(()=>requestAnimationFrame(()=>{
+        objwrap.style.transition='transform 1s cubic-bezier(.16,1,.3,1),opacity .55s ease';
+        objwrap.style.transform=`translateX(${(28*vw).toFixed(1)}px)`;
+        objwrap.style.opacity='1';
+      }));
     }
-    addEventListener('scroll',travel,{passive:true}); addEventListener('resize',travel); travel();
+    objEnter();
+
+    let lock=0, stepDir=0, raf=0;
+    const locked=()=>Date.now()<lock;
+    const lockFor=ms=>{lock=Date.now()+ms;};
+    const ease=x=>x<0.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
+    const animateTo=(top,dur)=>{cancelAnimationFrame(raf);const from=sc.scrollTop,dist=top-from,t0=performance.now();
+      const tick=now=>{const p=dur?Math.min((now-t0)/dur,1):1;sc.scrollTop=from+dist*ease(p);if(p<1)raf=requestAnimationFrame(tick);};raf=requestAnimationFrame(tick);};
+    const goTo=i=>{const sl=slides();i=Math.max(0,Math.min(sl.length-1,i));if(i===idx)return;idx=i;markDots(i);lockFor(820);objEnter();animateTo(sl[i].offsetTop,800);};
+    const step=dir=>{if(locked()&&dir===stepDir)return;stepDir=dir;goTo(idx+dir);};
+
+    let wT=0,wDir=0,wAbs=0;
+    sc.addEventListener('wheel',e=>{e.preventDefault();const adel=Math.abs(e.deltaY);if(adel<4)return;
+      const dir=e.deltaY>0?1:-1,now=Date.now();const fresh=now-wT>110||dir!==wDir||adel>wAbs*1.25+2;
+      wT=now;wDir=dir;wAbs=adel;if(!fresh)return;step(dir);},{passive:false});
+
+    let tY=null;
+    sc.addEventListener('touchstart',e=>{tY=e.touches[0].clientY;},{passive:true});
+    sc.addEventListener('touchmove',e=>{e.preventDefault();},{passive:false});
+    sc.addEventListener('touchend',e=>{if(tY==null)return;const end=e.changedTouches[0]&&e.changedTouches[0].clientY;const dy=tY-(end==null?tY:end);if(Math.abs(dy)>28)step(dy>0?1:-1);tY=null;},{passive:true});
+
+    addEventListener('keydown',e=>{const tag=(e.target&&e.target.tagName)||'';if(/^(input|textarea|select)$/i.test(tag))return;
+      if(['ArrowDown','PageDown',' '].includes(e.key)){e.preventDefault();step(1);}
+      else if(['ArrowUp','PageUp'].includes(e.key)){e.preventDefault();step(-1);}
+      else if(e.key==='Home'){e.preventDefault();goTo(0);}else if(e.key==='End'){e.preventDefault();goTo(slides().length-1);}});
+
+    // keep index synced + replay entrance if the user drags the scrollbar
+    let st; sc.addEventListener('scroll',()=>{if(locked())return;clearTimeout(st);st=setTimeout(()=>{
+      const sl=slides();const mid=sc.scrollTop+sc.clientHeight/2;let near=0,best=Infinity;
+      sl.forEach((el,i)=>{const d=Math.abs(el.offsetTop+el.offsetHeight/2-mid);if(d<best){best=d;near=i;}});
+      if(near!==idx){idx=near;markDots(near);objEnter();}},90);},{passive:true});
+
+    addEventListener('resize',()=>{const sl=slides();sc.scrollTop=sl[idx].offsetTop;});
   }
 
-  if(PAGE==='home'){ initBlob(); travelInit(); }
+  if(PAGE==='home'){ initBlob(); deckInit(); }
 })();
