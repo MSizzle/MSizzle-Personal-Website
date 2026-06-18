@@ -1,101 +1,35 @@
 @import "tailwindcss";
 
 @theme inline {
-  /* v2.0 warm-paper palette (D-01) */
-  --color-paper: #F4F2EC;
-  --color-ink: #0E0E0C;
-  --color-muted: #6E6A65;
-  --color-faint: #C7C3BA;
-  --color-rule: #E5E2D9;
-  --color-rule-strong: #1A1A18;
-  --color-footer-bg: #0E0E0C;
-  --color-footer-fg: #F4F2EC;
-  --color-footer-mute: #7A7770;
-  --color-footer-rule: rgba(244, 242, 236, 0.18);
+  /* Crimson Poster palette — v3 single fixed theme (no dark mode) */
+  --color-bg:            #d93c1e;
+  --color-bg-2:          #c8341a;
+  --color-surface:       #cc3719;
 
-  /* v1.0 token compatibility aliases (D-02) — remove in Phase 12 */
-  --color-background: var(--color-paper);
-  --color-foreground: var(--color-ink);
-  --color-bg-secondary: var(--color-paper);
-  --color-fg-muted: var(--color-muted);
-  --color-border: var(--color-rule-strong);
-  --color-accent: var(--color-ink);
-  --color-accent-warm: var(--color-ink);
+  /* Black is the accent */
+  --accent:              #0a0503;
+  --color-border:        rgba(10,5,3,0.26);
+  --color-border-strong: rgba(10,5,3,0.5);
 
-  /* v2.0 editorial type scale (D-06 + D-14a) */
-  --text-display: 124px;
-  --text-display--line-height: 0.96;
-  --text-display--letter-spacing: -0.045em;
-  --text-display--font-weight: 700;
+  /* Ink — supporting text near-black on crimson */
+  --color-text:          #120604;
+  --color-text-dim:      rgba(10,5,3,0.74);
+  --color-text-muted:    rgba(10,5,3,0.52);
 
-  --text-page-title: clamp(40px, 12vw, 120px);
-  --text-page-title--line-height: 0.95;
-  --text-page-title--letter-spacing: -0.045em;
-  --text-page-title--font-weight: 700;
+  /* v3 type scale (translated from prototype :root to @theme token names) */
+  --text-xs:   0.72rem;
+  --text-sm:   0.85rem;
+  --text-base: 1rem;
+  --text-lg:   1.2rem;
+  --text-xl:   1.6rem;
+  --text-2xl:  2.2rem;
+  --text-3xl:  3.2rem;
+  --text-mega: clamp(3.5rem, 16vw, 16rem);
 
-  --text-feature: 44px;
-  --text-feature--line-height: 1.05;
-  --text-feature--letter-spacing: -0.03em;
-  --text-feature--font-weight: 700;
-
-  --text-event-title: 36px;
-  --text-event-title--line-height: 1.1;
-  --text-event-title--letter-spacing: -0.02em;
-  --text-event-title--font-weight: 700;
-
-  --text-section-feature: 28px;
-  --text-section-feature--line-height: 1.15;
-  --text-section-feature--letter-spacing: -0.025em;
-  --text-section-feature--font-weight: 700;
-
-  --text-list-title: 28px;
-  --text-list-title--line-height: 1.2;
-  --text-list-title--letter-spacing: -0.01em;
-  --text-list-title--font-weight: 400;
-
-  --text-list-title-home: 20px;
-  --text-list-title-home--line-height: 1.4;
-  --text-list-title-home--letter-spacing: -0.005em;
-  --text-list-title-home--font-weight: 400;
-
-  --text-body-lead: 22px;
-  --text-body-lead--line-height: 1.55;
-  --text-body-lead--letter-spacing: -0.005em;
-  --text-body-lead--font-weight: 400;
-
-  --text-caption: 13px;
-  --text-caption--line-height: 1.5;
-  --text-caption--font-weight: 400;
-
-  --text-nav: 13px;
-  --text-nav--line-height: 1.4;
-  --text-nav--letter-spacing: 0.02em;
-  --text-nav--font-weight: 400;
-
-  --text-label: 11px;
-  --text-label--line-height: 1;
-  --text-label--letter-spacing: 0.2em;
-  --text-label--font-weight: 700;
-
-  --text-meta: 11px;
-  --text-meta--line-height: 1;
-  --text-meta--letter-spacing: 0.16em;
-  --text-meta--font-weight: 400;
-
-  /* Fonts */
-  --font-sans: var(--font-inter);
-  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-}
-
-:root {
-  --bg: #F4F2EC;
-  --fg: #0E0E0C;
-  --bg-secondary: #F4F2EC;
-  --fg-muted: #6E6A65;
-  --border: #1A1A18;
-  --accent: #0E0E0C;
-  --accent-warm: #0E0E0C;
-  --gold: #0E0E0C;
+  /* Fonts (bound to next/font CSS variables set in layout.tsx) */
+  --font-display: var(--font-space-grotesk);
+  --font-sans:    var(--font-space-grotesk);
+  --font-mono:    var(--font-jetbrains-mono);
 }
 
 html {
@@ -103,62 +37,96 @@ html {
 }
 
 body {
-  font-family: var(--font-sans), sans-serif;
-  font-size: 1.125rem;
-  line-height: 1.6;
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-size: 1rem;
+  line-height: 1.45;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* Global link styling: underlined with opacity hover */
+/* Global link styling */
 a {
+  color: inherit;
+  text-decoration: none;
   text-underline-offset: 3px;
 }
 
-/* Prose overrides for editorial aesthetic */
+/* ── Signature display treatment (D-06) ──
+   .sig  = crimson fill + hard black drop shadow (same colour as canvas, lifted off)
+   .sig-out = outline variant (black stroke, transparent fill)
+   Use literal hex for --sig-shadow to avoid @theme/:root resolution order issues. */
+.sig {
+  color: var(--sig);
+  text-shadow: var(--sig-shadow);
+}
+
+.sig-out {
+  -webkit-text-stroke: 2px var(--accent);
+  color: transparent;
+  text-shadow: none;
+}
+
+/* Sig vars — declared outside @theme inline so they can reference --color-bg safely */
+:root {
+  --sig:        var(--color-bg, #d93c1e);
+  --sig-shadow: 0.055em 0.055em 0 #0a0503;
+}
+
+/* ── Marquee keyframe (used by Marquee component) ── */
+@keyframes scroll {
+  to { transform: translateX(-50%); }
+}
+
+/* ── Prose (essay reading view) ──
+   Reskinned to Crimson Poster per site.css lines 82-90. */
 .prose {
-  --tw-prose-body: var(--fg);
-  --tw-prose-headings: var(--fg);
-  --tw-prose-links: var(--fg);
-  --tw-prose-bold: var(--fg);
-  --tw-prose-counters: var(--fg);
-  --tw-prose-bullets: var(--fg);
-  --tw-prose-quotes: var(--fg);
-  --tw-prose-code: var(--fg);
-  --tw-prose-hr: var(--fg);
-  --tw-prose-th-borders: var(--fg);
-  --tw-prose-td-borders: var(--fg);
+  max-width: 68ch;
+  font-size: 1.18rem;
+  line-height: 1.75;
+  color: var(--color-text-dim);
+}
+
+.prose p {
+  margin: 0 0 1.4em;
 }
 
 .prose h2 {
-  font-weight: 400;
-  text-transform: uppercase;
-  font-size: 1rem;
-  letter-spacing: 0.05em;
-  margin-top: 3rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--color-text);
+  font-size: var(--text-2xl);
+  margin: 1.8em 0 0.6em;
+  text-transform: none;
+  letter-spacing: -0.01em;
 }
 
 .prose h3 {
   font-weight: 400;
-  font-size: 1rem;
+  font-size: var(--text-base);
+}
+
+.prose a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.prose blockquote {
+  border-left: 2px solid var(--accent);
+  padding-left: 22px;
+  margin: 1.6em 0;
+  color: var(--color-text);
+  font-style: italic;
+}
+
+.prose strong {
+  color: var(--color-text);
 }
 
 .prose code {
-  background: rgba(45, 23, 36, 0.1);
+  background: rgba(10, 5, 3, 0.12);
   padding: 0.125rem 0.25rem;
   border-radius: 0.125rem;
   font-weight: 400;
-}
-
-/* Inverted color band for content sections below hero */
-.section-inverted {
-  --bg: #0E0E0C;
-  --fg: #F4F2EC;
-  --bg-secondary: #0E0E0C;
-  --fg-muted: #F4F2EC;
-  --border: #F4F2EC;
-  --accent: #F4F2EC;
-  --accent-warm: #F4F2EC;
-  --muted: #1A1A18;
-  background-color: var(--bg);
-  color: var(--fg);
+  font-family: var(--font-mono);
 }
