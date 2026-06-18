@@ -7,9 +7,9 @@ presentation-layer rebuild: infrastructure is preserved, not rebuilt.
 ## v3.0 Requirements
 
 ### Design System (DS)
-- [ ] **DS-01**: The site renders in the "Crimson Poster" palette (crimson-orange field #d93c1e, black accent, near-black supporting text) with no gradients anywhere.
-- [ ] **DS-02**: Display headings render in the same crimson as the background, lifted by a hard black drop shadow; the outline variant uses a black stroke.
-- [ ] **DS-03**: Typography uses Space Grotesk (display) and JetBrains Mono (labels) with a defined type scale, implemented as Tailwind v4 `@theme` tokens.
+- [x] **DS-01**: The site renders in the "Crimson Poster" palette (crimson-orange field #d93c1e, black accent, near-black supporting text) with no gradients anywhere.
+- [x] **DS-02**: Display headings render in the same crimson as the background, lifted by a hard black drop shadow; the outline variant uses a black stroke.
+- [x] **DS-03**: Typography uses Space Grotesk (display) and JetBrains Mono (labels) with a defined type scale, implemented as Tailwind v4 `@theme` tokens.
 - [ ] **DS-04**: A reusable set of brutalist primitives (rules, section labels, clickable list rows, big-type list, buttons, marquee, cards) is available to every page.
 - [ ] **DS-05**: The site honors `prefers-reduced-motion` (disables autonomous and scroll-driven animation, keeps content fully usable).
 
@@ -39,7 +39,7 @@ presentation-layer rebuild: infrastructure is preserved, not rebuilt.
 - [ ] **IN-04**: Umami analytics continues to load and track on every page.
 
 ### Delivery & Quality (DQ)
-- [ ] **DQ-01**: v3 is built on a long-lived branch and previewed on Vercel without affecting the live production site.
+- [x] **DQ-01**: v3 is built on a long-lived branch and previewed on Vercel without affecting the live production site.
 - [ ] **DQ-02**: The build passes the production-readiness gate (`vercel build --prod`) before any swap.
 - [ ] **DQ-03**: Mobile performance meets the budget (PSI mobile authoritative, parity-or-better vs current); the 3D object does not regress LCP.
 - [ ] **DQ-04**: At a QA GO verdict, the production alias is promoted to v3 and verified post-promotion.
@@ -60,9 +60,9 @@ REQ-ID → Phase. All 21 v3.0 requirements mapped to exactly one phase (100% cov
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| DS-01 | Phase 14 | Pending |
-| DS-02 | Phase 14 | Pending |
-| DS-03 | Phase 14 | Pending |
+| DS-01 | Phase 14 | Complete |
+| DS-02 | Phase 14 | Complete |
+| DS-03 | Phase 14 | Complete |
 | DS-04 | Phase 14 | Pending |
 | DS-05 | Phase 14 | Pending |
 | HD-01 | Phase 15 | Pending |
@@ -82,7 +82,7 @@ REQ-ID → Phase. All 21 v3.0 requirements mapped to exactly one phase (100% cov
 | IN-02 | Phase 16 | Pending |
 | IN-03 | Phase 17 | Pending |
 | IN-04 | Phase 17 | Pending |
-| DQ-01 | Phase 14 | Pending |
+| DQ-01 | Phase 14 | Complete |
 | DQ-02 | Phase 18 | Pending |
 | DQ-03 | Phase 18 | Pending |
 | DQ-04 | Phase 18 | Pending |
