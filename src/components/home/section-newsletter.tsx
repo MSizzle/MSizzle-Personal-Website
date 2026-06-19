@@ -11,7 +11,7 @@ import { SectionLabel } from "@/components/v3/section-label";
 export function SectionNewsletter() {
   return (
     <section className="min-h-dvh flex flex-col justify-center px-[8vw] py-[15vh]">
-      <SectionLabel numeral="04">Newsletter</SectionLabel>
+      <SectionLabel numeral="03">Newsletter</SectionLabel>
 
       {/* Display heading */}
       <h2
