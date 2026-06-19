@@ -2,10 +2,10 @@
 gsd_state_version: 1.0
 milestone: v3.0
 milestone_name: Dark Brutalist Rebuild
-status: verifying
+status: completed
 stopped_at: Phase 14 context gathered
-last_updated: "2026-06-19T00:10:13.080Z"
-last_activity: 2026-06-19
+last_updated: "2026-06-19T00:16:38.661Z"
+last_activity: 2026-06-19 -- Phase 14 marked complete
 progress:
   total_phases: 5
   completed_phases: 1
@@ -25,10 +25,10 @@ See: .planning/PROJECT.md (updated 2026-06-18)
 
 ## Current Position
 
-Phase: 14 (branch-crimson-poster-foundation) — COMPLETE
+Phase: 14 — COMPLETE
 Plan: 4 of 4 (all plans complete)
-Status: Phase complete — DQ-01 build gate passed; /v3-specimen showcase live on v3 branch
-Last activity: 2026-06-19
+Status: Phase 14 complete
+Last activity: 2026-06-19 -- Phase 14 marked complete
 
 Progress: [██████████] 100%
 
