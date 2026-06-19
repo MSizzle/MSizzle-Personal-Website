@@ -4,8 +4,8 @@ milestone: v3.0
 milestone_name: Dark Brutalist Rebuild
 status: executing
 stopped_at: Phase 15 context gathered
-last_updated: "2026-06-19T01:31:08.536Z"
-last_activity: 2026-06-19 -- Phase 15 planning complete
+last_updated: "2026-06-19T01:33:54.537Z"
+last_activity: 2026-06-19 -- Phase 15 execution started
 progress:
   total_phases: 5
   completed_phases: 1
@@ -21,14 +21,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-18)
 
 **Core value:** A personal site that feels alive and memorable, *and* legible — not another template blog.
-**Current focus:** Phase 14 — branch-crimson-poster-foundation
+**Current focus:** Phase 15 — slide-deck-homepage-3d-hero
 
 ## Current Position
 
-Phase: 14 — COMPLETE
-Plan: 4 of 4 (all plans complete)
-Status: Ready to execute
-Last activity: 2026-06-19 -- Phase 15 planning complete
+Phase: 15 (slide-deck-homepage-3d-hero) — EXECUTING
+Plan: 1 of 6
+Status: Executing Phase 15
+Last activity: 2026-06-19 -- Phase 15 execution started
 
 Progress: [██████████] 100%
 
