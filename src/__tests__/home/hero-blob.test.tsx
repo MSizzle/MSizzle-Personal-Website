@@ -1,4 +1,5 @@
 import { describe, it, expect, vi } from "vitest";
+import { create } from "@react-three/test-renderer";
 
 // Mock RoomEnvironment to avoid WebGL dependency
 vi.mock("three/examples/jsm/environments/RoomEnvironment.js", () => ({
@@ -26,25 +27,18 @@ vi.mock("three", async () => {
 // to avoid the ES-module interop issues in Vitest's jsdom environment
 vi.mock("three-custom-shader-material/vanilla", () => ({
   default: class CustomShaderMaterial {
+    uniforms = { uTime: { value: 0 } };
     constructor(opts: unknown) {
       Object.assign(this, opts);
     }
-    uniforms = { uTime: { value: 0 } };
     dispose() {}
-  },
-}));
-
-// Stub the real component (does not exist yet — created in Plan 15-02)
-vi.mock("@/components/home/hero-blob", () => ({
-  HeroBlob: function HeroBlobStub() {
-    return null;
   },
 }));
 
 describe("HeroBlob R3F scene (TD-01)", () => {
   it("renders scene graph without crash (GPU morph, no WebGL required)", async () => {
     const { HeroBlob } = await import("@/components/home/hero-blob");
-    // Stub is defined — real test will use @react-three/test-renderer in Plan 15-02
-    expect(HeroBlob).toBeDefined();
+    const renderer = await create(<HeroBlob />);
+    expect(renderer.scene.children.length).toBeGreaterThan(0);
   });
 });
