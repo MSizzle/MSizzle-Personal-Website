@@ -61,7 +61,7 @@ Full milestone detail: [milestones/v2.0-ROADMAP.md](./milestones/v2.0-ROADMAP.md
   5. With `prefers-reduced-motion` set, autonomous and scroll-driven animation is disabled and content stays fully usable.
 **Plans**: 4 plans
 - [x] 14-01-PLAN.md — v3 branch + deploy baseline + Crimson Poster @theme tokens, sig utility, Space Grotesk/JetBrains Mono fonts
-- [ ] 14-02-PLAN.md — Static brutalist primitives (Rule, RuleStrong, SectionLabel, Chip, ListRow, Button, BigList, PageHero, Marquee)
+- [x] 14-02-PLAN.md — Static brutalist primitives (Rule, RuleStrong, SectionLabel, Chip, ListRow, Button, BigList, PageHero, Marquee)
 - [ ] 14-03-PLAN.md — Composite + animated primitives (Card, VideoCard, NewsletterCarousel, UsesList, Reveal)
 - [ ] 14-04-PLAN.md — /v3-specimen showcase route + production build gate (DQ-01 readiness)
 **UI hint**: yes
@@ -133,7 +133,7 @@ Phases execute in numeric order: 14 → 15 → 16 → 17 → 18
 | 11. Archive Pages | v2.0 | 5/5 | Complete | 2026-05-21 |
 | 12. Sub-page Restyle Sweep | v2.0 | 7/7 | Complete | 2026-05-21 |
 | 13. v2.0 QA & GO/NO-GO | v2.0 | 6/6 | Complete | 2026-05-21 |
-| 14. Branch & Crimson Poster Foundation | v3.0 | 1/4 | In Progress|  |
+| 14. Branch & Crimson Poster Foundation | v3.0 | 2/4 | In Progress|  |
 | 15. Slide-Deck Homepage & 3D Hero | v3.0 | 0/TBD | Not started | - |
 | 16. Interior Pages on Notion Data | v3.0 | 0/TBD | Not started | - |
 | 17. Infrastructure Preservation & SEO Extension | v3.0 | 0/TBD | Not started | - |

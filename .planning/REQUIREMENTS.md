@@ -10,8 +10,8 @@ presentation-layer rebuild: infrastructure is preserved, not rebuilt.
 - [x] **DS-01**: The site renders in the "Crimson Poster" palette (crimson-orange field #d93c1e, black accent, near-black supporting text) with no gradients anywhere.
 - [x] **DS-02**: Display headings render in the same crimson as the background, lifted by a hard black drop shadow; the outline variant uses a black stroke.
 - [x] **DS-03**: Typography uses Space Grotesk (display) and JetBrains Mono (labels) with a defined type scale, implemented as Tailwind v4 `@theme` tokens.
-- [ ] **DS-04**: A reusable set of brutalist primitives (rules, section labels, clickable list rows, big-type list, buttons, marquee, cards) is available to every page.
-- [ ] **DS-05**: The site honors `prefers-reduced-motion` (disables autonomous and scroll-driven animation, keeps content fully usable).
+- [x] **DS-04**: A reusable set of brutalist primitives (rules, section labels, clickable list rows, big-type list, buttons, marquee, cards) is available to every page.
+- [x] **DS-05**: The site honors `prefers-reduced-motion` (disables autonomous and scroll-driven animation, keeps content fully usable).
 
 ### Homepage Slide Deck (HD)
 - [ ] **HD-01**: The homepage is a full-page slide deck where one wheel or keyboard gesture advances exactly one slide.
@@ -63,8 +63,8 @@ REQ-ID → Phase. All 21 v3.0 requirements mapped to exactly one phase (100% cov
 | DS-01 | Phase 14 | Complete |
 | DS-02 | Phase 14 | Complete |
 | DS-03 | Phase 14 | Complete |
-| DS-04 | Phase 14 | Pending |
-| DS-05 | Phase 14 | Pending |
+| DS-04 | Phase 14 | Complete |
+| DS-05 | Phase 14 | Complete |
 | HD-01 | Phase 15 | Pending |
 | HD-02 | Phase 15 | Pending |
 | HD-03 | Phase 15 | Pending |
