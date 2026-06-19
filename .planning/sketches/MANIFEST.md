@@ -25,6 +25,7 @@ branch, previewed on Vercel, promoted to production via alias swap when it reach
 | 002 | full-site-model | Does the language hold across the whole site? | _in review_ | full-site, prototype, nav |
 | 003 | guided-line-home | Does a self-drawing guided line + near-black/off-white palette feel expansive while fixing red-on-red legibility? | _in review_ | home, line, scroll, dark, crimson-accent, legibility, palette-revisit |
 | 004 | explorative-scroll-story | Does the explorative scroll-story (hologram-on-podium → fluid line → 3D horse → YouTube zoom-through → newsletter) hold as the homepage spine? | _in review_ | home, scroll-story, 3d, hologram, fluid-line, youtube, zoom-transition, prototype |
+| 005 | webgl-hero-fidelity | What's the real fidelity ceiling — does live WebGL (PBR/IBL/bloom/grain/smooth-scroll) clear the Lusion bar and justify the heavier build? | _in review_ | home, webgl, threejs, pbr, ibl, bloom, postprocessing, lenis, fidelity |
 
 ## Locked Decisions (from 001)
 - **Direction:** dark canvas, brutalist uppercase grotesk type, autonomous (non-cursor-reactive) motion.
