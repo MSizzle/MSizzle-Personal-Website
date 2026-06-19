@@ -13,7 +13,8 @@ A personal site that feels alive and memorable, *and* legible — not another te
 - **Live:** https://montysinger.com (Vercel, Namecheap DNS, Super disconnected)
 - **Last shipped:** v1.0 Build & Launch — 2026-04-16 (GO per Phase 6 QA, 0 UAT failures, Lighthouse desktop 100/96/96/100, mobile PSI 77 accepted non-blocking)
 - **v2.0 shipped 2026-05-21:** Editorial Redesign milestone complete. 6 phases (8-13), 41 plans. Vanschneider-inspired manifesto homepage, warm-paper palette, 7 shared editorial primitives, archive pages (`/writing`, `/events`, `/photos`), sub-page restyle sweep, mobile nav restructure, modern browserslist (Chrome 92+/Safari 15.4+ — dropped ~14 KiB legacy polyfills). Lighthouse desktop median 96-100, PSI mobile 95 (up from 82). GO verdict signed by Monty Singer.
-- **Stack in production:** Next.js 16 App Router + React 19 + Tailwind v4 + Inter (next/font/google) + Motion (motion/react) + GSAP + Lenis + `@notionhq/client` v5
+- **v3.0 in progress (branch `v3`):** Dark Brutalist Rebuild. Phase 15 complete (2026-06-19) — the homepage pivoted from the planned CHOMP slide-deck to a **WebGL explorative scroll-story** (real-time GPU vertex-shader 3D hero blob, RoomEnvironment IBL + crimson rim + bloom, after-LCP `dynamic({ssr:false})` mount, capability-gated mobile poster fallback, four section beats). Palette shifted from "Crimson Poster" to **Crimson Line** (near-black canvas, off-white name, crimson as a sparing accent). Slide-deck approach superseded.
+- **Stack in production:** Next.js 16 App Router + React 19 + Tailwind v4 + Inter (next/font/google) + Motion (motion/react) + GSAP + Lenis + `@notionhq/client` v5 — v3 adds React Three Fiber + `@react-three/postprocessing` + `three-custom-shader-material`
 - **Analytics:** Self-hosted Umami at https://analytics.montysinger.com (Neon Postgres, separate Vercel project)
 - **Routes:** `/`, `/about`, `/projects` + `/projects/[slug]`, `/blog` + `/blog/[slug]` + `/blog/feed.xml`, `/events`, `/links`, `/newsletter`, `/prometheus`, `/uses` (redirects to `/about` post-v1.0)
 
@@ -152,4 +153,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-05-21 — v2.0 Editorial Redesign milestone complete. Next milestone planning open.*
+*Last updated: 2026-06-19 — v3.0 Phase 15 (WebGL explorative homepage) complete; homepage pivoted from slide-deck to WebGL scroll-story, palette to Crimson Line. Next: Phase 16 interior pages on Notion data.*
