@@ -763,7 +763,7 @@ export function useLenisControl() {
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **How to produce the poster image (D-08)?**
    - What we know: It's a still render of the elevated blob in the object slot. D-08 says "one-time render/screenshot committed as a static asset."
