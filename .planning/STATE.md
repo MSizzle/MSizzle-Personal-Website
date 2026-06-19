@@ -2,14 +2,14 @@
 gsd_state_version: 1.0
 milestone: v3.0
 milestone_name: Dark Brutalist Rebuild
-status: Re-scoped from slide deck; ready to discuss/plan the WebGL homepage
+status: executing
 stopped_at: Phase 15 context gathered (WebGL homepage, ready to plan)
-last_updated: "2026-06-19T04:11:59.620Z"
-last_activity: 2026-06-18 -- Phase 15 re-scoped to WebGL explorative homepage
+last_updated: "2026-06-19T17:01:38.373Z"
+last_activity: 2026-06-19 -- Phase 15 planning complete
 progress:
   total_phases: 5
   completed_phases: 1
-  total_plans: 4
+  total_plans: 9
   completed_plans: 4
   percent: 20
 ---
@@ -27,8 +27,8 @@ See: .planning/PROJECT.md (updated 2026-06-18)
 
 Phase: 15 (WebGL Explorative Homepage) — RE-PLANNING
 Plan: 0 of TBD (deck plans archived under superseded-deck/)
-Status: Re-scoped from slide deck; ready to discuss/plan the WebGL homepage
-Last activity: 2026-06-18 -- Phase 15 re-scoped to WebGL explorative homepage
+Status: Ready to execute
+Last activity: 2026-06-19 -- Phase 15 planning complete
 
 Direction: validated via sketches 003–005 + perf spike 001 (GO-WITH-CUTS). Build cuts: desktop-WebGL / mobile-poster, defer canvas past LCP, GPU vertex-shader morph.
 
