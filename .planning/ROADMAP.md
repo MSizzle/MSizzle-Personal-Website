@@ -81,7 +81,7 @@ Full milestone detail: [milestones/v2.0-ROADMAP.md](./milestones/v2.0-ROADMAP.md
 - [x] 15-01-PLAN.md — Palette swap (globals.css Crimson Line tokens + deck CSS removal) + 1x1 poster placeholder + test scaffolds
 - [x] 15-02-PLAN.md — GPU vertex-shader HeroBlob (CSM migration) + HeroBlobCanvas (Bloom/postprocessing) + HeroPodium
 - [x] 15-03-PLAN.md — canvas-loader.tsx (after-LCP dynamic mount) + explorative-homepage.tsx (gate orchestrator) + page.tsx swap
-- [ ] 15-04-PLAN.md — FallbackPoster + four section beats (Building, Writing, Newsletter, Footer)
+- [x] 15-04-PLAN.md — FallbackPoster + four section beats (Building, Writing, Newsletter, Footer)
 - [ ] 15-05-PLAN.md — Playwright poster capture + scroll-cue + GLB swap-in seam + visual verification checkpoint
 **Carry-forward from the superseded deck**: HeroBlob, HeroBlobCanvas, FallbackPoster, WebGL2 detection, section content, v3 tokens.
 **Build cuts (from spike 001, non-negotiable)**: desktop-only WebGL; defer canvas mount past LCP; GPU vertex-shader morph (no per-frame JS computeVertexNormals); trim/lazy postprocessing; produce the poster asset; confirm on Vercel preview PSI mobile.
@@ -143,7 +143,7 @@ Phases execute in numeric order: 14 → 15 → 16 → 17 → 18
 | 12. Sub-page Restyle Sweep | v2.0 | 7/7 | Complete | 2026-05-21 |
 | 13. v2.0 QA & GO/NO-GO | v2.0 | 6/6 | Complete | 2026-05-21 |
 | 14. Branch & Crimson Poster Foundation | v3.0 | 4/4 | Complete   | 2026-06-19 |
-| 15. WebGL Explorative Homepage | v3.0 | 3/5 | In Progress|  |
+| 15. WebGL Explorative Homepage | v3.0 | 4/5 | In Progress|  |
 | 16. Interior Pages on Notion Data | v3.0 | 0/TBD | Not started | - |
 | 17. Infrastructure Preservation & SEO Extension | v3.0 | 0/TBD | Not started | - |
 | 18. v3.0 QA, Perf Gate & Alias Swap | v3.0 | 0/TBD | Not started | - |
