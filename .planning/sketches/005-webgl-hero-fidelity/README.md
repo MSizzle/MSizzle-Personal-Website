@@ -2,7 +2,7 @@
 sketch: 005
 name: webgl-hero-fidelity
 question: "What's the real fidelity ceiling for the hero? Does live WebGL (PBR + IBL + crimson rim + bloom/grain + smooth scroll) clear the Lusion bar and justify the heavier build?"
-winner: null
+winner: "validated — real-WebGL fidelity approved by user 2026-06-18"
 tags: [home, webgl, threejs, pbr, ibl, bloom, postprocessing, lenis, fidelity, prototype]
 ---
 
