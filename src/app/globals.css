@@ -130,3 +130,128 @@ a {
   font-weight: 400;
   font-family: var(--font-mono);
 }
+
+/* ── Phase 15 — Deck Styles ────────────────────────────────────────────────
+   Fixed-stage deck layout: #scroller owns the viewport scroll; #objstage
+   is a fixed right-side panel for the 3D object / fallback poster.
+   On touch/small-screen/reduced-motion, deck-homepage--native reverts to
+   normal document flow (slides become block elements).
+   ─────────────────────────────────────────────────────────────────────── */
+
+/* Scroller: full-viewport fixed panel, hides native scrollbar */
+#scroller,
+.deck-scroller {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100dvh;
+  overflow-y: scroll;
+  overscroll-behavior: contain;
+  z-index: 20;
+  scrollbar-width: none;
+}
+#scroller::-webkit-scrollbar,
+.deck-scroller::-webkit-scrollbar {
+  display: none;
+}
+
+/* Object stage: fixed right panel for the 3D object */
+#objstage {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 45vw;
+  height: 100dvh;
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* Object wrapper: position:absolute fill; CSS entrance animation target */
+.objwrap {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  will-change: transform;
+  transform: translateX(38vw);
+}
+
+/* Individual deck slide */
+.deck-slide {
+  height: 100dvh;
+  flex-shrink: 0;
+  display: flex;
+  padding: 0 8vw;
+}
+
+/* Footer slide: auto-height, anchored to bottom */
+.deck-slide--footer,
+.deck-foot {
+  height: auto;
+  min-height: 100dvh;
+  justify-content: flex-end;
+  padding-top: 12vh;
+}
+
+/* Progress dots: fixed right side, vertically centered */
+.deck-dots {
+  position: fixed;
+  right: 1.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+@media (max-width: 760px) {
+  .deck-dots {
+    display: none;
+  }
+}
+
+/* Individual progress dot */
+.deck-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--color-text-muted);
+  opacity: 0.4;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: opacity 0.2s ease, background 0.2s ease;
+}
+.deck-dot--active {
+  background: var(--color-text);
+  opacity: 1;
+}
+
+/* Atmosphere: fixed background fill (z-index:0 below everything) */
+#atmosphere {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100dvh;
+  z-index: 0;
+  background: var(--color-bg);
+}
+
+/* Native-scroll mode overrides */
+.deck-homepage--native #atmosphere {
+  display: none;
+}
+.deck-homepage--native .deck-slide {
+  height: auto;
+  min-height: auto;
+}
+
+/* Static object stage for native-scroll fallback */
+.objstage-static {
+  position: relative;
+  width: 100%;
+  height: 40vw;
+  max-height: 500px;
+}
