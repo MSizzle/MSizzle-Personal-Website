@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sketch 004 — Explorative Scroll Story</title>
+<link rel="stylesheet" href="../themes/crimson-line.css">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--color-bg);color:var(--color-text);font-family:var(--font-sans);
+    -webkit-font-smoothing:antialiased;overflow-x:hidden}
+  ::selection{background:var(--accent);color:#fff}
+  a{color:inherit}
+
+  /* fixed fluid line overlay spanning the whole document */
+  #fluid{position:fixed;inset:0;width:100vw;height:100vh;z-index:4;pointer-events:none}
+  #fluid path{fill:none;stroke:var(--accent);stroke-width:2;stroke-linecap:round;
+    filter:drop-shadow(0 0 7px var(--accent-glow))}
+  #fluid .ghostline{stroke:var(--color-border);stroke-width:2}
+
+  .scene{position:relative;z-index:5}
+
+  /* ───────── HERO ───────── */
+  #hero{height:100vh;position:sticky;top:0;display:flex;align-items:center;
+    justify-content:space-between;padding:0 7vw;z-index:5;overflow:hidden}
+  .hero-copy{max-width:30ch}
+  .eyebrow{font-family:var(--font-mono);font-size:var(--text-sm);color:var(--color-text-muted);
+    letter-spacing:.18em;text-transform:uppercase;margin-bottom:var(--space-6)}
+  .name{font-family:var(--font-display);font-weight:700;line-height:.84;
+    font-size:clamp(3rem,9vw,9rem);letter-spacing:-.02em}
+  .name .ghost{color:transparent;-webkit-text-stroke:1.5px var(--color-border-strong);display:block}
+  .bio{margin-top:var(--space-6);color:var(--color-text-dim);font-size:var(--text-lg);line-height:1.4}
+
+  /* podium + rotating pixel avatar (faked 3D) */
+  .stage3d{position:relative;width:40vmin;height:64vmin;display:flex;flex-direction:column;
+    align-items:center;justify-content:flex-end;perspective:900px}
+  .avatar{width:30vmin;height:30vmin;transform-style:preserve-3d;
+    animation:spin3d 9s linear infinite;position:relative;margin-bottom:2vmin}
+  .avatar .face{position:absolute;inset:0;backface-visibility:hidden;border-radius:8px;
+    image-rendering:pixelated;
+    background:
+      repeating-linear-gradient(0deg,rgba(245,245,240,.08) 0 6px,transparent 6px 12px),
+      repeating-linear-gradient(90deg,rgba(245,245,240,.05) 0 6px,transparent 6px 12px),
+      radial-gradient(60% 50% at 50% 38%, #3a3a3e, #1a1a1c 70%),
+      linear-gradient(#202024,#121214);
+    box-shadow:inset 0 0 0 1px rgba(245,245,240,.08), 0 0 40px var(--accent-glow);
+    display:flex;align-items:center;justify-content:center;font-size:7vmin;filter:contrast(1.1)}
+  .avatar .face.back{transform:rotateY(180deg);opacity:.92}
+  .avatar .face::after{content:"";position:absolute;inset:0;border-radius:8px;
+    background:repeating-linear-gradient(0deg,transparent 0 3px,rgba(226,56,56,.06) 3px 4px);
+    animation:scan 3s linear infinite}
+  @keyframes scan{to{background-position:0 40px}}
+  @keyframes spin3d{to{transform:rotateY(360deg)}}
+  .podium{width:34vmin;height:7vmin;border-radius:50%/40%;
+    background:radial-gradient(60% 80% at 50% 20%, #19191b, #0b0b0c 80%);
+    box-shadow:0 0 0 1px rgba(245,245,240,.06), 0 -2px 30px var(--accent-glow), 0 20px 50px rgba(0,0,0,.7);
+    position:relative}
+  .podium::before{content:"";position:absolute;left:50%;top:-14vmin;transform:translateX(-50%);
+    width:30vmin;height:16vmin;
+    background:radial-gradient(50% 100% at 50% 100%, var(--accent-glow), transparent 70%);
+    opacity:.5;filter:blur(6px)}
+  .holo-tag{position:absolute;bottom:-3.4vmin;left:50%;transform:translateX(-50%);
+    font-family:var(--font-mono);font-size:11px;color:var(--color-text-muted);letter-spacing:.1em;white-space:nowrap}
+
+  .cue{position:absolute;bottom:5vh;left:50%;transform:translateX(-50%);
+    font-family:var(--font-mono);font-size:11px;color:var(--color-text-muted);letter-spacing:.18em;
+    display:flex;flex-direction:column;align-items:center;gap:8px;z-index:6}
+  .cue .bar{width:1px;height:40px;background:linear-gradient(var(--accent),transparent);
+    animation:cue 1.7s var(--ease-out) infinite}
+  @keyframes cue{0%{transform:scaleY(.2);opacity:.3;transform-origin:top}
+    50%{transform:scaleY(1);opacity:1}100%{transform:scaleY(.2);opacity:.3;transform-origin:bottom}}
+
+  /* ───────── generic content scene ───────── */
+  .panel{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:0 9vw;z-index:5}
+  .kicker{font-family:var(--font-mono);font-size:var(--text-sm);color:var(--accent);
+    letter-spacing:.16em;text-transform:uppercase;margin-bottom:var(--space-4)}
+  .big{font-family:var(--font-display);font-weight:700;font-size:clamp(2.4rem,7vw,6rem);
+    line-height:.92;letter-spacing:-.015em}
+  .sub{margin-top:var(--space-4);max-width:46ch;color:var(--color-text-dim);font-size:var(--text-lg);line-height:1.4}
+  .biglist{margin-top:var(--space-8);border-top:1px solid var(--color-border);max-width:760px}
+  .biglist a{display:flex;justify-content:space-between;gap:24px;text-decoration:none;
+    padding:var(--space-6) 0;border-bottom:1px solid var(--color-border);
+    font-family:var(--font-display);font-weight:700;font-size:clamp(1.6rem,4.5vw,3rem);
+    transition:color .18s,padding-left .25s var(--ease-out)}
+  .biglist a .to{font-family:var(--font-mono);font-weight:400;font-size:var(--text-sm);color:var(--color-text-muted)}
+  .biglist a:hover{color:var(--accent);padding-left:18px}
+
+  /* ───────── 3D horse scene ───────── */
+  #horse-scene{min-height:120vh;display:flex;align-items:center;justify-content:center;
+    flex-direction:column;text-align:center;padding:10vh 6vw;position:relative;z-index:5}
+  .horse{font-size:34vmin;line-height:1;transform-style:preserve-3d;
+    animation:spin3d 12s linear infinite;
+    filter:grayscale(1) brightness(1.4) drop-shadow(0 0 22px var(--accent-glow));
+    -webkit-text-stroke:1px var(--accent)}
+  .horse-floor{width:42vmin;height:5vmin;border-radius:50%;margin-top:-2vmin;
+    background:radial-gradient(50% 90% at 50% 20%, #161618, transparent 75%);
+    box-shadow:0 -2px 30px var(--accent-glow)}
+
+  /* ───────── WATCHING / youtube zoom-through ───────── */
+  #watch{height:520vh;position:relative;z-index:5}            /* tall scroll runway */
+  #watch .pin{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;
+    align-items:center}
+  .watch-head{position:absolute;top:9vh;left:9vw;z-index:3}
+  .track{display:flex;gap:3vw;padding:0 9vw;will-change:transform}
+  .vid{flex:0 0 32vw;aspect-ratio:16/9;border-radius:14px;position:relative;overflow:hidden;
+    border:1px solid var(--color-border);background:#101012;
+    box-shadow:0 20px 60px rgba(0,0,0,.5);transition:border-color .2s}
+  .vid:hover{border-color:var(--accent)}
+  .vid .thumb{position:absolute;inset:0;
+    background:linear-gradient(135deg,#1b1b1f,#0e0e10);display:flex;align-items:center;justify-content:center}
+  .vid .thumb span{font-size:48px;opacity:.5}
+  .vid .play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+    width:64px;height:46px;border-radius:12px;background:var(--accent);display:flex;align-items:center;justify-content:center;
+    box-shadow:0 0 30px var(--accent-glow)}
+  .vid .play::after{content:"";border-left:18px solid #fff;border-top:11px solid transparent;border-bottom:11px solid transparent;margin-left:4px}
+  .vid .meta{position:absolute;left:14px;bottom:12px;right:14px;font-family:var(--font-mono);font-size:12px;color:var(--color-text-dim)}
+  /* the hero tile that zooms in */
+  .vid.zoomer{flex:0 0 32vw;z-index:5}
+  #zoom-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    z-index:8;pointer-events:none;opacity:0}
+  #zoom-overlay .frame{width:32vw;aspect-ratio:16/9;border-radius:14px;overflow:hidden;
+    background:linear-gradient(135deg,#1b1b1f,#0e0e10);border:1px solid var(--accent);
+    box-shadow:0 0 80px var(--accent-glow);transform-origin:center;display:flex;align-items:center;justify-content:center}
+  #zoom-overlay .frame .play{position:static}
+  /* what emerges from inside the zoom */
+  #reveal{position:absolute;inset:0;z-index:9;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;text-align:center;gap:var(--space-6);
+    opacity:0;transform:scale(1.2)}
+  #reveal .nl{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+  #reveal input{background:var(--color-surface);border:1px solid var(--color-border);color:var(--color-text);
+    padding:14px 16px;border-radius:var(--radius-full);font-family:var(--font-mono);font-size:13px;min-width:220px}
+  #reveal button{background:var(--color-text);color:var(--color-bg);border:none;padding:14px 22px;
+    border-radius:var(--radius-full);font-family:var(--font-mono);font-weight:700;cursor:pointer}
+  #reveal button:hover{background:var(--accent);color:#fff}
+
+  footer{min-height:70vh;display:flex;flex-direction:column;justify-content:flex-end;
+    padding:0 9vw 9vh;z-index:5;position:relative}
+  .flinks{display:flex;gap:20px;flex-wrap:wrap;margin-top:var(--space-6);font-family:var(--font-mono);font-size:var(--text-sm)}
+  .flinks a{color:var(--color-text-dim);text-decoration:none}
+  .flinks a:hover{color:var(--accent)}
+  .colophon{margin-top:var(--space-8);color:var(--color-text-muted);font-family:var(--font-mono);font-size:var(--text-xs)}
+
+  .fakebadge{display:inline-block;font-family:var(--font-mono);font-size:10px;color:var(--color-text-muted);
+    border:1px dashed var(--color-border-strong);border-radius:999px;padding:3px 8px;margin-top:10px;letter-spacing:.06em}
+
+  #notes{position:fixed;left:12px;bottom:12px;z-index:9999;max-width:300px;
+    background:rgba(0,0,0,.82);color:#cfcfca;font-family:var(--font-mono);font-size:11px;line-height:1.5;
+    padding:10px 12px;border-radius:8px;border:1px solid var(--color-border)}
+  #notes b{color:var(--accent-hover)}
+</style>
+</head>
+<body>
+
+<!-- fluid interweaving line (animated) -->
+<svg id="fluid" viewBox="0 0 100 100" preserveAspectRatio="none">
+  <path class="ghostline" id="fluid-ghost"/>
+  <path id="fluid-path"/>
+</svg>
+
+<!-- ───────── HERO ───────── -->
+<section id="hero" class="scene">
+  <div class="hero-copy">
+    <div class="eyebrow">— builder · writer · optimist</div>
+    <h1 class="name">MONTY<span class="ghost">SINGER</span></h1>
+    <p class="bio">I build things that feel alive and write about why building is worth it. Wander down — there's a lot to see.</p>
+    <span class="fakebadge">scroll-cue: the hologram scales + the line spills out as you scroll ↓</span>
+  </div>
+  <div class="stage3d" id="stage3d">
+    <div class="avatar" id="avatar">
+      <div class="face front">🧑‍💻</div>
+      <div class="face back">🧑‍💻</div>
+      <span class="holo-tag">PIXEL-MONTY · 360° HOLOGRAM → real build: Three.js voxel model</span>
+    </div>
+    <div class="podium"></div>
+  </div>
+  <div class="cue"><span>SCROLL</span><span class="bar"></span></div>
+</section>
+
+<!-- ───────── BUILDING ───────── -->
+<section class="panel scene">
+  <div class="kicker">01 / Building</div>
+  <h2 class="big">What I'm making</h2>
+  <div class="biglist">
+    <a href="#">Projects <span class="to">→ /projects</span></a>
+    <a href="#">Writing <span class="to">→ /writing</span></a>
+    <a href="#">Doing <span class="to">→ prometheus.today</span></a>
+  </div>
+</section>
+
+<!-- ───────── 3D HORSE ───────── -->
+<section id="horse-scene" class="scene">
+  <div class="kicker">02 / The cool bit</div>
+  <h2 class="big" style="margin-bottom:6vh">Some things are just&nbsp;rad.</h2>
+  <div class="horse">🐎</div>
+  <div class="horse-floor"></div>
+  <span class="fakebadge">placeholder → real build: rotating 3D horse model (Three.js / GLTF)</span>
+</section>
+
+<!-- ───────── WRITING ───────── -->
+<section class="panel scene">
+  <div class="kicker">03 / Writing</div>
+  <h2 class="big">Notes &amp; essays</h2>
+  <p class="sub">Long-form thinking on building and defiant optimism, pulled live from Notion.</p>
+</section>
+
+<!-- ───────── WATCHING / YOUTUBE ZOOM-THROUGH ───────── -->
+<section id="watch" class="scene">
+  <div class="pin">
+    <div class="watch-head">
+      <div class="kicker">04 / Watching</div>
+      <h2 class="big" style="font-size:clamp(2rem,5vw,4rem)">Things worth your eyes</h2>
+    </div>
+    <div class="track" id="track">
+      <div class="vid"><div class="thumb"><span>▶</span></div><div class="play"></div><div class="meta">How to build a personal site that feels alive</div></div>
+      <div class="vid"><div class="thumb"><span>▶</span></div><div class="play"></div><div class="meta">Lusion — behind the cinematic scroll</div></div>
+      <div class="vid"><div class="thumb"><span>▶</span></div><div class="play"></div><div class="meta">Three.js in 100 seconds</div></div>
+      <div class="vid"><div class="thumb"><span>▶</span></div><div class="play"></div><div class="meta">The art of the slow web</div></div>
+      <div class="vid zoomer" id="zoomer"><div class="thumb"><span>▶</span></div><div class="play"></div><div class="meta">▶ the one that takes over the screen…</div></div>
+    </div>
+    <!-- the tile that scales to fill, then we "scroll into" it -->
+    <div id="zoom-overlay"><div class="frame" id="zoom-frame"><div class="play"></div></div></div>
+    <!-- what emerges from inside -->
+    <div id="reveal">
+      <div class="kicker">05 / Stay in the loop</div>
+      <h2 class="big">…and out comes the newsletter.</h2>
+      <form class="nl" onsubmit="return fakeSub(this)">
+        <input type="email" placeholder="you@email.com" required>
+        <button>Subscribe</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── FOOTER ───────── -->
+<footer class="scene">
+  <div class="kicker">End of the wander</div>
+  <h2 class="big" style="font-size:clamp(1.8rem,5vw,3.4rem)">Let's talk.</h2>
+  <div class="flinks"><a>Email</a><a>X / Twitter</a><a>GitHub</a><a>LinkedIn</a><a>RSS</a></div>
+  <div class="colophon">© 2026 Monty Singer · explorative prototype · sketch 004</div>
+</footer>
+
+<!-- toolbar -->
+<div id="sketch-tools" style="position:fixed;bottom:12px;right:12px;z-index:9999;font-family:var(--font-mono);font-size:12px;background:rgba(0,0,0,0.8);color:#fff;padding:8px 12px;border-radius:8px;opacity:.4;transition:opacity .2s;display:flex;gap:10px;align-items:center" onmouseenter="this.style.opacity='1'" onmouseleave="this.style.opacity='0.4'">
+  <label>theme
+    <select onchange="document.querySelector('link[href*=themes]').href='../themes/'+this.value+'.css'">
+      <option value="crimson-line" selected>crimson-line</option>
+      <option value="nocturne">nocturne</option>
+      <option value="ember">ember</option>
+      <option value="halogen">halogen</option>
+    </select>
+  </label>
+  <label>end<select id="endStyle"><option value="tile">tile zoom</option><option value="button">button zoom</option></select></label>
+</div>
+
+<div id="notes">
+  <b>Sketch 004 — explorative prototype.</b> Scroll slowly.<br>
+  • Hero: rotating pixel-avatar on a podium (CSS-faked 3D).<br>
+  • Fluid line interweaves as you scroll.<br>
+  • Horse + avatar are placeholders → real build = Three.js.<br>
+  • <b>Watching</b>: videos scroll sideways, then one zooms in and the newsletter emerges from inside it.
+</div>
+
+<script>
+const fp = document.getElementById('fluid-path');
+const fg = document.getElementById('fluid-ghost');
+let t = 0;
+
+/* Fluid interweaving line: an animated vertical-ish wave drawn in 0..100 space,
+   amplitude grows as you scroll (rigid thread near the top → fluid lower down). */
+function fluid(){
+  const max = (document.documentElement.scrollHeight - innerHeight) || 1;
+  const prog = Math.min(1, Math.max(0, scrollY / max));
+  const amp = 6 + prog * 26;                 // gets more expressive as you go
+  let d = 'M 50 0';
+  for(let y=0; y<=100; y+=4){
+    const x = 50 + Math.sin((y/12) + t + prog*3) * (amp * (0.3 + y/120));
+    d += ` L ${x.toFixed(2)} ${y}`;
+  }
+  fp.setAttribute('d', d);
+  fg.setAttribute('d', d);
+  // reveal the line proportionally to scroll
+  const L = fp.getTotalLength();
+  fp.style.strokeDasharray = L;
+  fp.style.strokeDashoffset = L * (1 - Math.min(1, prog*1.1 + 0.05));
+}
+
+/* Hero scroll-cue: avatar scales down + drifts as you start scrolling. */
+const stage = document.getElementById('stage3d');
+const heroCopy = document.querySelector('.hero-copy');
+function hero(){
+  const p = Math.min(1, scrollY / innerHeight);
+  stage.style.transform = `scale(${1 - p*0.45}) translateY(${p*-8}vh)`;
+  stage.style.opacity = 1 - p*0.7;
+  heroCopy.style.transform = `translateX(${-p*6}vw)`;
+  heroCopy.style.opacity = 1 - p*0.6;
+}
+
+/* Watching: horizontal track translate + final zoom-through. */
+const watch = document.getElementById('watch');
+const track = document.getElementById('track');
+const overlay = document.getElementById('zoom-overlay');
+const frame = document.getElementById('zoom-frame');
+const reveal = document.getElementById('reveal');
+function watching(){
+  const rect = watch.getBoundingClientRect();
+  const total = watch.offsetHeight - innerHeight;
+  const p = Math.min(1, Math.max(0, -rect.top / total));   // 0..1 within the pinned runway
+  // phase 1 (0 .. .7): scroll the row sideways
+  const scrollPhase = Math.min(1, p / 0.7);
+  const maxX = track.scrollWidth - innerWidth + innerWidth*0.18;
+  track.style.transform = `translateX(${-scrollPhase * maxX}px)`;
+  // phase 2 (.7 .. 1): one tile zooms to fill, newsletter emerges
+  const zp = Math.max(0, (p - 0.7) / 0.3);
+  if(zp > 0){
+    overlay.style.opacity = 1;
+    track.style.opacity = 1 - zp*0.9;
+    const scale = 1 + zp*7;                 // 32vw tile blows up to fill+
+    frame.style.transform = `scale(${scale})`;
+    frame.style.opacity = 1 - Math.max(0,(zp-0.6)/0.4); // frame fades as we go "inside"
+    reveal.style.opacity = Math.max(0,(zp-0.55)/0.45);
+    reveal.style.transform = `scale(${1.2 - Math.max(0,(zp-0.55)/0.45)*0.2})`;
+  } else {
+    overlay.style.opacity = 0; track.style.opacity = 1; reveal.style.opacity = 0;
+  }
+}
+
+function fakeSub(form){ form.querySelector('button').textContent='✓ On the list'; return false; }
+
+let raf=false;
+function onScroll(){ if(!raf){requestAnimationFrame(()=>{hero();watching();fluid();raf=false;});raf=true;} }
+addEventListener('scroll', onScroll);
+addEventListener('resize', ()=>{hero();watching();fluid();});
+// animate the fluid line continuously
+(function loop(){ t += 0.012; fluid(); requestAnimationFrame(loop); })();
+hero(); watching();
+</script>
+</body>
+</html>

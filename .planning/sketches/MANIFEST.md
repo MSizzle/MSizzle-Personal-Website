@@ -24,6 +24,7 @@ branch, previewed on Vercel, promoted to production via alias swap when it reach
 | 001 | dark-kinetic-home | What does the dark, kinetic homepage feel like? | **D · Synthesis** | home, motion, dark, 3d, slides |
 | 002 | full-site-model | Does the language hold across the whole site? | _in review_ | full-site, prototype, nav |
 | 003 | guided-line-home | Does a self-drawing guided line + near-black/off-white palette feel expansive while fixing red-on-red legibility? | _in review_ | home, line, scroll, dark, crimson-accent, legibility, palette-revisit |
+| 004 | explorative-scroll-story | Does the explorative scroll-story (hologram-on-podium → fluid line → 3D horse → YouTube zoom-through → newsletter) hold as the homepage spine? | _in review_ | home, scroll-story, 3d, hologram, fluid-line, youtube, zoom-transition, prototype |
 
 ## Locked Decisions (from 001)
 - **Direction:** dark canvas, brutalist uppercase grotesk type, autonomous (non-cursor-reactive) motion.
@@ -41,3 +42,4 @@ After Phase 15 built the locked direction (Crimson Poster slide deck), user feed
 - **Structure:** discrete CHOMP slide deck → wants expansive, "wandering" feel via a **guided drawing line** (self-drawing SVG thread connecting sections). Reuse the 3D blob + section content; swap the navigation model.
 - **Palette:** "Crimson Poster" (crimson field + crimson type) → **red-on-red is illegible.** New direction in `themes/crimson-line.css`: near-black canvas, off-white name, crimson DEMOTED to a sparing accent (line / dots / hover), never the name.
 If sketch 003 wins, the LOCKED palette + slide-deck structure decisions above must be superseded.
+- **Scope expansion (sketch 004):** user wants a more ambitious *explorative* homepage — rotating pixel-avatar hologram on a podium (hero), scroll-cue that scales the hero, the line going *fluid/interweaving*, a rotating 3D horse beat, and a "Watching"/YouTube gallery that ends with a video zooming to fill the screen and the next section emerging from inside it. Implies real 3D (Three.js/GLTF models for avatar + horse) and scroll-pinned transitions — heavier than the Phase 15 build. Asset sourcing (pixel-avatar, horse model) is an open dependency.
