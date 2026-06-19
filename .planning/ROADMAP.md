@@ -81,7 +81,7 @@ Full milestone detail: [milestones/v2.0-ROADMAP.md](./milestones/v2.0-ROADMAP.md
 - [x] 15-02-PLAN.md — Lenis context augment (useLenisControl) + CHOMP deck controller hook + objEnter (Wave 1)
 - [x] 15-03-PLAN.md — R3F HeroBlob mesh + HeroBlobCanvas wrapper (Wave 1)
 - [x] 15-04-PLAN.md — 5 slide components + fallback poster component (Wave 1)
-- [ ] 15-05-PLAN.md — DeckHomepage orchestrator + page.tsx replacement + InkFooter suppression (Wave 2)
+- [x] 15-05-PLAN.md — DeckHomepage orchestrator + page.tsx replacement + InkFooter suppression (Wave 2)
 - [ ] 15-06-PLAN.md — Poster production (human checkpoint) + VALIDATION.md closeout (Wave 3)
 **UI hint**: yes
 
@@ -140,7 +140,7 @@ Phases execute in numeric order: 14 → 15 → 16 → 17 → 18
 | 12. Sub-page Restyle Sweep | v2.0 | 7/7 | Complete | 2026-05-21 |
 | 13. v2.0 QA & GO/NO-GO | v2.0 | 6/6 | Complete | 2026-05-21 |
 | 14. Branch & Crimson Poster Foundation | v3.0 | 4/4 | Complete   | 2026-06-19 |
-| 15. Slide-Deck Homepage & 3D Hero | v3.0 | 4/6 | In Progress|  |
+| 15. Slide-Deck Homepage & 3D Hero | v3.0 | 5/6 | In Progress|  |
 | 16. Interior Pages on Notion Data | v3.0 | 0/TBD | Not started | - |
 | 17. Infrastructure Preservation & SEO Extension | v3.0 | 0/TBD | Not started | - |
 | 18. v3.0 QA, Perf Gate & Alias Swap | v3.0 | 0/TBD | Not started | - |
