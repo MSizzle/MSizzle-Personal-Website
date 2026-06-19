@@ -1,16 +1,17 @@
 import { JsonLd } from "@/components/seo/json-ld";
 import { buildPersonSchema } from "@/lib/seo/schemas";
-import { DeckHomepage } from "@/components/home-deck/deck-homepage";
+import { ExplorativeHomepage } from "@/components/home/explorative-homepage";
 
 /**
- * Homepage — static Server Component for the v3 slide-deck experience.
+ * Homepage — static Server Component for the WebGL explorative scroll-story.
  *
- * No Notion data fetched here (D-10: slide copy is hardcoded JSX).
+ * No Notion data fetched here (D-10: homepage copy is hardcoded JSX in section components).
  * revalidate=false: fully static, no ISR needed on homepage.
  *
- * DeckHomepage is a "use client" component that:
- *  - Dynamically imports HeroBlobCanvas with ssr:false (avoids build error)
- *  - Conditionally renders deck vs native-scroll based on touch/reduced-motion
+ * ExplorativeHomepage is a "use client" orchestrator that:
+ *  - Detects WebGL2 availability, touch/small-screen, and reduced-motion preference
+ *  - Renders CanvasLoader (dynamic HeroBlobCanvas, after-LCP) on capable desktop
+ *  - Renders FallbackPoster on mobile / no-WebGL / reduced-motion
  */
 export const revalidate = false;
 
@@ -18,7 +19,7 @@ export default function Home() {
   return (
     <>
       <JsonLd data={buildPersonSchema()} />
-      <DeckHomepage />
+      <ExplorativeHomepage />
     </>
   );
 }

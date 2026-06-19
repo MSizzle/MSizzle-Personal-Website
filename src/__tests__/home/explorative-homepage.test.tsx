@@ -1,4 +1,6 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import { describe, it, expect, vi, afterEach } from "vitest";
+import { render, screen, act, cleanup } from "@testing-library/react";
+import React from "react";
 
 // Mock motion/react — no real animation in test env
 vi.mock("motion/react", () => ({ useReducedMotion: () => false }));
@@ -6,7 +8,6 @@ vi.mock("motion/react", () => ({ useReducedMotion: () => false }));
 // Mock CanvasLoader so the test doesn't need WebGL
 vi.mock("@/components/home/canvas-loader", () => ({
   CanvasLoader: function CanvasLoaderMock() {
-    const React = require("react");
     return React.createElement("div", { "data-testid": "canvas-loader" });
   },
 }));
@@ -14,7 +15,6 @@ vi.mock("@/components/home/canvas-loader", () => ({
 // Mock FallbackPoster so the test doesn't need next/image
 vi.mock("@/components/home/fallback-poster", () => ({
   FallbackPoster: function FallbackPosterMock() {
-    const React = require("react");
     return React.createElement("div", { "data-testid": "fallback-poster" });
   },
 }));
@@ -41,50 +41,65 @@ vi.mock("@/components/home/section-footer", () => ({
   },
 }));
 
-// Stub the real component (does not exist yet — created in Plan 15-02)
-vi.mock("@/components/home/explorative-homepage", () => ({
-  ExplorativeHomepage: function ExplorativeHomepageStub() {
-    return null;
-  },
-}));
-
-// Standard matchMedia mock (from Shared Patterns — PATTERNS.md)
+// Standard matchMedia mock helper (jsdom does not define window.matchMedia)
 function mockMatchMedia(coarse: boolean) {
-  vi.spyOn(window, "matchMedia").mockImplementation((query: string) => ({
-    matches: coarse ? query === "(pointer: coarse)" : false,
-    media: query,
-    onchange: null,
-    addListener: vi.fn(),
-    removeListener: vi.fn(),
-    addEventListener: vi.fn(),
-    removeEventListener: vi.fn(),
-    dispatchEvent: vi.fn(),
-  } as MediaQueryList));
+  Object.defineProperty(window, "matchMedia", {
+    writable: true,
+    configurable: true,
+    value: (query: string) => ({
+      matches: coarse ? query === "(pointer: coarse)" : false,
+      media: query,
+      onchange: null,
+      addListener: vi.fn(),
+      removeListener: vi.fn(),
+      addEventListener: vi.fn(),
+      removeEventListener: vi.fn(),
+      dispatchEvent: vi.fn(),
+    }),
+  });
 }
 
 describe("ExplorativeHomepage gate (TD-03 + HD-05)", () => {
   afterEach(() => {
+    cleanup(); // unmount all rendered components
     vi.restoreAllMocks();
+    // Reset matchMedia to undefined so spies don't bleed between tests
+    Object.defineProperty(window, "matchMedia", {
+      writable: true,
+      configurable: true,
+      value: undefined,
+    });
   });
 
-  it("stub is importable before real component exists", async () => {
+  it("shows fallback-poster on pointer:coarse (touch device)", async () => {
+    // coarse = true → isTouchOrSmall = true → showCanvas = false
+    mockMatchMedia(true);
     const { ExplorativeHomepage } = await import(
       "@/components/home/explorative-homepage"
     );
-    expect(ExplorativeHomepage).toBeDefined();
+    await act(async () => {
+      render(React.createElement(ExplorativeHomepage));
+    });
+    expect(screen.getByTestId("fallback-poster")).toBeTruthy();
   });
 
-  // Will be promoted to real tests in Plan 15-02 Task 3 (gate logic)
-  it.todo(
-    "shows fallback-poster on pointer:coarse (touch device) — wire to real component"
-  );
-  it.todo(
-    "shows fallback-poster when WebGL2 unavailable — wire to real component"
-  );
-  it.todo(
-    "shows canvas-loader on pointer:fine with WebGL2 available — wire to real component"
-  );
-  it.todo(
-    "shows fallback-poster when prefers-reduced-motion — wire to real component"
-  );
+  it("shows fallback-poster when WebGL2 unavailable", async () => {
+    // fine pointer, large screen — but WebGL2 returns null
+    mockMatchMedia(false);
+    // Capture original before spying to avoid infinite recursion
+    const originalCreateElement = document.createElement.bind(document);
+    vi.spyOn(document, "createElement").mockImplementation((tag: string) => {
+      if (tag === "canvas") {
+        return { getContext: () => null } as unknown as HTMLElement;
+      }
+      return originalCreateElement(tag);
+    });
+    const { ExplorativeHomepage } = await import(
+      "@/components/home/explorative-homepage"
+    );
+    await act(async () => {
+      render(React.createElement(ExplorativeHomepage));
+    });
+    expect(screen.getByTestId("fallback-poster")).toBeTruthy();
+  });
 });
