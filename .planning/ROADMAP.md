@@ -78,7 +78,7 @@ Full milestone detail: [milestones/v2.0-ROADMAP.md](./milestones/v2.0-ROADMAP.md
   4. Mobile / pointer:coarse / small-screen / reduced-motion / no-WebGL2 → static poster (`public/hero-blob-poster.webp`), no canvas.
   5. Expansive scroll-story structure with four section beats (Building, Writing, Newsletter, Footer); GLB swap-in seam built; v1 ships on the procedural blob stand-in.
 **Plans**: 5 plans
-- [ ] 15-01-PLAN.md — Palette swap (globals.css Crimson Line tokens + deck CSS removal) + 1x1 poster placeholder + test scaffolds
+- [x] 15-01-PLAN.md — Palette swap (globals.css Crimson Line tokens + deck CSS removal) + 1x1 poster placeholder + test scaffolds
 - [ ] 15-02-PLAN.md — GPU vertex-shader HeroBlob (CSM migration) + HeroBlobCanvas (Bloom/postprocessing) + HeroPodium
 - [ ] 15-03-PLAN.md — canvas-loader.tsx (after-LCP dynamic mount) + explorative-homepage.tsx (gate orchestrator) + page.tsx swap
 - [ ] 15-04-PLAN.md — FallbackPoster + four section beats (Building, Writing, Newsletter, Footer)
@@ -143,7 +143,7 @@ Phases execute in numeric order: 14 → 15 → 16 → 17 → 18
 | 12. Sub-page Restyle Sweep | v2.0 | 7/7 | Complete | 2026-05-21 |
 | 13. v2.0 QA & GO/NO-GO | v2.0 | 6/6 | Complete | 2026-05-21 |
 | 14. Branch & Crimson Poster Foundation | v3.0 | 4/4 | Complete   | 2026-06-19 |
-| 15. WebGL Explorative Homepage | v3.0 | 5/5 | Planning | — |
+| 15. WebGL Explorative Homepage | v3.0 | 1/5 | In Progress|  |
 | 16. Interior Pages on Notion Data | v3.0 | 0/TBD | Not started | - |
 | 17. Infrastructure Preservation & SEO Extension | v3.0 | 0/TBD | Not started | - |
 | 18. v3.0 QA, Perf Gate & Alias Swap | v3.0 | 0/TBD | Not started | - |
