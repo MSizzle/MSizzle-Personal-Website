@@ -70,14 +70,19 @@ Full milestone detail: [milestones/v2.0-ROADMAP.md](./milestones/v2.0-ROADMAP.md
 **Goal**: The homepage is an expansive, Lusion-grade WebGL "explorative scroll-story" — a real-time 3D hero object, a fluid interweaving scroll line, and themed section beats you wander down — that stays inside the project's perf budget. Replaces the superseded slide deck.
 **Depends on**: Phase 14
 **Direction validated by**: sketches 003–005 (`.planning/sketches/`) + perf spike 001 (`.planning/spikes/`, GO-WITH-CUTS). See memory homepage-webgl-direction.
-**Requirements**: TD-01, TD-02, TD-03 (3D object / lazy-load / fallback — carry forward), HD-04 (big-type index), HD-05 (touch/small-screen fallback). _HD-01, HD-02, HD-03 (CHOMP wheel-deck nav) are superseded; requirements to be finalized in re-plan._
-**Success Criteria** (provisional — finalized in discuss/plan):
+**Requirements**: TD-01, TD-02, TD-03 (3D object / lazy-load / fallback — carry forward), HD-04 (big-type index), HD-05 (touch/small-screen fallback). _HD-01, HD-02, HD-03 (CHOMP wheel-deck nav) are superseded._
+**Success Criteria** (what must be TRUE):
   1. Palette: near-black canvas, off-white name (NO red-on-red), crimson as a sparing accent (line / rim / hover).
   2. Desktop renders a live WebGL 3D hero (PBR/clearcoat, RoomEnvironment IBL, crimson rim, bloom) with GPU vertex-shader morph; canvas is `dynamic({ssr:false})` in a `"use client"` loader, mounted after LCP.
   3. LCP element is SSR'd text/poster — never the canvas; mobile LCP/PSI stays within the budget already won.
   4. Mobile / pointer:coarse / small-screen / reduced-motion / no-WebGL2 → static poster (`public/hero-blob-poster.webp`), no canvas.
-  5. Expansive scroll-story structure (fluid line threading the section beats). Full set-pieces (voxel-Monty on a podium, 3D horse, "Watching"/YouTube zoom-through) layered incrementally; real GLB models swap in for the procedural stand-in when the asset workstream delivers.
-**Plans**: TBD — re-planning (deck attempt archived under `superseded-deck/`)
+  5. Expansive scroll-story structure with four section beats (Building, Writing, Newsletter, Footer); GLB swap-in seam built; v1 ships on the procedural blob stand-in.
+**Plans**: 5 plans
+- [ ] 15-01-PLAN.md — Palette swap (globals.css Crimson Line tokens + deck CSS removal) + 1x1 poster placeholder + test scaffolds
+- [ ] 15-02-PLAN.md — GPU vertex-shader HeroBlob (CSM migration) + HeroBlobCanvas (Bloom/postprocessing) + HeroPodium
+- [ ] 15-03-PLAN.md — canvas-loader.tsx (after-LCP dynamic mount) + explorative-homepage.tsx (gate orchestrator) + page.tsx swap
+- [ ] 15-04-PLAN.md — FallbackPoster + four section beats (Building, Writing, Newsletter, Footer)
+- [ ] 15-05-PLAN.md — Playwright poster capture + scroll-cue + GLB swap-in seam + visual verification checkpoint
 **Carry-forward from the superseded deck**: HeroBlob, HeroBlobCanvas, FallbackPoster, WebGL2 detection, section content, v3 tokens.
 **Build cuts (from spike 001, non-negotiable)**: desktop-only WebGL; defer canvas mount past LCP; GPU vertex-shader morph (no per-frame JS computeVertexNormals); trim/lazy postprocessing; produce the poster asset; confirm on Vercel preview PSI mobile.
 **UI hint**: yes
@@ -138,7 +143,7 @@ Phases execute in numeric order: 14 → 15 → 16 → 17 → 18
 | 12. Sub-page Restyle Sweep | v2.0 | 7/7 | Complete | 2026-05-21 |
 | 13. v2.0 QA & GO/NO-GO | v2.0 | 6/6 | Complete | 2026-05-21 |
 | 14. Branch & Crimson Poster Foundation | v3.0 | 4/4 | Complete   | 2026-06-19 |
-| 15. WebGL Explorative Homepage | v3.0 | 0/TBD | Re-planning (deck superseded) |  |
+| 15. WebGL Explorative Homepage | v3.0 | 5/5 | Planning | — |
 | 16. Interior Pages on Notion Data | v3.0 | 0/TBD | Not started | - |
 | 17. Infrastructure Preservation & SEO Extension | v3.0 | 0/TBD | Not started | - |
 | 18. v3.0 QA, Perf Gate & Alias Swap | v3.0 | 0/TBD | Not started | - |
