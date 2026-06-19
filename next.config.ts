@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  transpilePackages: ['three'],
   // Next.js bundles `next-polyfill-module` unconditionally, ignoring browserslist
   // (vercel/next.js#86785, discussion #64330). The Next client imports it via
   // a relative path (`../build/polyfills/polyfill-module`), so alias both the
