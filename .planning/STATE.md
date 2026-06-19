@@ -2,14 +2,14 @@
 gsd_state_version: 1.0
 milestone: v3.0
 milestone_name: Dark Brutalist Rebuild
-status: executing
-stopped_at: Phase 15 re-scoped to WebGL homepage (deck superseded); ready to re-discuss/plan
-last_updated: "2026-06-18T00:00:00.000Z"
-last_activity: 2026-06-18 -- Phase 15 re-scoped from slide deck to WebGL explorative homepage
+status: Re-scoped from slide deck; ready to discuss/plan the WebGL homepage
+stopped_at: Phase 15 context gathered (WebGL homepage, ready to plan)
+last_updated: "2026-06-19T04:11:59.620Z"
+last_activity: 2026-06-18 -- Phase 15 re-scoped to WebGL explorative homepage
 progress:
   total_phases: 5
   completed_phases: 1
-  total_plans: 10
+  total_plans: 4
   completed_plans: 4
   percent: 20
 ---
@@ -114,8 +114,8 @@ Close-out rationale: v2.0 shipped via Phase 13 GO sign-off. These items predate 
 
 ## Session Continuity
 
-Last session: 2026-06-19T00:49:46.273Z
-Stopped at: Phase 15 context gathered
+Last session: 2026-06-19T04:11:59.611Z
+Stopped at: Phase 15 context gathered (WebGL homepage, ready to plan)
 Resume file: .planning/phases/15-slide-deck-homepage-3d-hero/15-CONTEXT.md
 
 ---
