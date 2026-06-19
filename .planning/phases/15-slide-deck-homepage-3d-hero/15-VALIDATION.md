@@ -1,7 +1,7 @@
 ---
 phase: 15
 slug: slide-deck-homepage-3d-hero
-status: draft
+status: ready-for-manual-verification
 nyquist_compliant: true
 wave_0_complete: true
 created: 2026-06-18
@@ -40,14 +40,14 @@ Wave 0 must install `@react-three/test-renderer@9.1.0` (peer of `@react-three/fi
 
 | Req ID | Behavior | Test Type | Automated Command | File Exists | Status |
 |--------|----------|-----------|-------------------|-------------|--------|
-| HD-01 | One wheel gesture advances exactly one slide | unit | `npx vitest run src/__tests__/home-deck/deck-controller.test.ts` | ❌ W0 | ⬜ pending |
-| HD-02 | Fresh-gesture detection filters decaying momentum; direction reversal bypasses the 820ms lock | unit | `npx vitest run src/__tests__/home-deck/deck-controller.test.ts` | ❌ W0 | ⬜ pending |
-| HD-03 | Keyboard (ArrowDown/Up, Space, PageUp/Down, Home/End) advances slides | unit | `npx vitest run src/__tests__/home-deck/deck-controller.test.ts` | ❌ W0 | ⬜ pending |
-| HD-04 | Slide 2 brutalist big-type index renders 3 links (Works / Writing / Prometheus) | unit | `npx vitest run src/__tests__/home-deck/slides.test.tsx` | ❌ W0 | ⬜ pending |
-| HD-05 | Touch/small-screen detection returns true on `pointer: coarse` → native-scroll mode | unit | `npx vitest run src/__tests__/home-deck/use-deck-mode.test.ts` | ❌ W0 | ⬜ pending |
-| TD-01 | `HeroBlob` renders without crash via R3F test renderer (scene graph builds) | unit | `npx vitest run src/__tests__/home-deck/hero-blob.test.tsx` | ❌ W0 | ⬜ pending |
-| TD-02 | `objEnter` produces correct initial + settled transform values per slide change | unit | `npx vitest run src/__tests__/home-deck/obj-enter.test.ts` | ❌ W0 | ⬜ pending |
-| TD-03 | WebGL2 support detection correctly identifies context availability (poster fallback path) | unit | `npx vitest run src/__tests__/home-deck/use-webgl-support.test.ts` | ❌ W0 | ⬜ pending |
+| HD-01 | One wheel gesture advances exactly one slide | unit | `npx vitest run src/__tests__/home-deck/deck-controller.test.ts` | ❌ W0 | ✅ green |
+| HD-02 | Fresh-gesture detection filters decaying momentum; direction reversal bypasses the 820ms lock | unit | `npx vitest run src/__tests__/home-deck/deck-controller.test.ts` | ❌ W0 | ✅ green |
+| HD-03 | Keyboard (ArrowDown/Up, Space, PageUp/Down, Home/End) advances slides | unit | `npx vitest run src/__tests__/home-deck/deck-controller.test.ts` | ❌ W0 | ✅ green |
+| HD-04 | Slide 2 brutalist big-type index renders 3 links (Works / Writing / Prometheus) | unit | `npx vitest run src/__tests__/home-deck/slides.test.tsx` | ❌ W0 | ✅ green |
+| HD-05 | Touch/small-screen detection returns true on `pointer: coarse` → native-scroll mode | unit | `npx vitest run src/__tests__/home-deck/use-deck-mode.test.ts` | ❌ W0 | ✅ green |
+| TD-01 | `HeroBlob` renders without crash via R3F test renderer (scene graph builds) | unit | `npx vitest run src/__tests__/home-deck/hero-blob.test.tsx` | ❌ W0 | ✅ green |
+| TD-02 | `objEnter` produces correct initial + settled transform values per slide change | unit | `npx vitest run src/__tests__/home-deck/obj-enter.test.ts` | ❌ W0 | ✅ green |
+| TD-03 | WebGL2 support detection correctly identifies context availability (poster fallback path) | unit | `npx vitest run src/__tests__/home-deck/use-webgl-support.test.ts` | ❌ W0 | ✅ green |
 
 *Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky*
 
