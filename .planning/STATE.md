@@ -3,8 +3,8 @@ gsd_state_version: 1.0
 milestone: v3.0
 milestone_name: Dark Brutalist Rebuild
 status: completed
-stopped_at: Phase 14 context gathered
-last_updated: "2026-06-19T00:16:38.661Z"
+stopped_at: Phase 15 context gathered
+last_updated: "2026-06-19T00:49:46.281Z"
 last_activity: 2026-06-19 -- Phase 14 marked complete
 progress:
   total_phases: 5
@@ -112,9 +112,9 @@ Close-out rationale: v2.0 shipped via Phase 13 GO sign-off. These items predate 
 
 ## Session Continuity
 
-Last session: 2026-06-19T00:10:13.076Z
-Stopped at: Phase 14 context gathered
-Resume file: None
+Last session: 2026-06-19T00:49:46.273Z
+Stopped at: Phase 15 context gathered
+Resume file: .planning/phases/15-slide-deck-homepage-3d-hero/15-CONTEXT.md
 
 ---
 
