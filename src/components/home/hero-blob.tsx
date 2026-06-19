@@ -37,7 +37,14 @@ const BLOB_VERT = /* glsl */`
   }
 `;
 
-export function HeroBlob() {
+interface HeroBlobProps {
+  /** GLB swap-in seam (D-15). When null (default), render the procedural blob.
+   *  When set, this path is reserved for a future GLB model load (v2 workstream). */
+  modelUrl?: string | null;
+}
+
+/** Procedural GPU-morph blob — rendered when modelUrl is null (v1 default). */
+function HeroBlobProcedural() {
   const meshRef = useRef<THREE.Mesh>(null!);
   const matRef = useRef<InstanceType<typeof CustomShaderMaterial>>(null!);
 
@@ -86,4 +93,15 @@ export function HeroBlob() {
   return (
     <mesh ref={meshRef} geometry={blobGeo} material={mat} />
   );
+}
+
+/** HeroBlob with GLB swap-in seam (D-15).
+ *  modelUrl=null (default) → procedural GPU morph blob (v1 behavior).
+ *  modelUrl="..." → reserved for future GLB load (v2 workstream). */
+export function HeroBlob({ modelUrl = null }: HeroBlobProps) {
+  if (modelUrl) {
+    // Future: load GLB via useGLTF(modelUrl) and return the model
+    return null;
+  }
+  return <HeroBlobProcedural />;
 }
