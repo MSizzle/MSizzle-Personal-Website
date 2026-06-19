@@ -3,9 +3,9 @@ gsd_state_version: 1.0
 milestone: v3.0
 milestone_name: Dark Brutalist Rebuild
 status: executing
-stopped_at: Phase 15 context gathered
-last_updated: "2026-06-19T01:33:54.537Z"
-last_activity: 2026-06-19 -- Phase 15 execution started
+stopped_at: Phase 15 re-scoped to WebGL homepage (deck superseded); ready to re-discuss/plan
+last_updated: "2026-06-18T00:00:00.000Z"
+last_activity: 2026-06-18 -- Phase 15 re-scoped from slide deck to WebGL explorative homepage
 progress:
   total_phases: 5
   completed_phases: 1
@@ -21,23 +21,23 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-18)
 
 **Core value:** A personal site that feels alive and memorable, *and* legible — not another template blog.
-**Current focus:** Phase 15 — slide-deck-homepage-3d-hero
+**Current focus:** Phase 15 — WebGL Explorative Homepage (re-planning; slide deck superseded)
 
 ## Current Position
 
-Phase: 15 (slide-deck-homepage-3d-hero) — EXECUTING
-Plan: 1 of 6
-Status: Executing Phase 15
-Last activity: 2026-06-19 -- Phase 15 execution started
+Phase: 15 (WebGL Explorative Homepage) — RE-PLANNING
+Plan: 0 of TBD (deck plans archived under superseded-deck/)
+Status: Re-scoped from slide deck; ready to discuss/plan the WebGL homepage
+Last activity: 2026-06-18 -- Phase 15 re-scoped to WebGL explorative homepage
 
-Progress: [██████████] 100%
+Direction: validated via sketches 003–005 + perf spike 001 (GO-WITH-CUTS). Build cuts: desktop-WebGL / mobile-poster, defer canvas past LCP, GPU vertex-shader morph.
 
 ## v3.0 Phase Status
 
 | Phase | Status | Started | Completed |
 |-------|--------|---------|-----------|
 | 14 — Branch & Crimson Poster Foundation | complete | 2026-06-18 | 2026-06-18 |
-| 15 — Slide-Deck Homepage & 3D Hero | not_started | — | — |
+| 15 — WebGL Explorative Homepage (deck superseded) | re-planning | 2026-06-18 | — |
 | 16 — Interior Pages on Notion Data | not_started | — | — |
 | 17 — Infrastructure Preservation & SEO Extension | not_started | — | — |
 | 18 — v3.0 QA, Perf Gate & Alias Swap | not_started | — | — |
@@ -46,9 +46,11 @@ v1.0 (Phases 1-7) and v2.0 (Phases 8-13) shipped — see `milestones/v1.0-ROADMA
 
 ## Active Work
 
-v3.0 ROADMAP.md drafted 2026-06-18. 21 requirements (DS/HD/TD/PG/IN/DQ) mapped across 5 phases (14-18), continuing numbering from v2.0's Phase 13. This is a presentation-layer rebuild on the existing Next.js 16 / React 19 / Tailwind v4 / Notion stack — infrastructure preserved, not rebuilt. Design fully specified by the committed prototype at `.planning/sketches/002-full-site-model/` (reference assets: `assets/site.css`, `assets/site.js`); deck controller ported from CHOMP `components/Slideshow.tsx`.
+v3.0 presentation-layer rebuild on the existing Next.js 16 / React 19 / Tailwind v4 / Notion stack — infra preserved.
 
-Next action: `/gsd-plan-phase 14` to decompose Branch & Crimson Poster Foundation into plans.
+**Phase 15 pivot (2026-06-18):** The Slide-Deck Homepage (CHOMP wheel deck + Crimson Poster palette) was built (15-01..15-05 committed on `v3`) and paused at the 15-06 human checkpoint, then **superseded**. Red-on-red hurt legibility and the discrete deck didn't match the desired "wandering" feel. New direction — an expansive **WebGL explorative scroll-story** (near-black/off-white/crimson-accent; 3D hero, fluid line, themed beats; Lusion-grade) — validated via sketches 003–005 (`.planning/sketches/`) and de-risked by perf spike 001 (`.planning/spikes/`, GO-WITH-CUTS). Phase 15 was re-scoped in place (keeps the homepage slot; avoids renumbering 16–18); deck plan artifacts archived under `.planning/phases/15-slide-deck-homepage-3d-hero/superseded-deck/`. Reusable carry-forward: HeroBlob, HeroBlobCanvas, FallbackPoster, WebGL2 detection, section content, v3 tokens. Experimental spike code on throwaway branch `spike/webgl-perf` (unmerged). See memory homepage-webgl-direction + nextjs16-dynamic-ssr-false.
+
+Next action: `/gsd-discuss-phase 15` to lock the WebGL homepage v1 scope (which beats ship first, procedural-stand-in vs real models, asset strategy), then plan + execute. Parallel: kick off the asset workstream (voxel-Monty + horse GLB).
 
 ## Accumulated Context
 

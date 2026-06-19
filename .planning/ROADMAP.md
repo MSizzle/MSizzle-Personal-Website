@@ -42,7 +42,7 @@ Full milestone detail: [milestones/v2.0-ROADMAP.md](./milestones/v2.0-ROADMAP.md
 **Milestone Goal:** Rebuild the presentation layer of montysinger.com as a dark, flat, brutalist site (Crimson Poster palette, wheel-driven slide-deck homepage, lazy-loaded 3D hero object) while preserving all existing infrastructure. Built on a `v3` branch, previewed on Vercel, and promoted via alias swap at parity + QA.
 
 - [x] **Phase 14: Branch & Crimson Poster Foundation** - `v3` branch + Crimson Poster `@theme` tokens and brutalist primitives, previewed on Vercel (completed 2026-06-19)
-- [ ] **Phase 15: Slide-Deck Homepage & 3D Hero** - CHOMP-style wheel deck homepage with the lazy R3F morphing 3D object
+- [ ] **Phase 15: WebGL Explorative Homepage** - Lusion-grade WebGL scroll-story homepage (real-time 3D hero, fluid interweaving line, themed beats); replaces the superseded slide deck. Desktop-WebGL / mobile-poster.
 - [ ] **Phase 16: Interior Pages on Notion Data** - All interior pages rebuilt on the new system and wired to existing Notion loaders, plus new /uses and /watching
 - [ ] **Phase 17: Infrastructure Preservation & SEO Extension** - Verify Notion/image-proxy/analytics intact and extend SEO to the new pages
 - [ ] **Phase 18: v3.0 QA, Perf Gate & Alias Swap** - Production-readiness gate, mobile-perf budget, GO/NO-GO, and production alias promotion
@@ -66,24 +66,22 @@ Full milestone detail: [milestones/v2.0-ROADMAP.md](./milestones/v2.0-ROADMAP.md
 - [x] 14-04-PLAN.md — /v3-specimen showcase route + production build gate (DQ-01 readiness)
 **UI hint**: yes
 
-### Phase 15: Slide-Deck Homepage & 3D Hero
-**Goal**: The homepage is a full-page wheel-driven slide deck (one gesture = one slide) with a lazy-loaded morphing 3D hero object that flies in per slide and stays inside the perf budget.
+### Phase 15: WebGL Explorative Homepage
+**Goal**: The homepage is an expansive, Lusion-grade WebGL "explorative scroll-story" — a real-time 3D hero object, a fluid interweaving scroll line, and themed section beats you wander down — that stays inside the project's perf budget. Replaces the superseded slide deck.
 **Depends on**: Phase 14
-**Requirements**: HD-01, HD-02, HD-03, HD-04, HD-05, TD-01, TD-02, TD-03
-**Success Criteria** (what must be TRUE):
-  1. On desktop, one wheel or keyboard gesture advances exactly one slide; decaying trackpad momentum is ignored (fresh-gesture detection) and direction reversals bypass the cool-down so one push moves one slide without feeling blocked.
-  2. The background stays static while slide content moves; arrows/space/Home/End and touch-swipe navigation work; a progress indicator is shown.
-  3. Slide 2 is the brutalist big-type index ("What I'm Building / Writing / Doing") linking to Works / Writing / Prometheus.
-  4. On touch and small screens the homepage falls back to native vertical scroll (no wheel controller).
-  5. A near-black glossy morphing 3D object with a crimson rim spawns on the right and flies in from the left on each slide change; it is lazy-loaded off the LCP path and degrades to a static fallback under no-WebGL or reduced-motion.
-**Plans**: 6 plans
-- [x] 15-01-PLAN.md — Deps install (three@0.184.0, @react-three/fiber@9.6.1, @react-three/test-renderer@9.1.0) + transpilePackages + 6 failing test stubs (Wave 0)
-- [x] 15-02-PLAN.md — Lenis context augment (useLenisControl) + CHOMP deck controller hook + objEnter (Wave 1)
-- [x] 15-03-PLAN.md — R3F HeroBlob mesh + HeroBlobCanvas wrapper (Wave 1)
-- [x] 15-04-PLAN.md — 5 slide components + fallback poster component (Wave 1)
-- [x] 15-05-PLAN.md — DeckHomepage orchestrator + page.tsx replacement + InkFooter suppression (Wave 2)
-- [ ] 15-06-PLAN.md — Poster production (human checkpoint) + VALIDATION.md closeout (Wave 3)
+**Direction validated by**: sketches 003–005 (`.planning/sketches/`) + perf spike 001 (`.planning/spikes/`, GO-WITH-CUTS). See memory homepage-webgl-direction.
+**Requirements**: TD-01, TD-02, TD-03 (3D object / lazy-load / fallback — carry forward), HD-04 (big-type index), HD-05 (touch/small-screen fallback). _HD-01, HD-02, HD-03 (CHOMP wheel-deck nav) are superseded; requirements to be finalized in re-plan._
+**Success Criteria** (provisional — finalized in discuss/plan):
+  1. Palette: near-black canvas, off-white name (NO red-on-red), crimson as a sparing accent (line / rim / hover).
+  2. Desktop renders a live WebGL 3D hero (PBR/clearcoat, RoomEnvironment IBL, crimson rim, bloom) with GPU vertex-shader morph; canvas is `dynamic({ssr:false})` in a `"use client"` loader, mounted after LCP.
+  3. LCP element is SSR'd text/poster — never the canvas; mobile LCP/PSI stays within the budget already won.
+  4. Mobile / pointer:coarse / small-screen / reduced-motion / no-WebGL2 → static poster (`public/hero-blob-poster.webp`), no canvas.
+  5. Expansive scroll-story structure (fluid line threading the section beats). Full set-pieces (voxel-Monty on a podium, 3D horse, "Watching"/YouTube zoom-through) layered incrementally; real GLB models swap in for the procedural stand-in when the asset workstream delivers.
+**Plans**: TBD — re-planning (deck attempt archived under `superseded-deck/`)
+**Carry-forward from the superseded deck**: HeroBlob, HeroBlobCanvas, FallbackPoster, WebGL2 detection, section content, v3 tokens.
+**Build cuts (from spike 001, non-negotiable)**: desktop-only WebGL; defer canvas mount past LCP; GPU vertex-shader morph (no per-frame JS computeVertexNormals); trim/lazy postprocessing; produce the poster asset; confirm on Vercel preview PSI mobile.
 **UI hint**: yes
+**Note**: directory slug `15-slide-deck-homepage-3d-hero` is legacy (kept to avoid breaking references).
 
 ### Phase 16: Interior Pages on Notion Data
 **Goal**: Every interior page is rebuilt in the Crimson Poster system, sourced from the existing Notion pipeline, with a shared nav and footer and the two new pages (/uses, /watching) live.
@@ -140,7 +138,7 @@ Phases execute in numeric order: 14 → 15 → 16 → 17 → 18
 | 12. Sub-page Restyle Sweep | v2.0 | 7/7 | Complete | 2026-05-21 |
 | 13. v2.0 QA & GO/NO-GO | v2.0 | 6/6 | Complete | 2026-05-21 |
 | 14. Branch & Crimson Poster Foundation | v3.0 | 4/4 | Complete   | 2026-06-19 |
-| 15. Slide-Deck Homepage & 3D Hero | v3.0 | 5/6 | In Progress|  |
+| 15. WebGL Explorative Homepage | v3.0 | 0/TBD | Re-planning (deck superseded) |  |
 | 16. Interior Pages on Notion Data | v3.0 | 0/TBD | Not started | - |
 | 17. Infrastructure Preservation & SEO Extension | v3.0 | 0/TBD | Not started | - |
 | 18. v3.0 QA, Perf Gate & Alias Swap | v3.0 | 0/TBD | Not started | - |
