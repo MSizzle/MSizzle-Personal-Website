@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sketch 003 — Guided Line Home</title>
+<link rel="stylesheet" href="../themes/crimson-line.css">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:auto}
+  body{
+    background:var(--color-bg);
+    color:var(--color-text);
+    font-family:var(--font-sans);
+    padding-top:44px;            /* room for variant tab bar */
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--accent);color:#fff}
+
+  /* ── variant tab bar ── */
+  #variant-nav{position:fixed;top:0;left:0;right:0;z-index:9998;
+    background:rgba(10,10,10,0.9);backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--color-border);
+    padding:7px 14px;display:flex;gap:8px;align-items:center;
+    font-family:var(--font-mono);font-size:12px}
+  #variant-nav .brand{color:var(--color-text-muted);margin-right:8px;letter-spacing:.08em}
+  .variant-tab{background:transparent;color:var(--color-text-dim);
+    border:1px solid var(--color-border);border-radius:var(--radius-full);
+    padding:5px 12px;cursor:pointer;font-family:inherit;font-size:12px;
+    transition:all .15s ease}
+  .variant-tab:hover{border-color:var(--accent);color:var(--color-text)}
+  .variant-tab.active{background:var(--accent);border-color:var(--accent);color:#fff}
+
+  /* ── stage / viewport constraint ── */
+  #stage{margin:0 auto;transition:max-width .25s ease}
+
+  .variant{position:relative}
+  .variant[hidden]{display:none}
+
+  /* ── the drawing line (SVG overlay) ── */
+  .line-svg{position:absolute;top:0;left:0;pointer-events:none;z-index:2;overflow:visible}
+  .line-path{fill:none;stroke:var(--accent);stroke-width:2;
+    stroke-linecap:round;stroke-linejoin:round;
+    filter:drop-shadow(0 0 6px var(--accent-glow))}
+  .line-track{fill:none;stroke:var(--color-border);stroke-width:2;stroke-linecap:round}
+  .travel{fill:none;stroke:var(--accent-hover);stroke-width:2}
+  .travel-core{fill:var(--accent-hover)}
+
+  /* ── node dot (anchors the line to real DOM) ── */
+  .node{position:relative;display:inline-block;width:13px;height:13px;flex:0 0 auto}
+  .node::before{content:"";position:absolute;inset:0;border-radius:50%;
+    background:var(--accent);box-shadow:0 0 0 4px rgba(226,56,56,.16),0 0 12px var(--accent-glow)}
+
+  /* ── hero ── */
+  .hero{min-height:92vh;display:flex;flex-direction:column;justify-content:center;
+    padding:0 6vw;position:relative;z-index:3}
+  .eyebrow{font-family:var(--font-mono);font-size:var(--text-sm);
+    color:var(--color-text-muted);letter-spacing:.18em;text-transform:uppercase;
+    display:flex;align-items:center;gap:14px;margin-bottom:var(--space-6)}
+  .name{font-family:var(--font-display);font-weight:700;line-height:.86;
+    font-size:var(--text-mega);letter-spacing:-.02em;color:var(--color-text)}
+  .name .ghost{color:transparent;-webkit-text-stroke:1.5px var(--color-border-strong)}
+  .tagline{margin-top:var(--space-8);max-width:30ch;font-size:var(--text-xl);
+    color:var(--color-text-dim);line-height:1.3}
+  .scrollcue{margin-top:var(--space-12);font-family:var(--font-mono);
+    font-size:var(--text-xs);color:var(--color-text-muted);letter-spacing:.16em;
+    display:flex;align-items:center;gap:10px}
+  .scrollcue .tick{width:1px;height:34px;background:linear-gradient(var(--accent),transparent);
+    animation:cue 1.8s var(--ease-out) infinite}
+  @keyframes cue{0%{transform:scaleY(.2);opacity:.3;transform-origin:top}
+    50%{transform:scaleY(1);opacity:1;transform-origin:top}
+    100%{transform:scaleY(.2);opacity:.3;transform-origin:bottom}}
+
+  /* ── section ── */
+  .sec{min-height:78vh;padding:0 6vw;position:relative;z-index:3;
+    display:flex;flex-direction:column;justify-content:center}
+  .sec-head{display:flex;align-items:center;gap:18px;margin-bottom:var(--space-6)}
+  .sec-kicker{font-family:var(--font-mono);font-size:var(--text-sm);
+    color:var(--accent);letter-spacing:.16em;text-transform:uppercase}
+  .sec-title{font-family:var(--font-display);font-weight:700;
+    font-size:clamp(2.4rem,7vw,6rem);line-height:.92;letter-spacing:-.015em}
+  .sec-sub{margin-top:var(--space-4);max-width:42ch;color:var(--color-text-dim);
+    font-size:var(--text-lg);line-height:1.4}
+
+  /* big-list (Building/Writing/Doing) */
+  .biglist{margin-top:var(--space-8);border-top:1px solid var(--color-border)}
+  .biglist a{display:flex;align-items:baseline;justify-content:space-between;gap:24px;
+    text-decoration:none;color:var(--color-text);
+    padding:var(--space-6) 0;border-bottom:1px solid var(--color-border);
+    font-family:var(--font-display);font-weight:700;
+    font-size:clamp(1.8rem,5vw,3.4rem);letter-spacing:-.01em;
+    transition:color .18s ease,padding-left .25s var(--ease-out)}
+  .biglist a .to{font-family:var(--font-mono);font-weight:400;font-size:var(--text-sm);
+    color:var(--color-text-muted);transition:color .18s ease}
+  .biglist a:hover{color:var(--accent);padding-left:18px}
+  .biglist a:hover .to{color:var(--accent-hover)}
+
+  .cards{margin-top:var(--space-8);display:grid;gap:var(--space-4);
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+  .card{border:1px solid var(--color-border);border-radius:var(--radius-md);
+    padding:var(--space-6);transition:border-color .18s ease,transform .25s var(--ease-out)}
+  .card:hover{border-color:var(--accent);transform:translateY(-4px)}
+  .card h4{font-size:var(--text-lg);margin-bottom:var(--space-2)}
+  .card p{color:var(--color-text-muted);font-size:var(--text-sm);line-height:1.4}
+
+  .nl{margin-top:var(--space-8);display:flex;gap:10px;max-width:440px;flex-wrap:wrap}
+  .nl input{flex:1;min-width:200px;background:var(--color-surface);
+    border:1px solid var(--color-border);color:var(--color-text);
+    padding:14px 16px;border-radius:var(--radius-full);font-family:var(--font-mono);font-size:13px}
+  .nl input:focus{outline:none;border-color:var(--accent)}
+  .nl button{background:var(--color-text);color:var(--color-bg);border:none;
+    padding:14px 22px;border-radius:var(--radius-full);font-family:var(--font-mono);
+    font-size:13px;font-weight:700;cursor:pointer;transition:all .15s ease}
+  .nl button:hover{background:var(--accent);color:#fff}
+  .nl-ok{color:var(--accent-hover);font-family:var(--font-mono);font-size:13px;
+    margin-top:12px;opacity:0;transition:opacity .3s ease}
+
+  footer.sec{min-height:60vh;justify-content:flex-end;padding-bottom:8vh}
+  footer .flinks{display:flex;gap:20px;flex-wrap:wrap;margin-top:var(--space-6);
+    font-family:var(--font-mono);font-size:var(--text-sm)}
+  footer .flinks a{color:var(--color-text-dim);text-decoration:none;transition:color .15s ease}
+  footer .flinks a:hover{color:var(--accent)}
+  footer .colophon{margin-top:var(--space-8);color:var(--color-text-muted);
+    font-family:var(--font-mono);font-size:var(--text-xs);letter-spacing:.08em}
+
+  /* ── faux 3D blob ── */
+  .blob{position:fixed;z-index:1;width:42vmin;height:42vmin;border-radius:48% 52% 56% 44%;
+    background:
+      radial-gradient(38% 34% at 38% 30%, rgba(255,255,255,.16), transparent 60%),
+      radial-gradient(60% 60% at 65% 70%, #1d1d1f, #0c0c0d 78%),
+      radial-gradient(120% 120% at 50% 50%, #18181a, #0a0a0a);
+    box-shadow:
+      inset -10px -14px 40px rgba(0,0,0,.7),
+      inset 18px 12px 40px rgba(255,255,255,.05),
+      0 0 0 1px rgba(255,255,255,.04),
+      26px 12px 70px rgba(0,0,0,.6);
+    animation:morph 14s var(--ease-out) infinite alternate, drift 22s ease-in-out infinite alternate}
+  .blob::after{content:"";position:absolute;inset:-2px;border-radius:inherit;
+    background:conic-gradient(from 210deg, transparent 0deg, var(--blob-rim) 40deg, transparent 120deg);
+    -webkit-mask:radial-gradient(closest-side, transparent 78%, #000 82%);
+    mask:radial-gradient(closest-side, transparent 78%, #000 82%);
+    opacity:.85;filter:blur(.5px) drop-shadow(0 0 18px var(--accent-glow));
+    animation:spin 18s linear infinite}
+  @keyframes morph{0%{border-radius:48% 52% 56% 44%}50%{border-radius:58% 42% 40% 60%}100%{border-radius:44% 56% 50% 50%}}
+  @keyframes drift{0%{transform:translateY(-3%) rotate(-4deg)}100%{transform:translateY(4%) rotate(5deg)}}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .blob.right{top:50%;right:5vw;margin-top:-21vmin}
+  .blob.center-right{top:46%;right:10vw;margin-top:-21vmin}
+
+  /* layout variants for node alignment */
+  .v-spine .hero,.v-spine .sec{padding-left:16vw}
+  .v-spine .anchor{position:absolute;left:8vw;transform:translateX(-50%)}
+
+  .v-meander .sec.lean-r{align-items:flex-end;text-align:right;padding-right:14vw}
+  .v-meander .anchor{position:absolute}
+  .v-meander .sec .anchor{left:50%;transform:translateX(-50%)}
+
+  .v-rail{padding-left:90px}
+  .v-rail .hero,.v-rail .sec{padding-left:5vw}
+  .v-rail .anchor{position:absolute;left:-58px;display:flex;align-items:center;gap:0}
+  .v-rail .anchor::after{content:"";height:1px;width:42px;background:var(--accent);
+    margin-left:8px;opacity:.6}
+
+  .annotate-note{position:fixed;bottom:60px;right:12px;z-index:9999;
+    background:rgba(0,0,0,.8);color:#fff;font-family:var(--font-mono);font-size:11px;
+    padding:6px 10px;border-radius:6px;max-width:240px;display:none}
+</style>
+</head>
+<body class="v-spine">
+
+<!-- ── variant tabs ── -->
+<div id="variant-nav">
+  <span class="brand">SKETCH 003 ▸ guided line</span>
+  <button class="variant-tab active" data-v="a" onclick="showVariant('a',this)">A · Centered spine</button>
+  <button class="variant-tab" data-v="b" onclick="showVariant('b',this)">B · Meander</button>
+  <button class="variant-tab" data-v="c" onclick="showVariant('c',this)">C · Left rail + branches</button>
+</div>
+
+<!-- the blob persists behind every variant -->
+<div class="blob right" id="blob"></div>
+
+<div id="stage">
+
+<!-- ════════ VARIANT A — CENTERED SPINE ════════ -->
+<section class="variant" id="variant-a">
+  <svg class="line-svg"><path class="line-track"/><path class="line-path"/><g class="travel-g"><circle class="travel" r="11"/><circle class="travel-core" r="3.5"/></g></svg>
+
+  <div class="hero">
+    <span class="anchor node" style="top:48%"></span>
+    <div class="eyebrow">— Monty Singer · builder, writer</div>
+    <h1 class="name">MONTY<br><span class="ghost">SINGER</span></h1>
+    <p class="tagline">A quieter homepage you wander down — one crimson thread connecting everything I make.</p>
+    <div class="scrollcue"><span class="tick"></span> SCROLL TO FOLLOW THE LINE</div>
+  </div>
+
+  <div class="sec">
+    <span class="anchor node" style="top:50%"></span>
+    <div class="sec-head"><span class="sec-kicker">01 / Building</span></div>
+    <h2 class="sec-title">What I'm making</h2>
+    <div class="biglist">
+      <a href="#">Projects <span class="to">→ /projects</span></a>
+      <a href="#">Writing <span class="to">→ /writing</span></a>
+      <a href="#">Doing <span class="to">→ prometheus.today</span></a>
+    </div>
+  </div>
+
+  <div class="sec">
+    <span class="anchor node" style="top:50%"></span>
+    <div class="sec-head"><span class="sec-kicker">02 / Writing</span></div>
+    <h2 class="sec-title">Notes &amp; essays</h2>
+    <p class="sec-sub">Long-form thinking on building, optimism, and the tools I wish existed. Pulled live from Notion.</p>
+    <div class="cards">
+      <div class="card"><h4>The Pursuit of Happierness</h4><p>On compounding small joys.</p></div>
+      <div class="card"><h4>Defiant Optimism</h4><p>Why building is a moral act.</p></div>
+      <div class="card"><h4>Demystifying Merlin</h4><p>A teardown of the magic.</p></div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <span class="anchor node" style="top:50%"></span>
+    <div class="sec-head"><span class="sec-kicker">03 / Doing</span></div>
+    <h2 class="sec-title">Prometheus, daily</h2>
+    <p class="sec-sub">A running log of the work in motion right now — shipped at prometheus.today.</p>
+  </div>
+
+  <div class="sec">
+    <span class="anchor node" style="top:50%"></span>
+    <div class="sec-head"><span class="sec-kicker">04 / Newsletter</span></div>
+    <h2 class="sec-title">Get the thread</h2>
+    <p class="sec-sub">Occasional dispatches. No spam, no cadence promises.</p>
+    <form class="nl" onsubmit="return fakeSub(this)">
+      <input type="email" placeholder="you@email.com" required>
+      <button type="submit">Subscribe</button>
+    </form>
+    <div class="nl-ok">✓ You're on the list.</div>
+  </div>
+
+  <footer class="sec">
+    <span class="anchor node" style="top:30%"></span>
+    <div class="sec-head"><span class="sec-kicker">End of line</span></div>
+    <h2 class="sec-title" style="font-size:clamp(1.8rem,5vw,3.6rem)">Let's talk.</h2>
+    <div class="flinks">
+      <a href="#">Email</a><a href="#">X / Twitter</a><a href="#">GitHub</a>
+      <a href="#">LinkedIn</a><a href="#">RSS</a>
+    </div>
+    <div class="colophon">© 2026 Monty Singer · built on the v3 thread</div>
+  </footer>
+</section>
+
+<!-- ════════ VARIANT B — MEANDER ════════ -->
+<section class="variant" id="variant-b" hidden>
+  <svg class="line-svg"><path class="line-track"/><path class="line-path"/><g class="travel-g"><circle class="travel" r="11"/><circle class="travel-core" r="3.5"/></g></svg>
+
+  <div class="hero" style="padding-left:10vw">
+    <span class="anchor node" style="left:18vw;top:54%"></span>
+    <div class="eyebrow">— Monty Singer · builder, writer</div>
+    <h1 class="name">MONTY<br><span class="ghost">SINGER</span></h1>
+    <p class="tagline">Wander, don't click. The line bends through everything — let it pull you along.</p>
+    <div class="scrollcue"><span class="tick"></span> FOLLOW THE BEND</div>
+  </div>
+
+  <div class="sec">
+    <span class="anchor node" style="left:24vw;top:46%"></span>
+    <div class="sec-head"><span class="sec-kicker">01 / Building</span></div>
+    <h2 class="sec-title">What I'm making</h2>
+    <div class="biglist" style="max-width:620px">
+      <a href="#">Projects <span class="to">→ /projects</span></a>
+      <a href="#">Writing <span class="to">→ /writing</span></a>
+      <a href="#">Doing <span class="to">→ prometheus.today</span></a>
+    </div>
+  </div>
+
+  <div class="sec lean-r">
+    <span class="anchor node" style="right:24vw;top:46%"></span>
+    <div class="sec-head" style="justify-content:flex-end"><span class="sec-kicker">02 / Writing</span></div>
+    <h2 class="sec-title">Notes &amp; essays</h2>
+    <p class="sec-sub" style="margin-left:auto">Long-form thinking on building and optimism, pulled live from Notion.</p>
+    <div class="cards" style="max-width:620px;margin-left:auto">
+      <div class="card"><h4>Defiant Optimism</h4><p>Why building is a moral act.</p></div>
+      <div class="card"><h4>Demystifying Merlin</h4><p>A teardown of the magic.</p></div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <span class="anchor node" style="left:22vw;top:48%"></span>
+    <div class="sec-head"><span class="sec-kicker">03 / Doing</span></div>
+    <h2 class="sec-title">Prometheus, daily</h2>
+    <p class="sec-sub">The work in motion right now — shipped at prometheus.today.</p>
+  </div>
+
+  <div class="sec lean-r">
+    <span class="anchor node" style="right:22vw;top:48%"></span>
+    <div class="sec-head" style="justify-content:flex-end"><span class="sec-kicker">04 / Newsletter</span></div>
+    <h2 class="sec-title">Get the thread</h2>
+    <form class="nl" style="margin-left:auto" onsubmit="return fakeSub(this)">
+      <input type="email" placeholder="you@email.com" required>
+      <button type="submit">Subscribe</button>
+    </form>
+    <div class="nl-ok" style="text-align:right">✓ You're on the list.</div>
+  </div>
+
+  <footer class="sec">
+    <span class="anchor node" style="left:50%;transform:translateX(-50%);top:28%"></span>
+    <div class="sec-head" style="justify-content:center"><span class="sec-kicker">End of line</span></div>
+    <h2 class="sec-title" style="text-align:center;font-size:clamp(1.8rem,5vw,3.6rem)">Let's talk.</h2>
+    <div class="flinks" style="justify-content:center">
+      <a href="#">Email</a><a href="#">X / Twitter</a><a href="#">GitHub</a><a href="#">RSS</a>
+    </div>
+  </footer>
+</section>
+
+<!-- ════════ VARIANT C — LEFT RAIL + BRANCHES ════════ -->
+<section class="variant v-rail-wrap" id="variant-c" hidden>
+  <svg class="line-svg"><path class="line-track"/><path class="line-path"/><g class="travel-g"><circle class="travel" r="9"/><circle class="travel-core" r="3"/></g></svg>
+
+  <div class="hero">
+    <span class="anchor node" style="top:50%"></span>
+    <div class="eyebrow">— Monty Singer</div>
+    <h1 class="name">MONTY<br><span class="ghost">SINGER</span></h1>
+    <p class="tagline">A rail down the margin. Each tick is a place to go.</p>
+    <div class="scrollcue"><span class="tick"></span> SCROLL THE RAIL</div>
+  </div>
+
+  <div class="sec">
+    <span class="anchor node" style="top:50%"></span>
+    <div class="sec-head"><span class="sec-kicker">01 / Building</span></div>
+    <h2 class="sec-title">What I'm making</h2>
+    <div class="biglist">
+      <a href="#">Projects <span class="to">→ /projects</span></a>
+      <a href="#">Writing <span class="to">→ /writing</span></a>
+      <a href="#">Doing <span class="to">→ prometheus.today</span></a>
+    </div>
+  </div>
+
+  <div class="sec">
+    <span class="anchor node" style="top:50%"></span>
+    <div class="sec-head"><span class="sec-kicker">02 / Writing</span></div>
+    <h2 class="sec-title">Notes &amp; essays</h2>
+    <div class="cards">
+      <div class="card"><h4>The Pursuit of Happierness</h4><p>On compounding small joys.</p></div>
+      <div class="card"><h4>Defiant Optimism</h4><p>Why building is a moral act.</p></div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <span class="anchor node" style="top:50%"></span>
+    <div class="sec-head"><span class="sec-kicker">03 / Doing</span></div>
+    <h2 class="sec-title">Prometheus, daily</h2>
+    <p class="sec-sub">The work in motion — prometheus.today.</p>
+  </div>
+
+  <div class="sec">
+    <span class="anchor node" style="top:50%"></span>
+    <div class="sec-head"><span class="sec-kicker">04 / Newsletter</span></div>
+    <h2 class="sec-title">Get the thread</h2>
+    <form class="nl" onsubmit="return fakeSub(this)">
+      <input type="email" placeholder="you@email.com" required>
+      <button type="submit">Subscribe</button>
+    </form>
+    <div class="nl-ok">✓ You're on the list.</div>
+  </div>
+
+  <footer class="sec">
+    <span class="anchor node" style="top:30%"></span>
+    <div class="sec-head"><span class="sec-kicker">End of rail</span></div>
+    <h2 class="sec-title" style="font-size:clamp(1.8rem,5vw,3.6rem)">Let's talk.</h2>
+    <div class="flinks">
+      <a href="#">Email</a><a href="#">GitHub</a><a href="#">RSS</a>
+    </div>
+  </footer>
+</section>
+
+</div><!-- /stage -->
+
+<!-- ── sketch toolbar ── -->
+<div id="sketch-tools" style="position:fixed;bottom:12px;right:12px;z-index:9999;font-family:var(--font-mono);font-size:12px;background:rgba(0,0,0,0.78);color:#fff;padding:8px 12px;border-radius:8px;opacity:.4;transition:opacity .2s;display:flex;gap:10px;align-items:center" onmouseenter="this.style.opacity='1'" onmouseleave="this.style.opacity='0.4'">
+  <label>theme
+    <select onchange="document.querySelector('link[href*=themes]').href='../themes/'+this.value+'.css'">
+      <option value="crimson-line" selected>crimson-line</option>
+      <option value="nocturne">nocturne</option>
+      <option value="ember">ember</option>
+      <option value="halogen">halogen</option>
+      <option value="default">default</option>
+    </select>
+  </label>
+  <span>view</span>
+  <button onclick="setVW('375px')" style="cursor:pointer">📱</button>
+  <button onclick="setVW('768px')" style="cursor:pointer">▭</button>
+  <button onclick="setVW('100%')" style="cursor:pointer">🖥</button>
+</div>
+
+<script>
+const BODYCLASS = {a:'v-spine', b:'v-meander', c:'v-rail'};
+let current = 'a';
+
+function activeVariant(){ return document.getElementById('variant-'+current); }
+
+function setVW(w){ document.getElementById('stage').style.maxWidth = w; requestAnimationFrame(()=>{buildPath();draw();}); }
+
+function showVariant(id, btn){
+  current = id;
+  document.querySelectorAll('.variant').forEach(v=>v.hidden = true);
+  document.getElementById('variant-'+id).hidden = false;
+  document.querySelectorAll('.variant-tab').forEach(t=>t.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  document.body.className = BODYCLASS[id];
+  // reposition blob slightly per variant
+  const blob = document.getElementById('blob');
+  blob.className = 'blob ' + (id==='b' ? 'center-right' : 'right');
+  window.scrollTo(0,0);
+  requestAnimationFrame(()=>{ buildPath(); draw(); });
+}
+
+/* Build the line path from the REAL positions of .node anchors in the active variant. */
+function buildPath(){
+  const v = activeVariant();
+  const svg = v.querySelector('.line-svg');
+  const path = v.querySelector('.line-path');
+  const track = v.querySelector('.line-track');
+  const w = v.clientWidth, h = v.scrollHeight;
+  svg.setAttribute('width', w); svg.setAttribute('height', h);
+  svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
+
+  const vRect = v.getBoundingClientRect();
+  const vTop = vRect.top + window.scrollY, vLeft = vRect.left;
+  const nodes = [...v.querySelectorAll('.node')];
+  const pts = nodes.map(n=>{
+    const r = n.getBoundingClientRect();
+    return { x: (r.left - vLeft) + r.width/2, y: (r.top + window.scrollY - vTop) + r.height/2 };
+  });
+  if(pts.length < 2){ path.setAttribute('d',''); track.setAttribute('d',''); return; }
+
+  let d;
+  if(current === 'b'){
+    // smooth meander: quadratic through midpoints
+    d = `M ${pts[0].x} ${pts[0].y}`;
+    for(let i=0;i<pts.length-1;i++){
+      const p=pts[i], n=pts[i+1];
+      const mx=(p.x+n.x)/2, my=(p.y+n.y)/2;
+      d += ` Q ${p.x} ${my} ${mx} ${my}`;
+      d += ` T ${n.x} ${n.y}`;
+    }
+  } else {
+    // spine / rail: gentle straight segments
+    d = `M ${pts[0].x} ${pts[0].y}`;
+    for(let i=1;i<pts.length;i++) d += ` L ${pts[i].x} ${pts[i].y}`;
+  }
+  path.setAttribute('d', d);
+  track.setAttribute('d', d);
+  const L = path.getTotalLength();
+  path.style.strokeDasharray = L;
+  path.dataset.len = L;
+}
+
+/* On scroll: reveal the line proportionally + move the traveling marker. */
+function draw(){
+  const v = activeVariant();
+  const path = v.querySelector('.line-path');
+  const L = parseFloat(path.dataset.len||0);
+  if(!L) return;
+  const max = (document.documentElement.scrollHeight - window.innerHeight) || 1;
+  const prog = Math.min(1, Math.max(0, window.scrollY / max));
+  path.style.strokeDashoffset = L * (1 - prog);
+  const pt = path.getPointAtLength(L * prog);
+  const g = v.querySelector('.travel-g');
+  g.querySelector('.travel').setAttribute('cx', pt.x);
+  g.querySelector('.travel').setAttribute('cy', pt.y);
+  g.querySelector('.travel-core').setAttribute('cx', pt.x);
+  g.querySelector('.travel-core').setAttribute('cy', pt.y);
+}
+
+function fakeSub(form){
+  const ok = form.parentElement.querySelector('.nl-ok');
+  ok.style.opacity = '1';
+  form.querySelector('input').value='';
+  return false;
+}
+
+let ticking=false;
+window.addEventListener('scroll',()=>{ if(!ticking){requestAnimationFrame(()=>{draw();ticking=false;});ticking=true;} });
+window.addEventListener('resize',()=>{ buildPath(); draw(); });
+window.addEventListener('load',()=>{ buildPath(); draw(); });
+// fonts may shift layout; rebuild shortly after
+setTimeout(()=>{buildPath();draw();}, 400);
+</script>
+</body>
+</html>

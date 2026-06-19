@@ -23,6 +23,7 @@ branch, previewed on Vercel, promoted to production via alias swap when it reach
 |---|------|----------------|--------|------|
 | 001 | dark-kinetic-home | What does the dark, kinetic homepage feel like? | **D · Synthesis** | home, motion, dark, 3d, slides |
 | 002 | full-site-model | Does the language hold across the whole site? | _in review_ | full-site, prototype, nav |
+| 003 | guided-line-home | Does a self-drawing guided line + near-black/off-white palette feel expansive while fixing red-on-red legibility? | _in review_ | home, line, scroll, dark, crimson-accent, legibility, palette-revisit |
 
 ## Locked Decisions (from 001)
 - **Direction:** dark canvas, brutalist uppercase grotesk type, autonomous (non-cursor-reactive) motion.
@@ -34,3 +35,9 @@ branch, previewed on Vercel, promoted to production via alias swap when it reach
   (borders, labels, supporting ink near-black). 3D object is a near-black glossy blob with a crimson
   rim light. No gradients. Supersedes the earlier orange-on-black "Prometheus" palette.
 - **YouTube favorites:** a "Watching" page/section listing favorite videos (added per user request).
+
+## Pending Revisits (2026-06-18)
+After Phase 15 built the locked direction (Crimson Poster slide deck), user feedback flagged two problems and opened sketch 003:
+- **Structure:** discrete CHOMP slide deck → wants expansive, "wandering" feel via a **guided drawing line** (self-drawing SVG thread connecting sections). Reuse the 3D blob + section content; swap the navigation model.
+- **Palette:** "Crimson Poster" (crimson field + crimson type) → **red-on-red is illegible.** New direction in `themes/crimson-line.css`: near-black canvas, off-white name, crimson DEMOTED to a sparing accent (line / dots / hover), never the name.
+If sketch 003 wins, the LOCKED palette + slide-deck structure decisions above must be superseded.
