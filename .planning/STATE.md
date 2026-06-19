@@ -50,7 +50,9 @@ v3.0 presentation-layer rebuild on the existing Next.js 16 / React 19 / Tailwind
 
 **Phase 15 pivot (2026-06-18):** The Slide-Deck Homepage (CHOMP wheel deck + Crimson Poster palette) was built (15-01..15-05 committed on `v3`) and paused at the 15-06 human checkpoint, then **superseded**. Red-on-red hurt legibility and the discrete deck didn't match the desired "wandering" feel. New direction — an expansive **WebGL explorative scroll-story** (near-black/off-white/crimson-accent; 3D hero, fluid line, themed beats; Lusion-grade) — validated via sketches 003–005 (`.planning/sketches/`) and de-risked by perf spike 001 (`.planning/spikes/`, GO-WITH-CUTS). Phase 15 was re-scoped in place (keeps the homepage slot; avoids renumbering 16–18); deck plan artifacts archived under `.planning/phases/15-slide-deck-homepage-3d-hero/superseded-deck/`. Reusable carry-forward: HeroBlob, HeroBlobCanvas, FallbackPoster, WebGL2 detection, section content, v3 tokens. Experimental spike code on throwaway branch `spike/webgl-perf` (unmerged). See memory homepage-webgl-direction + nextjs16-dynamic-ssr-false.
 
-Next action: `/gsd-discuss-phase 15` to lock the WebGL homepage v1 scope (which beats ship first, procedural-stand-in vs real models, asset strategy), then plan + execute. Parallel: kick off the asset workstream (voxel-Monty + horse GLB).
+Phase 15 context captured 2026-06-19 (`15-CONTEXT.md`): v1 = WebGL hero (procedural stand-in) + scroll-cue + section beats + fallback poster; fluid line = v2; YouTube zoom-through = v3; real GLB models swap in later; assets = parallel/non-blocking. v1-area decisions are recommended defaults (REC) to confirm at plan time.
+
+Next action: `/gsd-plan-phase 15` to decompose the WebGL homepage v1 into plans (reads `15-CONTEXT.md`, sketches 003–005, spike 001). Parallel: kick off the asset workstream (voxel-Monty + horse GLB).
 
 ## Accumulated Context
 
