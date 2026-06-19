@@ -65,9 +65,9 @@ REQ-ID → Phase. All 21 v3.0 requirements mapped to exactly one phase (100% cov
 | DS-03 | Phase 14 | Complete |
 | DS-04 | Phase 14 | Complete |
 | DS-05 | Phase 14 | Complete |
-| HD-01 | Phase 15 | Pending |
-| HD-02 | Phase 15 | Pending |
-| HD-03 | Phase 15 | Pending |
+| HD-01 | Phase 15 | Superseded — WebGL explorative direction per Phase 15 CONTEXT.md D-05 |
+| HD-02 | Phase 15 | Superseded — WebGL explorative direction per Phase 15 CONTEXT.md D-05 |
+| HD-03 | Phase 15 | Superseded — WebGL explorative direction per Phase 15 CONTEXT.md D-05 |
 | HD-04 | Phase 15 | Pending |
 | HD-05 | Phase 15 | Pending |
 | TD-01 | Phase 15 | Pending |

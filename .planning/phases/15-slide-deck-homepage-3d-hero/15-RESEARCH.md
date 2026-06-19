@@ -841,24 +841,28 @@ function useScrollProgress() {
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **ConditionalFooter on homepage:** Does `ConditionalFooter` already suppress on `/`? If the homepage has its own footer-beat section (D-12), two footers would render.
    - What we know: `ConditionalFooter` is rendered in `layout.tsx` for all routes.
    - What's unclear: Whether it has a homepage exclusion.
    - Recommendation: Check `src/components/layout/conditional-footer.tsx`; if no exclusion exists, add `pathname === '/'` suppression so the footer-beat section is the only footer on the homepage.
+   - RESOLVED: `conditional-footer.tsx` already suppresses on `/` (confirmed in PATTERNS.md); SectionFooter is the homepage's only footer. No change needed.
 
 2. **Podium mesh spec:** D-08 says "simple podium now." No concrete design is specified.
    - What we know: Sketch 005 shows a "crimson glow ring + reflective disc."
    - What's unclear: Exact geometry (cylinder? flat disc? multi-element?), size relative to the blob.
    - Recommendation: Planner/executor discretion — start with a thin `CylinderGeometry` disc with a `MeshStandardMaterial` (metalness 0.8, roughness 0.1) and a faint crimson emissive, visible under the blob.
+   - RESOLVED: Claude's Discretion — simple disc per CONTEXT D-08; `CylinderGeometry(1.6, 1.6, 0.06, 64)` at `[0, -1.55, 0]` with faint crimson emissive (see 15-02-PLAN.md Task 2).
 
 3. **Writing section data in v1:** D-13 says content is static/curated in v1. Should the Writing section show hardcoded essay titles, or be empty with a "See all" CTA?
    - What we know: Notion-wiring is Phase 16.
    - Recommendation: Show 2-3 hardcoded essay titles/links matching current writing page content; not a blocker.
+   - RESOLVED: 2-3 hardcoded essay titles per CONTEXT D-13; real slugs sourced from `src/app/writing/page.tsx` (see 15-04-PLAN.md Task 2).
 
 4. **Exact scroll-cue easing:** How far should the camera dolly and object scale change over scroll?
    - Recommendation: Planner/executor discretion. Sketch 005 shows the object "scales down + drifts" — suggest `scale: 1.0 → 0.65` and `camera.z: 4.4 → 5.6` over the first 30% of page scroll.
+   - RESOLVED: Claude's Discretion — executor tunes; target range `scale 1.0 → 0.65`, `camera.z 4.4 → 5.6` over first 30% scroll (see 15-05-PLAN.md Task 1).
 
 ---
 
