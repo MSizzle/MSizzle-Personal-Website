@@ -3,7 +3,7 @@ import { Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import { LenisProvider } from "@/components/providers/lenis-provider";
 import { MotionProvider } from "@/components/providers/motion-provider";
 import { Navigation } from "@/components/nav/navigation";
-import { InkFooter } from "@/components/home-v2/ink-footer";
+import { ConditionalFooter } from "@/components/layout/conditional-footer";
 import { MainOffset } from "@/components/main-offset";
 import { UmamiAnalytics } from "@/components/analytics/umami-analytics";
 import { VisitSurvey } from "@/components/visit-survey";
@@ -72,7 +72,7 @@ export default function RootLayout({
           <MotionProvider>
             <Navigation />
             <MainOffset>{children}</MainOffset>
-            <InkFooter />
+            <ConditionalFooter />
             <VisitSurvey />
           </MotionProvider>
         </LenisProvider>
