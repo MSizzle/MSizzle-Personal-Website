@@ -41,7 +41,7 @@ Full milestone detail: [milestones/v2.0-ROADMAP.md](./milestones/v2.0-ROADMAP.md
 
 **Milestone Goal:** Rebuild the presentation layer of montysinger.com as a dark, flat, brutalist site (Crimson Poster palette, wheel-driven slide-deck homepage, lazy-loaded 3D hero object) while preserving all existing infrastructure. Built on a `v3` branch, previewed on Vercel, and promoted via alias swap at parity + QA.
 
-- [ ] **Phase 14: Branch & Crimson Poster Foundation** - `v3` branch + Crimson Poster `@theme` tokens and brutalist primitives, previewed on Vercel
+- [x] **Phase 14: Branch & Crimson Poster Foundation** - `v3` branch + Crimson Poster `@theme` tokens and brutalist primitives, previewed on Vercel (completed 2026-06-19)
 - [ ] **Phase 15: Slide-Deck Homepage & 3D Hero** - CHOMP-style wheel deck homepage with the lazy R3F morphing 3D object
 - [ ] **Phase 16: Interior Pages on Notion Data** - All interior pages rebuilt on the new system and wired to existing Notion loaders, plus new /uses and /watching
 - [ ] **Phase 17: Infrastructure Preservation & SEO Extension** - Verify Notion/image-proxy/analytics intact and extend SEO to the new pages
@@ -63,7 +63,7 @@ Full milestone detail: [milestones/v2.0-ROADMAP.md](./milestones/v2.0-ROADMAP.md
 - [x] 14-01-PLAN.md — v3 branch + deploy baseline + Crimson Poster @theme tokens, sig utility, Space Grotesk/JetBrains Mono fonts
 - [x] 14-02-PLAN.md — Static brutalist primitives (Rule, RuleStrong, SectionLabel, Chip, ListRow, Button, BigList, PageHero, Marquee)
 - [x] 14-03-PLAN.md — Composite + animated primitives (Card, VideoCard, NewsletterCarousel, UsesList, Reveal)
-- [ ] 14-04-PLAN.md — /v3-specimen showcase route + production build gate (DQ-01 readiness)
+- [x] 14-04-PLAN.md — /v3-specimen showcase route + production build gate (DQ-01 readiness)
 **UI hint**: yes
 
 ### Phase 15: Slide-Deck Homepage & 3D Hero
@@ -133,7 +133,7 @@ Phases execute in numeric order: 14 → 15 → 16 → 17 → 18
 | 11. Archive Pages | v2.0 | 5/5 | Complete | 2026-05-21 |
 | 12. Sub-page Restyle Sweep | v2.0 | 7/7 | Complete | 2026-05-21 |
 | 13. v2.0 QA & GO/NO-GO | v2.0 | 6/6 | Complete | 2026-05-21 |
-| 14. Branch & Crimson Poster Foundation | v3.0 | 3/4 | In Progress|  |
+| 14. Branch & Crimson Poster Foundation | v3.0 | 4/4 | Complete   | 2026-06-19 |
 | 15. Slide-Deck Homepage & 3D Hero | v3.0 | 0/TBD | Not started | - |
 | 16. Interior Pages on Notion Data | v3.0 | 0/TBD | Not started | - |
 | 17. Infrastructure Preservation & SEO Extension | v3.0 | 0/TBD | Not started | - |
