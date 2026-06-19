@@ -143,7 +143,7 @@ Phases execute in numeric order: 14 → 15 → 16 → 17 → 18
 | 12. Sub-page Restyle Sweep | v2.0 | 7/7 | Complete | 2026-05-21 |
 | 13. v2.0 QA & GO/NO-GO | v2.0 | 6/6 | Complete | 2026-05-21 |
 | 14. Branch & Crimson Poster Foundation | v3.0 | 4/4 | Complete   | 2026-06-19 |
-| 15. WebGL Explorative Homepage | v3.0 | 5/5 | Complete   | 2026-06-19 |
+| 15. WebGL Explorative Homepage | v3.0 | 5/5 | Complete    | 2026-06-19 |
 | 16. Interior Pages on Notion Data | v3.0 | 0/TBD | Not started | - |
 | 17. Infrastructure Preservation & SEO Extension | v3.0 | 0/TBD | Not started | - |
 | 18. v3.0 QA, Perf Gate & Alias Swap | v3.0 | 0/TBD | Not started | - |

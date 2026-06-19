@@ -15,15 +15,15 @@ presentation-layer rebuild: infrastructure is preserved, not rebuilt.
 
 ### Homepage Slide Deck (HD)
 - [ ] **HD-01**: The homepage is a full-page slide deck where one wheel or keyboard gesture advances exactly one slide.
-- [ ] **HD-02**: The controller ignores decaying trackpad momentum (fresh-gesture detection) and applies a short reversal-bypass cool-down, so one push moves one slide without feeling blocked.
-- [ ] **HD-03**: The background stays static while slide content moves; keyboard (arrows/space/Home/End) and touch-swipe navigation work; a progress indicator is shown.
-- [ ] **HD-04**: Slide 2 is the brutalist big-type index ("What I'm Building / Writing / Doing") linking to Works / Writing / Prometheus.
-- [ ] **HD-05**: On touch and small screens the homepage falls back to native vertical scroll (no wheel controller).
+- [x] **HD-02**: The controller ignores decaying trackpad momentum (fresh-gesture detection) and applies a short reversal-bypass cool-down, so one push moves one slide without feeling blocked.
+- [x] **HD-03**: The background stays static while slide content moves; keyboard (arrows/space/Home/End) and touch-swipe navigation work; a progress indicator is shown.
+- [x] **HD-04**: Slide 2 is the brutalist big-type index ("What I'm Building / Writing / Doing") linking to Works / Writing / Prometheus.
+- [x] **HD-05**: On touch and small screens the homepage falls back to native vertical scroll (no wheel controller).
 
 ### 3D Hero Object (TD)
-- [ ] **TD-01**: The hero shows a morphing near-black glossy 3D object (React-Three-Fiber) with a crimson rim, animating autonomously.
-- [ ] **TD-02**: The object spawns in the right portion and flies in from the left on each slide change.
-- [ ] **TD-03**: The object is lazy-loaded (off the LCP critical path) and degrades to a static fallback when WebGL is unavailable or reduced-motion is set.
+- [x] **TD-01**: The hero shows a morphing near-black glossy 3D object (React-Three-Fiber) with a crimson rim, animating autonomously.
+- [x] **TD-02**: The object spawns in the right portion and flies in from the left on each slide change.
+- [x] **TD-03**: The object is lazy-loaded (off the LCP critical path) and degrades to a static fallback when WebGL is unavailable or reduced-motion is set.
 
 ### Pages (PG)
 - [ ] **PG-01**: Home, Writing index, Essay reading view, Works index, Project detail, About, Prometheus, Newsletter, Events, and Links are rebuilt in the new system, content sourced from Notion as today.
@@ -68,11 +68,11 @@ REQ-ID → Phase. All 21 v3.0 requirements mapped to exactly one phase (100% cov
 | HD-01 | Phase 15 | Superseded — WebGL explorative direction per Phase 15 CONTEXT.md D-05 |
 | HD-02 | Phase 15 | Superseded — WebGL explorative direction per Phase 15 CONTEXT.md D-05 |
 | HD-03 | Phase 15 | Superseded — WebGL explorative direction per Phase 15 CONTEXT.md D-05 |
-| HD-04 | Phase 15 | Pending |
-| HD-05 | Phase 15 | Pending |
-| TD-01 | Phase 15 | Pending |
-| TD-02 | Phase 15 | Pending |
-| TD-03 | Phase 15 | Pending |
+| HD-04 | Phase 15 | Complete |
+| HD-05 | Phase 15 | Complete |
+| TD-01 | Phase 15 | Complete |
+| TD-02 | Phase 15 | Complete |
+| TD-03 | Phase 15 | Complete |
 | PG-01 | Phase 16 | Pending |
 | PG-02 | Phase 16 | Pending |
 | PG-03 | Phase 16 | Pending |

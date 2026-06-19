@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v3.0
 milestone_name: Dark Brutalist Rebuild
-status: executing
-stopped_at: Phase 15 context gathered (WebGL homepage, ready to plan)
-last_updated: "2026-06-19T17:05:43.639Z"
+status: ready_to_plan
+stopped_at: Phase 15 complete (5/5) — ready to discuss Phase 16
+last_updated: 2026-06-19T21:56:49.176Z
 last_activity: 2026-06-19 -- Phase 15 execution started
 progress:
   total_phases: 5
   completed_phases: 1
   total_plans: 9
-  completed_plans: 4
+  completed_plans: 50
   percent: 20
 ---
 
@@ -21,14 +21,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-18)
 
 **Core value:** A personal site that feels alive and memorable, *and* legible — not another template blog.
-**Current focus:** Phase 15 — slide-deck-homepage-3d-hero
+**Current focus:** Phase 16 — interior pages on notion data
 
 ## Current Position
 
-Phase: 15 (slide-deck-homepage-3d-hero) — EXECUTING
-Plan: 1 of 5
-Status: Executing Phase 15
-Last activity: 2026-06-19 -- Phase 15 execution started
+Phase: 16
+Plan: Not started
+Status: Ready to plan
+Last activity: 2026-06-19
 
 Direction: validated via sketches 003–005 + perf spike 001 (GO-WITH-CUTS). Build cuts: desktop-WebGL / mobile-poster, defer canvas past LCP, GPU vertex-shader morph.
 
