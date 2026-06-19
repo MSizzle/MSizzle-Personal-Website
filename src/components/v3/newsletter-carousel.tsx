@@ -40,7 +40,7 @@ export function NewsletterCarousel({ issues }: Props) {
           "flex-[0_0_300px] [scroll-snap-align:start] border border-border bg-bg-2 block";
 
         return issue.href ? (
-          <Link key={issue.href} href={issue.href} className={cardClasses}>
+          <Link key={issue.title} href={issue.href} className={cardClasses}>
             {body}
           </Link>
         ) : (
