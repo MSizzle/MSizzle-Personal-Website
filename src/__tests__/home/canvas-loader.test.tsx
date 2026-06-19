@@ -1,32 +1,43 @@
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect, vi, afterEach } from "vitest";
+import { render, act } from "@testing-library/react";
+import React from "react";
 
-// Mock next/dynamic so the loader compiles without the actual dynamic import
+// Mock next/dynamic so it returns the stub synchronously (no real dynamic split)
 vi.mock("next/dynamic", () => ({
   default: (_fn: unknown, _opts?: unknown) => {
-    // Return a simple stub component
-    function DynamicStub() {
-      return null;
+    // Return a stub that renders data-testid="canvas"
+    function HeroBlobCanvasStub() {
+      return React.createElement("div", { "data-testid": "canvas" });
     }
-    DynamicStub.displayName = "DynamicStub";
-    return DynamicStub;
+    HeroBlobCanvasStub.displayName = "HeroBlobCanvasStub";
+    return HeroBlobCanvasStub;
   },
 }));
 
-// Stub the real component (does not exist yet — created in Plan 15-02)
-vi.mock("@/components/home/canvas-loader", () => ({
-  CanvasLoader: function CanvasLoaderStub() {
-    return null;
-  },
-}));
+// Ensure the real canvas-loader module is used (not the old vi.mock stub)
+// by NOT mocking @/components/home/canvas-loader here
 
 describe("CanvasLoader (TD-02)", () => {
-  it("stub is importable before real component exists", async () => {
-    const { CanvasLoader } = await import("@/components/home/canvas-loader");
-    expect(CanvasLoader).toBeDefined();
+  afterEach(() => {
+    vi.useRealTimers();
+    vi.restoreAllMocks();
   });
 
-  // Will be promoted to real tests in Plan 15-02 Task 1
-  it.todo("renders null before requestIdleCallback fires");
-  it.todo("renders HeroBlobCanvas after idle fires (with requestIdleCallback)");
-  it.todo("renders HeroBlobCanvas after setTimeout fires (Safari path, 200ms)");
+  it("renders null before requestIdleCallback/setTimeout fires", async () => {
+    vi.useFakeTimers();
+    const { CanvasLoader } = await import("@/components/home/canvas-loader");
+    const { container } = render(React.createElement(CanvasLoader));
+    // Before any timers advance, mounted=false → null
+    expect(container.firstChild).toBeNull();
+  });
+
+  it("renders HeroBlobCanvas after setTimeout fires (Safari path, 200ms)", async () => {
+    vi.useFakeTimers();
+    const { CanvasLoader } = await import("@/components/home/canvas-loader");
+    const { getByTestId } = render(React.createElement(CanvasLoader));
+    await act(async () => {
+      vi.advanceTimersByTime(300);
+    });
+    expect(getByTestId("canvas")).toBeTruthy();
+  });
 });
