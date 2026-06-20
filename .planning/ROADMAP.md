@@ -43,7 +43,7 @@ Full milestone detail: [milestones/v2.0-ROADMAP.md](./milestones/v2.0-ROADMAP.md
 
 - [x] **Phase 14: Branch & Crimson Poster Foundation** - `v3` branch + Crimson Poster `@theme` tokens and brutalist primitives, previewed on Vercel (completed 2026-06-19)
 - [x] **Phase 15: WebGL Explorative Homepage** - Lusion-grade WebGL scroll-story homepage (real-time 3D hero, fluid interweaving line, themed beats); replaces the superseded slide deck. Desktop-WebGL / mobile-poster. (completed 2026-06-19)
-- [ ] **Phase 16: Interior Pages on Notion Data** - All interior pages rebuilt on the new system and wired to existing Notion loaders, plus new /uses and /watching
+- [x] **Phase 16: Interior Pages on Notion Data** - All interior pages rebuilt on the new system and wired to existing Notion loaders, plus new /uses and /watching (completed 2026-06-20)
 - [ ] **Phase 17: Infrastructure Preservation & SEO Extension** - Verify Notion/image-proxy/analytics intact and extend SEO to the new pages
 - [ ] **Phase 18: v3.0 QA, Perf Gate & Alias Swap** - Production-readiness gate, mobile-perf budget, GO/NO-GO, and production alias promotion
 
@@ -107,7 +107,7 @@ Full milestone detail: [milestones/v2.0-ROADMAP.md](./milestones/v2.0-ROADMAP.md
 - [x] 16-06-PLAN.md — Essay reading view (/blog/[slug]) repainted with PageHero, full-bleed cover, reading meta, related essays
 - [x] 16-07-PLAN.md — Project detail (/projects/[slug]) repainted with full-bleed cover, breadcrumb, Pumpkin Amber tokens
 - [x] 16-08-PLAN.md — About, Prometheus, Newsletter, Events, Links pages repainted with PageHero + Pumpkin Amber tokens
-- [ ] 16-09-PLAN.md — Automated gate (vitest + build + ISR audit + token audit) + human visual checkpoint on v3 preview
+- [x] 16-09-PLAN.md — Automated gate (vitest + build + ISR audit + token audit) + human visual checkpoint on v3 preview
 **UI hint**: yes
 
 ### Phase 17: Infrastructure Preservation & SEO Extension
@@ -153,6 +153,6 @@ Phases execute in numeric order: 14 -> 15 -> 16 -> 17 -> 18
 | 13. v2.0 QA & GO/NO-GO | v2.0 | 6/6 | Complete | 2026-05-21 |
 | 14. Branch & Crimson Poster Foundation | v3.0 | 4/4 | Complete   | 2026-06-19 |
 | 15. WebGL Explorative Homepage | v3.0 | 5/5 | Complete    | 2026-06-19 |
-| 16. Interior Pages on Notion Data | v3.0 | 8/9 | In Progress|  |
+| 16. Interior Pages on Notion Data | v3.0 | 9/9 | Complete   | 2026-06-20 |
 | 17. Infrastructure Preservation & SEO Extension | v3.0 | 0/TBD | Not started | - |
 | 18. v3.0 QA, Perf Gate & Alias Swap | v3.0 | 0/TBD | Not started | - |
