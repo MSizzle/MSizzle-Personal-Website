@@ -118,7 +118,9 @@ Full milestone detail: [milestones/v2.0-ROADMAP.md](./milestones/v2.0-ROADMAP.md
   1. Sitemap, robots, blog feed, `src/lib/seo`, JSON-LD, and per-page metadata are preserved and now include the new `/uses` and `/watching` pages.
   2. Umami analytics loads and tracks on every page of the `v3` preview.
   3. The blog feed, sitemap, and robots resolve correctly on the preview with no regressions versus production.
-**Plans**: TBD
+**Plans**: 1 plan
+Plans:
+- [ ] 17-01-PLAN.md — Add /uses + /watching to sitemap + automated regression gate (IN-03, IN-04)
 
 ### Phase 18: v3.0 QA, Perf Gate & Alias Swap
 **Goal**: v3 passes the production-readiness gate and mobile-perf budget, earns a GO verdict, and the production alias is promoted to v3 and verified.
@@ -154,5 +156,5 @@ Phases execute in numeric order: 14 -> 15 -> 16 -> 17 -> 18
 | 14. Branch & Crimson Poster Foundation | v3.0 | 4/4 | Complete   | 2026-06-19 |
 | 15. WebGL Explorative Homepage | v3.0 | 5/5 | Complete    | 2026-06-19 |
 | 16. Interior Pages on Notion Data | v3.0 | 9/9 | Complete    | 2026-06-20 |
-| 17. Infrastructure Preservation & SEO Extension | v3.0 | 0/TBD | Not started | - |
+| 17. Infrastructure Preservation & SEO Extension | v3.0 | 0/1 | Not started | - |
 | 18. v3.0 QA, Perf Gate & Alias Swap | v3.0 | 0/TBD | Not started | - |
