@@ -67,15 +67,15 @@ Full milestone detail: [milestones/v2.0-ROADMAP.md](./milestones/v2.0-ROADMAP.md
 **UI hint**: yes
 
 ### Phase 15: WebGL Explorative Homepage
-**Goal**: The homepage is an expansive, Lusion-grade WebGL "explorative scroll-story" — a real-time 3D hero object, a fluid interweaving scroll line, and themed section beats you wander down — that stays inside the project's perf budget. Replaces the superseded slide deck.
+**Goal**: The homepage is an expansive, Lusion-grade WebGL "explorative scroll-story" -- a real-time 3D hero object, a fluid interweaving scroll line, and themed section beats you wander down -- that stays inside the project's perf budget. Replaces the superseded slide deck.
 **Depends on**: Phase 14
-**Direction validated by**: sketches 003–005 (`.planning/sketches/`) + perf spike 001 (`.planning/spikes/`, GO-WITH-CUTS). See memory homepage-webgl-direction.
-**Requirements**: TD-01, TD-02, TD-03 (3D object / lazy-load / fallback — carry forward), HD-04 (big-type index), HD-05 (touch/small-screen fallback). _HD-01, HD-02, HD-03 (CHOMP wheel-deck nav) are superseded._
+**Direction validated by**: sketches 003-005 (`.planning/sketches/`) + perf spike 001 (`.planning/spikes/`, GO-WITH-CUTS). See memory homepage-webgl-direction.
+**Requirements**: TD-01, TD-02, TD-03 (3D object / lazy-load / fallback -- carry forward), HD-04 (big-type index), HD-05 (touch/small-screen fallback). _HD-01, HD-02, HD-03 (CHOMP wheel-deck nav) are superseded._
 **Success Criteria** (what must be TRUE):
   1. Palette: near-black canvas, off-white name (NO red-on-red), crimson as a sparing accent (line / rim / hover).
   2. Desktop renders a live WebGL 3D hero (PBR/clearcoat, RoomEnvironment IBL, crimson rim, bloom) with GPU vertex-shader morph; canvas is `dynamic({ssr:false})` in a `"use client"` loader, mounted after LCP.
-  3. LCP element is SSR'd text/poster — never the canvas; mobile LCP/PSI stays within the budget already won.
-  4. Mobile / pointer:coarse / small-screen / reduced-motion / no-WebGL2 → static poster (`public/hero-blob-poster.webp`), no canvas.
+  3. LCP element is SSR'd text/poster -- never the canvas; mobile LCP/PSI stays within the budget already won.
+  4. Mobile / pointer:coarse / small-screen / reduced-motion / no-WebGL2 -> static poster (`public/hero-blob-poster.webp`), no canvas.
   5. Expansive scroll-story structure with four section beats (Building, Writing, Newsletter, Footer); GLB swap-in seam built; v1 ships on the procedural blob stand-in.
 **Plans**: 5 plans
 - [x] 15-01-PLAN.md — Palette swap (globals.css Crimson Line tokens + deck CSS removal) + 1x1 poster placeholder + test scaffolds
@@ -89,7 +89,7 @@ Full milestone detail: [milestones/v2.0-ROADMAP.md](./milestones/v2.0-ROADMAP.md
 **Note**: directory slug `15-slide-deck-homepage-3d-hero` is legacy (kept to avoid breaking references).
 
 ### Phase 16: Interior Pages on Notion Data
-**Goal**: Every interior page is rebuilt in the Crimson Poster system, sourced from the existing Notion pipeline, with a shared nav and footer and the two new pages (/uses, /watching) live.
+**Goal**: Every interior page is rebuilt in the Pumpkin Amber system, sourced from the existing Notion pipeline, with a shared nav and footer and the two new pages (/uses, /watching) live.
 **Depends on**: Phase 15
 **Requirements**: PG-01, PG-02, PG-03, PG-04, PG-05, IN-01, IN-02
 **Success Criteria** (what must be TRUE):
@@ -98,7 +98,16 @@ Full milestone detail: [milestones/v2.0-ROADMAP.md](./milestones/v2.0-ROADMAP.md
   3. A new `/uses` page (grouped tools and stack) is built and linked.
   4. A new `/watching` page lists favorite YouTube videos as cards that link out to YouTube.
   5. A shared nav and footer link all pages with correct active states and breadcrumbs.
-**Plans**: TBD
+**Plans**: 9 plans
+- [ ] 16-01-PLAN.md — next.config.ts (add YouTube remotePattern, remove /uses redirect) + src/lib/uses.ts + src/lib/watching.ts + Wave 0 test scaffolds
+- [ ] 16-02-PLAN.md — Navigation active-label extension (/uses, /watching, Prometheus in mobile) + V3Footer full sitemap + ConditionalFooter swap
+- [ ] 16-03-PLAN.md — Editorial component token repaint (ListRow, YearBlock, Rule, RuleStrong, SectionLabel, AllLink) to Pumpkin Amber
+- [ ] 16-04-PLAN.md — Writing index + Projects index repainted with v3 PageHero + Pumpkin Amber tokens
+- [ ] 16-05-PLAN.md — New /uses page (UsesList + USES_DATA) + new /watching page (VideoCard grid + WATCHING_ITEMS)
+- [ ] 16-06-PLAN.md — Essay reading view (/blog/[slug]) repainted with PageHero, full-bleed cover, reading meta, related essays
+- [ ] 16-07-PLAN.md — Project detail (/projects/[slug]) repainted with full-bleed cover, breadcrumb, Pumpkin Amber tokens
+- [ ] 16-08-PLAN.md — About, Prometheus, Newsletter, Events, Links pages repainted with PageHero + Pumpkin Amber tokens
+- [ ] 16-09-PLAN.md — Automated gate (vitest + build + ISR audit + token audit) + human visual checkpoint on v3 preview
 **UI hint**: yes
 
 ### Phase 17: Infrastructure Preservation & SEO Extension
@@ -125,7 +134,7 @@ Full milestone detail: [milestones/v2.0-ROADMAP.md](./milestones/v2.0-ROADMAP.md
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 14 → 15 → 16 → 17 → 18
+Phases execute in numeric order: 14 -> 15 -> 16 -> 17 -> 18
 
 | Phase | Milestone | Plans | Status | Completed |
 |-------|-----------|-------|--------|-----------|
@@ -144,6 +153,6 @@ Phases execute in numeric order: 14 → 15 → 16 → 17 → 18
 | 13. v2.0 QA & GO/NO-GO | v2.0 | 6/6 | Complete | 2026-05-21 |
 | 14. Branch & Crimson Poster Foundation | v3.0 | 4/4 | Complete   | 2026-06-19 |
 | 15. WebGL Explorative Homepage | v3.0 | 5/5 | Complete    | 2026-06-19 |
-| 16. Interior Pages on Notion Data | v3.0 | 0/TBD | Not started | - |
+| 16. Interior Pages on Notion Data | v3.0 | 0/9 | Not started | - |
 | 17. Infrastructure Preservation & SEO Extension | v3.0 | 0/TBD | Not started | - |
 | 18. v3.0 QA, Perf Gate & Alias Swap | v3.0 | 0/TBD | Not started | - |
