@@ -1,10 +1,9 @@
 import type { Metadata } from 'next'
-import Image from 'next/image'
+import { PageHero } from '@/components/v3/page-hero'
 import { JsonLd } from '@/components/seo/json-ld'
 import { buildFaqPageSchema } from '@/lib/seo/schemas'
 import { RuleStrong } from '@/components/editorial/rule-strong'
 import { Rule } from '@/components/editorial/rule'
-import { AllLink } from '@/components/editorial/all-link'
 
 export const metadata: Metadata = {
   title: 'Prometheus | AI Integrations and Education | Monty Singer',
@@ -47,29 +46,12 @@ export default function PrometheusPage() {
     <>
       <JsonLd data={buildFaqPageSchema(FAQS)} />
 
-      <section className="px-6 pt-16 pb-15 md:px-40 md:pt-40 md:pb-25">
-        <div className="grid grid-cols-1 items-end gap-10 md:grid-cols-[1fr_360px] md:gap-20">
-          <div>
-            <div className="text-label uppercase text-muted">── The Studio · 01</div>
-            <h1 className="mt-6 text-page-title uppercase text-ink">Prometheus.</h1>
-            <p className="mt-10 max-w-[35rem] text-body-lead text-muted">
-              AI integrations and education. I help businesses implement AI into
-              their workflows — custom automation pipelines, tool integration,
-              and hands-on training. Built to outlive the next platform shift.
-            </p>
-          </div>
-          <div className="hidden md:block">
-            <div className="relative h-[480px] w-[360px] overflow-hidden bg-rule-strong">
-              <Image
-                src="/MSizzle-website-photos/000092530012.jpeg"
-                alt=""
-                fill
-                sizes="360px"
-                className="object-cover saturate-[0.92]"
-              />
-            </div>
-          </div>
-        </div>
+      <section className="px-6 md:px-40">
+        <PageHero
+          title="Prometheus"
+          crumb="Home / Prometheus"
+          sub="AI integrations and education."
+        />
       </section>
 
       <RuleStrong />
@@ -77,9 +59,9 @@ export default function PrometheusPage() {
       <section className="px-6 pt-[120px] pb-[120px] md:px-40">
         {/* What I Do row */}
         <div className="grid grid-cols-1 gap-6 py-9 md:grid-cols-[180px_1fr_1fr] md:gap-12">
-          <div className="text-meta uppercase text-muted">Services</div>
-          <div className="text-feature text-ink">What I Do</div>
-          <div className="text-body text-ink">
+          <div className="text-meta uppercase text-[var(--color-text-muted)]">Services</div>
+          <div className="text-feature text-[var(--color-text)]">What I Do</div>
+          <div className="text-body text-[var(--color-text)]">
             <p>
               Custom AI automation pipelines; AI tool implementation and
               integration; AI education and training for teams; workflow
@@ -92,9 +74,9 @@ export default function PrometheusPage() {
 
         {/* Orthodontic practice row */}
         <div className="grid grid-cols-1 gap-6 py-9 md:grid-cols-[180px_1fr_1fr] md:gap-12">
-          <div className="text-meta uppercase text-muted">Case Study · Healthcare</div>
-          <div className="text-feature text-ink">Document Automation</div>
-          <div className="text-body text-ink">
+          <div className="text-meta uppercase text-[var(--color-text-muted)]">Case Study · Healthcare</div>
+          <div className="text-feature text-[var(--color-text)]">Document Automation</div>
+          <div className="text-body text-[var(--color-text)]">
             <p>
               An orthodontic practice. Built an automated pipeline that converts
               patient PDF reports into formatted PowerPoint presentations,
@@ -108,9 +90,9 @@ export default function PrometheusPage() {
 
         {/* Hospitality company row */}
         <div className="grid grid-cols-1 gap-6 py-9 md:grid-cols-[180px_1fr_1fr] md:gap-12">
-          <div className="text-meta uppercase text-muted">Case Study · Hospitality</div>
-          <div className="text-feature text-ink">Research Tooling</div>
-          <div className="text-body text-ink">
+          <div className="text-meta uppercase text-[var(--color-text-muted)]">Case Study · Hospitality</div>
+          <div className="text-feature text-[var(--color-text)]">Research Tooling</div>
+          <div className="text-body text-[var(--color-text)]">
             <p>
               A boutique hospitality company. Scoped and designed a custom
               research tool and website for a property rental business,
@@ -123,16 +105,30 @@ export default function PrometheusPage() {
 
         {/* Work with Prometheus row */}
         <div className="grid grid-cols-1 gap-6 py-9 md:grid-cols-[180px_1fr_1fr] md:gap-12">
-          <div className="text-meta uppercase text-muted">Contact</div>
-          <div className="text-feature text-ink">Start a project</div>
-          <div className="text-body text-ink">
+          <div className="text-meta uppercase text-[var(--color-text-muted)]">Contact</div>
+          <div className="text-feature text-[var(--color-text)]">Start a project</div>
+          <div className="text-body text-[var(--color-text)]">
             <p>
               Visit prometheus.today to learn more, or email to discuss a
               project.
             </p>
             <div className="mt-4 flex flex-wrap gap-6">
-              <AllLink href="https://prometheus.today">prometheus.today &rarr;</AllLink>
-              <AllLink href="mailto:monty@prometheus.today">monty@prometheus.today &rarr;</AllLink>
+              <a
+                href="https://prometheus.today"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block border-b border-[var(--color-text)] pb-1 text-label uppercase text-[var(--color-text)]"
+              >
+                prometheus.today &rarr;
+              </a>
+              <a
+                href="mailto:monty@prometheus.today"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block border-b border-[var(--color-text)] pb-1 text-label uppercase text-[var(--color-text)]"
+              >
+                monty@prometheus.today &rarr;
+              </a>
             </div>
           </div>
         </div>
