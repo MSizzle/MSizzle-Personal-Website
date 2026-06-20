@@ -29,7 +29,7 @@ presentation-layer rebuild: infrastructure is preserved, not rebuilt.
 - [x] **PG-01**: Home, Writing index, Essay reading view, Works index, Project detail, About, Prometheus, Newsletter, Events, and Links are rebuilt in the new system, content sourced from Notion as today.
 - [x] **PG-02**: A new `/uses` page (tools and stack) is built and linked.
 - [x] **PG-03**: A new `/watching` page lists favorite YouTube videos as cards linking out to YouTube.
-- [ ] **PG-04**: The essay reading view shows breadcrumb, reading time, publish date, prose, and related essays; the writing and works indexes show excerpts.
+- [x] **PG-04**: The essay reading view shows breadcrumb, reading time, publish date, prose, and related essays; the writing and works indexes show excerpts.
 - [x] **PG-05**: A shared nav and footer link all pages with correct active states and breadcrumbs.
 
 ### Infrastructure Preservation (IN)
@@ -76,7 +76,7 @@ REQ-ID → Phase. All 21 v3.0 requirements mapped to exactly one phase (100% cov
 | PG-01 | Phase 16 | Complete |
 | PG-02 | Phase 16 | Complete |
 | PG-03 | Phase 16 | Complete |
-| PG-04 | Phase 16 | Pending |
+| PG-04 | Phase 16 | Complete |
 | PG-05 | Phase 16 | Complete |
 | IN-01 | Phase 16 | Complete |
 | IN-02 | Phase 16 | Complete |
