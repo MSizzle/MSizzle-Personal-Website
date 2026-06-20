@@ -26,15 +26,15 @@ presentation-layer rebuild: infrastructure is preserved, not rebuilt.
 - [x] **TD-03**: The object is lazy-loaded (off the LCP critical path) and degrades to a static fallback when WebGL is unavailable or reduced-motion is set.
 
 ### Pages (PG)
-- [ ] **PG-01**: Home, Writing index, Essay reading view, Works index, Project detail, About, Prometheus, Newsletter, Events, and Links are rebuilt in the new system, content sourced from Notion as today.
-- [ ] **PG-02**: A new `/uses` page (tools and stack) is built and linked.
-- [ ] **PG-03**: A new `/watching` page lists favorite YouTube videos as cards linking out to YouTube.
+- [x] **PG-01**: Home, Writing index, Essay reading view, Works index, Project detail, About, Prometheus, Newsletter, Events, and Links are rebuilt in the new system, content sourced from Notion as today.
+- [x] **PG-02**: A new `/uses` page (tools and stack) is built and linked.
+- [x] **PG-03**: A new `/watching` page lists favorite YouTube videos as cards linking out to YouTube.
 - [ ] **PG-04**: The essay reading view shows breadcrumb, reading time, publish date, prose, and related essays; the writing and works indexes show excerpts.
 - [ ] **PG-05**: A shared nav and footer link all pages with correct active states and breadcrumbs.
 
 ### Infrastructure Preservation (IN)
-- [ ] **IN-01**: The Notion CMS pipeline (dataSources.query v5, ISR 30min) continues to power all content unchanged.
-- [ ] **IN-02**: The image proxy routes (`notion-cover`, `notion-image`) continue to serve Notion images.
+- [x] **IN-01**: The Notion CMS pipeline (dataSources.query v5, ISR 30min) continues to power all content unchanged.
+- [x] **IN-02**: The image proxy routes (`notion-cover`, `notion-image`) continue to serve Notion images.
 - [ ] **IN-03**: SEO infrastructure (sitemap, robots, blog feed, `src/lib/seo`, JSON-LD, per-page metadata) is preserved and extended to the new `/uses` and `/watching` pages.
 - [ ] **IN-04**: Umami analytics continues to load and track on every page.
 
@@ -73,13 +73,13 @@ REQ-ID → Phase. All 21 v3.0 requirements mapped to exactly one phase (100% cov
 | TD-01 | Phase 15 | Complete |
 | TD-02 | Phase 15 | Complete |
 | TD-03 | Phase 15 | Complete |
-| PG-01 | Phase 16 | Pending |
-| PG-02 | Phase 16 | Pending |
-| PG-03 | Phase 16 | Pending |
+| PG-01 | Phase 16 | Complete |
+| PG-02 | Phase 16 | Complete |
+| PG-03 | Phase 16 | Complete |
 | PG-04 | Phase 16 | Pending |
 | PG-05 | Phase 16 | Pending |
-| IN-01 | Phase 16 | Pending |
-| IN-02 | Phase 16 | Pending |
+| IN-01 | Phase 16 | Complete |
+| IN-02 | Phase 16 | Complete |
 | IN-03 | Phase 17 | Pending |
 | IN-04 | Phase 17 | Pending |
 | DQ-01 | Phase 14 | Complete |
