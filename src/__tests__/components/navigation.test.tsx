@@ -8,7 +8,7 @@
  *  - Desktop primary nav stays at 5 links (D-11)
  */
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, screen, cleanup } from "@testing-library/react";
+import { render, screen, cleanup, fireEvent } from "@testing-library/react";
 
 beforeEach(() => {
   cleanup();
@@ -87,16 +87,9 @@ describe("Navigation component (Plan 02 / D-13)", () => {
   it("MOBILE_LINKS includes /uses link", () => {
     mockUsePathname.mockReturnValue("/");
     render(<Navigation />);
-    // Open the mobile drawer by clicking hamburger button
-    // We check the rendered href links for /uses
-    const usesLinks = document.querySelectorAll('a[href="/uses"]');
-    // MOBILE_LINKS renders in the drawer — may not be visible until hamburger clicked
-    // Check via screen queries that include hidden/conditional content
-    // Since MOBILE_LINKS is data that drives rendering, check via aria queries on open drawer
-    // Alternative: test the module exports directly by checking MOBILE_LINKS constant
-    // The simplest approach: open the drawer and look for the link
+    // Open the mobile drawer via fireEvent (triggers React state update)
     const hamburger = screen.getByRole("button", { name: /open navigation menu/i });
-    hamburger.click();
+    fireEvent.click(hamburger);
     const usesLink = document.querySelector('a[href="/uses"]');
     expect(usesLink).not.toBeNull();
   });
@@ -105,7 +98,7 @@ describe("Navigation component (Plan 02 / D-13)", () => {
     mockUsePathname.mockReturnValue("/");
     render(<Navigation />);
     const hamburger = screen.getByRole("button", { name: /open navigation menu/i });
-    hamburger.click();
+    fireEvent.click(hamburger);
     const watchingLink = document.querySelector('a[href="/watching"]');
     expect(watchingLink).not.toBeNull();
   });
@@ -114,7 +107,7 @@ describe("Navigation component (Plan 02 / D-13)", () => {
     mockUsePathname.mockReturnValue("/");
     render(<Navigation />);
     const hamburger = screen.getByRole("button", { name: /open navigation menu/i });
-    hamburger.click();
+    fireEvent.click(hamburger);
     const prometheusLink = document.querySelector('a[href="/prometheus"]');
     expect(prometheusLink).not.toBeNull();
   });

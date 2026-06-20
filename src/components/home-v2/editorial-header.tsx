@@ -5,8 +5,10 @@ type Props = {
   /**
    * Bolds the matching nav link. Falsy = no link bolded (homepage default).
    * Per handoff §3/§4: each archive route bolds its own nav label.
+   * 'Uses' and 'Watching' are accepted but do not bold any desktop nav link
+   * (those routes are mobile-drawer + footer only per D-11/D-13).
    */
-  active?: "Building" | "Writing" | "Events" | "About" | "Links";
+  active?: "Building" | "Writing" | "Events" | "About" | "Links" | "Uses" | "Watching";
 };
 
 // Five nav destinations per D-05 (homepage flips /blog → /writing in this plan).
