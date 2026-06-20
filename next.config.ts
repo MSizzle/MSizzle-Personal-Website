@@ -16,7 +16,6 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
-      { source: '/uses', destination: '/about', permanent: true },
       { source: '/blog', destination: '/writing', permanent: true },
     ]
   },
@@ -50,6 +49,10 @@ const nextConfig: NextConfig = {
       {
         protocol: "https",
         hostname: "*.substackcdn.com",
+      },
+      {
+        protocol: "https",
+        hostname: "img.youtube.com",
       },
     ],
   },
