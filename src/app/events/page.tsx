@@ -1,4 +1,3 @@
-import Link from "next/link";
 import type { Metadata } from "next";
 import {
   getUpcomingEvents,
@@ -9,7 +8,6 @@ import { formatMonthYear, formatDayNumeral } from "@/lib/dates";
 import { PageHero } from "@/components/v3/page-hero";
 import { RuleStrong } from "@/components/editorial/rule-strong";
 import { SectionLabel } from "@/components/editorial/section-label";
-import { AllLink } from "@/components/editorial/all-link";
 import { cn } from "@/utils/cn";
 
 // ISR — 30 minutes, matches / and /writing cadence (RESEARCH § Pitfall 9).
@@ -97,9 +95,14 @@ function UpcomingRow({
           {featured ? "Limited seats" : "Open door"}
         </div>
         {event.link && (
-          <AllLink href={event.link}>
+          <a
+            href={event.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block border-b border-[var(--color-text)] pb-1 text-label uppercase text-[var(--color-text)]"
+          >
             {featured ? "Reserve a seat →" : "RSVP →"}
-          </AllLink>
+          </a>
         )}
       </div>
     </div>
@@ -181,28 +184,45 @@ export default async function EventsPage() {
       {/* Past section — omitted entirely when empty */}
       {past.length > 0 && (
         <section className="px-6 pt-[120px] pb-[120px] md:px-40">
-          <SectionLabel numeral="03 — Past">Past</SectionLabel>
+          <SectionLabel numeral="04 — Past">Past</SectionLabel>
           <div className="mt-[72px]">
-            {past.map((event, i) => (
-              <Link
-                key={event.id}
-                href={event.link ?? "#"}
-                className={cn(
-                  "grid grid-cols-1 gap-6 py-5 md:grid-cols-[120px_1fr_1fr] md:gap-8",
-                  i > 0 && "border-t border-[var(--color-border)]"
-                )}
-              >
-                <span className="text-meta uppercase text-[var(--color-text-muted)]">
-                  {formatMonthYear(event.date)}
-                </span>
-                <span className="text-list-title-home text-[var(--color-text)]">
-                  {event.name}
-                </span>
-                <span className="text-caption text-[var(--color-text-muted)]">
-                  {event.description}
-                </span>
-              </Link>
-            ))}
+            {past.map((event, i) => {
+              const rowClass = cn(
+                "grid grid-cols-1 gap-6 py-5 md:grid-cols-[120px_1fr_1fr] md:gap-8",
+                i > 0 && "border-t border-[var(--color-border)]"
+              );
+              const rowInner = (
+                <>
+                  <span className="text-meta uppercase text-[var(--color-text-muted)]">
+                    {formatMonthYear(event.date)}
+                  </span>
+                  <span className="text-list-title-home text-[var(--color-text)]">
+                    {event.name}
+                  </span>
+                  <span className="text-caption text-[var(--color-text-muted)]">
+                    {event.description}
+                  </span>
+                </>
+              );
+              // Only render a link when the event has a real URL — avoids a
+              // focusable dead "#" link (CR-02). External URLs open in a new tab
+              // with tabnabbing protection.
+              return event.link ? (
+                <a
+                  key={event.id}
+                  href={event.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={rowClass}
+                >
+                  {rowInner}
+                </a>
+              ) : (
+                <div key={event.id} className={rowClass}>
+                  {rowInner}
+                </div>
+              );
+            })}
           </div>
         </section>
       )}

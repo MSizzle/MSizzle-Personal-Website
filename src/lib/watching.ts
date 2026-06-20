@@ -20,10 +20,10 @@ export type WatchingItem = {
 
 export const WATCHING_ITEMS: WatchingItem[] = [
   {
-    id: "dQw4w9WgXcQ",
+    id: "PLACEHDR001",
     title: "The Philosophy of Building",
     channel: "TODO: [Monty to fill in]",
-    url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    url: "https://www.youtube.com/watch?v=PLACEHDR001",
   },
   {
     id: "rStL7niR7gs",
