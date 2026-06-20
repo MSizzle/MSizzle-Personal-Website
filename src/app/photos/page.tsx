@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { groupPhotosByYear } from "@/lib/photos";
 import { RuleStrong } from "@/components/editorial/rule-strong";
 import { YearBlock } from "@/components/editorial/year-block";
+import { PageHero } from "@/components/v3/page-hero";
 
 /**
  * /photos — ARCH-03 editorial photo archive.
@@ -43,33 +44,13 @@ export default function PhotosPage() {
 
   return (
     <Fragment>
-      {/* Title block — matching /writing skeleton per RESEARCH Pattern 1 */}
-      <section className="px-6 pt-40 pb-24 md:px-40 md:pt-[160px] md:pb-[100px]">
-        <div className="grid grid-cols-1 items-end gap-10 md:grid-cols-[1fr_360px] md:gap-20">
-          {/* Left: label + page title + blurb */}
-          <div>
-            <div className="text-label uppercase text-muted">── The Archive · 04</div>
-            <h1 className="mt-6 text-page-title uppercase text-ink">Photographs.</h1>
-            <p className="mt-10 max-w-[35rem] text-body-lead text-muted">
-              A film-led survey of years in motion. Stills, fragments, and frames from a year of
-              quiet attention. Updated when something earns the page.
-            </p>
-          </div>
-
-          {/* Right: atmosphere photo — PHOTOS[1] per D-22 — hidden on mobile per RESEARCH Pitfall 6 */}
-          <div className="hidden md:block">
-            <div className="relative h-[480px] w-[360px] overflow-hidden bg-rule-strong">
-              {/* Filename: "20230928 MSB_0114.jpg" — space URL-encoded as %20, matching src/app/page.tsx line 23 pattern */}
-              <Image
-                src="/MSizzle-website-photos/20230928%20MSB_0114.jpg"
-                alt=""
-                fill
-                sizes="360px"
-                className="object-cover saturate-[0.92]"
-              />
-            </div>
-          </div>
-        </div>
+      {/* Title block — v3 PageHero replaces old two-column atmosphere-photo grid */}
+      <section className="px-6 md:px-40">
+        <PageHero
+          title="Photographs"
+          crumb="Home / Photographs"
+          sub="A film-led survey of years in motion. Updated when something earns the page."
+        />
       </section>
 
       <RuleStrong />
@@ -82,7 +63,7 @@ export default function PhotosPage() {
               <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
                 {yearPhotos.map((photo) => (
                   <figure key={photo.filename}>
-                    <div className="relative aspect-square overflow-hidden bg-rule-strong">
+                    <div className="relative aspect-square overflow-hidden bg-[var(--color-surface)]">
                       <Image
                         src={`/MSizzle-website-photos/${encodeURIComponent(photo.filename).replace(/%2F/g, "/")}`}
                         alt={photo.alt}
@@ -92,7 +73,7 @@ export default function PhotosPage() {
                       />
                     </div>
                     {photo.caption && (
-                      <figcaption className="mt-3 text-meta uppercase text-muted">
+                      <figcaption className="mt-3 text-xs uppercase tracking-[0.08em] text-[var(--color-text-muted)]">
                         {photo.caption}
                       </figcaption>
                     )}
