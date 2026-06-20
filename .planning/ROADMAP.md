@@ -104,7 +104,7 @@ Full milestone detail: [milestones/v2.0-ROADMAP.md](./milestones/v2.0-ROADMAP.md
 - [x] 16-03-PLAN.md — Editorial component token repaint (ListRow, YearBlock, Rule, RuleStrong, SectionLabel, AllLink) to Pumpkin Amber
 - [x] 16-04-PLAN.md — Writing index + Projects index repainted with v3 PageHero + Pumpkin Amber tokens
 - [x] 16-05-PLAN.md — New /uses page (UsesList + USES_DATA) + new /watching page (VideoCard grid + WATCHING_ITEMS)
-- [ ] 16-06-PLAN.md — Essay reading view (/blog/[slug]) repainted with PageHero, full-bleed cover, reading meta, related essays
+- [x] 16-06-PLAN.md — Essay reading view (/blog/[slug]) repainted with PageHero, full-bleed cover, reading meta, related essays
 - [ ] 16-07-PLAN.md — Project detail (/projects/[slug]) repainted with full-bleed cover, breadcrumb, Pumpkin Amber tokens
 - [x] 16-08-PLAN.md — About, Prometheus, Newsletter, Events, Links pages repainted with PageHero + Pumpkin Amber tokens
 - [ ] 16-09-PLAN.md — Automated gate (vitest + build + ISR audit + token audit) + human visual checkpoint on v3 preview
@@ -153,6 +153,6 @@ Phases execute in numeric order: 14 -> 15 -> 16 -> 17 -> 18
 | 13. v2.0 QA & GO/NO-GO | v2.0 | 6/6 | Complete | 2026-05-21 |
 | 14. Branch & Crimson Poster Foundation | v3.0 | 4/4 | Complete   | 2026-06-19 |
 | 15. WebGL Explorative Homepage | v3.0 | 5/5 | Complete    | 2026-06-19 |
-| 16. Interior Pages on Notion Data | v3.0 | 6/9 | In Progress|  |
+| 16. Interior Pages on Notion Data | v3.0 | 7/9 | In Progress|  |
 | 17. Infrastructure Preservation & SEO Extension | v3.0 | 0/TBD | Not started | - |
 | 18. v3.0 QA, Perf Gate & Alias Swap | v3.0 | 0/TBD | Not started | - |
