@@ -1,10 +1,19 @@
 /**
  * Tests for /projects page -- Plan 04 (16-04) photo grid rebuild.
+ * Tests for /projects/[slug] detail page -- Plan 07 (16-07) repaint.
  *
- * Asserts:
+ * Asserts (index page):
  * (a) Card components render for each project (not ListRow)
  * (b) When getPublishedProjects returns [] the text "No projects yet" appears
  * (c) PageHero renders with title="Building"
+ *
+ * Asserts (detail page - Plan 07):
+ * (d) Breadcrumbs Building item href is /projects (NOT /building or /works)
+ * (e) PageHero renders with project title
+ * (f) Cover image renders with fetchPriority="high" when project.cover exists
+ * (g) No cover image when project.cover is null/absent
+ * (h) externalUrl renders with rel="noopener noreferrer" target="_blank"
+ * (i) NotionRenderer is present
  *
  * Also retains Plan 01 WATCHING_ITEMS shape verifications.
  */
@@ -16,7 +25,7 @@ import { WATCHING_ITEMS } from "@/lib/watching";
 // Mock next/image
 vi.mock("next/image", () => ({
   default: (props: Record<string, unknown>) =>
-    React.createElement("img", { ...props }),
+    React.createElement("img", { ...props, "data-testid": "next-image" }),
 }));
 
 // Mock next/link
@@ -25,9 +34,35 @@ vi.mock("next/link", () => ({
     React.createElement("a", { href, ...props }, children),
 }));
 
-// Mock Notion loader
+// Mock next/navigation
+vi.mock("next/navigation", () => ({
+  notFound: vi.fn(() => {
+    throw new Error("NEXT_NOT_FOUND");
+  }),
+}));
+
+// Mock Notion loaders
 vi.mock("@/lib/notion-projects", () => ({
   getPublishedProjects: vi.fn(),
+  getProjectBySlug: vi.fn(),
+}));
+
+vi.mock("@/lib/notion", () => ({
+  getBlocks: vi.fn(),
+}));
+
+// Mock SEO metadata builder for project detail
+vi.mock("@/lib/seo/project-metadata", () => ({
+  buildProjectMetadata: vi.fn(() => ({ title: "Test Project | Monty Singer" })),
+}));
+
+// Mock NotionRenderer to isolate page rendering
+vi.mock("@/components/notion/notion-renderer", () => ({
+  NotionRenderer: ({ blocks }: { blocks: any[] }) =>
+    React.createElement("div", {
+      "data-testid": "notion-renderer",
+      "data-block-count": blocks.length,
+    }),
 }));
 
 afterEach(() => {
@@ -169,5 +204,117 @@ describe("/projects page (Plan 04 / PG-03)", () => {
       img.getAttribute("src")?.includes("notion-cover?pageId=proj-no-image")
     );
     expect(coverImg).toBeUndefined();
+  });
+});
+
+// ── Plan 07: /projects/[slug] detail page tests ─────────────────────────────
+
+const makeMockProject = (overrides: Partial<Record<string, unknown>> = {}) => ({
+  id: "proj-detail-abc",
+  slug: "my-project",
+  title: "My Cool Project",
+  description: "A detailed project description",
+  published: true,
+  tags: ["AI", "Product"],
+  cover: null,
+  image: null,
+  emoji: null,
+  externalUrl: null,
+  featured: false,
+  lastEdited: "2026-03-15",
+  ...overrides,
+});
+
+async function renderProjectDetailPage(slug: string) {
+  const { default: ProjectPage } = await import("@/app/projects/[slug]/page");
+  const element = await (ProjectPage as any)({ params: Promise.resolve({ slug }) });
+  render(element as any);
+}
+
+describe("/projects/[slug] detail page (Plan 07 / PG-01, PG-04)", () => {
+  it("Breadcrumbs Building item href is /projects NOT /building (PG-04)", async () => {
+    const { getProjectBySlug } = await import("@/lib/notion-projects");
+    const { getBlocks } = await import("@/lib/notion");
+    vi.mocked(getProjectBySlug).mockResolvedValue(makeMockProject() as any);
+    vi.mocked(getBlocks).mockResolvedValue([]);
+    await renderProjectDetailPage("my-project");
+    const allLinks = document.querySelectorAll("a");
+    const hrefs = Array.from(allLinks).map((a) => a.getAttribute("href"));
+    expect(hrefs).toContain("/projects");
+    expect(hrefs).not.toContain("/building");
+  });
+
+  it("renders project title in PageHero h1 (D-02)", async () => {
+    const { getProjectBySlug } = await import("@/lib/notion-projects");
+    const { getBlocks } = await import("@/lib/notion");
+    vi.mocked(getProjectBySlug).mockResolvedValue(makeMockProject() as any);
+    vi.mocked(getBlocks).mockResolvedValue([]);
+    await renderProjectDetailPage("my-project");
+    const h1 = screen.getByRole("heading", { level: 1 });
+    expect(h1.textContent).toContain("My Cool Project");
+  });
+
+  it("renders cover image with fetchPriority=high when project.cover exists (D-02, nextjs16-fetchpriority-quirk)", async () => {
+    const { getProjectBySlug } = await import("@/lib/notion-projects");
+    const { getBlocks } = await import("@/lib/notion");
+    vi.mocked(getProjectBySlug).mockResolvedValue(
+      makeMockProject({ cover: "https://notion.so/some-cover.jpg" }) as any
+    );
+    vi.mocked(getBlocks).mockResolvedValue([]);
+    await renderProjectDetailPage("my-project");
+    const imgs = document.querySelectorAll("img");
+    const coverImg = Array.from(imgs).find((img) =>
+      img.getAttribute("src")?.includes("notion-cover?pageId=proj-detail-abc")
+    );
+    expect(coverImg).toBeDefined();
+    expect(coverImg?.getAttribute("fetchpriority")).toBe("high");
+  });
+
+  it("does NOT render cover image when project.cover is null", async () => {
+    const { getProjectBySlug } = await import("@/lib/notion-projects");
+    const { getBlocks } = await import("@/lib/notion");
+    vi.mocked(getProjectBySlug).mockResolvedValue(
+      makeMockProject({ cover: null }) as any
+    );
+    vi.mocked(getBlocks).mockResolvedValue([]);
+    await renderProjectDetailPage("my-project");
+    const imgs = document.querySelectorAll("img");
+    const coverImg = Array.from(imgs).find((img) =>
+      img.getAttribute("src")?.includes("notion-cover?pageId=proj-detail-abc")
+    );
+    expect(coverImg).toBeUndefined();
+  });
+
+  it("externalUrl anchor has rel=noopener noreferrer target=_blank (T-16-15)", async () => {
+    const { getProjectBySlug } = await import("@/lib/notion-projects");
+    const { getBlocks } = await import("@/lib/notion");
+    vi.mocked(getProjectBySlug).mockResolvedValue(
+      makeMockProject({ externalUrl: "https://github.com/user/my-project" }) as any
+    );
+    vi.mocked(getBlocks).mockResolvedValue([]);
+    await renderProjectDetailPage("my-project");
+    const allLinks = document.querySelectorAll("a");
+    const externalLink = Array.from(allLinks).find((a) =>
+      a.getAttribute("href") === "https://github.com/user/my-project"
+    );
+    expect(externalLink).toBeDefined();
+    expect(externalLink?.getAttribute("rel")).toContain("noopener");
+    expect(externalLink?.getAttribute("rel")).toContain("noreferrer");
+    expect(externalLink?.getAttribute("target")).toBe("_blank");
+  });
+
+  it("NotionRenderer is present with fetched blocks (IN-02)", async () => {
+    const { getProjectBySlug } = await import("@/lib/notion-projects");
+    const { getBlocks } = await import("@/lib/notion");
+    vi.mocked(getProjectBySlug).mockResolvedValue(makeMockProject() as any);
+    vi.mocked(getBlocks).mockResolvedValue([
+      { id: "blk-1" },
+      { id: "blk-2" },
+      { id: "blk-3" },
+    ] as any);
+    await renderProjectDetailPage("my-project");
+    const renderer = screen.getByTestId("notion-renderer");
+    expect(renderer).toBeDefined();
+    expect(renderer.getAttribute("data-block-count")).toBe("3");
   });
 });
