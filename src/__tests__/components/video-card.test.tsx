@@ -25,6 +25,29 @@ vi.mock("next/link", () => ({
   ),
 }));
 
+vi.mock("next/image", () => ({
+  default: ({
+    src,
+    alt,
+    width,
+    height,
+    sizes,
+    className,
+    ...props
+  }: {
+    src: string;
+    alt: string;
+    width?: number;
+    height?: number;
+    sizes?: string;
+    className?: string;
+    [key: string]: unknown;
+  }) => (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img src={src} alt={alt} width={width} height={height} className={className} />
+  ),
+}));
+
 import { VideoCard } from "@/components/v3/video-card";
 
 describe("VideoCard component (Plan 05 / PG-02)", () => {
@@ -66,9 +89,21 @@ describe("VideoCard component (Plan 05 / PG-02)", () => {
     expect(link?.getAttribute("href")).toBe(testHref);
   });
 
-  it.todo(
-    "link has target=_blank and rel=noopener noreferrer (Plan 05 — VideoCard patch needed)"
-  );
+  it("link has target=_blank and rel=noopener noreferrer when props are passed (Plan 05)", () => {
+    const { container } = render(
+      <VideoCard
+        title="External Video"
+        channel="YouTube Channel"
+        href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+        target="_blank"
+        rel="noopener noreferrer"
+      />
+    );
+    const link = container.querySelector("a");
+    expect(link?.getAttribute("target")).toBe("_blank");
+    expect(link?.getAttribute("rel")).toBe("noopener noreferrer");
+  });
+
   it.todo("VideoCard renders play triangle via CSS border trick (Plan 05)");
   it.todo("VideoCard hover state lifts card (Plan 05)");
 });
