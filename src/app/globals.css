@@ -1,28 +1,31 @@
 @import "tailwindcss";
 
 @theme inline {
-  /* Crimson Line palette — v3 single fixed theme (no dark mode)
-     near-black canvas · off-white display type · crimson DEMOTED to accent */
-  --color-bg:             #0a0a0a;
-  --color-bg-2:           #0d0d0f;
-  --color-surface:        #141416;
-  --color-border:         rgba(245,245,240,0.10);
-  --color-border-strong:  rgba(245,245,240,0.22);
+  /* Pumpkin Amber palette — v3 single fixed theme (no dark mode)
+     bright amber field · warm near-black ink · teal DEMOTED to accent.
+     Supersedes both the documented "Crimson Poster" and the prior dark "Crimson Line". */
+  --color-bg:             #ff7a14;             /* Pumpkin Amber — main background */
+  --color-bg-2:           #f26f0e;             /* deeper amber — alternate section bands */
+  --color-surface:        #2a1808;             /* Roasted Cocoa — dark panels / cards / photo frames */
+  --color-surface-2:      #e8e5da;             /* Soft Linen — light cards / inverse panels */
+  --color-border:         rgba(42,24,8,0.18);
+  --color-border-strong:  rgba(42,24,8,0.40);
 
-  /* Ink — off-white display + supporting greys */
-  --color-text:           #f5f5f0;
-  --color-text-dim:       #b6b6b0;
-  --color-text-muted:     #6f6f6a;
+  /* Ink — warm near-black on amber + a cream for text on dark surfaces */
+  --color-text:           #2a1808;             /* Roasted Cocoa — display + body on amber */
+  --color-text-dim:       rgba(42,24,8,0.72);
+  --color-text-muted:     rgba(42,24,8,0.55);
+  --color-text-inverse:   #f7efe6;             /* Vanilla Cream — text on dark surfaces */
 
-  /* Accent — crimson, used SPARINGLY (line, dots, hover, tiny marks) */
-  --accent:               #e23838;
-  --accent-hover:         #ff4d4d;
-  --accent-deep:          #b51d1d;
-  --accent-glow:          rgba(226,56,56,0.40);
+  /* Accent — teal, used SPARINGLY (line, dots, hover, tiny marks) */
+  --accent:               #0c6b74;
+  --accent-hover:         #0a565e;
+  --accent-deep:          #c9531c;             /* Terracotta — warm support / section bands / sig shadow */
+  --accent-glow:          rgba(12,107,116,0.40);
 
-  /* Blob atmosphere (dark glossy + crimson rim) */
-  --blob-core:            #161617;
-  --blob-rim:             #e23838;
+  /* Blob atmosphere (dark glossy + teal rim, on the amber stage) */
+  --blob-core:            #2a1808;
+  --blob-rim:             #0c6b74;
 
   /* v3 type scale (translated from prototype :root to @theme token names) */
   --text-xs:   0.72rem;
@@ -60,9 +63,8 @@ a {
 }
 
 /* ── Signature display treatment (D-06) ──
-   .sig  = crimson fill + hard black drop shadow (same colour as canvas, lifted off)
-   .sig-out = outline variant (black stroke, transparent fill)
-   Use literal hex for --sig-shadow to avoid @theme/:root resolution order issues. */
+   .sig  = roasted-cocoa ink fill + hard cream drop shadow, lifted off the amber field
+   .sig-out = outline variant (teal stroke, transparent fill) */
 .sig {
   color: var(--sig);
   text-shadow: var(--sig-shadow);
@@ -76,8 +78,8 @@ a {
 
 /* Sig vars — declared outside @theme inline so they can reference tokens safely */
 :root {
-  --sig:        var(--color-text);         /* off-white fill */
-  --sig-shadow: 0.055em 0.055em 0 var(--accent-deep);
+  --sig:        var(--color-text);              /* roasted-cocoa ink fill */
+  --sig-shadow: 0.055em 0.055em 0 var(--color-text-inverse);  /* hard cream lift */
 }
 
 /* ── Marquee keyframe (used by Marquee component) ── */
