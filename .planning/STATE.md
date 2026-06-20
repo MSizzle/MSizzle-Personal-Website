@@ -28,7 +28,7 @@ See: .planning/PROJECT.md (updated 2026-06-18)
 Phase: 17
 Plan: Not started
 Status: Ready to plan
-Last activity: 2026-06-20
+Last activity: 2026-06-20 - Completed quick task 260620-q14: repaint /photos to v3 Pumpkin Amber (visual confirm pending)
 
 Direction: validated via sketches 003–005 + perf spike 001 (GO-WITH-CUTS). Build cuts: desktop-WebGL / mobile-poster, defer canvas past LCP, GPU vertex-shader morph.
 
@@ -94,6 +94,12 @@ None tracked for v3.0 yet.
 ### Blockers/Concerns
 
 None yet. Highest-risk item to watch: the 3D hero object's effect on LCP/PSI (Phase 15 lazy-load + fallback strategy; gated in Phase 18).
+
+### Quick Tasks Completed
+
+| # | Description | Date | Commit | Directory |
+|---|-------------|------|--------|-----------|
+| 260620-q14 | Repaint /photos page to v3 Pumpkin Amber system | 2026-06-20 | 5101b5e | [260620-q14-repaint-photos-page-to-v3-pumpkin-amber-](./quick/260620-q14-repaint-photos-page-to-v3-pumpkin-amber-/) |
 
 ## Deferred Items
 
