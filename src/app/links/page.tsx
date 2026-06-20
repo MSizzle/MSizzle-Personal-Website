@@ -1,6 +1,6 @@
-import Image from 'next/image'
 import Link from 'next/link'
 import type { Metadata } from 'next'
+import { PageHero } from '@/components/v3/page-hero'
 import { RuleStrong } from '@/components/editorial/rule-strong'
 
 export const metadata: Metadata = {
@@ -26,32 +26,17 @@ const LINKS = [
 ]
 
 const ROW_CLASS =
-  'flex items-baseline justify-between gap-6 border-t border-rule py-7 first:border-t-0 transition-opacity hover:opacity-60'
+  'flex items-baseline justify-between gap-6 border-t border-[var(--color-border)] py-7 first:border-t-0 transition-opacity hover:opacity-60'
 
 export default function LinksPage() {
   return (
     <>
-      <section className="px-6 pt-16 pb-15 md:px-40 md:pt-40 md:pb-25">
-        <div className="grid grid-cols-1 items-end gap-10 md:grid-cols-[1fr_360px] md:gap-20">
-          <div>
-            <div className="text-label uppercase text-muted">── The Index · 06</div>
-            <h1 className="mt-6 text-page-title uppercase text-ink">Links.</h1>
-            <p className="mt-10 max-w-[35rem] text-body-lead text-muted">
-              Let&rsquo;s be friends.
-            </p>
-          </div>
-          <div className="hidden md:block">
-            <div className="relative h-[480px] w-[360px] overflow-hidden bg-rule-strong">
-              <Image
-                src="/MSizzle-website-photos/IMG_2129.jpeg"
-                alt=""
-                fill
-                sizes="360px"
-                className="object-cover saturate-[0.92]"
-              />
-            </div>
-          </div>
-        </div>
+      <section className="px-6 md:px-40">
+        <PageHero
+          title="Links"
+          crumb="Home / Links"
+          sub="Things worth reading and watching."
+        />
       </section>
 
       <RuleStrong />
@@ -78,16 +63,16 @@ export default function LinksPage() {
                   : {})}
                 className={ROW_CLASS}
               >
-                <span className="text-list-title text-ink">{link.label}</span>
-                <span className="shrink-0 text-meta uppercase text-muted">{link.meta}</span>
+                <span className="text-list-title text-[var(--color-text)]">{link.label}</span>
+                <span className="shrink-0 text-meta uppercase text-[var(--color-text-muted)]">{link.meta}</span>
               </a>
             )
           }
 
           return (
             <Link key={link.label} href={link.href} className={ROW_CLASS}>
-              <span className="text-list-title text-ink">{link.label}</span>
-              <span className="shrink-0 text-meta uppercase text-muted">{link.meta}</span>
+              <span className="text-list-title text-[var(--color-text)]">{link.label}</span>
+              <span className="shrink-0 text-meta uppercase text-[var(--color-text-muted)]">{link.meta}</span>
             </Link>
           )
         })}

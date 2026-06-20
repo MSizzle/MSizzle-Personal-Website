@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 import {
@@ -7,6 +6,7 @@ import {
   type EventItem,
 } from "@/lib/notion-events";
 import { formatMonthYear, formatDayNumeral } from "@/lib/dates";
+import { PageHero } from "@/components/v3/page-hero";
 import { RuleStrong } from "@/components/editorial/rule-strong";
 import { SectionLabel } from "@/components/editorial/section-label";
 import { AllLink } from "@/components/editorial/all-link";
@@ -57,15 +57,15 @@ function UpcomingRow({
       className={cn(
         "grid grid-cols-1 items-baseline gap-6 md:grid-cols-[160px_1fr_200px] md:gap-14",
         featured ? "pb-14" : "py-10",
-        !last && "border-b border-rule"
+        !last && "border-b border-[var(--color-border)]"
       )}
     >
       {/* Left: tracked month/year above giant day numeral (D-18) */}
       <div className="leading-none">
-        <div className="text-meta uppercase text-muted">{monthYr}</div>
+        <div className="text-meta uppercase text-[var(--color-text-muted)]">{monthYr}</div>
         <div
           className={cn(
-            "mt-2 font-bold leading-[0.9] tracking-[-0.04em] text-ink",
+            "mt-2 font-bold leading-[0.9] tracking-[-0.04em] text-[var(--color-text)]",
             featured ? "text-[84px]" : "text-[56px]"
           )}
         >
@@ -75,17 +75,17 @@ function UpcomingRow({
 
       {/* Middle: location + title + optional blurb */}
       <div>
-        <div className="text-meta uppercase text-muted">{event.location}</div>
+        <div className="text-meta uppercase text-[var(--color-text-muted)]">{event.location}</div>
         <div
           className={cn(
-            "mt-3 font-bold tracking-[-0.025em] text-ink",
+            "mt-3 font-bold tracking-[-0.025em] text-[var(--color-text)]",
             featured ? "text-[40px] leading-[1.05]" : "text-event-title"
           )}
         >
           {event.name}
         </div>
         {event.description && (
-          <p className="mt-3 max-w-[34rem] text-caption text-muted md:text-base">
+          <p className="mt-3 max-w-[34rem] text-caption text-[var(--color-text-muted)] md:text-base">
             {event.description}
           </p>
         )}
@@ -93,7 +93,7 @@ function UpcomingRow({
 
       {/* Right: seat-count meta + RSVP CTA */}
       <div className="md:text-right">
-        <div className="mb-3 text-meta uppercase text-muted">
+        <div className="mb-3 text-meta uppercase text-[var(--color-text-muted)]">
           {featured ? "Limited seats" : "Open door"}
         </div>
         {event.link && (
@@ -113,9 +113,7 @@ function UpcomingRow({
  *   1. The shared editorial nav is rendered globally via `Navigation` (Path 2) —
  *      "Events" is bolded automatically via the pathname → active-label mapping
  *      there. No inline header is rendered from this page.
- *   2. Title block — 2-col grid: tracked label · "Events." 120px page title ·
- *      muted blurb · 360×480 atmosphere photo IMG_1075.JPG (PHOTOS[3] per D-16).
- *      Photo hidden on mobile per RESEARCH § Pitfall 6.
+ *   2. PageHero — title "Events", crumb "Home / Events", sub line.
  *   3. <RuleStrong />
  *   4. Upcoming section — inline UpcomingRow entries. First event gets the
  *      84px featured day numeral (D-18 signature). Empty state renders when
@@ -137,33 +135,13 @@ export default async function EventsPage() {
 
   return (
     <>
-      {/* Title block — matches /writing skeleton with /events-specific content */}
-      <section className="px-6 pt-40 pb-24 md:px-40 md:pt-[160px] md:pb-[100px]">
-        <div className="grid grid-cols-1 items-end gap-10 md:grid-cols-[1fr_360px] md:gap-20">
-          <div>
-            <div className="text-label uppercase text-muted">
-              ── The Calendar · 03
-            </div>
-            <h1 className="mt-6 text-page-title uppercase text-ink">Events.</h1>
-            <p className="mt-10 max-w-[35rem] text-body-lead text-muted">
-              Small, intentional gatherings on AI, building, and the texture of
-              an attentive life. Working evenings — not panels, not
-              pitches. Bring something stuck; we&rsquo;ll work on it together.
-            </p>
-          </div>
-          {/* Atmosphere photo hidden on mobile (RESEARCH § Pitfall 6) */}
-          <div className="hidden md:block">
-            <div className="relative h-[480px] w-[360px] overflow-hidden bg-rule-strong">
-              <Image
-                src="/MSizzle-website-photos/IMG_1075.JPG"
-                alt=""
-                fill
-                sizes="360px"
-                className="object-cover saturate-[0.92]"
-              />
-            </div>
-          </div>
-        </div>
+      {/* PageHero title block */}
+      <section className="px-6 md:px-40">
+        <PageHero
+          title="Events"
+          crumb="Home / Events"
+          sub="Speaking, panels, and public appearances."
+        />
       </section>
 
       <RuleStrong />
@@ -173,13 +151,13 @@ export default async function EventsPage() {
         <SectionLabel numeral="03 — Upcoming">Upcoming</SectionLabel>
         <div className="mt-[72px]">
           {upcoming.length === 0 ? (
-            <p className="text-caption text-muted">
+            <p className="text-caption text-[var(--color-text-muted)]">
               Next gathering being planned. Subscribe to{" "}
               <a
                 href="https://montymonthly.substack.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="border-b border-ink text-ink"
+                className="border-b border-[var(--color-text)] text-[var(--color-text)]"
               >
                 Monty Monthly
               </a>{" "}
@@ -211,16 +189,16 @@ export default async function EventsPage() {
                 href={event.link ?? "#"}
                 className={cn(
                   "grid grid-cols-1 gap-6 py-5 md:grid-cols-[120px_1fr_1fr] md:gap-8",
-                  i > 0 && "border-t border-rule"
+                  i > 0 && "border-t border-[var(--color-border)]"
                 )}
               >
-                <span className="text-meta uppercase text-muted">
+                <span className="text-meta uppercase text-[var(--color-text-muted)]">
                   {formatMonthYear(event.date)}
                 </span>
-                <span className="text-list-title-home text-ink">
+                <span className="text-list-title-home text-[var(--color-text)]">
                   {event.name}
                 </span>
-                <span className="text-caption text-muted">
+                <span className="text-caption text-[var(--color-text-muted)]">
                   {event.description}
                 </span>
               </Link>

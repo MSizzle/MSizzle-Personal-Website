@@ -1,6 +1,7 @@
-import type { Metadata } from 'next'
 import Image from 'next/image'
+import type { Metadata } from 'next'
 import { fetchMontyMonthlyIssues } from '@/lib/rss/substack'
+import { PageHero } from '@/components/v3/page-hero'
 import { RuleStrong } from '@/components/editorial/rule-strong'
 import { SectionLabel } from '@/components/editorial/section-label'
 
@@ -25,43 +26,28 @@ export default async function NewsletterPage() {
 
   return (
     <>
-      <section className="px-6 pt-16 pb-15 md:px-40 md:pt-40 md:pb-25">
-        <div className="grid grid-cols-1 items-end gap-10 md:grid-cols-[1fr_360px] md:gap-20">
-          <div>
-            <div className="text-label uppercase text-muted">── The Dispatch · 02</div>
-            <h1 className="mt-6 text-page-title uppercase text-ink">Monty Monthly.</h1>
-            <p className="mt-10 max-w-[35rem] text-body-lead text-muted">
-              A monthly letter on what I&rsquo;m building, learning, and thinking
-              about — essays on AI, entrepreneurship, philosophy, and life. One
-              email a month, no firehose.
-            </p>
-            <a
-              href="https://montymonthly.substack.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-10 inline-block border border-ink px-7 py-3 text-label uppercase text-ink transition-opacity hover:opacity-80 no-underline"
-            >
-              Subscribe on Substack &rarr;
-            </a>
-          </div>
-          <div className="hidden md:block">
-            <div className="relative h-[480px] w-[360px] overflow-hidden bg-rule-strong">
-              <Image
-                src="/MSizzle-website-photos/IMG_0028.jpeg"
-                alt=""
-                fill
-                sizes="360px"
-                className="object-cover saturate-[0.92]"
-              />
-            </div>
-          </div>
+      <section className="px-6 md:px-40">
+        <PageHero
+          title="Newsletter"
+          crumb="Home / Newsletter"
+          sub="Monty Monthly -- a monthly dispatch."
+        />
+        <div className="pb-12">
+          <a
+            href="https://montymonthly.substack.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block border border-[var(--color-text)] px-7 py-3 text-label uppercase text-[var(--color-text)] transition-opacity hover:opacity-80 no-underline"
+          >
+            Subscribe on Substack &rarr;
+          </a>
         </div>
       </section>
 
       <RuleStrong />
 
       <section className="px-6 pt-[120px] pb-[120px] md:px-40">
-        <SectionLabel numeral="02 — Issues">Recent Issues</SectionLabel>
+        <SectionLabel numeral="02 -- Issues">Recent Issues</SectionLabel>
 
         <div className="mt-[72px]">
           {issues.length > 0 ? (
@@ -72,10 +58,10 @@ export default async function NewsletterPage() {
                   href={issue.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group block bg-paper border border-rule no-underline"
+                  className="group block bg-[var(--color-bg-2)] border border-[var(--color-border)] no-underline"
                 >
                   {issue.thumbnail ? (
-                    <div className="relative aspect-[4/5] md:aspect-[16/9] overflow-hidden bg-muted">
+                    <div className="relative aspect-[4/5] md:aspect-[16/9] overflow-hidden bg-[var(--color-surface)]">
                       <Image
                         src={issue.thumbnail}
                         alt={issue.title}
@@ -85,11 +71,11 @@ export default async function NewsletterPage() {
                       />
                     </div>
                   ) : (
-                    <div className="aspect-[4/5] md:aspect-[16/9] bg-muted" aria-hidden />
+                    <div className="aspect-[4/5] md:aspect-[16/9] bg-[var(--color-surface)]" aria-hidden />
                   )}
                   <div className="p-4">
-                    <h3 className="text-list-title text-ink">{issue.title}</h3>
-                    <time className="mt-2 block text-meta uppercase text-muted">
+                    <h3 className="text-list-title text-[var(--color-text)]">{issue.title}</h3>
+                    <time className="mt-2 block text-meta uppercase text-[var(--color-text-muted)]">
                       {new Date(issue.pubDate).toLocaleDateString('en-US', {
                         year: 'numeric',
                         month: 'long',
@@ -102,7 +88,7 @@ export default async function NewsletterPage() {
               ))}
             </div>
           ) : (
-            <p className="text-body text-muted">
+            <p className="text-body text-[var(--color-text-muted)]">
               Issues land here once the archive syncs. In the meantime,{' '}
               <a
                 href="https://montymonthly.substack.com"
