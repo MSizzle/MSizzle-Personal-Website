@@ -25,6 +25,7 @@ describe("ProjectCard hover-reveal (PORT-02)", () => {
     slug: "test-project",
     description: "A test project",
     tags: ["React", "TypeScript"],
+    cover: "https://example.com/img.jpg",
     image: "https://example.com/img.jpg",
     emoji: null,
     externalUrl: "https://example.com",

@@ -40,6 +40,8 @@ export interface Project {
   slug: string;
   title: string;
   description: string;
+  /** URL of the Notion page cover image (same data as `image`; alias for D-02 full-bleed hero). */
+  cover: string | null;
   image: string | null;
   emoji: string | null;
   externalUrl: string;
@@ -101,6 +103,7 @@ function extractProjectProperties(page: PageObjectResponse): Project {
     slug,
     title,
     description,
+    cover: image, // alias: same Notion page cover URL (used for full-bleed hero per D-02)
     image,
     emoji,
     externalUrl,

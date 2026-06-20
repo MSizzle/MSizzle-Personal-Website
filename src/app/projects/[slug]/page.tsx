@@ -1,8 +1,10 @@
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { getPublishedProjects, getProjectBySlug } from "@/lib/notion-projects";
 import { getBlocks } from "@/lib/notion";
 import { NotionRenderer } from "@/components/notion/notion-renderer";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
+import { PageHero } from "@/components/v3/page-hero";
 import { buildProjectMetadata } from "@/lib/seo/project-metadata";
 import type { Metadata } from "next";
 import type { BlockObjectResponse } from "@notionhq/client/build/src/api-endpoints";
@@ -14,8 +16,15 @@ interface PageProps {
 }
 
 export async function generateStaticParams() {
-  const projects = await getPublishedProjects();
-  return projects.map((project) => ({ slug: project.slug }));
+  if (!process.env.NOTION_TOKEN || !process.env.NOTION_PROJECTS_DATABASE_ID) {
+    return [];
+  }
+  try {
+    const projects = await getPublishedProjects();
+    return projects.map((project) => ({ slug: project.slug }));
+  } catch {
+    return [];
+  }
 }
 
 export async function generateMetadata({
@@ -37,69 +46,69 @@ export default async function ProjectPage({ params }: PageProps) {
 
   return (
     <>
-      <Breadcrumbs
-        items={[
-          { name: "Home", href: "/" },
-          { name: "Works", href: "/projects" },
-          { name: project.title },
-        ]}
-      />
-      {/* Hero image — full width, above content */}
-      {project.image && (
-        <div className="mx-auto max-w-[66ch] px-6 pt-8 md:px-0">
-          <div className="w-full overflow-hidden bg-muted">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={`/api/notion-cover?pageId=${project.id}`}
-              alt={project.title}
-              className="w-full object-contain"
-            />
-          </div>
+      {/* Full-bleed cover image (D-02) — only when project.cover (Notion cover) exists */}
+      {project.cover && (
+        <div className="relative w-full h-[400px] md:h-[600px]">
+          <Image
+            src={`/api/notion-cover?pageId=${project.id}`}
+            alt={`${project.title} cover`}
+            fill
+            priority
+            fetchPriority="high"
+            sizes="100vw"
+            className="object-cover"
+          />
         </div>
       )}
 
-      <article className="mx-auto max-w-[66ch] px-6 pb-16 pt-8 md:px-0">
-        <header className="mb-10">
-        <h1 className="text-section-feature text-ink">
-          {project.emoji && <span className="mr-2">{project.emoji}</span>}
-          {project.title}
-        </h1>
+      {/* Semantic breadcrumb nav + JSON-LD (sr-only); Building points to /projects */}
+      <Breadcrumbs
+        items={[
+          { name: "Home", href: "/" },
+          { name: "Building", href: "/projects" },
+          { name: project.title },
+        ]}
+      />
 
-        {project.description && (
-          <p className="mt-3 text-muted">
-            {project.description}
-          </p>
-        )}
+      {/* PageHero: breadcrumb line + title */}
+      <div className="px-6 md:px-40">
+        <PageHero
+          title={project.title}
+          crumb="Home / Building"
+          sub={project.description ?? ""}
+        />
+      </div>
 
-        {(project.tags.length > 0 || project.externalUrl) && (
-          <div className="mt-5 flex flex-wrap items-center gap-4">
-            {project.tags.length > 0 && (
-              <div className="flex flex-wrap gap-3">
-                {project.tags.map((tag) => (
-                  <span key={tag} className="text-sm text-muted">
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            )}
+      {/* Optional external project link */}
+      {project.externalUrl && (
+        <div className="px-6 md:px-40">
+          <a
+            href={project.externalUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-umami-event="project-external-link"
+            data-umami-event-title={project.title}
+            className="inline-block mt-4 px-0 text-[var(--accent)] underline hover:text-[var(--accent-hover)]"
+          >
+            View Project ↗
+          </a>
+        </div>
+      )}
 
-            {project.externalUrl && (
-              <a
-                href={project.externalUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                data-umami-event="project-external-link"
-                data-umami-event-title={project.title}
-                className="underline transition-opacity hover:opacity-60"
-              >
-                View on GitHub &rarr;
-              </a>
-            )}
-          </div>
-        )}
-      </header>
+      {/* Tags */}
+      {project.tags.length > 0 && (
+        <div className="px-6 md:px-40 mt-4 flex flex-wrap gap-3">
+          {project.tags.map((tag) => (
+            <span key={tag} className="text-sm text-[var(--color-text-muted)]">
+              {tag}
+            </span>
+          ))}
+        </div>
+      )}
 
-        <div className="prose mt-12 max-w-none">
+      {/* Prose section (IN-01/IN-02) — NotionRenderer is UNCHANGED */}
+      <article className="mx-auto max-w-[68ch] px-6 pb-16 pt-8 md:px-0">
+        <div className="prose max-w-none">
           <NotionRenderer
             blocks={
               blocks as (BlockObjectResponse & {
