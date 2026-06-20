@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v3.0
 milestone_name: Dark Brutalist Rebuild
-status: ready_to_plan
-stopped_at: Phase 15 complete (5/5) — ready to discuss Phase 16
-last_updated: 2026-06-19T21:56:49.176Z
-last_activity: 2026-06-19 -- Phase 15 execution started
+status: planning
+stopped_at: Phase 16 context gathered
+last_updated: "2026-06-20T02:35:18.530Z"
+last_activity: 2026-06-19
 progress:
   total_phases: 5
-  completed_phases: 1
+  completed_phases: 2
   total_plans: 9
-  completed_plans: 50
-  percent: 20
+  completed_plans: 9
+  percent: 40
 ---
 
 # Project State
@@ -116,9 +116,9 @@ Close-out rationale: v2.0 shipped via Phase 13 GO sign-off. These items predate 
 
 ## Session Continuity
 
-Last session: 2026-06-19T04:11:59.611Z
-Stopped at: Phase 15 context gathered (WebGL homepage, ready to plan)
-Resume file: .planning/phases/15-slide-deck-homepage-3d-hero/15-CONTEXT.md
+Last session: 2026-06-20T02:35:18.521Z
+Stopped at: Phase 16 context gathered
+Resume file: .planning/phases/16-interior-pages-on-notion-data/16-CONTEXT.md
 
 ---
 
