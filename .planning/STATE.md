@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v3.0
 milestone_name: Dark Brutalist Rebuild
-status: ready_to_plan
-stopped_at: Phase 16 complete (9/9) — ready to discuss Phase 17
-last_updated: 2026-06-20T04:50:48.008Z
-last_activity: 2026-06-20
+status: planning
+stopped_at: Phase 17 context gathered
+last_updated: "2026-06-20T23:35:23.356Z"
+last_activity: "2026-06-20 - Completed quick task 260620-q14: repaint /photos to v3 Pumpkin Amber (visual confirm pending)"
 progress:
   total_phases: 5
-  completed_phases: 2
+  completed_phases: 3
   total_plans: 18
-  completed_plans: 59
-  percent: 40
+  completed_plans: 18
+  percent: 60
 ---
 
 # Project State
@@ -122,9 +122,9 @@ Close-out rationale: v2.0 shipped via Phase 13 GO sign-off. These items predate 
 
 ## Session Continuity
 
-Last session: 2026-06-20T04:34:55.196Z
-Stopped at: Phase 16 UI-SPEC approved
-Resume file: None
+Last session: 2026-06-20T23:35:23.347Z
+Stopped at: Phase 17 context gathered
+Resume file: .planning/phases/17-infrastructure-preservation-seo-extension/17-CONTEXT.md
 
 ---
 
