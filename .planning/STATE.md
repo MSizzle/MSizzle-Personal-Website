@@ -4,8 +4,8 @@ milestone: v3.0
 milestone_name: Dark Brutalist Rebuild
 status: executing
 stopped_at: Phase 17 context gathered
-last_updated: "2026-06-20T23:50:53.990Z"
-last_activity: 2026-06-20 -- Phase 17 planning complete
+last_updated: "2026-06-20T23:52:08.488Z"
+last_activity: 2026-06-20 -- Phase 17 execution started
 progress:
   total_phases: 5
   completed_phases: 3
@@ -21,14 +21,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-18)
 
 **Core value:** A personal site that feels alive and memorable, *and* legible — not another template blog.
-**Current focus:** Phase 17 — infrastructure preservation & seo extension
+**Current focus:** Phase 17 — Infrastructure Preservation & SEO Extension
 
 ## Current Position
 
-Phase: 17
-Plan: Not started
-Status: Ready to execute
-Last activity: 2026-06-20 -- Phase 17 planning complete
+Phase: 17 (Infrastructure Preservation & SEO Extension) — EXECUTING
+Plan: 1 of 1
+Status: Executing Phase 17
+Last activity: 2026-06-20 -- Phase 17 execution started
 
 Direction: validated via sketches 003–005 + perf spike 001 (GO-WITH-CUTS). Build cuts: desktop-WebGL / mobile-poster, defer canvas past LCP, GPU vertex-shader morph.
 
