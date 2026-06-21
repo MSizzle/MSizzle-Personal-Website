@@ -131,7 +131,14 @@ Plans:
   2. PSI mobile (authoritative) meets parity-or-better versus current, and the 3D object does not regress LCP.
   3. A QA GO/NO-GO verdict is recorded; on GO the production alias is promoted to v3 (no `--prebuilt --prod`; alias drift checked).
   4. Post-promotion verification confirms montysinger.com serves the v3 site at parity.
-**Plans**: TBD
+**Plans**: 6 plans
+Plans:
+- [ ] 18-01-PLAN.md — vercel build --prod gate at HEAD of v3 (DQ-02)
+- [ ] 18-02-PLAN.md — v3 Vercel preview deploy + Lighthouse desktop median-of-3 (D-02)
+- [ ] 18-03-PLAN.md — PSI mobile gate + D-04 WebGL hero LCP verification (DQ-03)
+- [ ] 18-04-PLAN.md — 375px visual QA, 7-route walk, Phase-16 deferred checklist (D-05)
+- [ ] 18-05-PLAN.md — D-14 dual-tree secret scan + D-10 theme/FOUC decision (D-06, D-10)
+- [ ] 18-06-PLAN.md — compile 18-GO-NO-GO.md, human sign-off, alias promotion, milestone close (DQ-04)
 
 ## Progress
 
@@ -157,4 +164,4 @@ Phases execute in numeric order: 14 -> 15 -> 16 -> 17 -> 18
 | 15. WebGL Explorative Homepage | v3.0 | 5/5 | Complete    | 2026-06-19 |
 | 16. Interior Pages on Notion Data | v3.0 | 9/9 | Complete    | 2026-06-20 |
 | 17. Infrastructure Preservation & SEO Extension | v3.0 | 1/1 | Complete    | 2026-06-21 |
-| 18. v3.0 QA, Perf Gate & Alias Swap | v3.0 | 0/TBD | Not started | - |
+| 18. v3.0 QA, Perf Gate & Alias Swap | v3.0 | 0/6 | Not started | - |
