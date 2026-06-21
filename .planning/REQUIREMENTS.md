@@ -35,8 +35,8 @@ presentation-layer rebuild: infrastructure is preserved, not rebuilt.
 ### Infrastructure Preservation (IN)
 - [x] **IN-01**: The Notion CMS pipeline (dataSources.query v5, ISR 30min) continues to power all content unchanged.
 - [x] **IN-02**: The image proxy routes (`notion-cover`, `notion-image`) continue to serve Notion images.
-- [ ] **IN-03**: SEO infrastructure (sitemap, robots, blog feed, `src/lib/seo`, JSON-LD, per-page metadata) is preserved and extended to the new `/uses` and `/watching` pages.
-- [ ] **IN-04**: Umami analytics continues to load and track on every page.
+- [x] **IN-03**: SEO infrastructure (sitemap, robots, blog feed, `src/lib/seo`, JSON-LD, per-page metadata) is preserved and extended to the new `/uses` and `/watching` pages.
+- [x] **IN-04**: Umami analytics continues to load and track on every page.
 
 ### Delivery & Quality (DQ)
 - [x] **DQ-01**: v3 is built on a long-lived branch and previewed on Vercel without affecting the live production site.
@@ -80,8 +80,8 @@ REQ-ID → Phase. All 21 v3.0 requirements mapped to exactly one phase (100% cov
 | PG-05 | Phase 16 | Complete |
 | IN-01 | Phase 16 | Complete |
 | IN-02 | Phase 16 | Complete |
-| IN-03 | Phase 17 | Pending |
-| IN-04 | Phase 17 | Pending |
+| IN-03 | Phase 17 | Complete |
+| IN-04 | Phase 17 | Complete |
 | DQ-01 | Phase 14 | Complete |
 | DQ-02 | Phase 18 | Pending |
 | DQ-03 | Phase 18 | Pending |

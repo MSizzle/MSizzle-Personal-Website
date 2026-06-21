@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v3.0
 milestone_name: Dark Brutalist Rebuild
-status: executing
-stopped_at: Phase 17 context gathered
-last_updated: "2026-06-20T23:52:08.488Z"
+status: ready_to_plan
+stopped_at: Phase 17 complete (1/1) — ready to discuss Phase 18
+last_updated: 2026-06-21T00:10:37.059Z
 last_activity: 2026-06-20 -- Phase 17 execution started
 progress:
   total_phases: 5
   completed_phases: 3
   total_plans: 19
-  completed_plans: 18
+  completed_plans: 60
   percent: 60
 ---
 
@@ -21,14 +21,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-18)
 
 **Core value:** A personal site that feels alive and memorable, *and* legible — not another template blog.
-**Current focus:** Phase 17 — Infrastructure Preservation & SEO Extension
+**Current focus:** Phase 18 — v3.0 qa, perf gate & alias swap
 
 ## Current Position
 
-Phase: 17 (Infrastructure Preservation & SEO Extension) — EXECUTING
-Plan: 1 of 1
-Status: Executing Phase 17
-Last activity: 2026-06-20 -- Phase 17 execution started
+Phase: 18
+Plan: Not started
+Status: Ready to plan
+Last activity: 2026-06-21
 
 Direction: validated via sketches 003–005 + perf spike 001 (GO-WITH-CUTS). Build cuts: desktop-WebGL / mobile-poster, defer canvas past LCP, GPU vertex-shader morph.
 
