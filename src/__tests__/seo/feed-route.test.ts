@@ -12,4 +12,11 @@ describe('GET /blog/feed.xml', () => {
     const body = await res.text()
     expect(body).toContain('<rss version="2.0">')
   })
+
+  it('body contains channel title Monty Singer | Writings', async () => {
+    const { GET } = await import('@/app/blog/feed.xml/route')
+    const res = await GET()
+    const body = await res.text()
+    expect(body).toContain('Monty Singer | Writings')
+  })
 })
