@@ -496,20 +496,25 @@ grep -r "NOTION_TOKEN" .vercel/output/functions/ | head -1 | cut -d: -f1
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED — carried into plan 18-06 as pre-promote confirmations)
+
+All three are runtime/operator confirmations that cannot be answered at research time (they depend on live Vercel settings and git state). They are **resolved by deferral**: each is encoded as an explicit pre-promote confirmation step in plan 18-06, so the operator answers them at the GO checkpoint, before any alias swap. None blocks planning.
 
 1. **Vercel auto-deploy branch configuration:** Is the `m-sizzle-personal-website` project configured to auto-deploy the `main` branch to production? Or does it require an explicit `vercel deploy --prod` command?
    - **Why:** Determines whether Path B (merge to main) is viable.
    - **How to resolve:** Check Vercel project settings → Deployments → "Automatic deployments from Git" — should show `main` branch mapped to production.
-   - **Fallback:** If not configured, Path A (`vercel deploy --prod` from v3) becomes the default.
+   - **Fallback:** If not configured, Path A (`vercel deploy --prod` from v3, never `--prebuilt --prod`) becomes the default.
+   - **RESOLVED:** Carried into 18-06 as pre-promote confirmation #1.
 
 2. **Alias-drift root cause from Phase 13:** The v2.0 promotion memo mentions `--prebuilt --prod` caused alias drift. Was this a one-time issue with that specific flag, or is there a systemic alias-drift problem with this project?
    - **Why:** Determines risk level of promoting directly from v3 vs. merging to main first.
    - **How to resolve:** Ask user whether v2.0 production alias still points to the correct deployment, or if manual correction was needed after Phase 13.
+   - **RESOLVED:** Carried into 18-06 as pre-promote confirmation #3 + the mandatory post-promote alias-drift check.
 
 3. **Phase 16 and 17 commits on `main`:** The STATE.md indicates Phases 16 and 17 (interior pages, SEO extension) are "not started" yet, but they may have already landed on the `v3` branch. Does `main` already have commits from these phases, or is `main` still at v2.0?
    - **Why:** If `main` has Phase 16+ commits, the merge will be clean; if not, expect a large changeset.
    - **How to resolve:** `git log main..v3 --oneline | wc -l` will show the commit distance.
+   - **RESOLVED:** Carried into 18-06 as pre-promote confirmation #2.
 
 ---
 
