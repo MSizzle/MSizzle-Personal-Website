@@ -160,8 +160,8 @@ Plans:
 
 **Wave 2** *(parallel; both depend on 17.1-01)*
 
-- [ ] 17.1-02-PLAN.md — New section-work.tsx + section-loves.tsx + orchestrator final assembly (D-06 narrative arc order, SectionWriting retired)
-- [ ] 17.1-03-PLAN.md — Section narrative copy adaptations: section-building (Prometheus-forward), section-newsletter (essay teasers + newsletter gate), section-footer (velvet-rope tone)
+- [x] 17.1-02-PLAN.md — New section-work.tsx + section-loves.tsx + orchestrator final assembly (D-06 narrative arc order, SectionWriting retired)
+- [x] 17.1-03-PLAN.md — Section narrative copy adaptations: section-building (Prometheus-forward), section-newsletter (essay teasers + newsletter gate), section-footer (velvet-rope tone)
 
 **Wave 3** *(depends on Wave 2 completion)*
 
@@ -251,5 +251,5 @@ Phases execute in numeric order: 14 -> 15 -> 16 -> 17 -> 18
 | 15. WebGL Explorative Homepage | v3.0 | 5/5 | Complete    | 2026-06-19 |
 | 16. Interior Pages on Notion Data | v3.0 | 9/9 | Complete    | 2026-06-20 |
 | 17. Infrastructure Preservation & SEO Extension | v3.0 | 1/1 | Complete    | 2026-06-21 |
-| 17.1. Homepage Rebuild | v3.0 | 1/4 | In Progress|  |
+| 17.1. Homepage Rebuild | v3.0 | 3/4 | In Progress|  |
 | 18. v3.0 QA, Perf Gate & Alias Swap | v3.0 | 0/6 | Not started | - |
