@@ -4,14 +4,14 @@ milestone: v3.0
 milestone_name: Dark Brutalist Rebuild
 status: executing
 stopped_at: Phase 18 context gathered
-last_updated: "2026-06-21T01:14:13.916Z"
+last_updated: "2026-07-01T14:39:50.466Z"
 last_activity: 2026-06-21 -- Phase 18 planning complete
 progress:
-  total_phases: 5
+  total_phases: 8
   completed_phases: 4
   total_plans: 25
   completed_plans: 19
-  percent: 76
+  percent: 50
 ---
 
 # Project State
@@ -21,7 +21,7 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-18)
 
 **Core value:** A personal site that feels alive and memorable, *and* legible — not another template blog.
-**Current focus:** Phase 18 — v3.0 qa, perf gate & alias swap
+**Current focus:** Phase 17.1 — Homepage Rebuild (personal-brand restructure)
 
 ## Current Position
 
@@ -55,6 +55,12 @@ Phase 15 context captured 2026-06-19 (`15-CONTEXT.md`): v1 = WebGL hero (procedu
 Next action: `/gsd-plan-phase 15` to decompose the WebGL homepage v1 into plans (reads `15-CONTEXT.md`, sketches 003–005, spike 001). Parallel: kick off the asset workstream (voxel-Monty + horse GLB).
 
 ## Accumulated Context
+
+### Roadmap Evolution
+
+- Phase 17.1 inserted after Phase 17: Homepage Rebuild — personal-brand arc, current aesthetic, replaces WebGL blob
+- Phase 17.2 inserted after Phase 17: Site Information Architecture — nav/cuts/folds/merges for new scope
+- Phase 17.3 inserted after Phase 17: Portfolio — proud-of past work on projects pipeline
 
 ### v3.0 Roadmap Decisions
 

@@ -141,10 +141,57 @@ Plans:
 
 - [x] 17-01-PLAN.md — Add /uses + /watching to sitemap + automated regression gate (IN-03, IN-04)
 
+### Phase 17.1: Homepage Rebuild (INSERTED)
+
+**Goal**: The homepage is rebuilt around a personal-brand narrative arc (who am I → what I am building → how to engage), rendered in the CURRENT aesthetic (Pumpkin Amber palette + current fonts), replacing the superseded WebGL blob scroll-story. The WebGL/blob canvas is removed from the home path. Full agreed direction lives in project memory `personal-brand-homepage-direction`.
+**Depends on**: Phase 17
+**Requirements**: TBD (set at plan time)
+**Success Criteria** (what must be TRUE):
+
+  1. The homepage renders the who → what → engage arc in the current aesthetic, with no WebGL/blob canvas on the home path.
+  2. Sections present and populated top-to-bottom: hero (Founder of Prometheus + one-liner + one woven "way in" to Monty Monthly), what-I'm-building (Prometheus + current work, CTA woven into prose), selected-work/portfolio teaser, "things I love" teaser, writing + Monty Monthly gate (a flagship essay or two shown open), understated footer contact (email + socials woven in).
+  3. Engagement is woven/contextual only: no CTA button and no contact page; the primary "way in" is Monty Monthly (velvet-rope principle).
+
+**Plans**: 0 plans
+
+Plans:
+- [ ] TBD (run /gsd-plan-phase 17.1 to break down)
+
+### Phase 17.2: Site Information Architecture (INSERTED)
+
+**Goal**: The site IA matches the new scope. New nav (Building, Work, Things I love, Writing, Prometheus). Cut /events and /photos. Delete /specimen and /v3-specimen dev pages. Fold /links socials into the woven footer/contact layer. Reframe /uses as "Things I love" and fold /watching into it. Merge /writing + /newsletter into a single "Writing / Monty Monthly" surface (hybrid: a few open flagship essays + the newsletter gate). Keep /about and /prometheus as dedicated pages.
+**Depends on**: Phase 17.1
+**Requirements**: TBD (set at plan time)
+**Success Criteria** (what must be TRUE):
+
+  1. Nav reflects the new set; /events, /photos, /specimen, /v3-specimen no longer exist (routes + nav + sitemap all updated).
+  2. /links is folded into the footer/contact layer; /watching is folded into a reframed /uses ("Things I love").
+  3. /writing and /newsletter are merged into one "Writing / Monty Monthly" surface; sitemap, nav, and internal links are consistent with the new IA with no broken links.
+
+**Plans**: 0 plans
+
+Plans:
+- [ ] TBD (run /gsd-plan-phase 17.2 to break down)
+
+### Phase 17.3: Portfolio (INSERTED)
+
+**Goal**: A real portfolio surface for proud past work exists, built on the existing /projects (Notion) pipeline in the current aesthetic, and linked from the homepage "selected work" section.
+**Depends on**: Phase 17.1
+**Requirements**: TBD (set at plan time)
+**Success Criteria** (what must be TRUE):
+
+  1. A portfolio surface presents selected proud-of past work, sourced from the existing projects Notion pipeline, in the current aesthetic.
+  2. The homepage "selected work" section links into the portfolio.
+
+**Plans**: 0 plans
+
+Plans:
+- [ ] TBD (run /gsd-plan-phase 17.3 to break down)
+
 ### Phase 18: v3.0 QA, Perf Gate & Alias Swap
 
 **Goal**: v3 passes the production-readiness gate and mobile-perf budget, earns a GO verdict, and the production alias is promoted to v3 and verified.
-**Depends on**: Phase 17
+**Depends on**: Phase 17.3
 **Requirements**: DQ-02, DQ-03, DQ-04
 **Success Criteria** (what must be TRUE):
 
