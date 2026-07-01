@@ -1,0 +1,38 @@
+{
+  "version": "1.0",
+  "timestamp": "2026-07-01T14:44:08.776Z",
+  "phase": "17.1",
+  "phase_name": "Homepage Rebuild",
+  "phase_dir": ".planning/phases/17.1-homepage-rebuild-personal-brand-narrative-arc-who-am-i-what-",
+  "plan": null,
+  "task": null,
+  "total_tasks": null,
+  "status": "paused",
+  "completed_tasks": [
+    {"name": "Diagnosed + fixed the broken WebGL hero (GLSL tangent-attribute shader compile error)", "status": "done", "commit": "uncommitted (working tree)"},
+    {"name": "Pivoted site direction to a personal-brand 'business page' (who/what/engage, velvet-rope, hybrid Monty Monthly)", "status": "done"},
+    {"name": "Mocked + REJECTED the Prometheus flame palette and Fraunces/Space Grotesk type; locked keeping the current Pumpkin Amber aesthetic", "status": "done"},
+    {"name": "Captured full direction to project memory personal-brand-homepage-direction; superseded homepage-webgl-direction", "status": "done"},
+    {"name": "Inserted + committed roadmap phases 17.1 -> 17.2 -> 17.3 before the Phase 18 ship gate (fixed reverse-order insert + dependency chain)", "status": "done", "commit": "committed"}
+  ],
+  "remaining_tasks": [
+    {"name": "Plan + build Phase 17.1 homepage (current aesthetic, remove blob, who->what->engage arc); show in dev server; iterate", "status": "not_started"},
+    {"name": "Phase 17.2 Site Information Architecture (nav, cuts, folds, merges)", "status": "not_started"},
+    {"name": "Phase 17.3 Portfolio", "status": "not_started"},
+    {"name": "Phase 18 QA/perf/alias-swap ship gate (parked; its existing plans are now partly stale vs new structure)", "status": "not_started"}
+  ],
+  "blockers": [],
+  "human_actions_pending": [
+    {"action": "Optional: install the claude-seo plugin via /plugin marketplace add AgricIDaniel/claude-seo then /plugin install claude-seo@agricidaniel-claude-seo", "context": "Monty asked about it; it's for SEO auditing, not shipped code. Not required to proceed.", "blocking": false}
+  ],
+  "decisions": [
+    {"decision": "Keep the current v3 aesthetic (Pumpkin Amber palette + current fonts); rebuild STRUCTURE only", "rationale": "Monty rejected the flame palette + Fraunces/Space Grotesk mock; the real problem was the broken blob + incoherent structure, not the colors", "phase": "17.1"},
+    {"decision": "Homepage becomes a who->what->engage personal-brand narrative; remove the WebGL blob from the home path", "rationale": "The blob read as a tech demo that did not answer 'who is this person'; Monty wants a business-like page", "phase": "17.1"},
+    {"decision": "Velvet-rope engagement: no CTA button, no contact page; woven contextual invitations; getting in touch is deliberately not easy", "rationale": "Monty wants visitors to feel 'this person is very cool, how do I reach them'", "phase": "17.1"},
+    {"decision": "Hybrid writing model: Monty Monthly newsletter is the headline + subscribe action; a few flagship essays shown open; merge /writing + /newsletter into one surface", "rationale": "Essays live inside the newsletter; the light gate doubles as the velvet rope", "phase": "17.2"},
+    {"decision": "Cut /events + /photos; delete /specimen + /v3-specimen; fold /links into footer; fold /watching into a reframed /uses ('Things I love'); keep /about + /prometheus dedicated", "rationale": "Tighten IA to the new scope", "phase": "17.2"}
+  ],
+  "uncommitted_files": ["src/components/home/hero-blob.tsx"],
+  "next_action": "Run /gsd-plan-phase 17.1 to decompose the homepage rebuild, then build a first pass in the current aesthetic and show Monty in the dev server to iterate.",
+  "context_notes": "Session was highly interactive/design-driven. Monty reacts to what he SEES (spin up npm run dev and show him). Full agreed direction is in project memory personal-brand-homepage-direction and the ROADMAP 17.1/17.2/17.3 goals. The rejected flame mock is at .planning/sketches/006-flame-personal-brand/mock.html. The uncommitted hero-blob.tsx shader fix becomes moot once 17.1 removes the blob."
+}
