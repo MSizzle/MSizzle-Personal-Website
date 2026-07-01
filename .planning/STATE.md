@@ -4,8 +4,8 @@ milestone: v3.0
 milestone_name: Dark Brutalist Rebuild
 status: executing
 stopped_at: Phase 18 context gathered
-last_updated: "2026-07-01T15:21:00.330Z"
-last_activity: 2026-07-01 -- Phase 17.1 planning complete
+last_updated: "2026-07-01T15:30:10.209Z"
+last_activity: 2026-07-01 -- Phase 17.1 execution started
 progress:
   total_phases: 8
   completed_phases: 4
@@ -21,14 +21,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-18)
 
 **Core value:** A personal site that feels alive and memorable, *and* legible — not another template blog.
-**Current focus:** Phase 17.1 — Homepage Rebuild (personal-brand restructure)
+**Current focus:** Phase 17.1 — homepage-rebuild-personal-brand-narrative-arc-who-am-i-what-
 
 ## Current Position
 
-Phase: 18
-Plan: Not started
-Status: Ready to execute
-Last activity: 2026-07-01 -- Phase 17.1 planning complete
+Phase: 17.1 (homepage-rebuild-personal-brand-narrative-arc-who-am-i-what-) — EXECUTING
+Plan: 1 of 4
+Status: Executing Phase 17.1
+Last activity: 2026-07-01 -- Phase 17.1 execution started
 
 Direction: validated via sketches 003–005 + perf spike 001 (GO-WITH-CUTS). Build cuts: desktop-WebGL / mobile-poster, defer canvas past LCP, GPU vertex-shader morph.
 

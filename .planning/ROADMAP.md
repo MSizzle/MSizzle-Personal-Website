@@ -156,7 +156,7 @@ Plans:
 
 **Wave 1**
 
-- [ ] 17.1-01-PLAN.md — Blob removal + text-forward hero + orchestrator refactor (explorative-homepage.tsx becomes Server Component, no canvas gate)
+- [x] 17.1-01-PLAN.md — Blob removal + text-forward hero + orchestrator refactor (explorative-homepage.tsx becomes Server Component, no canvas gate)
 
 **Wave 2** *(parallel; both depend on 17.1-01)*
 
@@ -251,5 +251,5 @@ Phases execute in numeric order: 14 -> 15 -> 16 -> 17 -> 18
 | 15. WebGL Explorative Homepage | v3.0 | 5/5 | Complete    | 2026-06-19 |
 | 16. Interior Pages on Notion Data | v3.0 | 9/9 | Complete    | 2026-06-20 |
 | 17. Infrastructure Preservation & SEO Extension | v3.0 | 1/1 | Complete    | 2026-06-21 |
-| 17.1. Homepage Rebuild | v3.0 | 0/4 | Not started | - |
+| 17.1. Homepage Rebuild | v3.0 | 1/4 | In Progress|  |
 | 18. v3.0 QA, Perf Gate & Alias Swap | v3.0 | 0/6 | Not started | - |
