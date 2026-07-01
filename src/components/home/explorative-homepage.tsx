@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { SectionBuilding } from "./section-building";
-import { SectionWriting } from "./section-writing";
+import { SectionWork } from "./section-work";
+import { SectionLoves } from "./section-loves";
 import { SectionNewsletter } from "./section-newsletter";
 import { SectionFooter } from "./section-footer";
 
@@ -8,10 +9,11 @@ import { SectionFooter } from "./section-footer";
  * ExplorativeHomepage — personal-brand narrative arc orchestrator (Server Component).
  *
  * Renders a text-forward hero anchored on "Founder of Prometheus", followed by
- * the existing section beats. No WebGL gate, no device detection, no client hooks.
+ * the six-section narrative arc. No WebGL gate, no device detection, no client hooks.
  *
  * Phase 17.1 (Plan 01): blob gate removed; hero replaced with hardcoded JSX copy.
- * Phase 17.1 (Plan 02): will reorder/extend section beats for the full narrative arc.
+ * Phase 17.1 (Plan 02): SectionWork + SectionLoves added; writing section retired;
+ *   final D-06 arc order: hero -> Building -> Work -> Loves -> Newsletter -> Footer.
  *
  * D-10: homepage copy is fully hardcoded JSX (revalidate=false in page.tsx).
  */
@@ -47,9 +49,10 @@ export function ExplorativeHomepage() {
         </p>
       </section>
 
-      {/* Section beats — normal document flow (Plan 17.1-02 will reorder/extend) */}
+      {/* D-06 narrative arc: who (hero) -> what I'm building -> selected work -> things I love -> newsletter -> footer */}
       <SectionBuilding />
-      <SectionWriting />
+      <SectionWork />
+      <SectionLoves />
       <SectionNewsletter />
       <SectionFooter />
     </div>
