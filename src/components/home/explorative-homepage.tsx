@@ -1,64 +1,53 @@
-"use client";
-
-import { useReducedMotion } from "motion/react";
-import { useEffect, useState } from "react";
-import { CanvasLoader } from "./canvas-loader";
-import { FallbackPoster } from "./fallback-poster";
+import Link from "next/link";
 import { SectionBuilding } from "./section-building";
 import { SectionWriting } from "./section-writing";
 import { SectionNewsletter } from "./section-newsletter";
 import { SectionFooter } from "./section-footer";
 
 /**
- * ExplorativeHomepage — device/capability gate orchestrator.
+ * ExplorativeHomepage — personal-brand narrative arc orchestrator (Server Component).
  *
- * Owns the WebGL2 + touch/small-screen + reduced-motion gate (D-03, D-04, HD-05).
- * Renders CanvasLoader when desktop + WebGL2 + no reduced-motion; FallbackPoster otherwise.
+ * Renders a text-forward hero anchored on "Founder of Prometheus", followed by
+ * the existing section beats. No WebGL gate, no device detection, no client hooks.
  *
- * Does NOT stop or start Lenis — the explorative scroll layout uses Lenis
- * as the primary scroll controller. Halting Lenis here would break smooth scroll
- * site-wide (Pitfall 4 in RESEARCH.md / T-15-10).
+ * Phase 17.1 (Plan 01): blob gate removed; hero replaced with hardcoded JSX copy.
+ * Phase 17.1 (Plan 02): will reorder/extend section beats for the full narrative arc.
+ *
+ * D-10: homepage copy is fully hardcoded JSX (revalidate=false in page.tsx).
  */
 export function ExplorativeHomepage() {
-  const prefersReduced = useReducedMotion();
-  const [isTouchOrSmall, setIsTouchOrSmall] = useState(false);
-  const [webglOk, setWebglOk] = useState(false);
-
-  // Mount-time detection — runs once in the browser (never on server)
-  useEffect(() => {
-    // Touch / small-screen detection (HD-05, D-04)
-    const coarse = window.matchMedia("(pointer: coarse)").matches;
-    setIsTouchOrSmall(coarse || window.innerWidth < 760);
-
-    // WebGL2 detection with software-renderer guard (T-15-08)
-    try {
-      const c = document.createElement("canvas");
-      const ctx = c.getContext("webgl2", { failIfMajorPerformanceCaveat: true });
-      setWebglOk(!!ctx);
-    } catch {
-      setWebglOk(false);
-    }
-  }, []);
-
-  // No showDeck concept in explorative layout — scroll is always native
-  const showCanvas = !isTouchOrSmall && !prefersReduced && webglOk;
-
   return (
-    <div className="explorative-homepage min-h-screen bg-bg">
-      {/* Hero section — full viewport height, WebGL canvas overlaid */}
-      <section className="relative min-h-dvh flex flex-col justify-center px-[8vw]">
-        {/* LCP element — SSR'd text, never inside canvas slot */}
-        <h1 className="font-display font-bold uppercase leading-[0.9] sig">
-          Monty Singer
+    <div className="personal-homepage min-h-screen bg-bg">
+      {/* Hero section — full viewport height, text-forward */}
+      <section className="min-h-dvh flex flex-col justify-center px-[8vw]">
+        {/* Primary identity — D-11: sole professional identity, no em dashes */}
+        <h1 className="font-display font-bold uppercase sig text-[clamp(2.8rem,11vw,8rem)] leading-[0.9] tracking-[-0.03em]">
+          Founder of Prometheus
         </h1>
 
-        {/* Canvas slot — positioned absolute, fills hero section */}
-        <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-          {showCanvas ? <CanvasLoader /> : <FallbackPoster />}
-        </div>
+        {/* One-liner subtitle */}
+        <p
+          className="mt-6 max-w-[54ch] text-text-dim font-display"
+          style={{ fontSize: "clamp(1rem, 2vw, 1.4rem)" }}
+        >
+          Building a company. Writing about what I am learning.
+        </p>
+
+        {/* Woven engagement — D-07/D-09: prose invitation, not a button */}
+        <p className="mt-8 font-mono text-xs uppercase tracking-[0.12em] text-text-muted">
+          I write about building monthly.{" "}
+          <Link
+            href="https://montymonthly.substack.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-accent transition-colors duration-150"
+          >
+            Join Monty Monthly
+          </Link>
+        </p>
       </section>
 
-      {/* Section beats — normal document flow (expansive scroll) */}
+      {/* Section beats — normal document flow (Plan 17.1-02 will reorder/extend) */}
       <SectionBuilding />
       <SectionWriting />
       <SectionNewsletter />
