@@ -3,15 +3,14 @@ import { buildPersonSchema } from "@/lib/seo/schemas";
 import { ExplorativeHomepage } from "@/components/home/explorative-homepage";
 
 /**
- * Homepage — static Server Component for the WebGL explorative scroll-story.
+ * Homepage — static Server Component for the personal-brand narrative arc.
  *
- * No Notion data fetched here (D-10: homepage copy is hardcoded JSX in section components).
- * revalidate=false: fully static, no ISR needed on homepage.
+ * Narrative arc: who am I -> what I am building -> how to engage.
+ * Rendered as a fully static Server Component with hardcoded JSX copy (D-10).
+ * revalidate=false: no Notion fetch on home path, no ISR needed.
  *
- * ExplorativeHomepage is a "use client" orchestrator that:
- *  - Detects WebGL2 availability, touch/small-screen, and reduced-motion preference
- *  - Renders CanvasLoader (dynamic HeroBlobCanvas, after-LCP) on capable desktop
- *  - Renders FallbackPoster on mobile / no-WebGL / reduced-motion
+ * ExplorativeHomepage assembles the hero and section beats in document order.
+ * Phase 17.1-02 will reorder/extend sections to complete the narrative arc.
  */
 export const revalidate = false;
 
