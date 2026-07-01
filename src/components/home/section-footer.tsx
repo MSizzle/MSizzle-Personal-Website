@@ -106,10 +106,10 @@ export function SectionFooter() {
           </nav>
         </div>
 
-        {/* Contact */}
+        {/* Connect — D-07: no "Contact" heading; email + link woven in */}
         <div className="flex flex-col gap-3">
           <h4 className="font-mono text-xs uppercase tracking-[0.12em] text-text-muted">
-            Contact
+            Connect
           </h4>
           <nav className="flex flex-col gap-2">
             <a
