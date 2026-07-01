@@ -145,17 +145,27 @@ Plans:
 
 **Goal**: The homepage is rebuilt around a personal-brand narrative arc (who am I → what I am building → how to engage), rendered in the CURRENT aesthetic (Pumpkin Amber palette + current fonts), replacing the superseded WebGL blob scroll-story. The WebGL/blob canvas is removed from the home path. Full agreed direction lives in project memory `personal-brand-homepage-direction`.
 **Depends on**: Phase 17
-**Requirements**: TBD (set at plan time)
+**Requirements**: TBD (set at plan time; governed by CONTEXT.md D-01..D-12)
 **Success Criteria** (what must be TRUE):
 
   1. The homepage renders the who → what → engage arc in the current aesthetic, with no WebGL/blob canvas on the home path.
   2. Sections present and populated top-to-bottom: hero (Founder of Prometheus + one-liner + one woven "way in" to Monty Monthly), what-I'm-building (Prometheus + current work, CTA woven into prose), selected-work/portfolio teaser, "things I love" teaser, writing + Monty Monthly gate (a flagship essay or two shown open), understated footer contact (email + socials woven in).
   3. Engagement is woven/contextual only: no CTA button and no contact page; the primary "way in" is Monty Monthly (velvet-rope principle).
 
-**Plans**: 0 plans
+**Plans**: 4 plans
 
-Plans:
-- [ ] TBD (run /gsd-plan-phase 17.1 to break down)
+**Wave 1**
+
+- [ ] 17.1-01-PLAN.md — Blob removal + text-forward hero + orchestrator refactor (explorative-homepage.tsx becomes Server Component, no canvas gate)
+
+**Wave 2** *(parallel; both depend on 17.1-01)*
+
+- [ ] 17.1-02-PLAN.md — New section-work.tsx + section-loves.tsx + orchestrator final assembly (D-06 narrative arc order, SectionWriting retired)
+- [ ] 17.1-03-PLAN.md — Section narrative copy adaptations: section-building (Prometheus-forward), section-newsletter (essay teasers + newsletter gate), section-footer (velvet-rope tone)
+
+**Wave 3** *(depends on Wave 2 completion)*
+
+- [ ] 17.1-04-PLAN.md — Automated build gate + human visual verify at localhost:3000 (D-12)
 
 ### Phase 17.2: Site Information Architecture (INSERTED)
 
@@ -241,4 +251,5 @@ Phases execute in numeric order: 14 -> 15 -> 16 -> 17 -> 18
 | 15. WebGL Explorative Homepage | v3.0 | 5/5 | Complete    | 2026-06-19 |
 | 16. Interior Pages on Notion Data | v3.0 | 9/9 | Complete    | 2026-06-20 |
 | 17. Infrastructure Preservation & SEO Extension | v3.0 | 1/1 | Complete    | 2026-06-21 |
+| 17.1. Homepage Rebuild | v3.0 | 0/4 | Not started | - |
 | 18. v3.0 QA, Perf Gate & Alias Swap | v3.0 | 0/6 | Not started | - |
