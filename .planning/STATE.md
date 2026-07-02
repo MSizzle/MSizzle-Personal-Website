@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v3.0
 milestone_name: Dark Brutalist Rebuild
-status: ready_to_plan
-stopped_at: Phase 17.1 complete (4/4) — ready to discuss Phase 17.2
-last_updated: 2026-07-02T02:48:06.379Z
-last_activity: 2026-07-01 -- Phase 17.1 execution started
+status: planning
+stopped_at: Phase 17.2 context gathered
+last_updated: "2026-07-02T05:43:19.974Z"
+last_activity: 2026-07-02
 progress:
   total_phases: 8
-  completed_phases: 4
+  completed_phases: 5
   total_plans: 29
-  completed_plans: 64
-  percent: 50
+  completed_plans: 23
+  percent: 63
 ---
 
 # Project State
@@ -128,9 +128,9 @@ Close-out rationale: v2.0 shipped via Phase 13 GO sign-off. These items predate 
 
 ## Session Continuity
 
-Last session: 2026-06-21T00:51:14.196Z
-Stopped at: Phase 18 context gathered
-Resume file: .planning/phases/18-v3-0-qa-perf-gate-alias-swap/18-CONTEXT.md
+Last session: 2026-07-02T05:43:19.958Z
+Stopped at: Phase 17.2 context gathered
+Resume file: .planning/phases/17.2-site-information-architecture-new-nav-plus-cut-events-and-ph/17.2-CONTEXT.md
 
 ---
 
