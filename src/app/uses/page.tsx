@@ -36,6 +36,14 @@ export const metadata: Metadata = {
 };
 
 export default function UsesPage() {
+  // Only surface fully-populated watching entries. Placeholder rows (fake
+  // "PLACEHDR" ids or unfilled "TODO" channels) are held back so the reframed
+  // /uses page never ships a broken thumbnail or literal TODO text; they appear
+  // automatically once WATCHING_ITEMS is filled in with real data.
+  const watchingItems = WATCHING_ITEMS.filter(
+    (item) => !item.id.startsWith("PLACEHDR"),
+  );
+
   return (
     <>
       <Breadcrumbs
@@ -59,24 +67,26 @@ export default function UsesPage() {
         </section>
 
         {/* Watching section — folded from deleted /watching route (D-07) */}
-        <section className="pb-16">
-          <h3 className="font-mono text-sm uppercase tracking-[0.12em] text-accent mb-[18px]">
-            Watching
-          </h3>
-          <div className="grid [grid-template-columns:repeat(auto-fill,minmax(320px,1fr))] gap-6">
-            {WATCHING_ITEMS.map((item) => (
-              <VideoCard
-                key={item.id}
-                title={item.title}
-                channel={item.channel}
-                href={item.url}
-                thumbnail={`https://img.youtube.com/vi/${item.id}/hqdefault.jpg`}
-                target="_blank"
-                rel="noopener noreferrer"
-              />
-            ))}
-          </div>
-        </section>
+        {watchingItems.length > 0 && (
+          <section className="pb-16">
+            <h3 className="font-mono text-sm uppercase tracking-[0.12em] text-accent mb-[18px]">
+              Watching
+            </h3>
+            <div className="grid [grid-template-columns:repeat(auto-fill,minmax(320px,1fr))] gap-6">
+              {watchingItems.map((item) => (
+                <VideoCard
+                  key={item.id}
+                  title={item.title}
+                  channel={item.channel.startsWith("TODO") ? undefined : item.channel}
+                  href={item.url}
+                  thumbnail={`https://img.youtube.com/vi/${item.id}/hqdefault.jpg`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                />
+              ))}
+            </div>
+          </section>
+        )}
 
         <RuleStrong />
       </div>

@@ -132,15 +132,21 @@ export default async function WritingPage() {
 
       <RuleStrong />
 
-      {/* Monty Monthly section — folded from deleted /newsletter route (D-04) */}
-      <section className="px-6 md:px-40 pb-16">
-        <h3 className="font-mono text-sm uppercase tracking-[0.12em] text-accent mb-[18px]">
-          Monty Monthly
-        </h3>
-        <NewsletterCarousel issues={carouselIssues} />
-      </section>
+      {/* Monty Monthly section — folded from deleted /newsletter route (D-04).
+          Hidden when the Substack RSS fetch returns nothing so we never render
+          a bare heading over an empty carousel. */}
+      {carouselIssues.length > 0 && (
+        <>
+          <section className="px-6 md:px-40 pb-16">
+            <h3 className="font-mono text-sm uppercase tracking-[0.12em] text-accent mb-[18px]">
+              Monty Monthly
+            </h3>
+            <NewsletterCarousel issues={carouselIssues} />
+          </section>
 
-      <RuleStrong />
+          <RuleStrong />
+        </>
+      )}
 
       <WritingSubscribeCTA />
     </>
