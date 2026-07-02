@@ -191,7 +191,7 @@ Plans:
 
 **Wave 3** *(depends on Wave 2 completion)*
 
-- [ ] 17.2-04-PLAN.md — Automated validation gate (grep + vitest + build) + human visual checkpoint on /uses, /writing, nav, footer, redirects
+- [x] 17.2-04-PLAN.md — Automated validation gate (grep + vitest + build) + human visual checkpoint on /uses, /writing, nav, footer, redirects
 
 ### Phase 17.3: Portfolio (INSERTED)
 
@@ -262,5 +262,5 @@ Phases execute in numeric order: 14 -> 15 -> 16 -> 17 -> 18
 | 16. Interior Pages on Notion Data | v3.0 | 9/9 | Complete    | 2026-06-20 |
 | 17. Infrastructure Preservation & SEO Extension | v3.0 | 1/1 | Complete   | 2026-07-02 |
 | 17.1. Homepage Rebuild | v3.0 | 4/4 | Complete    | 2026-07-02 |
-| 17.2. Site Information Architecture | v3.0 | 3/4 | In Progress|  |
+| 17.2. Site Information Architecture | v3.0 | 4/4 | Complete   | 2026-07-02 |
 | 18. v3.0 QA, Perf Gate & Alias Swap | v3.0 | 0/6 | Not started | - |
