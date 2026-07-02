@@ -31,6 +31,17 @@ vi.mock("@/components/home-v2/writing-subscribe-cta", () => ({
     React.createElement("div", { "data-testid": "writing-subscribe-cta" }),
 }));
 
+// Mock NewsletterCarousel — avoid rendering carousel internals (D-04 fold)
+vi.mock("@/components/v3/newsletter-carousel", () => ({
+  NewsletterCarousel: () =>
+    React.createElement("div", { "data-testid": "newsletter-carousel" }),
+}));
+
+// Mock Substack RSS fetch — avoid network calls in tests (D-04 fold)
+vi.mock("@/lib/rss/substack", () => ({
+  fetchMontyMonthlyIssues: vi.fn().mockResolvedValue([]),
+}));
+
 // Mock Notion loader — control data in tests
 vi.mock("@/lib/notion", () => ({
   getPublishedPosts: vi.fn(),

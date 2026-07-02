@@ -1,11 +1,13 @@
 import { Fragment } from "react";
 import type { Metadata } from "next";
 import { getPublishedPosts, type BlogPost } from "@/lib/notion";
+import { fetchMontyMonthlyIssues } from "@/lib/rss/substack";
 import { RuleStrong } from "@/components/editorial/rule-strong";
 import { YearBlock } from "@/components/editorial/year-block";
 import { WritingSubscribeCTA } from "@/components/home-v2/writing-subscribe-cta";
 import { PageHero } from "@/components/v3/page-hero";
 import { Card } from "@/components/v3/card";
+import { NewsletterCarousel } from "@/components/v3/newsletter-carousel";
 
 // ISR -- matches /, /events cadence (RESEARCH § Pitfall 9). 30 minutes balances
 // fresh Notion-sourced essays against Vercel build minutes on the free tier.
@@ -45,25 +47,35 @@ function groupPostsByYear(posts: BlogPost[]): Map<number, BlogPost[]> {
 }
 
 /**
- * /writing -- editorial archive page (ARCH-01).
+ * /writing -- merged essay archive + Monty Monthly surface (D-03, D-04).
  *
- * Layout per D-01..D-04 (16-04):
- *   1. PageHero (v3) -- replaces old two-column atmosphere-photo title block
+ * Layout per D-03/D-04 (17.2-03):
+ *   1. PageHero (v3) -- title "Writing", canonical /writing (unchanged)
  *   2. <RuleStrong />
  *   3. Year-grouped essays -- YearBlock heading above a photo grid of Cards (D-03)
  *      Each Card: cover image via /api/notion-cover proxy (D-02), calm color-only
  *      hover (D-01). Cards link to /blog/[slug] per D-02.
  *   4. <RuleStrong />
- *   5. WritingSubscribeCTA
+ *   5. Monty Monthly section -- NewsletterCarousel fed from Substack RSS (D-04)
+ *      /newsletter redirects here (301); no link to /newsletter anywhere.
+ *   6. <RuleStrong />
+ *   7. WritingSubscribeCTA -- Substack outbound CTA
  *
- * Defensive Notion fetch mirrors src/app/page.tsx -- a transient Notion API
- * failure renders the page with an empty-state message instead of crashing. (T-16-07)
+ * Defensive fetches: both Notion and Substack failures render gracefully with
+ * empty content rather than crashing. (T-16-07, T-17.2-05)
  */
 export default async function WritingPage() {
   let posts: BlogPost[] = [];
   try {
     posts = await getPublishedPosts();
   } catch {}
+
+  const rawIssues = await fetchMontyMonthlyIssues(6);
+  const carouselIssues = rawIssues.map((issue) => ({
+    title: issue.title,
+    date: issue.pubDate,
+    href: issue.link || undefined,
+  }));
 
   const postsByYear = groupPostsByYear(posts);
   const yearEntries = [...postsByYear.entries()];
@@ -116,6 +128,16 @@ export default async function WritingPage() {
             ))}
           </div>
         )}
+      </section>
+
+      <RuleStrong />
+
+      {/* Monty Monthly section — folded from deleted /newsletter route (D-04) */}
+      <section className="px-6 md:px-40 pb-16">
+        <h3 className="font-mono text-sm uppercase tracking-[0.12em] text-accent mb-[18px]">
+          Monty Monthly
+        </h3>
+        <NewsletterCarousel issues={carouselIssues} />
       </section>
 
       <RuleStrong />
