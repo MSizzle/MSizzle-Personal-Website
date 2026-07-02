@@ -187,7 +187,7 @@ Plans:
 **Wave 2** *(parallel; both depend on 17.2-01)*
 
 - [x] 17.2-02-PLAN.md — Nav/footer link sweep (EditorialHeader 4-item nav, Navigation MOBILE_LINKS, V3Footer + section-footer + slide-footer restructure)
-- [ ] 17.2-03-PLAN.md — /uses reframe "Things I Love" + Watching section (VideoCard + WATCHING_ITEMS); /writing merge Monty Monthly section + update page tests
+- [x] 17.2-03-PLAN.md — /uses reframe "Things I Love" + Watching section (VideoCard + WATCHING_ITEMS); /writing merge Monty Monthly section + update page tests
 
 **Wave 3** *(depends on Wave 2 completion)*
 
@@ -262,5 +262,5 @@ Phases execute in numeric order: 14 -> 15 -> 16 -> 17 -> 18
 | 16. Interior Pages on Notion Data | v3.0 | 9/9 | Complete    | 2026-06-20 |
 | 17. Infrastructure Preservation & SEO Extension | v3.0 | 1/1 | Complete   | 2026-07-02 |
 | 17.1. Homepage Rebuild | v3.0 | 4/4 | Complete    | 2026-07-02 |
-| 17.2. Site Information Architecture | v3.0 | 2/4 | In Progress|  |
+| 17.2. Site Information Architecture | v3.0 | 3/4 | In Progress|  |
 | 18. v3.0 QA, Perf Gate & Alias Swap | v3.0 | 0/6 | Not started | - |
