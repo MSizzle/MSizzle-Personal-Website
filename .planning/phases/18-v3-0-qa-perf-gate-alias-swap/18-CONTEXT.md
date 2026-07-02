@@ -2,11 +2,77 @@
 phase: 18
 phase_name: v3.0 QA, Perf Gate & Alias Swap
 created: 2026-06-20
+updated: 2026-07-02
 mode: auto
-discuss_passes: 1
+discuss_passes: 2
 ---
 
 # Phase 18 Context
+
+> **⚠ READ FIRST — Post-17.3 Reconciliation (2026-07-02) supersedes conflicting
+> auto-decisions below.** This CONTEXT.md was auto-generated 2026-06-20, before Phases
+> 17.1/17.2/17.3 shipped. Several original decisions (D-03, D-04, D-05, D-08) are now stale.
+> The reconciliation section immediately below is authoritative where it conflicts with the
+> `## Decisions (auto-resolved)` section.
+
+## Post-17.3 Reconciliation (2026-07-02) — AUTHORITATIVE
+
+Four decisions locked with Monty on 2026-07-02, plus corrections for what actually shipped in
+Phases 17.1 (homepage rebuild), 17.2 (IA restructure), and 17.3 (portfolio). Where these
+conflict with the older D-01..D-11 below, **these win.**
+
+### R-1 — Homepage is now STATIC; the WebGL-hero LCP gate (D-04) is largely obsolete
+- Phase 17.1 **removed the WebGL blob from the home path**. `explorative-homepage.tsx` is a
+  static Server Component (no `<canvas>`, no three.js, no client hooks) rendering a
+  six-section personal-brand arc.
+- Therefore **D-04's premise ("LCP is the WebGL canvas", "mobile-poster path", "deferred
+  canvas mount", "~885 kB three.js chunk") no longer applies to `/`.** The perf gate treats
+  the homepage as a plain Server Component and checks standard LCP (the SSR'd `<h1>`).
+- Planner action (18-03): confirm-in-code that no WebGL/canvas/three import remains on the
+  `/` render path. If confirmed, mark the WebGL-LCP sub-checks **satisfied-by-absence** — do
+  NOT run a bespoke 3D LCP probe or hunt for a poster fallback on home. If any WebGL is still
+  on a perf-critical route, escalate. (`nextjs16-fetchpriority-quirk` still applies to
+  whatever the real LCP image is.)
+
+### R-2 — PSI mobile baseline is 95, not 82 (corrects D-03)
+- D-03 cites v2.0 prod PSI mobile = 82. That is **stale**: PROJECT.md records **v2.0 shipped
+  PSI mobile = 95** (up from 82). Bar = **PSI mobile (authoritative) ≥ current production
+  (~95), parity-or-better.** A drop below current prod blocks GO unless explicitly
+  risk-accepted. Ignore the 82/77 numbers in D-03.
+
+### R-3 — Route list changed in 17.2 (corrects D-02 and D-05)
+- `/watching` and `/newsletter` no longer exist as standalone routes (17.2 folded `/watching`
+  into `/uses` "Things I Love" and `/newsletter` into `/writing`; both are 301 redirects).
+  `/events`, `/photos`, `/links` also 301-redirect; `/specimen`, `/v3-specimen` are 404.
+- **Do NOT Lighthouse/visual-walk `/watching` as a page.** The live v3 route set is:
+  `/`, `/about`, `/projects` (+`/projects/[slug]`), **`/portfolio`** (new, 17.3),
+  `/writing` (+`/blog/[slug]`, `/blog/feed.xml`), `/uses`, `/prometheus`.
+- The Phase-16 deferred visual items about `/watching` (D-05 item 4) now apply to the
+  **Watching section inside `/uses`**, and the redirects themselves should be spot-checked
+  (each 301 resolves correctly).
+
+### R-4 — `/portfolio` content gate before promotion (NEW, from 17.3)
+- `/portfolio` (shipped 17.3) renders a graceful empty-state until Notion projects are marked
+  `Featured: true`. **Monty marks a few proud-of projects `Featured: true` in Notion before
+  the alias flip** so prod `/portfolio` is not empty at launch.
+- Pre-GO checklist item in the visual walk: verify `/portfolio` shows real featured Cards on
+  the preview deploy (not the empty-state), and the homepage "Selected Work" link reaches it.
+
+### R-5 — Alias flip is HUMAN-RUN, agent-prepared (refines D-08)
+- The agent compiles `18-GO-NO-GO.md`, verifies every gate, and hands Monty the **exact
+  `vercel` alias-promotion command + rollback steps**. **Monty runs the production flip
+  himself.** The agent does NOT execute the swap. After the flip, the agent runs
+  post-promotion parity verification (SC-4 / curl + route walk + alias-drift check).
+- D-08's hard constraints still hold: **never `--prebuilt --prod`**, mandatory alias-drift
+  check. The branch→prod path (direct `--prod` from `v3` vs merge→main vs promote-preview)
+  remains the one genuine research item.
+
+### R-6 — Execution checkpoints (confirms/tightens D-A4)
+- Mechanical gates run **autonomously**: 18-01 build, 18-02 preview+Lighthouse, 18-03 PSI,
+  18-04 375px/route walk, 18-05 secret scan + theme decision.
+- **Human checkpoints (mark `autonomous: false`): (1) the GO/NO-GO sign-off (18-06), and
+  (2) immediately before the alias flip** (hand-off of the command per R-5). An `--auto`
+  chain must pause at both.
 
 ## Domain
 
