@@ -1,12 +1,12 @@
 /**
- * Tests for /uses page — Phase 17 Plan 01 (IN-03).
+ * Tests for /uses page — Phase 17.2 Plan 03 (D-06, D-07).
  *
  * Asserts:
- * (a) metadata.title equals 'Uses | Monty Singer'
+ * (a) metadata.title equals 'Things I Love | Monty Singer'
  * (b) metadata.alternates.canonical equals '/uses'
- * (c) metadata.openGraph.title equals 'Uses | Monty Singer'
+ * (c) metadata.openGraph.title equals 'Things I Love | Monty Singer'
  * (d) Breadcrumbs renders 'Home' item
- * (e) Breadcrumbs renders 'Uses' item
+ * (e) Breadcrumbs renders 'Things I Love' item
  */
 import React from "react";
 import { describe, it, expect, vi, afterEach } from "vitest";
@@ -28,6 +28,12 @@ vi.mock("next/link", () => ({
 vi.mock("@/components/v3/uses-list", () => ({
   UsesList: () =>
     React.createElement("div", { "data-testid": "uses-list" }),
+}));
+
+// Mock VideoCard — avoid rendering Next.js Image and Link internals
+vi.mock("@/components/v3/video-card", () => ({
+  VideoCard: ({ title }: { title: React.ReactNode }) =>
+    React.createElement("div", { "data-testid": "video-card" }, title),
 }));
 
 // Mock RuleStrong — just an hr
@@ -65,11 +71,11 @@ async function renderUsesPage() {
   render(element as any);
 }
 
-describe("/uses page (Phase 17 / IN-03)", () => {
-  it("metadata.title equals 'Uses | Monty Singer'", async () => {
+describe("/uses page — Things I Love (Phase 17.2 / D-06, D-07)", () => {
+  it("metadata.title equals 'Things I Love | Monty Singer'", async () => {
     const { metadata } = await import("@/app/uses/page");
     const resolved = typeof metadata === "function" ? await metadata() : metadata;
-    expect(resolved.title).toBe("Uses | Monty Singer");
+    expect(resolved.title).toBe("Things I Love | Monty Singer");
   });
 
   it("metadata.alternates.canonical equals '/uses'", async () => {
@@ -78,10 +84,10 @@ describe("/uses page (Phase 17 / IN-03)", () => {
     expect((resolved as any).alternates?.canonical).toBe("/uses");
   });
 
-  it("metadata.openGraph.title equals 'Uses | Monty Singer'", async () => {
+  it("metadata.openGraph.title equals 'Things I Love | Monty Singer'", async () => {
     const { metadata } = await import("@/app/uses/page");
     const resolved = typeof metadata === "function" ? await metadata() : metadata;
-    expect((resolved as any).openGraph?.title).toBe("Uses | Monty Singer");
+    expect((resolved as any).openGraph?.title).toBe("Things I Love | Monty Singer");
   });
 
   it("renders breadcrumb 'Home' item", async () => {
@@ -89,8 +95,8 @@ describe("/uses page (Phase 17 / IN-03)", () => {
     expect(screen.getAllByText("Home").length).toBeGreaterThan(0);
   });
 
-  it("renders breadcrumb 'Uses' item", async () => {
+  it("renders breadcrumb 'Things I Love' item", async () => {
     await renderUsesPage();
-    expect(screen.getAllByText("Uses").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("Things I Love").length).toBeGreaterThan(0);
   });
 });

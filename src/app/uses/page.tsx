@@ -1,30 +1,35 @@
 import type { Metadata } from "next";
 import { USES_DATA } from "@/lib/uses";
+import { WATCHING_ITEMS } from "@/lib/watching";
 import { PageHero } from "@/components/v3/page-hero";
 import { UsesList } from "@/components/v3/uses-list";
+import { VideoCard } from "@/components/v3/video-card";
 import { RuleStrong } from "@/components/editorial/rule-strong";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 
 /**
- * /uses — Hardcoded tools and software page (D-05, D-06, PG-02).
+ * /uses — "Things I Love" reframe (D-06, D-07).
  *
- * Data source: src/lib/uses.ts — static typed array, no Notion dependency.
- * Four groups: AI & Development, Productivity, Communication, Hardware.
- * Hardware items use TODO placeholder strings — Monty to fill in before v3 launch.
+ * Data sources:
+ * - src/lib/uses.ts — USES_DATA: static typed array (AI & Dev, Productivity, Communication, Hardware)
+ * - src/lib/watching.ts — WATCHING_ITEMS: YouTube video objects (folded from deleted /watching route)
+ *
+ * Section order per D-06: existing UsesList groups (Tools/AI/Productivity/etc.) then Watching (VideoCard grid).
+ * URL canonical stays /uses per D-03.
  *
  * Server Component — no "use client".
- * ISR cadence: 30 minutes (matches /, /writing, /events, /photos).
+ * ISR cadence: 30 minutes (matches /, /writing).
  */
 
 export const revalidate = 1800;
 
 export const metadata: Metadata = {
-  title: "Uses | Monty Singer",
-  description: "The tools and software I use daily.",
+  title: "Things I Love | Monty Singer",
+  description: "Tools, books, and ideas I keep coming back to.",
   alternates: { canonical: "/uses" },
   openGraph: {
-    title: "Uses | Monty Singer",
-    description: "The tools and software I use daily.",
+    title: "Things I Love | Monty Singer",
+    description: "Tools, books, and ideas I keep coming back to.",
     url: "/uses",
     type: "website",
   },
@@ -36,21 +41,41 @@ export default function UsesPage() {
       <Breadcrumbs
         items={[
           { name: "Home", href: "/" },
-          { name: "Uses" },
+          { name: "Things I Love" },
         ]}
       />
 
       <div className="px-6 md:px-40">
         <PageHero
-          title="Uses"
-          crumb="Home / Uses"
-          sub="The tools and software I use daily."
+          title="Things I Love"
+          crumb="Home / Things I Love"
+          sub="Tools, books, and ideas I keep coming back to."
         />
 
         <RuleStrong />
 
         <section className="pb-16">
           <UsesList groups={USES_DATA} />
+        </section>
+
+        {/* Watching section — folded from deleted /watching route (D-07) */}
+        <section className="pb-16">
+          <h3 className="font-mono text-sm uppercase tracking-[0.12em] text-accent mb-[18px]">
+            Watching
+          </h3>
+          <div className="grid [grid-template-columns:repeat(auto-fill,minmax(320px,1fr))] gap-6">
+            {WATCHING_ITEMS.map((item) => (
+              <VideoCard
+                key={item.id}
+                title={item.title}
+                channel={item.channel}
+                href={item.url}
+                thumbnail={`https://img.youtube.com/vi/${item.id}/hqdefault.jpg`}
+                target="_blank"
+                rel="noopener noreferrer"
+              />
+            ))}
+          </div>
         </section>
 
         <RuleStrong />
