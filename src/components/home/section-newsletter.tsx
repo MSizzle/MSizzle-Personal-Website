@@ -78,17 +78,14 @@ export function SectionNewsletter() {
           {
             title: "Vol. 1: Builders, Breakers, Believers",
             date: "Jun 2026",
-            href: "#",
           },
           {
             title: "Vol. 2: The Quiet Builders",
             date: "May 2026",
-            href: "#",
           },
           {
             title: "Vol. 3: First Principles",
             date: "Apr 2026",
-            href: "#",
           },
         ]}
       />
