@@ -8,8 +8,9 @@ import { SectionFooter } from "./section-footer";
 /**
  * ExplorativeHomepage — personal-brand narrative arc orchestrator (Server Component).
  *
- * Renders a text-forward hero anchored on "Founder of Prometheus", followed by
- * the six-section narrative arc. No WebGL gate, no device detection, no client hooks.
+ * Renders a text-forward hero anchored on the guiding principle "Create Order
+ * from Chaos" (professional identity moved to the subtitle), followed by the
+ * six-section narrative arc. No WebGL gate, no device detection, no client hooks.
  *
  * Phase 17.1 (Plan 01): blob gate removed; hero replaced with hardcoded JSX copy.
  * Phase 17.1 (Plan 02): SectionWork + SectionLoves added; writing section retired;
@@ -22,17 +23,17 @@ export function ExplorativeHomepage() {
     <div className="personal-homepage min-h-screen bg-bg">
       {/* Hero section — full viewport height, text-forward */}
       <section className="min-h-dvh flex flex-col justify-center px-[8vw]">
-        {/* Primary identity — D-11: sole professional identity, no em dashes */}
+        {/* Guiding principle — D-11 (revised): hero leads with ethos, not job title; no em dashes */}
         <h1 className="font-display font-bold uppercase sig text-[clamp(2.8rem,11vw,8rem)] leading-[0.9] tracking-[-0.03em]">
-          Founder of Prometheus
+          Create Order from Chaos
         </h1>
 
-        {/* One-liner subtitle */}
+        {/* One-liner subtitle — carries the professional identity that moved out of the headline */}
         <p
           className="mt-6 max-w-[54ch] text-text-dim font-display"
           style={{ fontSize: "clamp(1rem, 2vw, 1.4rem)" }}
         >
-          Building a company. Writing about what I am learning.
+          Founder of Prometheus. I build companies and write about what I am learning.
         </p>
 
         {/* Woven engagement — D-07/D-09: prose invitation, not a button */}
