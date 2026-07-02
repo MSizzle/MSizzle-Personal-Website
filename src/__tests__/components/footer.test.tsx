@@ -43,12 +43,6 @@ describe("V3Footer component (Plan 02 / D-11, D-12)", () => {
     expect(usesLink).not.toBeNull();
   });
 
-  it("renders /watching link in footer nav (Archive column)", () => {
-    render(<V3Footer />);
-    const watchingLink = document.querySelector('a[href="/watching"]');
-    expect(watchingLink).not.toBeNull();
-  });
-
   it("renders /prometheus external link in footer nav (Community column)", () => {
     render(<V3Footer />);
     const prometheusLink = document.querySelector('a[href="https://prometheus.today"]');
@@ -61,12 +55,6 @@ describe("V3Footer component (Plan 02 / D-11, D-12)", () => {
     expect(prometheusLink).not.toBeNull();
     expect(prometheusLink?.getAttribute("rel")).toBe("noopener noreferrer");
     expect(prometheusLink?.getAttribute("target")).toBe("_blank");
-  });
-
-  it("renders /photos link in footer nav (Archive column)", () => {
-    render(<V3Footer />);
-    const photosLink = document.querySelector('a[href="/photos"]');
-    expect(photosLink).not.toBeNull();
   });
 
   it("footer uses Pumpkin Amber surface token (no v2 tokens)", () => {

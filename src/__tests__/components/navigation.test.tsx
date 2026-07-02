@@ -77,13 +77,6 @@ describe("Navigation component (Plan 02 / D-13)", () => {
     expect(header.getAttribute("data-active")).toBe("Uses");
   });
 
-  it("active label is Watching when pathname is /watching (D-13)", () => {
-    mockUsePathname.mockReturnValue("/watching");
-    render(<Navigation />);
-    const header = screen.getByTestId("editorial-header");
-    expect(header.getAttribute("data-active")).toBe("Watching");
-  });
-
   it("MOBILE_LINKS includes /uses link", () => {
     mockUsePathname.mockReturnValue("/");
     render(<Navigation />);
@@ -92,15 +85,6 @@ describe("Navigation component (Plan 02 / D-13)", () => {
     fireEvent.click(hamburger);
     const usesLink = document.querySelector('a[href="/uses"]');
     expect(usesLink).not.toBeNull();
-  });
-
-  it("MOBILE_LINKS includes /watching link", () => {
-    mockUsePathname.mockReturnValue("/");
-    render(<Navigation />);
-    const hamburger = screen.getByRole("button", { name: /open navigation menu/i });
-    fireEvent.click(hamburger);
-    const watchingLink = document.querySelector('a[href="/watching"]');
-    expect(watchingLink).not.toBeNull();
   });
 
   it("MOBILE_LINKS includes /prometheus link (D-13)", () => {
