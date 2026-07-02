@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v3.0
 milestone_name: Dark Brutalist Rebuild
-status: executing
-stopped_at: Phase 17.2 UI-SPEC approved
-last_updated: "2026-07-02T06:58:52.992Z"
+status: ready_to_plan
+stopped_at: Phase 17.2 complete (4/4) — ready to discuss Phase 17.3
+last_updated: 2026-07-02T07:18:23.392Z
 last_activity: 2026-07-02
 progress:
   total_phases: 8
   completed_phases: 5
   total_plans: 33
-  completed_plans: 26
+  completed_plans: 68
   percent: 63
 ---
 
@@ -21,13 +21,13 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-18)
 
 **Core value:** A personal site that feels alive and memorable, *and* legible — not another template blog.
-**Current focus:** Phase 17.2 — site-information-architecture-new-nav-plus-cut-events-and-ph
+**Current focus:** Phase 17.3 — portfolio proud of past work surface built on the existing p
 
 ## Current Position
 
-Phase: 17.2 (site-information-architecture-new-nav-plus-cut-events-and-ph) — EXECUTING
-Plan: 4 of 4
-Status: Ready to execute
+Phase: 17.3
+Plan: Not started
+Status: Ready to plan
 Last activity: 2026-07-02
 
 Direction: validated via sketches 003–005 + perf spike 001 (GO-WITH-CUTS). Build cuts: desktop-WebGL / mobile-poster, defer canvas past LCP, GPU vertex-shader morph.
