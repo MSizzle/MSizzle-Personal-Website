@@ -171,17 +171,27 @@ Plans:
 
 **Goal**: The site IA matches the new scope. New nav (Building, Work, Things I love, Writing, Prometheus). Cut /events and /photos. Delete /specimen and /v3-specimen dev pages. Fold /links socials into the woven footer/contact layer. Reframe /uses as "Things I love" and fold /watching into it. Merge /writing + /newsletter into a single "Writing / Monty Monthly" surface (hybrid: a few open flagship essays + the newsletter gate). Keep /about and /prometheus as dedicated pages.
 **Depends on**: Phase 17.1
-**Requirements**: TBD (set at plan time)
+**Requirements**: D-01, D-02, D-03, D-04, D-05, D-06, D-07, D-08, D-09, D-10 (governed by 17.2-CONTEXT.md)
 **Success Criteria** (what must be TRUE):
 
   1. Nav reflects the new set; /events, /photos, /specimen, /v3-specimen no longer exist (routes + nav + sitemap all updated).
   2. /links is folded into the footer/contact layer; /watching is folded into a reframed /uses ("Things I love").
   3. /writing and /newsletter are merged into one "Writing / Monty Monthly" surface; sitemap, nav, and internal links are consistent with the new IA with no broken links.
 
-**Plans**: 0 plans
+**Plans**: 4 plans
 
-Plans:
-- [ ] TBD (run /gsd-plan-phase 17.2 to break down)
+**Wave 1**
+
+- [ ] 17.2-01-PLAN.md — 5 x 301 redirects in next.config.ts + 7 route dir deletions + sitemap.ts trimmed to 6 routes + SEO/component test lockstep
+
+**Wave 2** *(parallel; both depend on 17.2-01)*
+
+- [ ] 17.2-02-PLAN.md — Nav/footer link sweep (EditorialHeader 4-item nav, Navigation MOBILE_LINKS, V3Footer + section-footer + slide-footer restructure)
+- [ ] 17.2-03-PLAN.md — /uses reframe "Things I Love" + Watching section (VideoCard + WATCHING_ITEMS); /writing merge Monty Monthly section + update page tests
+
+**Wave 3** *(depends on Wave 2 completion)*
+
+- [ ] 17.2-04-PLAN.md — Automated validation gate (grep + vitest + build) + human visual checkpoint on /uses, /writing, nav, footer, redirects
 
 ### Phase 17.3: Portfolio (INSERTED)
 
@@ -252,4 +262,5 @@ Phases execute in numeric order: 14 -> 15 -> 16 -> 17 -> 18
 | 16. Interior Pages on Notion Data | v3.0 | 9/9 | Complete    | 2026-06-20 |
 | 17. Infrastructure Preservation & SEO Extension | v3.0 | 1/1 | Complete    | 2026-06-21 |
 | 17.1. Homepage Rebuild | v3.0 | 4/4 | Complete    | 2026-07-02 |
+| 17.2. Site Information Architecture | v3.0 | 0/4 | Not started | - |
 | 18. v3.0 QA, Perf Gate & Alias Swap | v3.0 | 0/6 | Not started | - |
