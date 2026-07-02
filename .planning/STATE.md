@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v3.0
 milestone_name: Dark Brutalist Rebuild
-status: ready_to_plan
-stopped_at: Phase 17.2 complete (4/4) — ready to discuss Phase 17.3
-last_updated: 2026-07-02T07:18:23.392Z
-last_activity: 2026-07-02
+status: executing
+stopped_at: Phase 17.2 UI-SPEC approved
+last_updated: "2026-07-02T15:23:16.624Z"
+last_activity: 2026-07-02 -- Phase 17.3 planning complete
 progress:
   total_phases: 8
-  completed_phases: 5
-  total_plans: 33
-  completed_plans: 68
-  percent: 63
+  completed_phases: 6
+  total_plans: 35
+  completed_plans: 27
+  percent: 75
 ---
 
 # Project State
@@ -27,8 +27,8 @@ See: .planning/PROJECT.md (updated 2026-06-18)
 
 Phase: 17.3
 Plan: Not started
-Status: Ready to plan
-Last activity: 2026-07-02
+Status: Ready to execute
+Last activity: 2026-07-02 -- Phase 17.3 planning complete
 
 Direction: validated via sketches 003–005 + perf spike 001 (GO-WITH-CUTS). Build cuts: desktop-WebGL / mobile-poster, defer canvas past LCP, GPU vertex-shader morph.
 
