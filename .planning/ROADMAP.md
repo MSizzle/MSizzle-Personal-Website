@@ -165,7 +165,7 @@ Plans:
 
 **Wave 3** *(depends on Wave 2 completion)*
 
-- [ ] 17.1-04-PLAN.md — Automated build gate + human visual verify at localhost:3000 (D-12)
+- [x] 17.1-04-PLAN.md — Automated build gate + human visual verify at localhost:3000 (D-12)
 
 ### Phase 17.2: Site Information Architecture (INSERTED)
 
@@ -251,5 +251,5 @@ Phases execute in numeric order: 14 -> 15 -> 16 -> 17 -> 18
 | 15. WebGL Explorative Homepage | v3.0 | 5/5 | Complete    | 2026-06-19 |
 | 16. Interior Pages on Notion Data | v3.0 | 9/9 | Complete    | 2026-06-20 |
 | 17. Infrastructure Preservation & SEO Extension | v3.0 | 1/1 | Complete    | 2026-06-21 |
-| 17.1. Homepage Rebuild | v3.0 | 3/4 | In Progress|  |
+| 17.1. Homepage Rebuild | v3.0 | 4/4 | Complete   | 2026-07-02 |
 | 18. v3.0 QA, Perf Gate & Alias Swap | v3.0 | 0/6 | Not started | - |
