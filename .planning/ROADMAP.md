@@ -208,7 +208,7 @@ Plans:
 **Wave 1** *(parallel — no shared files)*
 
 - [x] 17.3-01-PLAN.md — /portfolio page route (getFeaturedProjects, ISR 1800, year-grouped Card grid, empty-state) + sitemap /portfolio entry + portfolio tests + sitemap test update
-- [ ] 17.3-02-PLAN.md — section-work.tsx link update (/projects → /portfolio, D-01) + section-work.test.tsx (SC-2 assertions)
+- [x] 17.3-02-PLAN.md — section-work.tsx link update (/projects → /portfolio, D-01) + section-work.test.tsx (SC-2 assertions)
 
 ### Phase 18: v3.0 QA, Perf Gate & Alias Swap
 
@@ -265,5 +265,5 @@ Phases execute in numeric order: 14 -> 15 -> 16 -> 17 -> 18
 | 17. Infrastructure Preservation & SEO Extension | v3.0 | 1/1 | Complete   | 2026-07-02 |
 | 17.1. Homepage Rebuild | v3.0 | 4/4 | Complete    | 2026-07-02 |
 | 17.2. Site Information Architecture | v3.0 | 4/4 | Complete    | 2026-07-02 |
-| 17.3. Portfolio | v3.0 | 1/2 | In Progress|  |
+| 17.3. Portfolio | v3.0 | 2/2 | Complete   | 2026-07-02 |
 | 18. v3.0 QA, Perf Gate & Alias Swap | v3.0 | 0/6 | Not started | - |
