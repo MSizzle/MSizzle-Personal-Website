@@ -218,26 +218,34 @@ Plans:
 **Success Criteria** (what must be TRUE):
 
   1. `vercel build --prod` passes cleanly before any swap.
-  2. PSI mobile (authoritative) meets parity-or-better versus current, and the 3D object does not regress LCP.
+  2. PSI mobile (authoritative) meets parity-or-better versus current production (~95 per PROJECT.md). Homepage is a static Server Component (no WebGL on home path per R-1); D-04 LCP sub-checks satisfied-by-absence.
   3. A QA GO/NO-GO verdict is recorded; on GO the production alias is promoted to v3 (no `--prebuilt --prod`; alias drift checked).
   4. Post-promotion verification confirms montysinger.com serves the v3 site at parity.
 
-**Plans**: 6 plans
+**Plans**: 7 plans
 Plans:
+
 **Wave 1**
 
 - [ ] 18-01-PLAN.md — vercel build --prod gate at HEAD of v3 (DQ-02)
-- [ ] 18-02-PLAN.md — v3 Vercel preview deploy + Lighthouse desktop median-of-3 (D-02)
 
-**Wave 2** *(blocked on Wave 1 completion)*
+**Wave 2** *(parallel; both depend on 18-01)*
 
-- [ ] 18-03-PLAN.md — PSI mobile gate + D-04 WebGL hero LCP verification (DQ-03)
-- [ ] 18-04-PLAN.md — 375px visual QA, 7-route walk, Phase-16 deferred checklist (D-05)
-- [ ] 18-05-PLAN.md — D-14 dual-tree secret scan + D-10 theme/FOUC decision (D-06, D-10)
+- [ ] 18-02-PLAN.md — v3 Vercel preview deploy + Lighthouse desktop median-of-3 on /, /about, /writing, /uses, /portfolio (D-02)
+- [ ] 18-05-PLAN.md — D-14 dual-tree secret scan + D-10 theme/FOUC decision; runs parallel with 18-02 (D-06, D-10, DQ-04)
 
-**Wave 3** *(blocked on Wave 2 completion)*
+**Wave 3** *(parallel; both depend on 18-02)*
 
-- [ ] 18-06-PLAN.md — compile 18-GO-NO-GO.md, human sign-off, alias promotion, milestone close (DQ-04)
+- [ ] 18-03-PLAN.md — PSI mobile gate (≥ current prod ~95 per R-2) + R-1 code inspection confirming no WebGL on / render path (DQ-03)
+- [ ] 18-04-PLAN.md — Route health + redirect checks + R-4 /portfolio content gate + Phase-16 deferred checklist (D-05, DQ-03)
+
+**Wave 4** *(depends on Wave 3 completion)*
+
+- [ ] 18-06-PLAN.md — compile 18-GO-NO-GO.md + human GO/NO-GO sign-off (DQ-04) [autonomous: false]
+
+**Wave 5** *(depends on 18-06 signed GO)*
+
+- [ ] 18-07-PLAN.md — alias flip hand-off to Monty + post-promote parity verification + /gsd-complete-milestone v3.0 (DQ-04) [autonomous: false]
 
 ## Progress
 
@@ -266,4 +274,4 @@ Phases execute in numeric order: 14 -> 15 -> 16 -> 17 -> 18
 | 17.1. Homepage Rebuild | v3.0 | 4/4 | Complete    | 2026-07-02 |
 | 17.2. Site Information Architecture | v3.0 | 4/4 | Complete    | 2026-07-02 |
 | 17.3. Portfolio | v3.0 | 2/2 | Complete    | 2026-07-02 |
-| 18. v3.0 QA, Perf Gate & Alias Swap | v3.0 | 0/6 | Not started | - |
+| 18. v3.0 QA, Perf Gate & Alias Swap | v3.0 | 0/7 | Not started | - |
