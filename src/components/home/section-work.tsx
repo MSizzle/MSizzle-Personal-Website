@@ -8,6 +8,7 @@ import { cn } from "@/utils/cn";
  * Server Component — no "use client".
  * D-10: copy is fully hardcoded JSX, no Notion fetch, no async/await.
  * D-11: no em dashes; Prometheus link uses rel="noopener noreferrer" per T-17.1-02.
+ * D-01 (17.3): big-type Link and Button both target /portfolio (curated portfolio, not the full archive).
  *
  * Note: Items are rendered as direct Link elements (not via BigList) so the external
  * Prometheus link can carry target="_blank" rel="noopener noreferrer" safely.
@@ -50,7 +51,7 @@ export function SectionWork() {
 
         {/* Internal link to portfolio index — last item gets border-b */}
         <Link
-          href="/projects"
+          href="/portfolio"
           className={cn(
             "flex items-center justify-between gap-6",
             "border-t border-b border-border py-[1.4vh]",
@@ -61,15 +62,15 @@ export function SectionWork() {
             "hover:text-accent hover:[text-shadow:none]"
           )}
         >
-          <span>Projects</span>
+          <span>Portfolio</span>
           <span className="font-mono font-normal text-xs tracking-[0.12em] text-text-muted whitespace-nowrap hidden md:inline">
-            ARCHIVE
+            SELECTED
           </span>
         </Link>
       </div>
 
       <div className="mt-8">
-        <Button href="/projects">All work</Button>
+        <Button href="/portfolio">All work</Button>
       </div>
     </section>
   );
