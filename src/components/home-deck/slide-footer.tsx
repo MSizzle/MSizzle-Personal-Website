@@ -19,15 +19,15 @@ export function SlideFooter() {
       {/* Big greeting link */}
       <div className="mb-12 border-t border-border pt-8">
         <Link
-          href="/links"
+          href="/about"
           className="font-display font-bold uppercase sig text-[clamp(2rem,6vw,4rem)] leading-[0.9] transition-[color] duration-150 hover:text-accent"
         >
           Let&apos;s be friends.
         </Link>
       </div>
 
-      {/* Nav columns */}
-      <div className="grid grid-cols-2 gap-8 md:grid-cols-4 md:gap-12 mb-12">
+      {/* Nav columns — "More" column deleted per D-10 (contained only cut routes) */}
+      <div className="grid grid-cols-2 gap-8 md:grid-cols-3 md:gap-12 mb-12">
         {/* Site */}
         <div className="flex flex-col gap-3">
           <h4 className="font-mono text-xs uppercase tracking-[0.12em] text-text-muted">
@@ -45,24 +45,6 @@ export function SlideFooter() {
             </Link>
             <Link href="/about" className="text-text hover:text-accent transition-colors duration-150 text-sm">
               About
-            </Link>
-          </nav>
-        </div>
-
-        {/* More */}
-        <div className="flex flex-col gap-3">
-          <h4 className="font-mono text-xs uppercase tracking-[0.12em] text-text-muted">
-            More
-          </h4>
-          <nav className="flex flex-col gap-2">
-            <Link href="/newsletter" className="text-text hover:text-accent transition-colors duration-150 text-sm">
-              Monty Monthly
-            </Link>
-            <Link href="/events" className="text-text hover:text-accent transition-colors duration-150 text-sm">
-              Events
-            </Link>
-            <Link href="/links" className="text-text hover:text-accent transition-colors duration-150 text-sm">
-              Links
             </Link>
           </nav>
         </div>
