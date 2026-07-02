@@ -67,7 +67,7 @@ export default function AboutPage() {
               learning, and reading. Sometimes longer.
             </p>
             <div className="mt-4">
-              <AllLink href="/newsletter">Subscribe &rarr;</AllLink>
+              <AllLink href="/writing">Subscribe &rarr;</AllLink>
             </div>
           </div>
         </div>
