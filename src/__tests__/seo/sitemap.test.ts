@@ -19,14 +19,22 @@ describe('sitemap()', () => {
     expect(usesEntry?.changeFrequency).toBe('monthly')
   })
 
-  it('includes at least 6 static routes (existing site routes)', async () => {
+  it('includes at least 7 static routes (existing site routes + /portfolio)', async () => {
     const result = await sitemap()
-    // Static routes: /, /about, /prometheus, /projects, /writing, /uses = 6
+    // Static routes: /, /about, /prometheus, /projects, /writing, /uses, /portfolio = 7
     // Dynamic routes from mocked Notion return [] so only static routes are present
     // Filter out blog/ and projects/ slugs to count only static-looking entries
     const staticLooking = result.filter(
       (entry) => !entry.url.includes('/blog/') && !entry.url.includes('/projects/')
     )
-    expect(staticLooking.length).toBeGreaterThanOrEqual(6)
+    expect(staticLooking.length).toBeGreaterThanOrEqual(7)
+  })
+
+  it('includes /portfolio entry with priority 0.9 and changeFrequency weekly', async () => {
+    const result = await sitemap()
+    const portfolioEntry = result.find((e) => e.url.endsWith('/portfolio'))
+    expect(portfolioEntry).toBeDefined()
+    expect(portfolioEntry?.priority).toBe(0.9)
+    expect(portfolioEntry?.changeFrequency).toBe('weekly')
   })
 })
