@@ -33,9 +33,9 @@ export function InkFooter() {
           <FooterCol
             title="Library"
             links={[
-              { label: "Monty Monthly", href: "/newsletter" },
+              { label: "Monty Monthly", href: "/writing" },
               { label: "Essays",        href: "/writing" },
-              { label: "Links",         href: "/links" },
+              { label: "About",         href: "/about" },
             ]}
           />
         </div>
@@ -46,7 +46,7 @@ export function InkFooter() {
             title="About"
             links={[
               { label: "About",         href: "/about" },
-              { label: "Photo Archive", href: "/photos" },
+              { label: "Uses",          href: "/uses" },
               { label: "Contact",       href: "mailto:monty@prometheus.today" },
             ]}
           />
