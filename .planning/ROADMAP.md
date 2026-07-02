@@ -197,16 +197,18 @@ Plans:
 
 **Goal**: A real portfolio surface for proud past work exists, built on the existing /projects (Notion) pipeline in the current aesthetic, and linked from the homepage "selected work" section.
 **Depends on**: Phase 17.1
-**Requirements**: TBD (set at plan time)
+**Requirements**: SC-1 (portfolio surface), SC-2 (homepage link) — set at plan time; no formal REQ IDs in REQUIREMENTS.md
 **Success Criteria** (what must be TRUE):
 
   1. A portfolio surface presents selected proud-of past work, sourced from the existing projects Notion pipeline, in the current aesthetic.
   2. The homepage "selected work" section links into the portfolio.
 
-**Plans**: 0 plans
+**Plans**: 2 plans
 
-Plans:
-- [ ] TBD (run /gsd-plan-phase 17.3 to break down)
+**Wave 1** *(parallel — no shared files)*
+
+- [ ] 17.3-01-PLAN.md — /portfolio page route (getFeaturedProjects, ISR 1800, year-grouped Card grid, empty-state) + sitemap /portfolio entry + portfolio tests + sitemap test update
+- [ ] 17.3-02-PLAN.md — section-work.tsx link update (/projects → /portfolio, D-01) + section-work.test.tsx (SC-2 assertions)
 
 ### Phase 18: v3.0 QA, Perf Gate & Alias Swap
 
@@ -263,4 +265,5 @@ Phases execute in numeric order: 14 -> 15 -> 16 -> 17 -> 18
 | 17. Infrastructure Preservation & SEO Extension | v3.0 | 1/1 | Complete   | 2026-07-02 |
 | 17.1. Homepage Rebuild | v3.0 | 4/4 | Complete    | 2026-07-02 |
 | 17.2. Site Information Architecture | v3.0 | 4/4 | Complete    | 2026-07-02 |
+| 17.3. Portfolio | v3.0 | 0/2 | Not started | - |
 | 18. v3.0 QA, Perf Gate & Alias Swap | v3.0 | 0/6 | Not started | - |
