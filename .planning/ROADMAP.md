@@ -236,7 +236,7 @@ Plans:
 
 **Wave 3** *(parallel; both depend on 18-02)*
 
-- [ ] 18-03-PLAN.md — PSI mobile gate (≥ current prod ~95 per R-2) + R-1 code inspection confirming no WebGL on / render path (DQ-03)
+- [x] 18-03-PLAN.md — PSI mobile gate (≥ current prod ~95 per R-2) + R-1 code inspection confirming no WebGL on / render path (DQ-03)
 - [ ] 18-04-PLAN.md — Route health + redirect checks + R-4 /portfolio content gate + Phase-16 deferred checklist (D-05, DQ-03)
 
 **Wave 4** *(depends on Wave 3 completion)*
@@ -274,4 +274,4 @@ Phases execute in numeric order: 14 -> 15 -> 16 -> 17 -> 18
 | 17.1. Homepage Rebuild | v3.0 | 4/4 | Complete    | 2026-07-02 |
 | 17.2. Site Information Architecture | v3.0 | 4/4 | Complete    | 2026-07-02 |
 | 17.3. Portfolio | v3.0 | 2/2 | Complete    | 2026-07-02 |
-| 18. v3.0 QA, Perf Gate & Alias Swap | v3.0 | 3/7 | In Progress|  |
+| 18. v3.0 QA, Perf Gate & Alias Swap | v3.0 | 4/7 | In Progress|  |

@@ -41,7 +41,7 @@ presentation-layer rebuild: infrastructure is preserved, not rebuilt.
 ### Delivery & Quality (DQ)
 - [x] **DQ-01**: v3 is built on a long-lived branch and previewed on Vercel without affecting the live production site.
 - [x] **DQ-02**: The build passes the production-readiness gate (`vercel build --prod`) before any swap.
-- [ ] **DQ-03**: Mobile performance meets the budget (PSI mobile authoritative, parity-or-better vs current); the 3D object does not regress LCP.
+- [x] **DQ-03**: Mobile performance meets the budget (PSI mobile authoritative, parity-or-better vs current); the 3D object does not regress LCP.
 - [ ] **DQ-04**: At a QA GO verdict, the production alias is promoted to v3 and verified post-promotion.
 
 ## Future Requirements (deferred)
@@ -84,6 +84,6 @@ REQ-ID → Phase. All 21 v3.0 requirements mapped to exactly one phase (100% cov
 | IN-04 | Phase 17 | Complete |
 | DQ-01 | Phase 14 | Complete |
 | DQ-02 | Phase 18 | Complete |
-| DQ-03 | Phase 18 | Pending |
+| DQ-03 | Phase 18 | Complete |
 | DQ-04 | Phase 18 | Pending |
 </content>
