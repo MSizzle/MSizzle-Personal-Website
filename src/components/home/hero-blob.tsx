@@ -22,10 +22,17 @@ const BLOB_VERT = /* glsl */`
 
     csm_Position = (position / len) * d;
 
-    // Tangent-space normal recalculation (no JS computeVertexNormals needed)
+    // Tangent-space normal recalculation (no JS computeVertexNormals needed).
+    // Derive an orthonormal tangent basis from the surface normal so the shader does
+    // not depend on a precomputed tangent attribute. three.js only declares that
+    // attribute when the material has a normal map; otherwise the program fails to
+    // compile with an undeclared-identifier error.
     float shift = 0.001;
-    vec3 biTangent = cross(normal, tangent.xyz);
-    vec3 posA = position + tangent.xyz * shift;
+    vec3 nrm = normalize(normal);
+    vec3 refDir = abs(nrm.y) < 0.99 ? vec3(0.0, 1.0, 0.0) : vec3(1.0, 0.0, 0.0);
+    vec3 tangentDir = normalize(cross(refDir, nrm));
+    vec3 biTangent = cross(nrm, tangentDir);
+    vec3 posA = position + tangentDir * shift;
     vec3 posB = position + biTangent * shift;
     float dA = 1.3 + sineDisplace(posA) * 0.11;
     float dB = 1.3 + sineDisplace(posB) * 0.11;
@@ -48,11 +55,10 @@ function HeroBlobProcedural() {
   const meshRef = useRef<THREE.Mesh>(null!);
   const matRef = useRef<InstanceType<typeof CustomShaderMaterial>>(null!);
 
-  // Geometry with tangents for normal recalculation in vertex shader
+  // Procedural blob geometry. Normals are recomputed in the vertex shader from a
+  // basis derived from the surface normal, so no precomputed tangent attribute is needed.
   const blobGeo = useMemo(() => {
-    const g = new THREE.IcosahedronGeometry(1.3, 12);
-    g.computeTangents(); // required for tangent attribute in vertex shader
-    return g;
+    return new THREE.IcosahedronGeometry(1.3, 12);
   }, []);
 
   // IBL setup: RoomEnvironment + PMREMGenerator (one-time, no external HDR file)
