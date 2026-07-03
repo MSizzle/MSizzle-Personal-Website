@@ -4,14 +4,14 @@ milestone: v3.0
 milestone_name: Dark Brutalist Rebuild
 status: executing
 stopped_at: Phase 17.2 UI-SPEC approved
-last_updated: "2026-07-02T17:04:49.450Z"
-last_activity: 2026-07-02 -- Phase 18 planning complete
+last_updated: "2026-07-03T02:42:02.574Z"
+last_activity: 2026-07-03
 progress:
   total_phases: 8
   completed_phases: 7
   total_plans: 36
-  completed_plans: 29
-  percent: 81
+  completed_plans: 30
+  percent: 83
 ---
 
 # Project State
@@ -21,14 +21,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-18)
 
 **Core value:** A personal site that feels alive and memorable, *and* legible — not another template blog.
-**Current focus:** Phase 18 — v3 0 qa perf gate alias swap
+**Current focus:** Phase 18 — v3-0-qa-perf-gate-alias-swap
 
 ## Current Position
 
-Phase: 18
-Plan: Not started
+Phase: 18 (v3-0-qa-perf-gate-alias-swap) — EXECUTING
+Plan: 2 of 7
 Status: Ready to execute
-Last activity: 2026-07-02 -- Phase 18 planning complete
+Last activity: 2026-07-03
 
 Direction: validated via sketches 003–005 + perf spike 001 (GO-WITH-CUTS). Build cuts: desktop-WebGL / mobile-poster, defer canvas past LCP, GPU vertex-shader morph.
 
@@ -128,7 +128,7 @@ Close-out rationale: v2.0 shipped via Phase 13 GO sign-off. These items predate 
 
 ## Session Continuity
 
-Last session: 2026-07-02T15:35:42.934Z
+Last session: 2026-07-03T02:42:02.562Z
 Stopped at: Phase 17.2 UI-SPEC approved
 Resume file: None
 

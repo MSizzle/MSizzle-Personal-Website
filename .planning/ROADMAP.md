@@ -227,7 +227,7 @@ Plans:
 
 **Wave 1**
 
-- [ ] 18-01-PLAN.md — vercel build --prod gate at HEAD of v3 (DQ-02)
+- [x] 18-01-PLAN.md — vercel build --prod gate at HEAD of v3 (DQ-02)
 
 **Wave 2** *(parallel; both depend on 18-01)*
 
@@ -274,4 +274,4 @@ Phases execute in numeric order: 14 -> 15 -> 16 -> 17 -> 18
 | 17.1. Homepage Rebuild | v3.0 | 4/4 | Complete    | 2026-07-02 |
 | 17.2. Site Information Architecture | v3.0 | 4/4 | Complete    | 2026-07-02 |
 | 17.3. Portfolio | v3.0 | 2/2 | Complete    | 2026-07-02 |
-| 18. v3.0 QA, Perf Gate & Alias Swap | v3.0 | 0/7 | Not started | - |
+| 18. v3.0 QA, Perf Gate & Alias Swap | v3.0 | 1/7 | In Progress|  |
