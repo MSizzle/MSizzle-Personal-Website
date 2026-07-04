@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v3.0
 milestone_name: Dark Brutalist Rebuild
 status: executing
-stopped_at: Phase 17.4 planned (9 plans, ready to execute)
-last_updated: "2026-07-04T23:30:00.000Z"
-last_activity: 2026-07-04
+stopped_at: Phase 17.2 UI-SPEC approved
+last_updated: "2026-07-04T15:49:50.040Z"
+last_activity: 2026-07-04 -- Phase 17.4 execution started
 progress:
-  total_phases: 8
+  total_phases: 9
   completed_phases: 7
-  total_plans: 36
+  total_plans: 45
   completed_plans: 33
-  percent: 88
+  percent: 73
 ---
 
 # Project State
@@ -21,14 +21,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-18)
 
 **Core value:** A personal site that feels alive and memorable, *and* legible — not another template blog.
-**Current focus:** Phase 17.4 — photo-forward-homepage-restyle (planned; Phase 18 ship-gate re-runs after it lands)
+**Current focus:** Phase 17.4 — photo-forward-homepage-restyle
 
 ## Current Position
 
-Phase: 17.4 (photo-forward-homepage-restyle) — PLANNED
-Plan: 0 of 9
-Status: Ready to execute
-Last activity: 2026-07-04
+Phase: 17.4 (photo-forward-homepage-restyle) — EXECUTING
+Plan: 1 of 9
+Status: Executing Phase 17.4
+Last activity: 2026-07-04 -- Phase 17.4 execution started
 
 Direction: locked photo-forward restyle from sketch 010 (`.planning/sketches/010-structured-bands-carousel/`) — Hanken Grotesk 800 + Vermilion `#e5411f` marker hero, alternating light/dark bands, hard corners, rail boxes, slide-in photos, Monty Monthly carousel, sticky Subscribe nav, credibility strip, rich footer. Supersedes the 17.1 text-forward skin; preserves who→what→engage velvet-rope IA. Motion scroll/ambient-only (IO + CSS + scroll-snap), no WebGL/Lenis. See memory `v3-homepage-photo-forward-lock` + `17.4-CONTEXT.md`. Phase 18 (QA/perf/alias) parked until this lands.
 

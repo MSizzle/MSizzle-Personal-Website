@@ -228,7 +228,7 @@ Plans:
 
 **Wave 1** *(foundation)*
 
-- [ ] 17.4-01-PLAN.md — globals.css Vermilion tokens (D-01) + Hanken 800 font (D-02) + sketch-010 CSS system: band-dark inversion, rail box, photo/slide/shadow motion, reduced-motion guards (D-03/D-04/D-05/D-07/D-08)
+- [x] 17.4-01-PLAN.md — globals.css Vermilion tokens (D-01) + Hanken 800 font (D-02) + sketch-010 CSS system: band-dark inversion, rail box, photo/slide/shadow motion, reduced-motion guards (D-03/D-04/D-05/D-07/D-08)
 
 **Wave 2** *(parallel primitives + islands; depend on 01)*
 
@@ -314,5 +314,5 @@ Phases execute in numeric order: 14 -> 15 -> 16 -> 17 -> 18
 | 17.1. Homepage Rebuild | v3.0 | 4/4 | Complete    | 2026-07-02 |
 | 17.2. Site Information Architecture | v3.0 | 4/4 | Complete    | 2026-07-02 |
 | 17.3. Portfolio | v3.0 | 2/2 | Complete    | 2026-07-02 |
-| 17.4. Photo-Forward Homepage Restyle | v3.0 | 0/9 | Planned | |
+| 17.4. Photo-Forward Homepage Restyle | v3.0 | 1/9 | In Progress|  |
 | 18. v3.0 QA, Perf Gate & Alias Swap | v3.0 | 4/7 | In Progress|  |
