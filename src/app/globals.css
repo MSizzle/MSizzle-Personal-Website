@@ -47,8 +47,9 @@
   --text-mega: clamp(3.5rem, 16vw, 16rem);
 
   /* Fonts (bound to next/font CSS variables set in layout.tsx) */
-  --font-display: var(--font-space-grotesk);
-  --font-sans:    var(--font-space-grotesk);
+  /* D-02: both display and sans point to Hanken Grotesk; site-wide body font change accepted */
+  --font-display: var(--font-hanken);
+  --font-sans:    var(--font-hanken);
   --font-mono:    var(--font-jetbrains-mono);
 }
 
