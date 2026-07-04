@@ -238,9 +238,9 @@ Plans:
 
 **Wave 3** *(parallel reskins; depend on Wave 2)*
 
-- [ ] 17.4-05-PLAN.md — Marker-block hero: portrait + status tag + pinned ticker (D-06/D-08/D-13)
-- [ ] 17.4-06-PLAN.md — Section reskin A: Building (dark, rail 01, slide-in photo) + Work (light, rail 02, 2x2 grid) + tests; preserves /portfolio + rel invariants (D-03/D-05/D-07/D-13)
-- [ ] 17.4-07-PLAN.md — Section reskin B: Loves (dark, PhotoMarquee) + Writing carousel + Footer (avail tag + columns) (D-03/D-05/D-09/D-12/D-13)
+- [x] 17.4-05-PLAN.md — Marker-block hero: portrait + status tag + pinned ticker (D-06/D-08/D-13)
+- [x] 17.4-06-PLAN.md — Section reskin A: Building (dark, rail 01, slide-in photo) + Work (light, rail 02, 2x2 grid) + tests; preserves /portfolio + rel invariants (D-03/D-05/D-07/D-13)
+- [x] 17.4-07-PLAN.md — Section reskin B: Loves (dark, PhotoMarquee) + Writing carousel + Footer (avail tag + columns) (D-03/D-05/D-09/D-12/D-13)
 
 **Wave 4** *(assembly; depends on Wave 3)*
 
@@ -314,5 +314,5 @@ Phases execute in numeric order: 14 -> 15 -> 16 -> 17 -> 18
 | 17.1. Homepage Rebuild | v3.0 | 4/4 | Complete    | 2026-07-02 |
 | 17.2. Site Information Architecture | v3.0 | 4/4 | Complete    | 2026-07-02 |
 | 17.3. Portfolio | v3.0 | 2/2 | Complete    | 2026-07-02 |
-| 17.4. Photo-Forward Homepage Restyle | v3.0 | 4/9 | In Progress|  |
+| 17.4. Photo-Forward Homepage Restyle | v3.0 | 7/9 | In Progress|  |
 | 18. v3.0 QA, Perf Gate & Alias Swap | v3.0 | 4/7 | In Progress|  |
