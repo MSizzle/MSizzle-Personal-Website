@@ -1,47 +1,40 @@
 import Link from "next/link";
-import { SectionLabel } from "@/components/v3/section-label";
-import { Button } from "@/components/v3/button";
+import { RailBox } from "@/components/home/rail-box";
+import { PhotoMarquee } from "@/components/home/photo-marquee";
 
 /**
- * SectionLoves — Things I Love teaser (D-06 section 4).
- * Server Component — no "use client".
- * D-10: copy is fully hardcoded JSX, no Notion fetch, no async/await.
- * D-11: no em dashes in copy.
- * Links to /uses (the existing route — /uses reframe is Phase 17.2, not this plan).
+ * SectionLoves: Things I Love beat (D-03 dark band, D-05 rail 03, D-07 photo marquee).
+ * Server Component (RSC only, no client boundary).
+ * Band-agnostic token classes; dark-band auto-inversion via CSS custom props (Plan 01).
+ * Full-bleed PhotoMarquee lives outside .wrap so it spans the full band width.
+ * The band wrapper (section.band-dark.beat#loves) is supplied by the orchestrator (Plan 08).
  */
-
-const LOVES_ITEMS = [
-  { name: "Tools and stack", tag: "USES", href: "/uses" },
-  { name: "What I am reading", tag: "BOOKS", href: "/uses" },
-  { name: "Things I recommend", tag: "ALL", href: "/uses" },
-] as const;
-
 export function SectionLoves() {
   return (
-    <section className="min-h-dvh flex flex-col justify-center px-[8vw] py-[15vh]">
-      <SectionLabel numeral="04">Things I Love</SectionLabel>
-
-      <p
-        className="mt-4 mb-8 max-w-[52ch] text-text-dim font-display"
-        style={{ fontSize: "clamp(1rem,1.8vw,1.3rem)" }}
-      >
-        The tools, books, and ideas I keep coming back to.
-      </p>
-
-      {LOVES_ITEMS.map((item) => (
-        <Link
-          key={item.name}
-          href={item.href}
-          className="flex justify-between border-t border-border py-[1.4vh] text-text hover:text-accent transition-colors duration-150"
-        >
-          <span className="font-display font-bold text-xl">{item.name}</span>
-          <span className="font-mono text-xs text-text-muted self-center">{item.tag}</span>
-        </Link>
-      ))}
-
-      <div className="mt-8 border-t border-border pt-6">
-        <Button href="/uses">See the full list</Button>
+    <>
+      <div className="wrap">
+        <div className="beat-grid">
+          <div className="reveal">
+            <RailBox num="03" label="Things I love" />
+          </div>
+          <div>
+            <h2 className="reveal">
+              The stuff that keeps me curious. Always running.
+            </h2>
+            {/* Subtle /uses affordance, velvet-rope: link not a prominent CTA (D-13) */}
+            <Link
+              href="/uses"
+              className="inline-block mt-5 text-sm text-text-muted hover:text-accent transition-colors duration-150"
+            >
+              See what I use
+            </Link>
+          </div>
+        </div>
       </div>
-    </section>
+      {/* Full-bleed marquee, outside .wrap intentionally */}
+      <PhotoMarquee
+        items={["A place I go", "A tool I trust", "Off the clock", "Reading now"]}
+      />
+    </>
   );
 }
