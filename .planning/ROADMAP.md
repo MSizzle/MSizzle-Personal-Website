@@ -224,7 +224,31 @@ Plans:
   4. Motion is scroll-triggered/ambient only with no cursor dependence, `prefers-reduced-motion` honored (static layout holds with motion off), and no WebGL/Lenis on the home render path; existing LCP/PSI perf gates are respected.
   5. Velvet-rope IA is preserved: no contact page, no contact CTA button, Monty Monthly is the primary woven "way in".
 
-**Plans**: TBD (set at plan time)
+**Plans**: 9 plans (5 waves)
+
+**Wave 1** *(foundation)*
+
+- [ ] 17.4-01-PLAN.md — globals.css Vermilion tokens (D-01) + Hanken 800 font (D-02) + sketch-010 CSS system: band-dark inversion, rail box, photo/slide/shadow motion, reduced-motion guards (D-03/D-04/D-05/D-07/D-08)
+
+**Wave 2** *(parallel primitives + islands; depend on 01)*
+
+- [ ] 17.4-02-PLAN.md — Static primitives: RailBox (D-05), Photo placeholder (D-07), CredibilityStrip (D-11)
+- [ ] 17.4-03-PLAN.md — Motion islands: ScrollReveals IntersectionObserver toggler + PhotoMarquee (D-07/D-08)
+- [ ] 17.4-04-PLAN.md — Control islands: MontyMonthlyCarousel arrows+dots+scroll-sync (D-09) + sticky Subscribe mini-nav (D-10/D-13)
+
+**Wave 3** *(parallel reskins; depend on Wave 2)*
+
+- [ ] 17.4-05-PLAN.md — Marker-block hero: portrait + status tag + pinned ticker (D-06/D-08/D-13)
+- [ ] 17.4-06-PLAN.md — Section reskin A: Building (dark, rail 01, slide-in photo) + Work (light, rail 02, 2x2 grid) + tests; preserves /portfolio + rel invariants (D-03/D-05/D-07/D-13)
+- [ ] 17.4-07-PLAN.md — Section reskin B: Loves (dark, PhotoMarquee) + Writing carousel + Footer (avail tag + columns) (D-03/D-05/D-09/D-12/D-13)
+
+**Wave 4** *(assembly; depends on Wave 3)*
+
+- [ ] 17.4-08-PLAN.md — Orchestrator: sketch-010 band order + anchor ids + mount StickyNav/ScrollReveals; page.tsx stays static; rewrite explorative-homepage test (D-03/D-08/D-10/D-13)
+
+**Wave 5** *(gate; depends on 08)* [autonomous: false]
+
+- [ ] 17.4-09-PLAN.md — Automated build/type/test + cobalt/Hanken/no-WebGL greps + human visual verify at localhost:3000 vs sketch 010 incl. reduced-motion proof (D-01..D-13)
 
 ### Phase 18: v3.0 QA, Perf Gate & Alias Swap
 
