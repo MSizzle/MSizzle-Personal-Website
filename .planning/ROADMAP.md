@@ -45,6 +45,7 @@ Full milestone detail: [milestones/v2.0-ROADMAP.md](./milestones/v2.0-ROADMAP.md
 - [x] **Phase 15: WebGL Explorative Homepage** - Lusion-grade WebGL scroll-story homepage (real-time 3D hero, fluid interweaving line, themed beats); replaces the superseded slide deck. Desktop-WebGL / mobile-poster. (completed 2026-06-19)
 - [x] **Phase 16: Interior Pages on Notion Data** - All interior pages rebuilt on the new system and wired to existing Notion loaders, plus new /uses and /watching (completed 2026-06-20)
 - [x] **Phase 17: Infrastructure Preservation & SEO Extension** - Verify Notion/image-proxy/analytics intact and extend SEO to the new pages (completed 2026-06-21)
+- [ ] **Phase 17.4: Photo-Forward Homepage Restyle** - Rebuild the homepage to the locked sketch-010 spec (Hanken 800 + Vermilion marker hero, alternating bands, Monty Monthly carousel), superseding the text-forward 17.1 skin
 - [ ] **Phase 18: v3.0 QA, Perf Gate & Alias Swap** - Production-readiness gate, mobile-perf budget, GO/NO-GO, and production alias promotion
 
 ## Phase Details
@@ -210,10 +211,25 @@ Plans:
 - [x] 17.3-01-PLAN.md — /portfolio page route (getFeaturedProjects, ISR 1800, year-grouped Card grid, empty-state) + sitemap /portfolio entry + portfolio tests + sitemap test update
 - [x] 17.3-02-PLAN.md — section-work.tsx link update (/projects → /portfolio, D-01) + section-work.test.tsx (SC-2 assertions)
 
+### Phase 17.4: Photo-Forward Homepage Restyle (INSERTED)
+
+**Goal**: The homepage is rebuilt to the locked photo-forward editorial spec in `.planning/sketches/010-structured-bands-carousel/` (index.html + README) — Hanken Grotesk 800 display type, Vermilion `#e5411f` accent, a marker-block hero with a 44%-width portrait column and pinned section-link marquee, alternating light/dark bands with hard corners and auto-inverting rail boxes, scroll-triggered slide-in photos, a Monty Monthly writing carousel, a sticky Subscribe mini-nav, an "as seen in" credibility strip, and a rich multi-column footer. This restyle SUPERSEDES the text-forward 17.1 skin while preserving the who → what → engage IA and velvet-rope engagement model. Motion stays scroll/ambient-only (no cursor dependence, `prefers-reduced-motion` honored) on the cheap IntersectionObserver + CSS + native scroll-snap stack — no WebGL/Lenis. Full locked direction lives in project memory `v3-homepage-photo-forward-lock` and `17.4-CONTEXT.md`.
+**Depends on**: Phase 17.3
+**Requirements**: No formal REQ IDs — governed by `17.4-CONTEXT.md` (D-01..D-13), consistent with the 17.1/17.3 CONTEXT-governed pattern.
+**Success Criteria** (what must be TRUE):
+
+  1. The homepage renders the sketch-010 structure: marker-block hero (Vermilion "Create Order" block + "from Chaos" ink, 44% portrait, black status tag, pinned section marquee) followed by alternating light/dark bands — credibility strip → Building → Work → Things I Love → Writing carousel → footer — with hard corners and rail boxes throughout.
+  2. Display type is Hanken Grotesk 800 and the accent is Vermilion `#e5411f` (token-only re-theme; near-white paper + near-black ink base retained). No cobalt accent remains on the home path.
+  3. The Writing section is a horizontal Monty Monthly carousel (issue cards + subscribe card, scroll-snap + arrows/dots) linking out to Substack with no on-site email capture; sticky Subscribe mini-nav appears past the hero; footer carries "Available for select work".
+  4. Motion is scroll-triggered/ambient only with no cursor dependence, `prefers-reduced-motion` honored (static layout holds with motion off), and no WebGL/Lenis on the home render path; existing LCP/PSI perf gates are respected.
+  5. Velvet-rope IA is preserved: no contact page, no contact CTA button, Monty Monthly is the primary woven "way in".
+
+**Plans**: TBD (set at plan time)
+
 ### Phase 18: v3.0 QA, Perf Gate & Alias Swap
 
 **Goal**: v3 passes the production-readiness gate and mobile-perf budget, earns a GO verdict, and the production alias is promoted to v3 and verified.
-**Depends on**: Phase 17.3
+**Depends on**: Phase 17.4
 **Requirements**: DQ-02, DQ-03, DQ-04
 **Success Criteria** (what must be TRUE):
 
@@ -274,4 +290,5 @@ Phases execute in numeric order: 14 -> 15 -> 16 -> 17 -> 18
 | 17.1. Homepage Rebuild | v3.0 | 4/4 | Complete    | 2026-07-02 |
 | 17.2. Site Information Architecture | v3.0 | 4/4 | Complete    | 2026-07-02 |
 | 17.3. Portfolio | v3.0 | 2/2 | Complete    | 2026-07-02 |
+| 17.4. Photo-Forward Homepage Restyle | v3.0 | 0/? | Planning | |
 | 18. v3.0 QA, Perf Gate & Alias Swap | v3.0 | 4/7 | In Progress|  |
