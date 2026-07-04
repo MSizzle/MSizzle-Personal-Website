@@ -3,9 +3,9 @@ gsd_state_version: 1.0
 milestone: v3.0
 milestone_name: Dark Brutalist Rebuild
 status: executing
-stopped_at: Phase 17.2 UI-SPEC approved
-last_updated: "2026-07-03T03:38:11.146Z"
-last_activity: 2026-07-03
+stopped_at: Phase 17.4 planned (9 plans, ready to execute)
+last_updated: "2026-07-04T23:30:00.000Z"
+last_activity: 2026-07-04
 progress:
   total_phases: 8
   completed_phases: 7
@@ -21,16 +21,18 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-18)
 
 **Core value:** A personal site that feels alive and memorable, *and* legible — not another template blog.
-**Current focus:** Phase 18 — v3-0-qa-perf-gate-alias-swap
+**Current focus:** Phase 17.4 — photo-forward-homepage-restyle (planned; Phase 18 ship-gate re-runs after it lands)
 
 ## Current Position
 
-Phase: 18 (v3-0-qa-perf-gate-alias-swap) — EXECUTING
-Plan: 5 of 7
+Phase: 17.4 (photo-forward-homepage-restyle) — PLANNED
+Plan: 0 of 9
 Status: Ready to execute
-Last activity: 2026-07-03
+Last activity: 2026-07-04
 
-Direction: validated via sketches 003–005 + perf spike 001 (GO-WITH-CUTS). Build cuts: desktop-WebGL / mobile-poster, defer canvas past LCP, GPU vertex-shader morph.
+Direction: locked photo-forward restyle from sketch 010 (`.planning/sketches/010-structured-bands-carousel/`) — Hanken Grotesk 800 + Vermilion `#e5411f` marker hero, alternating light/dark bands, hard corners, rail boxes, slide-in photos, Monty Monthly carousel, sticky Subscribe nav, credibility strip, rich footer. Supersedes the 17.1 text-forward skin; preserves who→what→engage velvet-rope IA. Motion scroll/ambient-only (IO + CSS + scroll-snap), no WebGL/Lenis. See memory `v3-homepage-photo-forward-lock` + `17.4-CONTEXT.md`. Phase 18 (QA/perf/alias) parked until this lands.
+
+Prior focus (parked): Phase 18 v3.0 ship gate — 4 of 7 plans done (18-01/02/03/05); 18-04/06/07 remain, re-run after 17.4.
 
 ## v3.0 Phase Status
 
@@ -61,6 +63,7 @@ Next action: `/gsd-plan-phase 15` to decompose the WebGL homepage v1 into plans 
 - Phase 17.1 inserted after Phase 17: Homepage Rebuild — personal-brand arc, current aesthetic, replaces WebGL blob
 - Phase 17.2 inserted after Phase 17: Site Information Architecture — nav/cuts/folds/merges for new scope
 - Phase 17.3 inserted after Phase 17: Portfolio — proud-of past work on projects pipeline
+- Phase 17.4 inserted after Phase 17.3 (2026-07-04): Photo-Forward Homepage Restyle — sketch-010 lock (Hanken 800 + Vermilion) supersedes the 17.1 text-forward skin; Phase 18 now depends on 17.4
 
 ### v3.0 Roadmap Decisions
 
