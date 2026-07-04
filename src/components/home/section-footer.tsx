@@ -1,126 +1,88 @@
 import Link from "next/link";
 
 /**
- * SectionFooter — footer beat for the homepage scroll-story.
- * Server Component — no "use client".
+ * SectionFooter: Footer beat (D-12 avail tag + three columns, D-13 velvet-rope).
+ * Server Component (RSC only, no client boundary).
  *
- * IMPORTANT: This component is the ONLY footer on the homepage.
- * conditional-footer.tsx already returns null on pathname==="/" so the global
- * InkFooter is suppressed. On all other routes, InkFooter renders as normal.
+ * Velvet-rope preserved (D-13): no "Contact" heading, no contact CTA button.
+ * Reach-out is woven into the .selective line and mailto link only.
+ * External anchors carry rel="noopener noreferrer" (threat T-17.4-07).
  *
- * Carries all content from slide-footer.tsx; deck-slide / deck-foot classes stripped.
- * Uses v3 token classes: text-text, text-text-muted, border-border (palette-aware).
+ * This component stays the ONLY footer on /. conditional-footer.tsx returns
+ * null on pathname==="/" so the global footer is suppressed on the homepage.
+ *
+ * The band wrapper (section.band-dark#footer) is supplied by the orchestrator (Plan 08).
  */
 export function SectionFooter() {
   return (
-    <section className="flex flex-col justify-end min-h-[40vh] px-[8vw] pb-14 pt-[12vh]">
-      {/* Big greeting link */}
-      <div className="mb-12 border-t border-border pt-8">
-        <Link
-          href="/about"
-          className="font-display font-bold uppercase sig text-[clamp(2rem,6vw,4rem)] leading-[0.9] transition-[color] duration-150 hover:text-accent"
-        >
-          {"Let's be friends."}
-        </Link>
-      </div>
-
-      {/* Nav columns — "More" column deleted per D-10 (contained only cut routes) */}
-      <div className="grid grid-cols-2 gap-8 md:grid-cols-3 md:gap-12 mb-12">
-        {/* Site */}
-        <div className="flex flex-col gap-3">
-          <h4 className="font-mono text-xs uppercase tracking-[0.12em] text-text-muted">
-            Site
-          </h4>
-          <nav className="flex flex-col gap-2">
-            <Link href="/writing" className="text-text hover:text-accent transition-colors duration-150 text-sm">
-              Writing
-            </Link>
-            <Link href="/projects" className="text-text hover:text-accent transition-colors duration-150 text-sm">
-              Works
-            </Link>
-            <Link href="https://prometheus.today" className="text-text hover:text-accent transition-colors duration-150 text-sm" target="_blank" rel="noopener noreferrer">
-              Prometheus
-            </Link>
-            <Link href="/about" className="text-text hover:text-accent transition-colors duration-150 text-sm">
-              About
-            </Link>
-          </nav>
+    <footer className="site">
+      <div className="wrap">
+        {/* Available for select work tag (D-12) */}
+        <div className="avail">
+          <span className="dot" />
+          Available for select work
         </div>
 
-        {/* Elsewhere */}
-        <div className="flex flex-col gap-3">
-          <h4 className="font-mono text-xs uppercase tracking-[0.12em] text-text-muted">
-            Elsewhere
-          </h4>
-          <nav className="flex flex-col gap-2">
+        {/* Selective reach-out line, accent-bold on "very little" (D-12) */}
+        <div className="selective reveal">
+          I take on <b>very little</b>. If it is the right thing, reach out.
+        </div>
+
+        {/* Three-column footer grid (D-12) */}
+        <div className="foot-grid">
+          {/* Colophon */}
+          <div className="foot-col">
+            <h4>Colophon</h4>
+            <p className="colophon">
+              Designed and built by Monty. Type set in Hanken Grotesk. Content managed in Notion,
+              deployed on Vercel.
+            </p>
+            <div className="footmark">© 2026 Monty Singer</div>
+          </div>
+
+          {/* Navigate */}
+          <div className="foot-col">
+            <h4>Navigate</h4>
+            <Link href="#building">Building</Link>
+            <Link href="#work">Work</Link>
+            <Link href="#loves">Things I love</Link>
+            <Link href="#writing">Writing</Link>
+            <Link href="/uses">Uses</Link>
+          </div>
+
+          {/* Elsewhere: external links carry rel=noopener noreferrer (T-17.4-07) */}
+          <div className="foot-col">
+            <h4>Elsewhere</h4>
             <a
-              href="https://montymonthly.substack.com"
-              className="text-text hover:text-accent transition-colors duration-150 text-sm"
-              target="_blank"
+              href="mailto:monty@prometheus.today"
               rel="noopener noreferrer"
             >
-              Substack ↗
-            </a>
-            <a
-              href="https://github.com/MSizzle"
-              className="text-text hover:text-accent transition-colors duration-150 text-sm"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              GitHub ↗
-            </a>
-            <a
-              href="https://linkedin.com/in/monty-singer"
-              className="text-text hover:text-accent transition-colors duration-150 text-sm"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              LinkedIn ↗
+              Email
             </a>
             <a
               href="https://x.com/thefullmonty0"
-              className="text-text hover:text-accent transition-colors duration-150 text-sm"
               target="_blank"
               rel="noopener noreferrer"
             >
-              X / Twitter ↗
-            </a>
-          </nav>
-        </div>
-
-        {/* Connect — D-07: no "Contact" heading; email + link woven in */}
-        <div className="flex flex-col gap-3">
-          <h4 className="font-mono text-xs uppercase tracking-[0.12em] text-text-muted">
-            Connect
-          </h4>
-          <nav className="flex flex-col gap-2">
-            <a
-              href="mailto:monty@prometheus.today"
-              className="text-text hover:text-accent transition-colors duration-150 text-sm"
-            >
-              monty@prometheus.today
+              X / Twitter
             </a>
             <a
-              href="https://prometheus.today"
-              className="text-text hover:text-accent transition-colors duration-150 text-sm"
+              href="https://linkedin.com/in/monty-singer"
               target="_blank"
               rel="noopener noreferrer"
             >
-              Work with Prometheus
+              LinkedIn
             </a>
-          </nav>
+            <a
+              href="https://montymonthly.substack.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Monty Monthly
+            </a>
+          </div>
         </div>
       </div>
-
-      {/* Copyright / colophon */}
-      <div className="border-t border-border pt-6 flex flex-col gap-2 md:flex-row md:justify-between md:items-baseline">
-        <span className="font-mono text-xs uppercase tracking-[0.1em] text-text-muted">
-          © 2026 Monty Singer
-        </span>
-        <span className="font-mono text-xs uppercase tracking-[0.1em] text-text-muted">
-          Founder of Prometheus · Builder · Writer
-        </span>
-      </div>
-    </section>
+    </footer>
   );
 }
