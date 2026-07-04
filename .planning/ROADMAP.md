@@ -244,7 +244,7 @@ Plans:
 
 **Wave 4** *(assembly; depends on Wave 3)*
 
-- [ ] 17.4-08-PLAN.md — Orchestrator: sketch-010 band order + anchor ids + mount StickyNav/ScrollReveals; page.tsx stays static; rewrite explorative-homepage test (D-03/D-08/D-10/D-13)
+- [x] 17.4-08-PLAN.md — Orchestrator: sketch-010 band order + anchor ids + mount StickyNav/ScrollReveals; page.tsx stays static; rewrite explorative-homepage test (D-03/D-08/D-10/D-13)
 
 **Wave 5** *(gate; depends on 08)* [autonomous: false]
 
@@ -314,5 +314,5 @@ Phases execute in numeric order: 14 -> 15 -> 16 -> 17 -> 18
 | 17.1. Homepage Rebuild | v3.0 | 4/4 | Complete    | 2026-07-02 |
 | 17.2. Site Information Architecture | v3.0 | 4/4 | Complete    | 2026-07-02 |
 | 17.3. Portfolio | v3.0 | 2/2 | Complete    | 2026-07-02 |
-| 17.4. Photo-Forward Homepage Restyle | v3.0 | 7/9 | In Progress|  |
+| 17.4. Photo-Forward Homepage Restyle | v3.0 | 8/9 | In Progress|  |
 | 18. v3.0 QA, Perf Gate & Alias Swap | v3.0 | 4/7 | In Progress|  |
