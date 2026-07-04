@@ -1,0 +1,459 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sketch 010 · Structured bands + carousel</title>
+<link rel="stylesheet" href="../themes/ink-cobalt.css">
+<!-- Serious grotesques with presence (width + weight), not thin -->
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Hanken+Grotesk:wght@400..900&family=Familjen+Grotesk:wght@400..700&family=Geist:wght@400..700&display=swap">
+<style>
+  :root{
+    --font-display:'Hanken Grotesk', system-ui, sans-serif;
+    --font-body:'Hanken Grotesk', system-ui, sans-serif;
+    --font-label:'Hanken Grotesk', system-ui, sans-serif;
+    --sig-weight:800;
+    --sig-stretch:100%;
+    --band-pad:clamp(64px,9vw,120px);
+    /* hard corners everywhere */
+    --radius-sm:0;--radius-md:0;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--color-bg);color:var(--color-text);font-family:var(--font-body);-webkit-font-smoothing:antialiased}
+
+  #page{margin:0 auto;transition:max-width .25s;overflow:hidden}
+  #page.phone{max-width:390px;box-shadow:0 0 0 1px var(--color-border)}
+  #page.tablet{max-width:860px;box-shadow:0 0 0 1px var(--color-border)}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 clamp(22px,6vw,88px)}
+
+  /* ---------- BANDS: alternating light / dark ---------- */
+  .band{background:var(--color-bg);position:relative}
+  .band.dark{
+    --color-text:#f5f3ee;--color-text-dim:rgba(245,243,238,.76);--color-text-muted:rgba(245,243,238,.54);
+    --color-border:rgba(255,255,255,.15);--color-border-strong:rgba(255,255,255,.32);
+    background:#141416;color:var(--color-text)}
+  .band + .band{border-top:1px solid var(--color-border)}
+
+  /* nav */
+  nav.site{display:flex;justify-content:space-between;align-items:center;padding:30px 0}
+  nav.site .mark{font-family:var(--font-display);font-weight:600;font-size:23px;letter-spacing:-.01em}
+  nav.site .mark i{color:var(--accent);font-style:normal}
+  nav.site ul{display:flex;gap:28px;list-style:none;font-family:var(--font-label);font-size:12px;
+    text-transform:uppercase;letter-spacing:.14em;font-weight:600}
+  nav.site a{color:var(--color-text-muted);text-decoration:none;transition:color .18s}
+  nav.site a:hover{color:var(--accent)}
+
+  .eyebrow{font-family:var(--font-label);font-size:13px;letter-spacing:.24em;text-transform:uppercase;
+    font-weight:600;color:var(--accent);display:flex;align-items:center;gap:14px}
+  .eyebrow::before{content:"";width:34px;height:1.5px;background:var(--accent)}
+
+  /* ---------- HERO (structured split, big portrait) ---------- */
+  .hero{display:grid;grid-template-columns:1fr minmax(320px,44%);gap:clamp(28px,4.5vw,56px);align-items:stretch;
+    flex:1;min-height:auto;padding:clamp(10px,2vh,30px) 0 clamp(24px,4vh,48px)}
+  .hero .col-copy{display:flex;flex-direction:column;justify-content:center;padding:clamp(20px,4vh,50px) 0}
+  h1.sig{font-family:var(--font-display);font-weight:var(--sig-weight);font-stretch:var(--sig-stretch,100%);
+    line-height:1.0;letter-spacing:-.02em;font-size:clamp(2.4rem,6.2vw,5.4rem)}
+  h1.sig .hl{display:block;white-space:nowrap}
+  /* accent marker block on line 1 — hugs the glyphs (chosen hero treatment) */
+  h1.sig .hw{display:inline-block;background:var(--accent);color:#fff;padding:.05em .16em;line-height:.9;margin-left:-.1em}
+  .hero .eyebrow{margin-bottom:clamp(26px,4vh,42px)}
+  h1.sig{margin-bottom:clamp(28px,4vh,44px)}
+  .subtitle{font-family:var(--font-body);color:var(--color-text-dim);max-width:46ch;
+    font-size:clamp(1.05rem,1.6vw,1.35rem);line-height:1.5;margin-bottom:clamp(26px,4vh,40px)}
+  .wayin{font-family:var(--font-label);font-size:12.5px;text-transform:uppercase;letter-spacing:.16em;font-weight:600;color:var(--color-text-muted)}
+  .wayin a{color:var(--color-text);text-decoration:none;border-bottom:2px solid var(--accent);padding-bottom:3px}
+  .wayin a:hover{color:var(--accent)}
+  .hero .col-photo{position:relative;display:flex}
+  .hero .col-photo .photo{width:100%;height:100%;min-height:56vh;aspect-ratio:auto}
+  .blob{position:absolute;border-radius:50%;filter:blur(54px);opacity:.45;pointer-events:none;z-index:0;
+    background:radial-gradient(circle,var(--accent-glow),transparent 68%);animation:drift 16s ease-in-out infinite alternate}
+  @keyframes drift{from{transform:translate(0,0) scale(1)}to{transform:translate(4vw,4vh) scale(1.2)}}
+
+  /* ---------- photo system ---------- */
+  .photo{position:relative;overflow:hidden;border:1px solid var(--color-border);border-radius:var(--radius-sm);background:#e6e8ee}
+  .photo .img{position:absolute;inset:0;will-change:transform;background:
+      repeating-linear-gradient(135deg,color-mix(in srgb,var(--accent) 12%,transparent) 0 2px,transparent 2px 12px),
+      linear-gradient(150deg,#e9ebf0 0%,#e2e4ea 45%,#ece9e2 100%)}
+  .photo.dark .img{background:
+      repeating-linear-gradient(135deg,rgba(255,255,255,.05) 0 2px,transparent 2px 13px),
+      linear-gradient(160deg,color-mix(in srgb,var(--accent) 34%,#0d1526),var(--accent-deep) 58%,#0b111f)}
+  .photo .icon{position:absolute;top:13px;left:15px;font-size:15px;color:var(--accent);opacity:.55;z-index:2}
+  .photo.dark .icon{color:#fff;opacity:.7}
+  .photo .cap{position:absolute;bottom:12px;left:12px;font-family:var(--font-label);font-size:11px;text-transform:uppercase;
+    letter-spacing:.1em;font-weight:600;color:#12245a;background:rgba(255,255,255,.86);backdrop-filter:blur(2px);
+    padding:6px 10px;border-radius:var(--radius-sm);z-index:2;width:max-content;max-width:calc(100% - 24px)}
+  .photo.dark .cap{color:#eaf0ff;background:rgba(11,17,31,.6)}
+
+  /* ---------- structured section (left rail + content) ---------- */
+  section.beat{padding:var(--band-pad) 0}
+  .beat-grid{display:grid;grid-template-columns:180px 1fr;gap:clamp(24px,4vw,56px)}
+  .rail{font-family:var(--font-label)}
+  /* high-contrast hard box that auto-inverts per band */
+  .rail-box{background:var(--color-text);color:var(--color-bg);padding:18px 20px;display:inline-block}
+  .rail-box .num{font-family:var(--font-display);font-weight:var(--sig-weight);font-size:2.6rem;color:var(--accent);line-height:1}
+  .rail-box .lbl{font-size:12px;letter-spacing:.18em;text-transform:uppercase;font-weight:600;color:var(--color-bg);margin-top:12px;opacity:.9}
+
+  /* black status tag (hero) */
+  .statustag{display:inline-flex;align-items:center;gap:9px;background:var(--color-text);color:var(--color-bg);
+    padding:10px 15px;font-family:var(--font-label);font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;margin-top:26px;width:max-content}
+  .statustag .dot{width:8px;height:8px;background:var(--accent);border-radius:50%;animation:pulse 2s ease-in-out infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+
+  /* hero marquee strip (black, full-bleed, hard corners) */
+  .hero-ticker{background:#141416;color:#f5f3ee;padding:20px 0;overflow:hidden}
+  .hero-ticker .track{display:flex;width:max-content;animation:slide 30s linear infinite;align-items:center}
+  .hero-ticker:hover .track{animation-play-state:paused}
+  .hero-ticker .tick-link{color:#f5f3ee;opacity:.5}
+  .hero-ticker .tick-link:hover{opacity:1;color:var(--accent)}
+  h2{font-family:var(--font-display);font-weight:var(--sig-weight);font-stretch:var(--sig-stretch,100%);font-size:clamp(1.9rem,3.8vw,2.9rem);line-height:1.08;letter-spacing:-.015em;max-width:20ch}
+  p.body{margin-top:18px;max-width:54ch;font-size:16.5px;line-height:1.7;color:var(--color-text-dim)}
+  .inline{color:var(--color-text);border-bottom:2px solid var(--accent);text-decoration:none}
+  .inline:hover{color:var(--accent)}
+
+  .work-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(16px,2vw,26px);margin-top:44px}
+
+  /* ---------- loves marquee ---------- */
+  .marquee{overflow:hidden;position:relative}
+  .marquee .track{display:flex;width:max-content;animation:slide 30s linear infinite}
+  @keyframes slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+  /* ---------- WRITING carousel ---------- */
+  .mm-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap}
+  .mm-track{display:flex;gap:22px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;
+    margin-top:40px;padding-bottom:10px;scrollbar-width:none}
+  .mm-track::-webkit-scrollbar{display:none}
+  .mm-card{flex:0 0 clamp(280px,58%,600px);scroll-snap-align:center;border:1px solid var(--color-border);
+    border-radius:var(--radius-md);overflow:hidden;background:var(--color-bg);display:grid;grid-template-rows:auto 1fr}
+  .band.dark .mm-card{background:#1b1b1e}
+  .mm-card .cover{aspect-ratio:16/8;position:relative}
+  .mm-card .meta{padding:24px 26px 28px}
+  .mm-issue{font-family:var(--font-label);font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:var(--accent)}
+  .mm-title{font-family:var(--font-display);font-weight:var(--sig-weight);font-size:clamp(1.3rem,2.4vw,1.9rem);line-height:1.12;margin-top:12px}
+  .mm-ex{margin-top:14px;font-size:15px;line-height:1.6;color:var(--color-text-dim);max-width:46ch}
+  .mm-read{margin-top:20px;display:inline-block;font-family:var(--font-label);font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--color-text);border-bottom:2px solid var(--accent);padding-bottom:3px;text-decoration:none}
+  .mm-sub{flex:0 0 clamp(280px,46%,460px);scroll-snap-align:center;border-radius:var(--radius-md);
+    background:var(--accent);color:#fff;display:flex;flex-direction:column;justify-content:center;padding:40px 36px}
+  .mm-sub h3{font-family:var(--font-display);font-weight:var(--sig-weight);font-size:clamp(1.5rem,2.6vw,2.1rem);line-height:1.1}
+  .mm-sub p{margin-top:14px;font-size:15px;line-height:1.6;opacity:.92;max-width:34ch}
+  .mm-sub .btn{margin-top:24px;align-self:flex-start;background:#fff;color:var(--accent);font-family:var(--font-label);
+    font-weight:600;font-size:13px;letter-spacing:.08em;text-transform:uppercase;border:none;border-radius:0;
+    padding:14px 24px;cursor:pointer;text-decoration:none}
+  .mm-ctrls{display:flex;gap:10px;align-items:center;margin-top:26px}
+  .mm-btn{width:44px;height:44px;border-radius:0;border:1px solid var(--color-border-strong);background:transparent;
+    color:var(--color-text);cursor:pointer;font-size:18px;transition:all .18s}
+  .mm-btn:hover{background:var(--accent);border-color:var(--accent);color:#fff}
+  .mm-dots{display:flex;gap:7px;margin-left:6px}
+  .mm-dots span{width:8px;height:8px;border-radius:50%;background:var(--color-border-strong);transition:all .2s}
+  .mm-dots span.on{background:var(--accent);width:22px;border-radius:5px}
+
+  footer.site{padding:var(--band-pad) 0 clamp(40px,6vw,70px)}
+  .selective{font-family:var(--font-display);font-weight:var(--sig-weight);font-size:clamp(1.6rem,2.9vw,2.2rem);max-width:22ch;line-height:1.14}
+  .selective b{color:var(--accent)}
+  .channels{margin-top:30px;display:flex;gap:24px;flex-wrap:wrap;font-family:var(--font-label);font-size:13px}
+  .channels a{color:var(--color-text-muted);text-decoration:none}.channels a:hover{color:var(--accent)}
+  .footmark{margin-top:44px;font-family:var(--font-label);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--color-text-muted)}
+
+  /* ---------- bottom ticker marquee ---------- */
+  .ticker{padding:26px 0}
+  .ticker .track{align-items:center}
+  .tick-link{font-family:var(--font-display);font-weight:var(--sig-weight);font-size:clamp(1.4rem,3.6vw,2.7rem);
+    letter-spacing:-.01em;color:var(--color-text);opacity:.34;text-decoration:none;padding:0 .18em;transition:opacity .2s,color .2s}
+  .tick-link:hover{opacity:1;color:var(--accent)}
+  .tick-sep{color:var(--accent);opacity:.5;font-family:var(--font-display);font-size:clamp(1rem,2.4vw,1.8rem);padding:0 .05em}
+  .ticker:hover .track{animation-play-state:paused}
+
+  /* ---------- MOTION ---------- */
+  .reveal{opacity:0;transform:translateY(30px);transition:opacity .8s var(--ease-out),transform .8s var(--ease-out);transition-delay:var(--d,0s)}
+  .reveal.in{opacity:1;transform:none}
+  .slide{opacity:0;transform:translateX(var(--sx,-72px));transition:opacity .95s var(--ease-out),transform .95s var(--ease-out)}
+  .slide.from-right{--sx:72px}
+  .slide.in{opacity:1;transform:translateX(0)}
+  /* black shadow AROUND the photo, settles in (replaces angled frame) */
+  .shadowed .photo{box-shadow:0 4px 10px rgba(0,0,0,0);transition:box-shadow .9s var(--ease-out) .12s}
+  .shadowed.in .photo{box-shadow:0 30px 60px -18px rgba(0,0,0,.5),0 8px 20px -8px rgba(0,0,0,.35)}
+  .kenburns{animation:kb 22s ease-in-out infinite alternate}
+  @keyframes kb{from{transform:scale(1.03) translateY(0)}to{transform:scale(1.13) translateY(-2%)}}
+  .breathe{animation:breathe 7s ease-in-out infinite}
+  @keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.03)}}
+
+  body.no-motion .reveal,body.no-motion .slide{opacity:1!important;transform:none!important}
+  body.no-motion .kenburns,body.no-motion .breathe,body.no-motion .blob,body.no-motion .marquee .track{animation:none!important}
+  body.no-motion .shadowed .photo{box-shadow:0 30px 60px -18px rgba(0,0,0,.5)}
+  @media(prefers-reduced-motion:reduce){
+    .reveal,.slide{opacity:1!important;transform:none!important}
+    .kenburns,.breathe,.blob,.marquee .track{animation:none!important}
+    .shadowed .photo{box-shadow:0 30px 60px -18px rgba(0,0,0,.5)}}
+
+  @media(max-width:860px){nav.site ul{display:none}
+    .hero{grid-template-columns:1fr;min-height:auto;gap:26px}
+    .hero .col-photo{order:-1}.hero .col-photo .photo{min-height:44vh}
+    .beat-grid{grid-template-columns:1fr;gap:20px}.work-grid{grid-template-columns:1fr}}
+
+  /* ---------- sticky mini-nav (appears past the hero) ---------- */
+  .stickynav{position:fixed;top:0;left:0;right:0;z-index:9000;background:rgba(18,18,20,.92);backdrop-filter:blur(10px);
+    color:#f5f3ee;transform:translateY(-100%);transition:transform .35s var(--ease-out);border-bottom:1px solid rgba(255,255,255,.12)}
+  .stickynav.show{transform:none}
+  .stickynav .inner{max-width:1180px;margin:0 auto;padding:12px clamp(22px,6vw,88px);display:flex;align-items:center;justify-content:space-between;gap:20px}
+  .stickynav .mk{font-family:var(--font-display);font-weight:700;font-size:16px}
+  .stickynav .mk i{color:var(--accent);font-style:normal}
+  .stickynav ul{display:flex;gap:22px;list-style:none;font-family:var(--font-label);font-size:11.5px;text-transform:uppercase;letter-spacing:.12em;font-weight:600;margin-left:auto;margin-right:20px}
+  .stickynav a{color:rgba(245,243,238,.72);text-decoration:none;transition:color .18s}
+  .stickynav a:hover{color:#fff}
+  .stickynav .cta{background:var(--accent);color:#fff;padding:9px 16px;font-family:var(--font-label);font-size:11.5px;font-weight:600;text-transform:uppercase;letter-spacing:.1em}
+  @media(max-width:860px){.stickynav ul{display:none}}
+
+  /* ---------- credibility strip ---------- */
+  .proof{padding:30px 0}
+  .proof .lbl{font-family:var(--font-label);font-size:11px;letter-spacing:.2em;text-transform:uppercase;font-weight:600;color:var(--color-text-muted)}
+  .proof .marks{display:flex;flex-wrap:wrap;gap:14px 30px;align-items:center;margin-top:18px}
+  .proof .m{height:28px;min-width:96px;border:1px dashed var(--color-border-strong);display:flex;align-items:center;justify-content:center;
+    font-family:var(--font-label);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--color-text-muted);opacity:.75;padding:0 14px}
+
+  /* ---------- rich footer ---------- */
+  .avail{display:inline-flex;align-items:center;gap:9px;background:var(--color-text);color:var(--color-bg);padding:10px 15px;
+    font-family:var(--font-label);font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;margin-bottom:26px}
+  .avail .dot{width:8px;height:8px;background:var(--accent);border-radius:50%;animation:pulse 2s ease-in-out infinite}
+  .foot-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:40px;margin-top:52px;padding-top:44px;border-top:1px solid var(--color-border)}
+  .foot-col h4{font-family:var(--font-label);font-size:11px;letter-spacing:.2em;text-transform:uppercase;font-weight:600;color:var(--color-text-muted);margin-bottom:16px}
+  .foot-col a{display:block;color:var(--color-text-dim);text-decoration:none;font-size:14.5px;padding:5px 0;transition:color .18s}
+  .foot-col a:hover{color:var(--accent)}
+  .foot-col .colophon{font-size:13.5px;line-height:1.7;color:var(--color-text-muted);max-width:32ch}
+  @media(max-width:860px){.foot-grid{grid-template-columns:1fr;gap:26px}}
+
+  /* ---------- dev toolbar ---------- */
+  #tools{position:fixed;bottom:12px;right:12px;z-index:9999;font-family:'JetBrains Mono',monospace;font-size:11px;
+    background:rgba(20,20,24,.9);color:#fff;padding:10px 12px;border-radius:10px;opacity:.6;transition:opacity .2s;display:flex;flex-direction:column;gap:8px;max-width:300px}
+  #tools:hover{opacity:1}
+  #tools .row{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+  #tools .lbl{opacity:.55;width:46px}
+  #tools button{background:transparent;border:1px solid rgba(255,255,255,.25);color:#fff;padding:4px 8px;border-radius:6px;cursor:pointer;font:inherit}
+  #tools button.on{background:var(--accent);border-color:var(--accent)}
+  #tools .sw{width:20px;height:20px;border-radius:50%;border:2px solid transparent;cursor:pointer;padding:0}
+  #tools .sw.on{border-color:#fff}
+</style>
+</head>
+<body>
+<div class="stickynav" id="stickynav"><div class="inner">
+  <div class="mk">Monty<i>.</i></div>
+  <ul><li><a href="#building">Building</a></li><li><a href="#work">Work</a></li><li><a href="#loves">Loves</a></li><li><a href="#writing">Writing</a></li></ul>
+  <a class="cta" href="#writing">Subscribe</a>
+</div></div>
+<div id="page">
+
+  <!-- ===== HERO (light) — full viewport, marquee pinned at base ===== -->
+  <section class="band hero-band" style="min-height:100vh;display:flex;flex-direction:column">
+    <div class="wrap" style="flex:1;display:flex;flex-direction:column">
+      <nav class="site"><div class="mark">Monty<i>.</i></div>
+        <ul><li><a href="#building">Building</a></li><li><a href="#work">Work</a></li><li><a href="#loves">Things I love</a></li><li><a href="#writing">Writing</a></li></ul></nav>
+      <div class="hero">
+        <div class="blob" style="width:40vw;height:40vw;max-width:520px;max-height:520px;top:2%;right:34%"></div>
+        <div class="col-copy" style="position:relative;z-index:1">
+          <div class="eyebrow">Founder of Prometheus</div>
+          <h1 class="sig"><span class="hl"><span class="hw">Create Order</span></span><span class="hl">from Chaos</span></h1>
+          <p class="subtitle">I build companies and write about what I am learning. A record of what I am making and the few things I am proud of.</p>
+          <p class="wayin">I write about building monthly. <a href="#writing">Join Monty Monthly →</a></p>
+          <div class="statustag"><span class="dot"></span>Currently — building Prometheus</div>
+        </div>
+        <div class="col-photo shadowed in" style="z-index:1">
+          <div class="photo breathe"><div class="img kenburns"></div><span class="icon">◲</span><span class="cap">Large portrait · fills the hero · breathing</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-ticker"><div class="track" id="ticker-track"></div></div>
+  </section>
+
+  <!-- ===== CREDIBILITY STRIP (light) ===== -->
+  <section class="band"><div class="wrap"><div class="proof reveal">
+    <div class="lbl">Building &amp; writing at the edge of AI · as seen in</div>
+    <div class="marks"><div class="m">Logo</div><div class="m">Logo</div><div class="m">Logo</div><div class="m">Logo</div><div class="m">Logo</div></div>
+  </div></div></section>
+
+  <!-- ===== BUILDING (dark) ===== -->
+  <section class="band dark beat" id="building">
+    <div class="wrap">
+      <div class="beat-grid">
+        <div class="rail reveal"><div class="rail-box"><div class="num">01</div><div class="lbl">Building</div></div></div>
+        <div>
+          <h2 class="reveal">Prometheus — AI integrations and education for people who refuse to be left behind.</h2>
+          <p class="body reveal" style="--d:.1s">The center of my attention right now. If you care about real leverage from AI and not the hype, <a class="inline" href="#">let's talk</a>.</p>
+          <div class="shadowed slide from-left" style="margin-top:44px"><div class="photo dark" style="aspect-ratio:16/6.5"><div class="img kenburns"></div><span class="icon">◲</span><span class="cap">Wide Prometheus shot</span></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== WORK (light) ===== -->
+  <section class="band beat" id="work">
+    <div class="wrap">
+      <div class="beat-grid">
+        <div class="rail reveal"><div class="rail-box"><div class="num">02</div><div class="lbl">Selected work</div></div></div>
+        <div>
+          <h2 class="reveal">A few things I am proud of.</h2>
+          <div class="work-grid">
+            <div class="shadowed slide from-left"><div class="photo" style="aspect-ratio:3/2.2"><div class="img"></div><span class="icon">◲</span><span class="cap">Project one · Product · 2025</span></div></div>
+            <div class="shadowed slide from-right"><div class="photo" style="aspect-ratio:3/2.2"><div class="img"></div><span class="icon">◲</span><span class="cap">Project two · Build · 2025</span></div></div>
+            <div class="shadowed slide from-left"><div class="photo" style="aspect-ratio:3/2.2"><div class="img"></div><span class="icon">◲</span><span class="cap">Project three · Writing · 2024</span></div></div>
+            <div class="shadowed slide from-right"><div class="photo" style="aspect-ratio:3/2.2"><div class="img"></div><span class="icon">◲</span><span class="cap">Project four · Talk · 2024</span></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== THINGS I LOVE (dark) — marquee ===== -->
+  <section class="band dark beat" id="loves">
+    <div class="wrap"><div class="beat-grid">
+      <div class="rail reveal"><div class="rail-box"><div class="num">03</div><div class="lbl">Things I love</div></div></div>
+      <div><h2 class="reveal">The stuff that keeps me curious. Always running.</h2></div>
+    </div></div>
+    <div class="marquee" style="margin-top:44px"><div class="track" id="loves-track" style="gap:18px"></div></div>
+  </section>
+
+  <!-- ===== WRITING (light) — carousel ===== -->
+  <section class="band beat" id="writing">
+    <div class="wrap">
+      <div class="mm-head">
+        <div>
+          <div class="eyebrow" style="margin-bottom:16px">Monty Monthly</div>
+          <h2 class="reveal">Notes on building, one issue at a time.</h2>
+        </div>
+        <div class="mm-ctrls">
+          <button class="mm-btn" id="mm-prev" aria-label="previous">‹</button>
+          <button class="mm-btn" id="mm-next" aria-label="next">›</button>
+          <div class="mm-dots" id="mm-dots"></div>
+        </div>
+      </div>
+      <div class="mm-track" id="mm-track"></div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER (dark) ===== -->
+  <section class="band dark">
+    <footer class="site"><div class="wrap">
+      <div class="avail"><span class="dot"></span>Available for select work</div>
+      <div class="selective reveal">I take on <b>very little</b>. If it is the right thing, reach out.</div>
+      <div class="foot-grid">
+        <div class="foot-col">
+          <h4>Colophon</h4>
+          <p class="colophon">Designed and built by Monty. Type set in Geist. Content managed in Notion, deployed on Vercel.</p>
+          <div class="footmark" style="margin-top:22px">© 2026 Monty Singer</div>
+        </div>
+        <div class="foot-col">
+          <h4>Navigate</h4>
+          <a href="#building">Building</a><a href="#work">Work</a><a href="#loves">Things I love</a><a href="#writing">Writing</a><a href="/uses">Uses</a>
+        </div>
+        <div class="foot-col">
+          <h4>Elsewhere</h4>
+          <a href="#">Email</a><a href="#">X / Twitter</a><a href="#">LinkedIn</a><a href="#">Monty Monthly</a>
+        </div>
+      </div>
+    </div></footer>
+  </section>
+
+</div><!-- /#page -->
+
+<div id="tools">
+  <div class="row"><span class="lbl">color</span><span id="sw-row"></span></div>
+  <div class="row"><span class="lbl">type</span>
+    <button data-font="archivoX" onclick="setFont('archivoX',event)">Archivo Exp</button>
+    <button data-font="familjen" onclick="setFont('familjen',event)">Familjen</button>
+    <button data-font="hanken" class="on" onclick="setFont('hanken',event)">Hanken</button>
+    <button data-font="archivo" onclick="setFont('archivo',event)">Archivo</button>
+  </div>
+  <div class="row"><span class="lbl">weight</span>
+    <button data-w="600" onclick="setWeight('600',event)">600</button>
+    <button data-w="700" onclick="setWeight('700',event)">700</button>
+    <button data-w="800" class="on" onclick="setWeight('800',event)">800</button>
+    <button data-w="900" onclick="setWeight('900',event)">900</button>
+  </div>
+  <div class="row"><span class="lbl">view</span>
+    <button class="on" onclick="setVP('full',event)">full</button>
+    <button onclick="setVP('tablet',event)">tablet</button>
+    <button onclick="setVP('phone',event)">phone</button>
+    <span class="lbl" style="width:auto;margin-left:6px">motion</span>
+    <button id="motion-btn" class="on" onclick="toggleMotion(event)">on</button>
+  </div>
+</div>
+
+<script>
+  // accent switcher
+  const ACCENTS={vermilion:['#e5411f','#c8381a','#a52d13','rgba(229,65,31,.32)'],cobalt:['#1a4fd6','#1740ad','#14328a','rgba(26,79,214,.32)'],
+    emerald:['#0a8f5b','#0a7a4e','#075f3d','rgba(10,143,91,.30)'],violet:['#5a2bd8','#4a22b4','#3a1a8f','rgba(90,43,216,.32)'],magenta:['#c81d6b','#a91659','#841145','rgba(200,29,107,.30)']};
+  function setAccent(name){const [a,h,d,g]=ACCENTS[name];const r=document.documentElement.style;
+    r.setProperty('--accent',a);r.setProperty('--accent-hover',h);r.setProperty('--accent-deep',d);r.setProperty('--accent-glow',g);
+    document.querySelectorAll('#sw-row .sw').forEach(s=>s.classList.toggle('on',s.dataset.a===name));}
+  const swRow=document.getElementById('sw-row');
+  Object.entries(ACCENTS).forEach(([name,c])=>{const b=document.createElement('button');b.className='sw';b.dataset.a=name;b.title=name;b.style.background=c[0];b.onclick=()=>setAccent(name);swRow.appendChild(b);});
+
+  // font switcher
+  const A="'Archivo', system-ui, sans-serif",HK="'Hanken Grotesk', system-ui, sans-serif",FJ="'Familjen Grotesk', system-ui, sans-serif";
+  const FONTS={           // [display, body, label, weight, stretch]
+    archivoX:[A,A,A,"700","112%"],
+    familjen:[FJ,FJ,FJ,"700","100%"],
+    hanken:  [HK,HK,HK,"800","100%"],
+    archivo: [A,A,A,"700","100%"]};
+  function setFont(name,e){const [disp,body,label,w,st]=FONTS[name];const r=document.documentElement.style;
+    r.setProperty('--font-display',disp);r.setProperty('--font-body',body);r.setProperty('--font-label',label);
+    r.setProperty('--sig-weight',w);r.setProperty('--sig-stretch',st);
+    document.querySelectorAll('#tools [data-font]').forEach(b=>b.classList.toggle('on',b.dataset.font===name));
+    document.querySelectorAll('#tools [data-w]').forEach(b=>b.classList.toggle('on',b.dataset.w===w));}
+  function setWeight(w,e){document.documentElement.style.setProperty('--sig-weight',w);
+    document.querySelectorAll('#tools [data-w]').forEach(b=>b.classList.toggle('on',b.dataset.w===w));}
+
+  // loves marquee
+  const loves=['A place I go','A tool I trust','Off the clock','Reading now'];
+  const lt=document.getElementById('loves-track');
+  [...loves,...loves].forEach(l=>{const d=document.createElement('div');d.style.cssText='flex:0 0 clamp(220px,25vw,310px)';
+    d.innerHTML='<div class="photo" style="aspect-ratio:3/4"><div class="img"></div><span class="icon">◲</span><span class="cap">'+l+'</span></div>';lt.appendChild(d);});
+
+  // bottom ticker links
+  const tParts=[['Building','#building'],['Work','#work'],['Writing','#writing'],['Things I Love','#loves'],['Uses','/uses']];
+  const tTrack=document.getElementById('ticker-track');
+  function tickerGroup(){const f=document.createDocumentFragment();tParts.forEach(p=>{const a=document.createElement('a');a.className='tick-link';a.textContent=p[0];a.href=p[1];
+    if(p[1].startsWith('#'))a.addEventListener('click',ev=>{ev.preventDefault();const el=document.querySelector(p[1]);if(el)el.scrollIntoView({behavior:'smooth'});});
+    const s=document.createElement('span');s.className='tick-sep';s.textContent='·';f.appendChild(a);f.appendChild(s);});return f;}
+  tTrack.appendChild(tickerGroup());tTrack.appendChild(tickerGroup());
+
+  // ---- Monty Monthly carousel ----
+  const issues=[
+    ['12','Jun 2026','Why most AI adoption fails before it starts','The failure is almost never the model. It is the org that cannot absorb it.'],
+    ['11','May 2026','The org chart is the product','How the shape of a team leaks into the shape of what it ships.'],
+    ['10','Apr 2026','What I learned shipping Prometheus v1','Six weeks, one hard pivot, and the feature nobody asked for that mattered most.'],
+    ['09','Mar 2026','Taste is a competitive advantage','Why I hire for it and how I try to keep mine sharp.'],
+  ];
+  const track=document.getElementById('mm-track'),dots=document.getElementById('mm-dots');
+  issues.forEach(it=>{const c=document.createElement('article');c.className='mm-card';
+    c.innerHTML='<div class="cover photo dark"><div class="img"></div><span class="icon">◲</span><span class="cap">Issue cover</span></div>'+
+      '<div class="meta"><div class="mm-issue">Issue '+it[0]+' · '+it[1]+'</div><div class="mm-title">'+it[2]+'</div><p class="mm-ex">'+it[3]+'</p><a class="mm-read" href="#">Read issue →</a></div>';
+    track.appendChild(c);});
+  const sub=document.createElement('div');sub.className='mm-sub';
+  sub.innerHTML='<h3>Get the next one in your inbox.</h3><p>One email a month on what I am building and learning. Read the archive, or subscribe and never miss one.</p><a class="btn" href="https://montymonthly.substack.com" target="_blank" rel="noopener">Subscribe →</a>';
+  track.appendChild(sub);
+  const slides=[...track.children];
+  slides.forEach((s,i)=>{const d=document.createElement('span');if(i===0)d.className='on';d.onclick=()=>slides[i].scrollIntoView({behavior:'smooth',inline:'center',block:'nearest'});dots.appendChild(d);});
+  const dotEls=[...dots.children];
+  function syncDots(){const c=track.scrollLeft+track.clientWidth/2;let best=0,bd=1e9;slides.forEach((s,i)=>{const sc=s.offsetLeft+s.offsetWidth/2;const dd=Math.abs(sc-c);if(dd<bd){bd=dd;best=i}});dotEls.forEach((d,i)=>d.classList.toggle('on',i===best));}
+  track.addEventListener('scroll',()=>requestAnimationFrame(syncDots),{passive:true});
+  document.getElementById('mm-next').onclick=()=>track.scrollBy({left:track.clientWidth*0.62,behavior:'smooth'});
+  document.getElementById('mm-prev').onclick=()=>track.scrollBy({left:-track.clientWidth*0.62,behavior:'smooth'});
+
+  // reveals + slides
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:0,rootMargin:'0px 0px -38% 0px'});
+  document.querySelectorAll('.reveal,.slide,.shadowed').forEach(el=>{if(!el.classList.contains('in'))io.observe(el);});
+
+  // toolbar
+  function setVP(mode,e){const pg=document.getElementById('page');pg.classList.remove('phone','tablet');if(mode!=='full')pg.classList.add(mode);
+    [...e.target.parentElement.querySelectorAll('button')].forEach(b=>{if(['full','tablet','phone'].includes(b.textContent))b.classList.remove('on')});e.target.classList.add('on');}
+  function toggleMotion(e){const on=!document.body.classList.contains('no-motion');document.body.classList.toggle('no-motion',on);e.target.textContent=on?'off':'on';e.target.classList.toggle('on',!on);}
+
+  // sticky mini-nav appears once you're past the hero
+  const sn=document.getElementById('stickynav');
+  window.addEventListener('scroll',()=>sn.classList.toggle('show',window.scrollY>window.innerHeight*0.82),{passive:true});
+
+  setAccent('vermilion');
+</script>
+</body>
+</html>

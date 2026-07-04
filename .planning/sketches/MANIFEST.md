@@ -7,6 +7,22 @@ typography, electric accents. This is a presentation-layer rewrite only: the Not
 SEO infra, analytics, image proxy, RSS, and Notion-render components all stay. Built on a `v3`
 branch, previewed on Vercel, promoted to production via alias swap when it reaches parity + QA.
 
+## CURRENT Homepage Direction (2026-07-04) — sketches 007–011 · SUPERSEDES the dark-kinetic direction above
+A restrained, **photo-forward editorial** homepage (not the dark WebGL scroll-story). Driven by
+"homepage feels too text-based and plain — add photos." Landed via 007→011, consolidated in
+**sketch 010 (★ locked, full-page spec)**:
+- **Palette:** near-white paper / near-black ink with **Vermilion** accent `#e5411f` (chosen over
+  cobalt for warmth/contrast).
+- **Type:** **Hanken Grotesk 800** display (serious sans, not thin/playful). Rejected en route:
+  Space Grotesk, Clash/Cabinet (playful), Geist (thin/boring), serif options.
+- **Hero:** marker-block — "**Create Order**" in a solid vermilion box hugging the glyphs,
+  "from Chaos" in ink; large 44% portrait; black status tag; black link-marquee at the hero base.
+- **Structure:** alternating light/dark **bands**, hard corners, high-contrast **rail boxes**,
+  large photos with scroll **slide-in + even black drop-shadow**, **Monty Monthly carousel** for
+  writing, sticky Subscribe nav, credibility strip, multi-column footer.
+- **Motion:** scroll-triggered + ambient only, **no mouse dependence**, reduced-motion honored.
+- **Open:** real photography + real logos (placeholders labeled in the mock).
+
 ## Reference Points
 - Lusion (lusion.co) — primary: dark, fluid/3D, cinematic scroll, cursor-reactive
 - Award-style portfolios (Awwwards energy) — inventive layouts, heavy motion
@@ -26,6 +42,12 @@ branch, previewed on Vercel, promoted to production via alias swap when it reach
 | 003 | guided-line-home | Does a self-drawing guided line + near-black/off-white palette feel expansive while fixing red-on-red legibility? | folded into 004 | home, line, scroll, dark, crimson-accent, legibility, palette-revisit |
 | 004 | explorative-scroll-story | Does the explorative scroll-story (hologram-on-podium → fluid line → 3D horse → YouTube zoom-through → newsletter) hold as the homepage spine? | **concept ✓** (pending real build) | home, scroll-story, 3d, hologram, fluid-line, youtube, zoom-transition, prototype |
 | 005 | webgl-hero-fidelity | What's the real fidelity ceiling — does live WebGL (PBR/IBL/bloom/grain/smooth-scroll) clear the Lusion bar and justify the heavier build? | **★ validated** (fidelity approved) | home, webgl, threejs, pbr, ibl, bloom, postprocessing, lenis, fidelity |
+| 006 | flame-personal-brand | Restrained "personal business page" — dark vs light flame palette? | pivoted (led to 007+) | home, personal-brand, editorial, palette |
+| 007 | photo-forward-home | How much should photography drive the home, and where do photos land? | **C · woven through** | home, photography, hero, editorial |
+| 008 | alive-photo-home | How alive can it feel via bigger photos + non-mouse motion? | **3 · kinetic ambient** | home, photography, motion, scroll, ambient |
+| 009 | alive-photo-home-r2 | Color + type switchers, slide-in photos, writing rework | folded into 010 | home, motion, color, type, slide-in |
+| 010 | structured-bands-carousel | Can it read structured + professional (bands, hard boxes, serious type, carousel)? | **★ LOCKED — full-page spec** | home, editorial, bands, hard-corners, hanken, vermilion, carousel |
+| 011 | hero-accent-treatments | How much should the accent drive the hero, in what form? | **C · marker block** | home, hero, accent, marker-block, vermilion |
 
 ## Locked Decisions (from 001)
 - **Direction:** dark canvas, brutalist uppercase grotesk type, autonomous (non-cursor-reactive) motion.

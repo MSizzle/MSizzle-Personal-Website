@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sketch 011 · Hero accent treatments</title>
+<link rel="stylesheet" href="../themes/ink-cobalt.css">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400..900&display=swap">
+<style>
+  :root{--font-display:'Hanken Grotesk',system-ui,sans-serif;--font-body:'Hanken Grotesk',system-ui,sans-serif;
+    --sig-weight:800;--radius-sm:0;--radius-md:0}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--color-bg);color:var(--color-text);font-family:var(--font-body);-webkit-font-smoothing:antialiased;padding-top:44px}
+
+  #tabs{position:fixed;top:0;left:0;right:0;z-index:9998;background:#141416;color:#f5f3ee;padding:8px 14px;
+    display:flex;gap:6px;align-items:center;flex-wrap:wrap;font-family:var(--font-body);font-size:11px}
+  #tabs .brand{opacity:.55;margin-right:8px;text-transform:uppercase;letter-spacing:.1em}
+  .tab{background:transparent;border:1px solid rgba(255,255,255,.2);color:#ddd;padding:6px 11px;cursor:pointer;font:inherit;transition:all .18s}
+  .tab.on{background:var(--accent);border-color:var(--accent);color:#fff}
+  .tab:hover{border-color:var(--accent)}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 clamp(22px,6vw,84px)}
+  nav.site{display:flex;justify-content:space-between;align-items:center;padding:26px 0}
+  nav.site .mark{font-family:var(--font-display);font-weight:800;font-size:22px}
+  nav.site .mark i{color:var(--accent);font-style:normal}
+  nav.site ul{display:flex;gap:26px;list-style:none;font-size:12px;text-transform:uppercase;letter-spacing:.14em;font-weight:600}
+  nav.site a{color:var(--color-text-muted);text-decoration:none}nav.site a:hover{color:var(--accent)}
+
+  .heroband{min-height:calc(100vh - 44px);display:flex;flex-direction:column}
+  .hero{flex:1;display:grid;grid-template-columns:1fr minmax(320px,44%);gap:clamp(28px,4.5vw,56px);align-items:center;padding:20px 0 40px;position:relative}
+  .col-copy{position:relative;z-index:2;display:flex;flex-direction:column;justify-content:center}
+
+  .eyebrow{font-size:13px;letter-spacing:.24em;text-transform:uppercase;font-weight:700;color:var(--accent);
+    display:flex;align-items:center;gap:14px;margin-bottom:30px}
+  .eyebrow::before{content:"";width:34px;height:2px;background:var(--accent)}
+
+  h1.sig{font-family:var(--font-display);font-weight:var(--sig-weight);line-height:1.0;letter-spacing:-.02em;
+    font-size:clamp(2.4rem,6.2vw,5.4rem);margin-bottom:32px}
+  h1.sig .ln{display:block;white-space:nowrap}
+  /* the accentable word */
+  .hw{transition:all .2s}
+  .subtitle{color:var(--color-text-dim);max-width:44ch;font-size:clamp(1.05rem,1.6vw,1.35rem);line-height:1.5;margin-bottom:32px}
+
+  .engage{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+  .wayin{font-size:12.5px;text-transform:uppercase;letter-spacing:.16em;font-weight:600;color:var(--color-text-muted)}
+  .wayin a{color:var(--color-text);text-decoration:none;border-bottom:2px solid var(--accent);padding-bottom:3px}
+  .cta-btn{display:none;background:var(--accent);color:#fff;font-weight:700;font-size:13px;letter-spacing:.08em;
+    text-transform:uppercase;padding:14px 22px;text-decoration:none;transition:background .18s}
+  .cta-btn:hover{background:var(--accent-hover)}
+  .statustag{display:inline-flex;align-items:center;gap:9px;background:var(--color-text);color:var(--color-bg);
+    padding:10px 15px;font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;margin-top:30px;width:max-content}
+  .statustag .dot{width:8px;height:8px;background:var(--accent);border-radius:50%;animation:pulse 2s ease-in-out infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+
+  .col-photo{position:relative;z-index:1;display:flex;height:100%}
+  .accent-panel{display:none;position:absolute;background:var(--accent);z-index:0}
+  .photo{position:relative;overflow:hidden;border:1px solid var(--color-border);width:100%;min-height:56vh;z-index:1;
+    box-shadow:0 30px 60px -18px rgba(0,0,0,.5)}
+  .photo .img{position:absolute;inset:0;background:
+    repeating-linear-gradient(135deg,color-mix(in srgb,var(--accent) 12%,transparent) 0 2px,transparent 2px 12px),
+    linear-gradient(150deg,#e9ebf0,#e2e4ea 45%,#ece9e2)}
+  .photo.duo .img{background:linear-gradient(160deg,color-mix(in srgb,var(--accent) 45%,#0d1526),var(--accent-deep) 55%,#0b111f)}
+  .photo .cap{position:absolute;bottom:12px;left:12px;font-size:11px;text-transform:uppercase;letter-spacing:.1em;font-weight:600;
+    color:#12245a;background:rgba(255,255,255,.86);padding:6px 10px;z-index:2}
+  .photo.duo .cap{color:#eaf0ff;background:rgba(11,17,31,.6)}
+
+  .hero-ticker{background:#141416;color:#f5f3ee;padding:18px 0;overflow:hidden}
+  .hero-ticker .track{display:flex;width:max-content;animation:slide 30s linear infinite;align-items:center}
+  .hero-ticker:hover .track{animation-play-state:paused}
+  .tick{font-family:var(--font-display);font-weight:800;font-size:clamp(1.3rem,3vw,2.2rem);letter-spacing:-.01em;
+    color:#f5f3ee;opacity:.4;text-decoration:none;padding:0 .2em}
+  .tick:hover{opacity:1;color:var(--accent)}
+  .sep{color:var(--accent);opacity:.6;padding:0 .05em;font-size:1.2rem}
+  @keyframes slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+  .note{position:fixed;bottom:64px;left:14px;z-index:9999;font-family:var(--font-body);font-size:12px;
+    background:rgba(20,20,24,.9);color:#fff;padding:8px 12px;max-width:340px;line-height:1.45}
+  .note b{color:#ffb59f}
+
+  /* ============ ACCENT MODES ============ */
+  /* A · Spark — accent only on eyebrow / link / dot (headline stays ink) */
+  /* B · Accent word — one headline word takes the accent color */
+  .mode-b .hw{color:var(--accent)}
+  /* C · Marker block — the word sits in a solid accent box */
+  /* marker hugs the whole first line, tight to the glyphs */
+  .mode-c .hw{display:inline-block;background:var(--accent);color:#fff;padding:.05em .16em;line-height:.9;margin-left:-.1em}
+  /* D · Accent field — portrait on a big accent panel + solid accent CTA */
+  .mode-d .accent-panel{display:block;inset:26px -26px -26px 26px}
+  .mode-d .photo{border-color:transparent}
+  .mode-d .wayin{display:none}
+  .mode-d .cta-btn{display:inline-block}
+  .mode-d .photo{--dummy:0}
+  /* E · Bold — accent word + accent CTA + accent rule under headline */
+  .mode-e .hw{color:var(--accent)}
+  .mode-e h1.sig{position:relative;padding-bottom:22px}
+  .mode-e h1.sig::after{content:"";position:absolute;left:0;bottom:0;width:120px;height:8px;background:var(--accent)}
+  .mode-e .wayin{display:none}
+  .mode-e .cta-btn{display:inline-block}
+
+  #cs{position:fixed;bottom:12px;right:12px;z-index:9999;background:rgba(20,20,24,.9);padding:9px 11px;display:flex;gap:7px;align-items:center;font-family:var(--font-body);font-size:11px;color:#fff}
+  #cs .sw{width:20px;height:20px;border-radius:50%;border:2px solid transparent;cursor:pointer;padding:0}
+  #cs .sw.on{border-color:#fff}
+
+  @media(max-width:860px){nav.site ul{display:none}.hero{grid-template-columns:1fr;gap:24px}.col-photo{order:-1}.photo{min-height:40vh}}
+</style>
+</head>
+<body>
+
+<div id="tabs">
+  <span class="brand">011 · hero accent</span>
+  <button class="tab" onclick="mode('a',event)">A · Spark</button>
+  <button class="tab" onclick="mode('b',event)">B · Accent word</button>
+  <button class="tab on" onclick="mode('c',event)">C · Marker block</button>
+  <button class="tab" onclick="mode('d',event)">D · Accent field</button>
+  <button class="tab" onclick="mode('e',event)">E · Bold rule</button>
+</div>
+
+<div class="heroband">
+  <div class="wrap" style="flex:1;display:flex;flex-direction:column">
+    <nav class="site"><div class="mark">Monty<i>.</i></div>
+      <ul><li><a href="#">Building</a></li><li><a href="#">Work</a></li><li><a href="#">Things I love</a></li><li><a href="#">Writing</a></li></ul></nav>
+
+    <div class="hero mode-c" id="hero">
+      <div class="col-copy">
+        <div class="eyebrow">Founder of Prometheus</div>
+        <h1 class="sig"><span class="ln"><span class="hw">Create Order</span></span><span class="ln">from Chaos</span></h1>
+        <p class="subtitle">I build companies and write about what I am learning. A record of what I am making and the few things I am proud of.</p>
+        <div class="engage">
+          <p class="wayin">I write monthly. <a href="#">Join Monty Monthly →</a></p>
+          <a class="cta-btn" href="#">Join Monty Monthly →</a>
+        </div>
+        <div class="statustag"><span class="dot"></span>Currently — building Prometheus</div>
+      </div>
+      <div class="col-photo">
+        <div class="accent-panel"></div>
+        <div class="photo duo"><div class="img"></div><span class="cap">Large hero portrait</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-ticker"><div class="track" id="tk"></div></div>
+</div>
+
+<div class="note" id="note"></div>
+
+<div id="cs"><span style="opacity:.6">accent</span><span id="sw-row"></span></div>
+
+<script>
+  const NOTES={
+    a:'<b>A · Spark</b> — accent only as eyebrow, link underline, status dot. Ink/black carries the hero; accent is a spark. Most restrained / classic.',
+    b:'<b>B · Accent word</b> — one word ("Order") takes the accent. Cheap, effective, ties the color to the idea.',
+    c:'<b>C · Marker block</b> — that word sits in a solid accent box. Bold, editorial, very on-brand for "order from chaos".',
+    d:'<b>D · Accent field</b> — the portrait sits on a big accent panel + a solid accent CTA button. Accent becomes a real color field. Most assertive.',
+    e:'<b>E · Bold rule</b> — accent word + a heavy accent underline bar + accent CTA. Confident, graphic, brochure-like.'
+  };
+  function mode(m,e){document.getElementById('hero').className='hero mode-'+m;
+    document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));e.target.classList.add('on');
+    document.getElementById('note').innerHTML=NOTES[m];}
+
+  // accent swatches
+  const ACCENTS={vermilion:['#e5411f','#c8381a','#a52d13','rgba(229,65,31,.32)'],cobalt:['#1a4fd6','#1740ad','#14328a','rgba(26,79,214,.32)'],
+    emerald:['#0a8f5b','#0a7a4e','#075f3d','rgba(10,143,91,.3)'],violet:['#5a2bd8','#4a22b4','#3a1a8f','rgba(90,43,216,.32)'],magenta:['#c81d6b','#a91659','#841145','rgba(200,29,107,.3)']};
+  function setAccent(n){const[a,h,d,g]=ACCENTS[n];const r=document.documentElement.style;
+    r.setProperty('--accent',a);r.setProperty('--accent-hover',h);r.setProperty('--accent-deep',d);r.setProperty('--accent-glow',g);
+    document.querySelectorAll('#sw-row .sw').forEach(s=>s.classList.toggle('on',s.dataset.a===n));}
+  const row=document.getElementById('sw-row');
+  Object.entries(ACCENTS).forEach(([n,c])=>{const b=document.createElement('button');b.className='sw';b.dataset.a=n;b.title=n;b.style.background=c[0];b.onclick=()=>setAccent(n);row.appendChild(b);});
+
+  // ticker
+  const parts=['Building','Work','Writing','Things I Love','Uses'];const tk=document.getElementById('tk');
+  function grp(){const f=document.createDocumentFragment();parts.forEach(p=>{const a=document.createElement('a');a.className='tick';a.textContent=p;a.href='#';const s=document.createElement('span');s.className='sep';s.textContent='·';f.appendChild(a);f.appendChild(s);});return f;}
+  tk.appendChild(grp());tk.appendChild(grp());
+
+  document.getElementById('note').innerHTML=NOTES.c;
+  setAccent('vermilion');
+</script>
+</body>
+</html>
