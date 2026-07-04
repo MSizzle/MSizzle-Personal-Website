@@ -232,9 +232,9 @@ Plans:
 
 **Wave 2** *(parallel primitives + islands; depend on 01)*
 
-- [ ] 17.4-02-PLAN.md — Static primitives: RailBox (D-05), Photo placeholder (D-07), CredibilityStrip (D-11)
-- [ ] 17.4-03-PLAN.md — Motion islands: ScrollReveals IntersectionObserver toggler + PhotoMarquee (D-07/D-08)
-- [ ] 17.4-04-PLAN.md — Control islands: MontyMonthlyCarousel arrows+dots+scroll-sync (D-09) + sticky Subscribe mini-nav (D-10/D-13)
+- [x] 17.4-02-PLAN.md — Static primitives: RailBox (D-05), Photo placeholder (D-07), CredibilityStrip (D-11)
+- [x] 17.4-03-PLAN.md — Motion islands: ScrollReveals IntersectionObserver toggler + PhotoMarquee (D-07/D-08)
+- [x] 17.4-04-PLAN.md — Control islands: MontyMonthlyCarousel arrows+dots+scroll-sync (D-09) + sticky Subscribe mini-nav (D-10/D-13)
 
 **Wave 3** *(parallel reskins; depend on Wave 2)*
 
@@ -314,5 +314,5 @@ Phases execute in numeric order: 14 -> 15 -> 16 -> 17 -> 18
 | 17.1. Homepage Rebuild | v3.0 | 4/4 | Complete    | 2026-07-02 |
 | 17.2. Site Information Architecture | v3.0 | 4/4 | Complete    | 2026-07-02 |
 | 17.3. Portfolio | v3.0 | 2/2 | Complete    | 2026-07-02 |
-| 17.4. Photo-Forward Homepage Restyle | v3.0 | 1/9 | In Progress|  |
+| 17.4. Photo-Forward Homepage Restyle | v3.0 | 4/9 | In Progress|  |
 | 18. v3.0 QA, Perf Gate & Alias Swap | v3.0 | 4/7 | In Progress|  |
