@@ -17,38 +17,32 @@ vi.mock("next/link", () => ({
   },
 }));
 
-// Mock SectionLabel: renders children in a div
-vi.mock("@/components/v3/section-label", () => ({
-  SectionLabel: function SectionLabelMock({
-    children,
-  }: {
-    children: React.ReactNode;
-  }) {
-    return React.createElement("div", { "data-testid": "section-label" }, children);
+// Mock RailBox: renders num and label so the component can mount
+vi.mock("@/components/home/rail-box", () => ({
+  RailBox: function RailBoxMock({ num, label }: { num: string; label: string }) {
+    return React.createElement(
+      "div",
+      { "data-testid": "rail-box", "data-num": num },
+      label
+    );
   },
 }));
 
-// Mock Button: renders children in an <a> so href is assertable via getAllByRole("link")
-vi.mock("@/components/v3/button", () => ({
-  Button: function ButtonMock({
-    children,
-    href,
-    ...props
+// Mock Photo: renders a div so the component can mount without canvas/image setup
+vi.mock("@/components/home/photo", () => ({
+  Photo: function PhotoMock({
+    caption,
+    aspectRatio,
   }: {
-    children: React.ReactNode;
-    href?: string;
-    [key: string]: unknown;
+    caption?: string;
+    aspectRatio?: string;
   }) {
-    return React.createElement("a", { href, ...props }, children);
+    return React.createElement("div", {
+      "data-testid": "photo",
+      "data-caption": caption,
+      "data-aspect": aspectRatio,
+    });
   },
-}));
-
-// Mock cn utility: join truthy class names
-vi.mock("@/utils/cn", () => ({
-  cn: (...args: unknown[]) =>
-    (args as (string | false | null | undefined)[])
-      .filter(Boolean)
-      .join(" "),
 }));
 
 afterEach(() => {
@@ -83,7 +77,7 @@ describe("SectionWork (Phase 17.3 SC-2)", () => {
   it("SC-2.2: portfolio section contains kicker SELECTED", async () => {
     const { SectionWork } = await import("@/components/home/section-work");
     render(React.createElement(SectionWork));
-    // Use exact string match -- /SELECTED/i would also hit "Selected Work" in SectionLabel
+    // Use exact string match -- /SELECTED/i would also hit "Selected work" in RailBox
     expect(screen.getByText("SELECTED")).toBeDefined();
   });
 
