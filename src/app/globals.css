@@ -819,6 +819,44 @@ body.no-motion .shadowed .photo {
   }
 }
 
+/* ── Structural container (D-03) ── */
+/* Used by all beat section components as the centering/padding wrapper.
+   Full-bleed elements (marquee, photo rows) live OUTSIDE .wrap in their
+   parent band section. */
+.wrap {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 clamp(22px, 6vw, 88px);
+}
+
+/* ── Footer selective line (D-12) ── */
+.selective {
+  font-family: var(--font-display);
+  font-weight: var(--sig-weight);
+  font-size: clamp(1.6rem, 2.9vw, 2.2rem);
+  max-width: 22ch;
+  line-height: 1.14;
+  margin-bottom: 44px;
+}
+.selective b {
+  color: var(--accent);
+}
+
+/* ── Footer copyright / colophon mark (D-12) ── */
+.footmark {
+  margin-top: 22px;
+  font-family: var(--font-display);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+/* ── Footer site element (D-12) ── */
+footer.site {
+  padding: var(--band-pad) 0 clamp(40px, 6vw, 70px);
+}
+
 /* ── Responsive overrides ── */
 @media (max-width: 860px) {
   .beat-grid    { grid-template-columns: 1fr; gap: 20px; }
