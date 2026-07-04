@@ -1,39 +1,40 @@
 @import "tailwindcss";
 
 @theme inline {
-  /* Pumpkin Amber palette — v3 single fixed theme (no dark mode)
-     bright amber field · warm near-black ink · teal DEMOTED to accent.
-     Supersedes both the documented "Crimson Poster" and the prior dark "Crimson Line". */
-  --color-bg:             #ff7a14;             /* Pumpkin Amber — main background */
-  --color-bg-2:           #f26f0e;             /* deeper amber — alternate section bands */
-  --color-surface:        #2a1808;             /* Roasted Cocoa — dark panels / cards / photo frames */
-  --color-surface-2:      #e8e5da;             /* Soft Linen — light cards / inverse panels */
-  --color-border:         rgba(42,24,8,0.18);
-  --color-border-strong:  rgba(42,24,8,0.40);
+  /* Ink & Vermilion palette — v3 single fixed theme (no dark mode)
+     near-white paper field · near-black ink · vermilion accent.
+     Replaces Pumpkin Amber (rejected 2026-07-03); accent upgraded
+     from cobalt to vermilion for photo-forward restyle (D-01, 2026-07-04). */
+  --color-bg:             #faf9f7;             /* Near-white paper — main background */
+  --color-bg-2:           #f0f1f3;             /* Subtle cool-gray — alternate section bands */
+  --color-surface:        #17171a;             /* Near-black — dark panels / cards / photo frames */
+  --color-surface-2:      #ffffff;             /* White — light cards / inverse panels */
+  --color-border:         rgba(23,23,23,0.15);
+  --color-border-strong:  rgba(23,23,23,0.32);
 
-  /* Ink — warm near-black on amber + a cream for text on dark surfaces */
-  --color-text:           #2a1808;             /* Roasted Cocoa — display + body on amber */
-  --color-text-dim:       rgba(42,24,8,0.72);
-  --color-text-muted:     rgba(42,24,8,0.55);
-  --color-text-inverse:   #f7efe6;             /* Vanilla Cream — text on dark surfaces */
+  /* Ink — near-black on paper + near-white for text on dark surfaces */
+  --color-text:           #171717;             /* Near-black ink — display + body on paper */
+  --color-text-dim:       rgba(23,23,23,0.72);
+  --color-text-muted:     rgba(23,23,23,0.60); /* 0.60 for WCAG contrast (A11y 18-02) */
+  --color-text-inverse:   #f7f5f0;             /* Near-white — text on dark surfaces */
 
-  /* Accent — teal, used SPARINGLY (line, dots, hover, tiny marks) */
-  --accent:               #0c6b74;
-  --accent-hover:         #0a565e;
-  --accent-deep:          #c9531c;             /* Terracotta — warm support / section bands / sig shadow */
-  --accent-glow:          rgba(12,107,116,0.40);
+  /* Accent — vermilion, used for marker block, links, highlights */
+  --accent:               #e5411f;
+  --accent-hover:         #c8381a;
+  --accent-deep:          #a52d13;
+  --accent-glow:          rgba(229,65,31,0.32);
 
   /* --color-* aliases so Tailwind v4 emits accent utilities (text-accent,
      bg-accent, border-accent, border-l-accent). The bare --accent token is not
      in the --color-* namespace, so those utilities would otherwise generate
      nothing (code review WR-01). */
-  --color-accent:         #0c6b74;
-  --color-accent-hover:   #0a565e;
-  --color-accent-deep:    #c9531c;
+  --color-accent:         #e5411f;
+  --color-accent-hover:   #c8381a;
+  --color-accent-deep:    #a52d13;
 
-  /* Blob atmosphere (dark glossy + teal rim, on the amber stage) */
-  --blob-core:            #2a1808;
-  --blob-rim:             #0c6b74;
+  /* Blob atmosphere (dark glossy + vermilion rim) */
+  --blob-core:            #17171a;
+  --blob-rim:             #e5411f;
 
   /* v3 type scale (translated from prototype :root to @theme token names) */
   --text-xs:   0.72rem;
@@ -70,9 +71,9 @@ a {
   text-underline-offset: 3px;
 }
 
-/* ── Signature display treatment (D-06) ──
-   .sig  = roasted-cocoa ink fill + hard cream drop shadow, lifted off the amber field
-   .sig-out = outline variant (teal stroke, transparent fill) */
+/* ── Signature display treatment ──
+   .sig  = near-black ink fill + hard vermilion drop shadow
+   .sig-out = outline variant (vermilion stroke, transparent fill) */
 .sig {
   color: var(--sig);
   text-shadow: var(--sig-shadow);
@@ -86,8 +87,8 @@ a {
 
 /* Sig vars — declared outside @theme inline so they can reference tokens safely */
 :root {
-  --sig:        var(--color-text);              /* roasted-cocoa ink fill */
-  --sig-shadow: 0.055em 0.055em 0 var(--color-text-inverse);  /* hard cream lift */
+  --sig:        var(--color-text);              /* near-black ink fill */
+  --sig-shadow: 0.055em 0.055em 0 var(--accent); /* hard vermilion lift (D-01) */
 }
 
 /* ── Marquee keyframe (used by Marquee component) ── */
@@ -95,8 +96,7 @@ a {
   to { transform: translateX(-50%); }
 }
 
-/* ── Prose (essay reading view) ──
-   Reskinned to Crimson Poster per site.css lines 82-90. */
+/* ── Prose (essay reading view) ── */
 .prose {
   max-width: 68ch;
   font-size: 1.18rem;
@@ -142,10 +142,9 @@ a {
 }
 
 .prose code {
-  background: rgba(10, 5, 3, 0.12);
+  background: rgba(23,23,23,0.10);
   padding: 0.125rem 0.25rem;
   border-radius: 0.125rem;
   font-weight: 400;
   font-family: var(--font-mono);
 }
-
