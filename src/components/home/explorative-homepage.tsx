@@ -1,4 +1,7 @@
-import Link from "next/link";
+import { Hero } from "./hero";
+import { CredibilityStrip } from "./credibility-strip";
+import { StickyNav } from "./sticky-nav";
+import { ScrollReveals } from "./scroll-reveals";
 import { SectionBuilding } from "./section-building";
 import { SectionWork } from "./section-work";
 import { SectionLoves } from "./section-loves";
@@ -6,56 +9,60 @@ import { SectionNewsletter } from "./section-newsletter";
 import { SectionFooter } from "./section-footer";
 
 /**
- * ExplorativeHomepage — personal-brand narrative arc orchestrator (Server Component).
+ * ExplorativeHomepage: sketch-010 band-sequence orchestrator (Server Component).
  *
- * Renders a text-forward hero anchored on the guiding principle "Create Order
- * from Chaos" (professional identity moved to the subtitle), followed by the
- * six-section narrative arc. No WebGL gate, no device detection, no client hooks.
+ * Band order per D-03:
+ *   hero (light) -> credibility strip (light) -> Building (dark) -> Work (light)
+ *   -> Things I Love (dark) -> Writing (light) -> footer (dark)
  *
- * Phase 17.1 (Plan 01): blob gate removed; hero replaced with hardcoded JSX copy.
- * Phase 17.1 (Plan 02): SectionWork + SectionLoves added; writing section retired;
- *   final D-06 arc order: hero -> Building -> Work -> Loves -> Newsletter -> Footer.
+ * Islands mounted here:
+ *   StickyNav (D-10): fixed island, z-9000, Subscribe CTA past hero fold.
+ *   ScrollReveals (D-08): headless IO island toggling .in on .reveal/.slide/.shadowed.
  *
- * D-10: homepage copy is fully hardcoded JSX (revalidate=false in page.tsx).
+ * Motion is scroll-triggered + ambient only; no GL or heavy scroll stack (D-08).
+ * page.tsx remains a static Server Component (revalidate=false, Person JSON-LD, D-13).
  */
 export function ExplorativeHomepage() {
   return (
-    <div className="personal-homepage min-h-screen bg-bg">
-      {/* Hero section — full viewport height, text-forward */}
-      <section className="min-h-dvh flex flex-col justify-center px-[8vw]">
-        {/* Guiding principle — D-11 (revised): hero leads with ethos, not job title; no em dashes */}
-        <h1 className="font-display font-bold uppercase sig text-[clamp(2.8rem,11vw,8rem)] leading-[0.9] tracking-[-0.03em]">
-          Create Order from Chaos
-        </h1>
+    <div className="min-h-screen bg-bg">
+      {/* Fixed islands: mounted first so they overlay all bands */}
+      <StickyNav />
+      <ScrollReveals />
 
-        {/* One-liner subtitle — carries the professional identity that moved out of the headline */}
-        <p
-          className="mt-6 max-w-[54ch] text-text-dim font-display"
-          style={{ fontSize: "clamp(1rem, 2vw, 1.4rem)" }}
-        >
-          Founder of Prometheus. I build companies and write about what I am learning.
-        </p>
+      {/* Band 1: Hero (light) - Hero component owns its own section.band wrapper */}
+      <Hero />
 
-        {/* Woven engagement — D-07/D-09: prose invitation, not a button */}
-        <p className="mt-8 font-mono text-xs uppercase tracking-[0.12em] text-text-muted">
-          I write about building monthly.{" "}
-          <Link
-            href="https://montymonthly.substack.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-accent transition-colors duration-150"
-          >
-            Join Monty Monthly
-          </Link>
-        </p>
+      {/* Band 2: Credibility strip (light) */}
+      <section className="band beat">
+        <div className="proof">
+          <CredibilityStrip />
+        </div>
       </section>
 
-      {/* D-06 narrative arc: who (hero) -> what I'm building -> selected work -> things I love -> newsletter -> footer */}
-      <SectionBuilding />
-      <SectionWork />
-      <SectionLoves />
-      <SectionNewsletter />
-      <SectionFooter />
+      {/* Band 3: Building (dark) */}
+      <section className="band band-dark beat" id="building">
+        <SectionBuilding />
+      </section>
+
+      {/* Band 4: Work (light) */}
+      <section className="band beat" id="work">
+        <SectionWork />
+      </section>
+
+      {/* Band 5: Things I Love (dark) */}
+      <section className="band band-dark beat" id="loves">
+        <SectionLoves />
+      </section>
+
+      {/* Band 6: Writing / Monty Monthly (light) */}
+      <section className="band beat" id="writing">
+        <SectionNewsletter />
+      </section>
+
+      {/* Band 7: Footer (dark) */}
+      <section className="band band-dark">
+        <SectionFooter />
+      </section>
     </div>
   );
 }
