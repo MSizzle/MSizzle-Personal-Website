@@ -1,105 +1,124 @@
 import { describe, it, expect, vi, afterEach } from "vitest";
-import { render, screen, act, cleanup } from "@testing-library/react";
+import { render, cleanup } from "@testing-library/react";
 import React from "react";
 
 // Mock motion/react — no real animation in test env
 vi.mock("motion/react", () => ({ useReducedMotion: () => false }));
 
-// Mock CanvasLoader so the test doesn't need WebGL
-vi.mock("@/components/home/canvas-loader", () => ({
-  CanvasLoader: function CanvasLoaderMock() {
-    return React.createElement("div", { "data-testid": "canvas-loader" });
+// Mock Hero: renders its own light hero band
+vi.mock("@/components/home/hero", () => ({
+  Hero: function HeroMock() {
+    return React.createElement("section", { "data-testid": "hero" });
   },
 }));
 
-// Mock FallbackPoster so the test doesn't need next/image
-vi.mock("@/components/home/fallback-poster", () => ({
-  FallbackPoster: function FallbackPosterMock() {
-    return React.createElement("div", { "data-testid": "fallback-poster" });
+// Mock CredibilityStrip
+vi.mock("@/components/home/credibility-strip", () => ({
+  CredibilityStrip: function CredibilityStripMock() {
+    return React.createElement("div", { "data-testid": "credibility-strip" });
+  },
+}));
+
+// Mock StickyNav: must render something so we can assert it mounts
+vi.mock("@/components/home/sticky-nav", () => ({
+  StickyNav: function StickyNavMock() {
+    return React.createElement("div", { "data-testid": "sticky-nav" });
+  },
+}));
+
+// Mock ScrollReveals: headless but must render a node for assertion
+vi.mock("@/components/home/scroll-reveals", () => ({
+  ScrollReveals: function ScrollRevealsMock() {
+    return React.createElement("div", { "data-testid": "scroll-reveals" });
   },
 }));
 
 // Mock all section components — not under test here
 vi.mock("@/components/home/section-building", () => ({
   SectionBuilding: function SectionBuildingMock() {
-    return null;
+    return React.createElement("span", null, "Building content");
   },
 }));
-vi.mock("@/components/home/section-writing", () => ({
-  SectionWriting: function SectionWritingMock() {
-    return null;
+vi.mock("@/components/home/section-work", () => ({
+  SectionWork: function SectionWorkMock() {
+    return React.createElement("span", null, "Work content");
+  },
+}));
+vi.mock("@/components/home/section-loves", () => ({
+  SectionLoves: function SectionLovesMock() {
+    return React.createElement("span", null, "Loves content");
   },
 }));
 vi.mock("@/components/home/section-newsletter", () => ({
   SectionNewsletter: function SectionNewsletterMock() {
-    return null;
+    return React.createElement("span", null, "Newsletter content");
   },
 }));
 vi.mock("@/components/home/section-footer", () => ({
   SectionFooter: function SectionFooterMock() {
-    return null;
+    return React.createElement("span", null, "Footer content");
   },
 }));
 
-// Standard matchMedia mock helper (jsdom does not define window.matchMedia)
-function mockMatchMedia(coarse: boolean) {
-  Object.defineProperty(window, "matchMedia", {
-    writable: true,
-    configurable: true,
-    value: (query: string) => ({
-      matches: coarse ? query === "(pointer: coarse)" : false,
-      media: query,
-      onchange: null,
-      addListener: vi.fn(),
-      removeListener: vi.fn(),
-      addEventListener: vi.fn(),
-      removeEventListener: vi.fn(),
-      dispatchEvent: vi.fn(),
-    }),
-  });
-}
-
-describe("ExplorativeHomepage gate (TD-03 + HD-05)", () => {
+describe("ExplorativeHomepage orchestrator (17.4 band structure)", () => {
   afterEach(() => {
-    cleanup(); // unmount all rendered components
+    cleanup();
     vi.restoreAllMocks();
-    // Reset matchMedia to undefined so spies don't bleed between tests
-    Object.defineProperty(window, "matchMedia", {
-      writable: true,
-      configurable: true,
-      value: undefined,
-    });
   });
 
-  it("shows fallback-poster on pointer:coarse (touch device)", async () => {
-    // coarse = true → isTouchOrSmall = true → showCanvas = false
-    mockMatchMedia(true);
+  it("mounts StickyNav island", async () => {
     const { ExplorativeHomepage } = await import(
       "@/components/home/explorative-homepage"
     );
-    await act(async () => {
-      render(React.createElement(ExplorativeHomepage));
-    });
-    expect(screen.getByTestId("fallback-poster")).toBeTruthy();
+    const { getByTestId } = render(React.createElement(ExplorativeHomepage));
+    expect(getByTestId("sticky-nav")).toBeTruthy();
   });
 
-  it("shows fallback-poster when WebGL2 unavailable", async () => {
-    // fine pointer, large screen — but WebGL2 returns null
-    mockMatchMedia(false);
-    // Capture original before spying to avoid infinite recursion
-    const originalCreateElement = document.createElement.bind(document);
-    vi.spyOn(document, "createElement").mockImplementation((tag: string) => {
-      if (tag === "canvas") {
-        return { getContext: () => null } as unknown as HTMLElement;
-      }
-      return originalCreateElement(tag);
-    });
+  it("mounts ScrollReveals island", async () => {
     const { ExplorativeHomepage } = await import(
       "@/components/home/explorative-homepage"
     );
-    await act(async () => {
-      render(React.createElement(ExplorativeHomepage));
-    });
-    expect(screen.getByTestId("fallback-poster")).toBeTruthy();
+    const { getByTestId } = render(React.createElement(ExplorativeHomepage));
+    expect(getByTestId("scroll-reveals")).toBeTruthy();
+  });
+
+  it("band id=building is present on a dark band", async () => {
+    const { ExplorativeHomepage } = await import(
+      "@/components/home/explorative-homepage"
+    );
+    const { container } = render(React.createElement(ExplorativeHomepage));
+    const el = container.querySelector("#building");
+    expect(el).toBeTruthy();
+    expect(el?.className).toContain("band-dark");
+  });
+
+  it("band id=work is present on a light band (no band-dark)", async () => {
+    const { ExplorativeHomepage } = await import(
+      "@/components/home/explorative-homepage"
+    );
+    const { container } = render(React.createElement(ExplorativeHomepage));
+    const el = container.querySelector("#work");
+    expect(el).toBeTruthy();
+    expect(el?.className).not.toContain("band-dark");
+  });
+
+  it("band id=loves is present on a dark band", async () => {
+    const { ExplorativeHomepage } = await import(
+      "@/components/home/explorative-homepage"
+    );
+    const { container } = render(React.createElement(ExplorativeHomepage));
+    const el = container.querySelector("#loves");
+    expect(el).toBeTruthy();
+    expect(el?.className).toContain("band-dark");
+  });
+
+  it("band id=writing is present on a light band (no band-dark)", async () => {
+    const { ExplorativeHomepage } = await import(
+      "@/components/home/explorative-homepage"
+    );
+    const { container } = render(React.createElement(ExplorativeHomepage));
+    const el = container.querySelector("#writing");
+    expect(el).toBeTruthy();
+    expect(el?.className).not.toContain("band-dark");
   });
 });
