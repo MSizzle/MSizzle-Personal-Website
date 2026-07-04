@@ -1,77 +1,70 @@
 import Link from "next/link";
-import { SectionLabel } from "@/components/v3/section-label";
-import { Button } from "@/components/v3/button";
-import { cn } from "@/utils/cn";
+import { RailBox } from "@/components/home/rail-box";
+import { Photo } from "@/components/home/photo";
 
 /**
- * SectionWork — Selected work / portfolio teaser (D-06 section 3).
- * Server Component — no "use client".
- * D-10: copy is fully hardcoded JSX, no Notion fetch, no async/await.
- * D-11: no em dashes; Prometheus link uses rel="noopener noreferrer" per T-17.1-02.
- * D-01 (17.3): big-type Link and Button both target /portfolio (curated portfolio, not the full archive).
- *
- * Note: Items are rendered as direct Link elements (not via BigList) so the external
- * Prometheus link can carry target="_blank" rel="noopener noreferrer" safely.
+ * SectionWork: Selected work beat (D-03/D-05/D-07).
+ * Returns beat CONTENT only (div.wrap > div.beat-grid).
+ * The orchestrator (Plan 08) supplies the outer .band section + id="work".
+ * Server Component only; no client directive.
+ * D-03: token classes only auto-invert with the enclosing band variant.
+ * D-05: RailBox index 02, label "Selected work".
+ * D-07: 2x2 work-grid of slide-in photos alternating from-left/from-right.
+ * D-13 (Phase-17.3 invariants preserved):
+ *   - /portfolio link present with "SELECTED" kicker
+ *   - no link to the projects page
+ *   - Prometheus external anchor keeps rel="noopener noreferrer"
  */
 export function SectionWork() {
   return (
-    <section className="min-h-dvh flex flex-col justify-center px-[8vw] py-[15vh]">
-      <SectionLabel numeral="03">Selected Work</SectionLabel>
+    <div className="wrap">
+      <div className="beat-grid">
+        {/* Left rail */}
+        <div className="reveal">
+          <RailBox num="02" label="Selected work" />
+        </div>
 
-      <p
-        className="mt-4 mb-8 max-w-[52ch] text-text-dim font-display"
-        style={{ fontSize: "clamp(1rem,1.8vw,1.3rem)" }}
-      >
-        A handful of things I have built. More lives at Prometheus.
-      </p>
+        {/* Right column: headline, 2x2 work grid, portfolio link */}
+        <div>
+          <h2 className="reveal">A few things I am proud of.</h2>
 
-      {/* Work items — styled to match BigList visual treatment */}
-      <div className="big-list">
-        {/* External link rendered directly to support rel="noopener noreferrer" */}
-        <Link
-          href="https://prometheus.today"
-          target="_blank"
-          rel="noopener noreferrer"
-          className={cn(
-            "flex items-center justify-between gap-6",
-            "border-t border-border py-[1.4vh]",
-            "font-display font-bold uppercase",
-            "text-[clamp(2rem,9.5vw,8rem)] leading-[1.02] tracking-[-0.03em]",
-            "sig-out",
-            "transition-[color,text-shadow] duration-150",
-            "hover:text-accent hover:[text-shadow:none]",
-            "hover:[-webkit-text-stroke-color:var(--accent)]"
-          )}
-        >
-          <span>Prometheus</span>
-          <span className="font-mono font-normal text-xs tracking-[0.12em] text-text-muted whitespace-nowrap hidden md:inline">
-            CURRENT
-          </span>
-        </Link>
+          {/* 2x2 grid of slide-in photos alternating from-left / from-right */}
+          <div className="work-grid">
+            <div className="shadowed slide from-left">
+              <Photo aspectRatio="3/2.2" caption="Project one · Product · 2025" />
+            </div>
+            <div className="shadowed slide from-right">
+              <Photo aspectRatio="3/2.2" caption="Project two · Build · 2025" />
+            </div>
+            <div className="shadowed slide from-left">
+              <Photo aspectRatio="3/2.2" caption="Project three · Writing · 2024" />
+            </div>
+            <div className="shadowed slide from-right">
+              <Photo aspectRatio="3/2.2" caption="Project four · Talk · 2024" />
+            </div>
+          </div>
 
-        {/* Internal link to portfolio index — last item gets border-b */}
-        <Link
-          href="/portfolio"
-          className={cn(
-            "flex items-center justify-between gap-6",
-            "border-t border-b border-border py-[1.4vh]",
-            "font-display font-bold uppercase",
-            "text-[clamp(2rem,9.5vw,8rem)] leading-[1.02] tracking-[-0.03em]",
-            "sig",
-            "transition-[color,text-shadow] duration-150",
-            "hover:text-accent hover:[text-shadow:none]"
-          )}
-        >
-          <span>Portfolio</span>
-          <span className="font-mono font-normal text-xs tracking-[0.12em] text-text-muted whitespace-nowrap hidden md:inline">
-            SELECTED
-          </span>
-        </Link>
+          {/* Portfolio affordance: D-13 invariant from Phase 17.3 */}
+          <Link href="/portfolio" className="mt-8 inline-flex items-center gap-2 text-text">
+            <span>Portfolio</span>
+            <span className="font-mono text-xs tracking-widest text-text-muted">SELECTED</span>
+          </Link>
+
+          {/* External Prometheus link: T-17.1-02 invariant (rel=noopener noreferrer preserved) */}
+          <p className="body mt-4 text-text-dim">
+            More lives at{" "}
+            <a
+              href="https://prometheus.today"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline"
+            >
+              Prometheus
+            </a>
+            .
+          </p>
+        </div>
       </div>
-
-      <div className="mt-8">
-        <Button href="/portfolio">All work</Button>
-      </div>
-    </section>
+    </div>
   );
 }
