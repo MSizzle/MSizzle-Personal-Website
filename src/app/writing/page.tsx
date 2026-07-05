@@ -1,16 +1,15 @@
-import Image from "next/image";
 import { Fragment } from "react";
 import type { Metadata } from "next";
 import { getPublishedPosts, type BlogPost } from "@/lib/notion";
-import { formatMonthYear } from "@/lib/dates";
+import { fetchMontyMonthlyIssues } from "@/lib/rss/substack";
 import { RuleStrong } from "@/components/editorial/rule-strong";
-import { Rule } from "@/components/editorial/rule";
-import { IntroLink } from "@/components/editorial/intro-link";
-import { ListRow } from "@/components/editorial/list-row";
 import { YearBlock } from "@/components/editorial/year-block";
 import { WritingSubscribeCTA } from "@/components/home-v2/writing-subscribe-cta";
+import { PageHero } from "@/components/v3/page-hero";
+import { Card } from "@/components/v3/card";
+import { NewsletterCarousel } from "@/components/v3/newsletter-carousel";
 
-// ISR — matches /, /events cadence (RESEARCH § Pitfall 9). 30 minutes balances
+// ISR -- matches /, /events cadence (RESEARCH § Pitfall 9). 30 minutes balances
 // fresh Notion-sourced essays against Vercel build minutes on the free tier.
 export const revalidate = 1800;
 
@@ -31,7 +30,7 @@ export const metadata: Metadata = {
 /**
  * Group published posts by the UTC year of `post.date`. Returns a Map sorted
  * descending so iteration order is newest-year-first. Posts missing a date
- * are skipped defensively — `BlogPost.date` is "" when the Notion record has
+ * are skipped defensively -- `BlogPost.date` is "" when the Notion record has
  * no date property set (D-17 carryforward from Phase 10).
  */
 function groupPostsByYear(posts: BlogPost[]): Map<number, BlogPost[]> {
@@ -48,29 +47,22 @@ function groupPostsByYear(posts: BlogPost[]): Map<number, BlogPost[]> {
 }
 
 /**
- * /writing — editorial archive page (ARCH-01).
+ * /writing -- merged essay archive + Monty Monthly surface (D-03, D-04).
  *
- * Layout per handoff §3 + D-13/D-14/D-15 REVISED:
- *   1. The shared editorial nav is rendered globally via `Navigation` (Path 2) —
- *      "Writing" is bolded automatically via the pathname → active-label mapping
- *      there. No inline header is rendered from this page.
- *   2. Title block — 2-col grid: tracked label · "Writing." 120px page title ·
- *      muted blurb with IntroLink to Monty Monthly · 360×480 atmosphere photo
- *      (Patricof09.jpg per D-13). Photo hidden on mobile so the page title
- *      stays above the fold (RESEARCH § Pitfall 6).
- *   3. <RuleStrong />
- *   4. Year-grouped essays via <YearBlock> (Plan 11-01 primitive) — posts come
- *      from Notion getPublishedPosts() grouped client-side by year, sorted desc.
- *      Each essay rendered with <ListRow big> per Phase 9 D-29. Post permalinks
- *      keep the /blog/[slug] shape per D-02 (only the index moves to /writing).
- *   5. <RuleStrong />
- *   6. Inverted-ink Substack-outbound subscribe footer — single styled <a> to
- *      https://montymonthly.substack.com per D-15 REVISED. NOT a markup form,
- *      NOT an in-house subscribe endpoint — the Substack outbound IS the
- *      existing pipeline (mirrors src/app/newsletter/page.tsx:39).
+ * Layout per D-03/D-04 (17.2-03):
+ *   1. PageHero (v3) -- title "Writing", canonical /writing (unchanged)
+ *   2. <RuleStrong />
+ *   3. Year-grouped essays -- YearBlock heading above a photo grid of Cards (D-03)
+ *      Each Card: cover image via /api/notion-cover proxy (D-02), calm color-only
+ *      hover (D-01). Cards link to /blog/[slug] per D-02.
+ *   4. <RuleStrong />
+ *   5. Monty Monthly section -- NewsletterCarousel fed from Substack RSS (D-04)
+ *      /newsletter redirects here (301); no link to /newsletter anywhere.
+ *   6. <RuleStrong />
+ *   7. WritingSubscribeCTA -- Substack outbound CTA
  *
- * Defensive Notion fetch mirrors src/app/page.tsx — a transient Notion API
- * failure renders the page with an empty-state message instead of crashing.
+ * Defensive fetches: both Notion and Substack failures render gracefully with
+ * empty content rather than crashing. (T-16-07, T-17.2-05)
  */
 export default async function WritingPage() {
   let posts: BlogPost[] = [];
@@ -78,67 +70,60 @@ export default async function WritingPage() {
     posts = await getPublishedPosts();
   } catch {}
 
+  const rawIssues = await fetchMontyMonthlyIssues(6);
+  const carouselIssues = rawIssues.map((issue) => ({
+    title: issue.title,
+    date: issue.pubDate,
+    href: issue.link || undefined,
+  }));
+
   const postsByYear = groupPostsByYear(posts);
   const yearEntries = [...postsByYear.entries()];
 
   return (
     <>
-      {/* Title block — handoff §3 padding `160px 160px 100px` desktop / `64px 24px 60px` mobile */}
-      <section className="px-6 pt-16 pb-15 md:px-40 md:pt-40 md:pb-25">
-        <div className="grid grid-cols-1 items-end gap-10 md:grid-cols-[1fr_360px] md:gap-20">
-          <div>
-            <div className="text-label uppercase text-muted">── The Library · 02</div>
-            <h1 className="mt-6 text-page-title uppercase text-ink">Writing.</h1>
-            <p className="mt-10 max-w-[35rem] text-body-lead text-muted">
-              Long-form essays on philosophy, technology, and the texture of an
-              attentive life. Published monthly, sometimes more, never less.
-              Subscribe at{" "}
-              <IntroLink href="/newsletter">Monty Monthly</IntroLink>.
-            </p>
-          </div>
-          <div className="hidden md:block">
-            <div className="relative h-[480px] w-[360px] overflow-hidden bg-rule-strong">
-              <Image
-                src="/MSizzle-website-photos/Patricof09.jpg"
-                alt=""
-                fill
-                sizes="360px"
-                className="object-cover saturate-[0.92]"
-              />
-            </div>
-          </div>
-        </div>
+      {/* PageHero -- v3 title block (replaces atmosphere-photo two-column grid) */}
+      <section className="px-6 md:px-40">
+        <PageHero
+          title="Writing"
+          crumb="Home / Writing"
+          sub="Essays on philosophy, technology, and the texture of an attentive life."
+        />
       </section>
 
       <RuleStrong />
 
-      {/* Year-grouped essays via <YearBlock> (Plan 11-01) */}
+      {/* Year-grouped photo grid of cards (D-03, D-04) */}
       <section className="px-6 md:px-40">
         {yearEntries.length === 0 ? (
-          <div className="py-20 md:py-32">
-            <p className="text-caption text-muted">More essays coming soon.</p>
-          </div>
+          <p className="text-center py-12 text-[var(--color-text-muted)]">
+            No essays yet. Check back soon.
+          </p>
         ) : (
           <div className="-mx-6 md:-mx-40">
             {yearEntries.map(([year, yearPosts], i, arr) => (
               <Fragment key={year}>
                 <YearBlock year={year}>
-                  {yearPosts.map((post) => (
-                    <ListRow
-                      key={post.id}
-                      big
-                      href={`/blog/${post.slug}`}
-                      title={post.title}
-                      extra={post.description}
-                      meta={formatMonthYear(post.date)}
-                    />
-                  ))}
-                </YearBlock>
-                {i < arr.length - 1 && (
-                  <div className="px-6 md:px-40">
-                    <Rule />
+                  {/* Photo grid of Cards (D-03) -- auto-fill minmax 260px */}
+                  <div className="grid [grid-template-columns:repeat(auto-fill,minmax(260px,1fr))] gap-px bg-[var(--color-border)] border border-[var(--color-border)]">
+                    {yearPosts.map((post) => (
+                      <Card
+                        key={post.id}
+                        href={`/blog/${post.slug}`}
+                        title={post.title}
+                        blurb={post.description}
+                        kicker={post.tags?.[0]}
+                        coverSrc={
+                          post.cover
+                            ? `/api/notion-cover?pageId=${post.id}`
+                            : undefined
+                        }
+                        coverAlt={post.cover ? post.title : undefined}
+                      />
+                    ))}
                   </div>
-                )}
+                </YearBlock>
+                {i < arr.length - 1 && <RuleStrong />}
               </Fragment>
             ))}
           </div>
@@ -146,6 +131,22 @@ export default async function WritingPage() {
       </section>
 
       <RuleStrong />
+
+      {/* Monty Monthly section — folded from deleted /newsletter route (D-04).
+          Hidden when the Substack RSS fetch returns nothing so we never render
+          a bare heading over an empty carousel. */}
+      {carouselIssues.length > 0 && (
+        <>
+          <section className="px-6 md:px-40 pb-16">
+            <h3 className="font-mono text-sm uppercase tracking-[0.12em] text-accent mb-[18px]">
+              Monty Monthly
+            </h3>
+            <NewsletterCarousel issues={carouselIssues} />
+          </section>
+
+          <RuleStrong />
+        </>
+      )}
 
       <WritingSubscribeCTA />
     </>

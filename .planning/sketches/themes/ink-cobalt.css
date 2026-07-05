@@ -1,0 +1,46 @@
+/* ───────────────────────────────────────────────────────────
+   v3 — "Ink & Cobalt" (current shipping palette, 2026-07-03)
+   Near-white paper, near-black ink, cobalt accent. Editorial, calm,
+   credible. Mirrors src/app/globals.css tokens so sketches read true.
+   ─────────────────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  /* Canvas — near-white paper */
+  --color-bg:        #faf9f7;
+  --color-bg-2:      #f0f1f3;   /* cool-gray alternate band */
+  --color-surface:   #17171a;   /* near-black — dark panels / photo frames */
+  --color-surface-2: #ffffff;
+
+  /* Cobalt accent */
+  --accent:          #1a4fd6;
+  --accent-hover:    #1740ad;
+  --accent-deep:     #14328a;
+  --accent-glow:     rgba(26,79,214,0.35);
+
+  /* Ink */
+  --color-text:        #171717;
+  --color-text-dim:    rgba(23,23,23,0.72);
+  --color-text-muted:  rgba(23,23,23,0.55);
+  --color-text-inverse:#f7f5f0;
+  --color-border:      rgba(23,23,23,0.14);
+  --color-border-strong: rgba(23,23,23,0.32);
+
+  /* Signature display type — hard cobalt lift (matches globals --sig-shadow) */
+  --sig:        var(--color-text);
+  --sig-shadow: 0.055em 0.055em 0 var(--accent);
+
+  /* Typography */
+  --font-display: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+  --font-sans:    'Space Grotesk', system-ui, -apple-system, sans-serif;
+  --font-mono:    'JetBrains Mono', ui-monospace, 'SF Mono', monospace;
+
+  --space-1: 4px;  --space-2: 8px;  --space-3: 12px; --space-4: 16px;
+  --space-6: 24px; --space-8: 32px; --space-12: 48px; --space-16: 64px;
+  --space-24: 96px; --space-32: 128px;
+
+  --radius-sm: 4px; --radius-md: 10px; --radius-lg: 18px; --radius-full: 9999px;
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast: 0.18s; --dur: 0.6s;
+}

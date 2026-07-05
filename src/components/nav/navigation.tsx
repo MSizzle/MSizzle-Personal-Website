@@ -5,30 +5,33 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { EditorialHeader } from '@/components/home-v2/editorial-header'
 
-// Mobile drawer — unified link set across all routes per Phase 13 mobile-nav fix.
+// Mobile drawer — unified link set across all routes per D-08/D-10.
 // Home is reachable via the "Monty Singer" brand link in the mobile bar (no
 // redundant Home entry in the drawer).
+// Cut routes (/events, /links, /watching) removed per D-08; "Building" renamed
+// to "Projects" per D-08. /prometheus remains as secondary route.
 const MOBILE_LINKS = [
-  { href: '/projects', label: 'Building' },
-  { href: '/writing',  label: 'Writing'  },
-  { href: '/events',   label: 'Events'   },
-  { href: '/about',    label: 'About'    },
-  { href: '/links',    label: 'Links'    },
+  { href: '/projects',   label: 'Projects'    },
+  { href: '/writing',    label: 'Writing'     },
+  { href: '/about',      label: 'About'       },
+  { href: '/uses',       label: 'Uses'        },
+  { href: '/prometheus', label: 'Prometheus'  },
 ]
 
 export function Navigation() {
   const [open, setOpen] = useState(false)
   const pathname = usePathname()
 
-  // Derive the active EditorialHeader label from pathname (Path 2 — chrome
-  // unification). EditorialHeader is now globally rendered here; on routes
-  // not in this mapping the prop is undefined so no nav link gets bolded.
-  const activeLabel: 'Building' | 'Writing' | 'Events' | 'About' | 'Links' | undefined =
-    pathname === '/projects' ? 'Building'
+  // Derive the active EditorialHeader label from pathname (D-08 lean nav).
+  // EditorialHeader is globally rendered here; on routes not in this mapping
+  // the prop is undefined so no nav link gets bolded.
+  // Cut routes (/events, /links, /watching) removed per D-08/D-10.
+  // "Building" renamed to "Projects" per D-08.
+  const activeLabel: 'Projects' | 'Writing' | 'About' | 'Uses' | undefined =
+    pathname === '/projects' ? 'Projects'
     : pathname === '/writing' || pathname.startsWith('/blog') ? 'Writing'
-    : pathname === '/events' ? 'Events'
     : pathname === '/about' ? 'About'
-    : pathname === '/links' ? 'Links'
+    : pathname === '/uses' ? 'Uses'
     : undefined
 
   return (

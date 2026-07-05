@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sketch 001 — Dark Kinetic Home</title>
+<link rel="stylesheet" href="../themes/default.css">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--color-bg);color:var(--color-text);
+    font-family:var(--font-sans);line-height:1.4;
+    padding-top:46px;overflow-x:hidden;cursor:default;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;text-decoration:none}
+
+  /* ── Variant tab bar ───────────────────────────── */
+  #variant-nav{
+    position:fixed;top:0;left:0;right:0;z-index:9998;
+    background:rgba(8,8,11,0.85);backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--color-border);
+    padding:8px 14px;display:flex;gap:6px;align-items:center;
+    font-family:var(--font-mono);font-size:var(--text-xs);
+  }
+  #variant-nav .brand{color:var(--color-text-muted);margin-right:10px;letter-spacing:0.08em}
+  .variant-tab{
+    background:transparent;border:1px solid var(--color-border);
+    color:var(--color-text-dim);padding:5px 11px;border-radius:var(--radius-full);
+    font-family:var(--font-mono);font-size:var(--text-xs);cursor:pointer;
+    transition:all var(--dur-fast) var(--ease-out);
+  }
+  .variant-tab:hover{border-color:var(--color-border-strong);color:var(--color-text)}
+  .variant-tab.active{background:var(--color-text);color:var(--color-bg);border-color:var(--color-text)}
+
+  /* ── Variants ──────────────────────────────────── */
+  .variant{display:none}
+  .variant.active{display:block}
+
+  /* ── Cursor-reactive gradient mesh (Lusion-ish) ── */
+  #mesh{
+    position:fixed;width:70vmax;height:70vmax;left:0;top:0;
+    transform:translate(-50%,-50%);pointer-events:none;z-index:0;
+    background:radial-gradient(circle at center,
+      var(--accent-glow) 0%, rgba(255,77,46,0.18) 28%, transparent 62%);
+    filter:blur(40px);opacity:0.9;transition:opacity .4s;mix-blend-mode:screen;
+  }
+  /* ── Film grain ─────────────────────────────────── */
+  #grain{
+    position:fixed;inset:0;pointer-events:none;z-index:1;opacity:0.06;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .content{position:relative;z-index:2}
+
+  /* ── Reveal-on-scroll ───────────────────────────── */
+  .reveal{opacity:0;transform:translateY(38px);transition:opacity var(--dur-slow) var(--ease-out),transform var(--dur-slow) var(--ease-out)}
+  .reveal.in{opacity:1;transform:none}
+
+  /* ── Shared bits ────────────────────────────────── */
+  .wrap{max-width:1180px;margin:0 auto;padding:0 clamp(20px,5vw,64px)}
+  .mono{font-family:var(--font-mono);font-size:var(--text-xs);letter-spacing:0.14em;text-transform:uppercase;color:var(--color-text-muted)}
+  .grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;font-family:var(--font-mono);
+    font-size:var(--text-sm);padding:13px 22px;border-radius:var(--radius-full);
+    border:1px solid var(--color-border-strong);background:transparent;color:var(--color-text);
+    cursor:pointer;transition:all var(--dur-fast) var(--ease-out);will-change:transform;
+  }
+  .btn:hover{background:var(--color-text);color:var(--color-bg);transform:scale(1.03)}
+  .btn-fill{background:var(--color-text);color:var(--color-bg)}
+  .btn-fill:hover{background:transparent;color:var(--color-text)}
+
+  /* =========================================================
+     VARIANT A — LIQUID HERO
+     ========================================================= */
+  .a-hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;position:relative}
+  .a-name{
+    font-family:var(--font-display);font-weight:700;line-height:0.86;
+    font-size:var(--text-mega);letter-spacing:-0.03em;
+    animation:floaty 9s ease-in-out infinite;
+  }
+  @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-1.4vh)}}
+  .a-sub{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:var(--space-8)}
+  .a-sub span{position:relative;padding-left:18px}
+  .a-sub span::before{content:'';position:absolute;left:0;top:50%;width:7px;height:7px;border-radius:50%;background:var(--accent);transform:translateY(-50%)}
+  .a-scrollcue{position:absolute;bottom:34px;left:50%;transform:translateX(-50%);animation:bob 1.8s infinite}
+  @keyframes bob{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,8px)}}
+
+  .a-section{padding:var(--space-32) 0;border-top:1px solid var(--color-border)}
+  .a-shead{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:var(--space-12)}
+  .a-shead h2{font-family:var(--font-display);font-size:var(--text-3xl);font-weight:500;letter-spacing:-0.02em}
+  .a-row{display:flex;justify-content:space-between;align-items:center;padding:22px 0;border-top:1px solid var(--color-border);transition:padding var(--dur) var(--ease-out)}
+  .a-row:hover{padding-left:18px}
+  .a-row .t{font-family:var(--font-display);font-size:var(--text-xl);font-weight:500}
+  .a-row .m{color:var(--color-text-muted)}
+  .a-row:hover .t{color:var(--accent-3)}
+  .a-works{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px}
+  .a-card{border:1px solid var(--color-border);border-radius:var(--radius-lg);padding:26px;background:linear-gradient(160deg,var(--color-surface),transparent);transition:all var(--dur) var(--ease-out)}
+  .a-card:hover{transform:translateY(-6px);border-color:var(--accent-2);box-shadow:0 24px 60px -30px var(--accent-glow)}
+  .a-card h3{font-family:var(--font-display);font-size:var(--text-lg);margin-bottom:8px}
+  .a-card p{color:var(--color-text-dim);font-size:var(--text-sm)}
+  .a-feature{display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:center}
+  .a-feature .big{font-family:var(--font-display);font-size:clamp(2.4rem,6vw,4.4rem);line-height:1;letter-spacing:-0.03em;font-weight:700}
+
+  /* =========================================================
+     VARIANT B — BRUTAL GRID
+     ========================================================= */
+  .b-wrap{border-left:1px solid var(--color-border);border-right:1px solid var(--color-border);max-width:1180px;margin:0 auto}
+  .b-topbar{display:flex;justify-content:space-between;border-bottom:1px solid var(--color-border);font-family:var(--font-mono);font-size:var(--text-xs);text-transform:uppercase;letter-spacing:0.12em}
+  .b-topbar > *{padding:14px 18px}
+  .b-topbar nav{display:flex;gap:24px}
+  .b-topbar nav a{color:var(--color-text-dim)}
+  .b-topbar nav a:hover{color:var(--accent)}
+  .b-hero{padding:6vh 18px 4vh}
+  .b-hero .idx{font-family:var(--font-mono);color:var(--accent);font-size:var(--text-sm)}
+  .b-hero h1{font-family:var(--font-display);font-weight:700;font-size:clamp(3rem,13vw,11rem);line-height:0.84;letter-spacing:-0.04em;text-transform:uppercase}
+  .b-hero h1 em{font-style:normal;-webkit-text-stroke:2px var(--color-text);color:transparent}
+  .b-meta{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--color-border);border-bottom:1px solid var(--color-border)}
+  .b-meta div{padding:18px;border-right:1px solid var(--color-border);font-family:var(--font-mono);font-size:var(--text-xs)}
+  .b-meta div:last-child{border-right:0}
+  .b-meta strong{display:block;color:var(--color-text);font-size:var(--text-base);margin-top:6px;font-family:var(--font-display)}
+  .marquee{overflow:hidden;border-bottom:1px solid var(--color-border);white-space:nowrap;padding:12px 0}
+  .marquee .track{display:inline-block;animation:scroll 22s linear infinite;font-family:var(--font-display);font-size:var(--text-2xl);font-weight:700;text-transform:uppercase}
+  .marquee .track span{padding:0 22px;color:var(--color-text-muted)}
+  .marquee .track span.hot{color:var(--accent)}
+  @keyframes scroll{to{transform:translateX(-50%)}}
+  .b-list .b-item{display:grid;grid-template-columns:54px 1fr auto;gap:18px;align-items:center;padding:20px 18px;border-bottom:1px solid var(--color-border);transition:background var(--dur-fast),color var(--dur-fast)}
+  .b-list .b-item:hover{background:var(--color-text);color:var(--color-bg)}
+  .b-list .b-item .n{font-family:var(--font-mono);color:var(--color-text-muted)}
+  .b-list .b-item:hover .n{color:var(--color-bg)}
+  .b-list .b-item .ti{font-family:var(--font-display);font-size:var(--text-xl);font-weight:500}
+  .b-list .b-item .yr{font-family:var(--font-mono);font-size:var(--text-xs)}
+
+  /* =========================================================
+     VARIANT C — KINETIC TYPE
+     ========================================================= */
+  .c-hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center}
+  .c-name{font-family:var(--font-display);font-weight:700;font-size:var(--text-mega);line-height:0.84;letter-spacing:-0.04em}
+  .c-roles{height:1.4em;overflow:hidden;font-family:var(--font-mono);font-size:var(--text-xl);margin-top:var(--space-8);color:var(--accent-3)}
+  .c-roles .rolelist{transition:transform var(--dur) var(--ease-kinetic)}
+  .c-roles .rolelist div{height:1.4em}
+  .c-big-list a{display:block;font-family:var(--font-display);font-weight:700;font-size:clamp(2rem,9vw,7rem);line-height:1.02;letter-spacing:-0.03em;color:var(--color-text-muted);padding:8px 0;transition:color var(--dur-fast) var(--ease-out),transform var(--dur-fast) var(--ease-out)}
+  .c-big-list a:hover{color:var(--color-text)}
+  .c-big-list a:hover .ar{color:var(--accent)}
+  .c-big-list a .ar{font-size:0.4em;vertical-align:super;color:transparent;transition:color var(--dur-fast)}
+  .c-section{padding:var(--space-32) 0;border-top:1px solid var(--color-border)}
+
+  /* =========================================================
+     VARIANT D — SYNTHESIS (A layout + B type, autonomous motion)
+     ========================================================= */
+  /* autonomous drifting orbs — move on their own, ignore cursor */
+  /* fixed atmosphere — stays static while content scrolls over it */
+  .d-orbs{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+  .d-orbs i{position:absolute;border-radius:50%;filter:blur(70px);opacity:0.5;mix-blend-mode:screen}
+  .d-orbs i:nth-child(1){width:46vmax;height:46vmax;background:radial-gradient(circle,var(--main-1) 0%,transparent 65%);top:-12vmax;left:-8vmax;animation:drift1 26s ease-in-out infinite}
+  .d-orbs i:nth-child(2){width:40vmax;height:40vmax;background:radial-gradient(circle,var(--main-2) 0%,transparent 65%);bottom:-12vmax;right:-6vmax;animation:drift2 32s ease-in-out infinite}
+  .d-orbs i:nth-child(3){width:26vmax;height:26vmax;background:radial-gradient(circle,var(--accent) 0%,transparent 65%);top:42%;left:56%;opacity:0.4;animation:drift3 38s ease-in-out infinite}
+  @keyframes drift1{0%,100%{transform:translate(0,0)}33%{transform:translate(14vw,8vh)}66%{transform:translate(6vw,-6vh)}}
+  @keyframes drift2{0%,100%{transform:translate(0,0)}50%{transform:translate(-16vw,-10vh)}}
+  @keyframes drift3{0%,100%{transform:translate(0,0)}40%{transform:translate(-10vw,6vh)}80%{transform:translate(8vw,4vh)}}
+
+  .d-hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;position:relative}
+  .d-name{font-family:var(--font-display);font-weight:700;line-height:0.82;font-size:var(--text-mega);letter-spacing:-0.04em;text-transform:uppercase}
+  .d-name .out{-webkit-text-stroke:2px var(--color-text);color:transparent}
+  .d-name .word{display:block;animation:bob-name 11s ease-in-out infinite}
+  .d-name .word:nth-child(2){animation-delay:-3.5s}
+  @keyframes bob-name{0%,100%{transform:translateY(0)}50%{transform:translateY(-1.1vh)}}
+  .d-sub{display:flex;flex-wrap:wrap;gap:0;margin-top:var(--space-12);border-top:1px solid var(--color-border);border-bottom:1px solid var(--color-border)}
+  .d-sub span{font-family:var(--font-mono);font-size:var(--text-xs);letter-spacing:0.14em;text-transform:uppercase;color:var(--color-text-dim);padding:14px 22px 14px 0;margin-right:22px;border-right:1px solid var(--color-border)}
+  .d-sub span:last-child{border-right:0}
+  .d-scrollcue{position:absolute;bottom:32px;left:0;font-family:var(--font-mono);font-size:var(--text-xs);letter-spacing:0.2em;color:var(--color-text-muted);animation:bob 1.8s infinite}
+
+  /* autonomous marquee divider */
+  .d-marq{overflow:hidden;border-top:1px solid var(--color-border);border-bottom:1px solid var(--color-border);white-space:nowrap;padding:16px 0}
+  .d-marq .track{display:inline-block;animation:scroll 30s linear infinite}
+  .d-marq .track span{font-family:var(--font-display);font-weight:700;text-transform:uppercase;font-size:var(--text-2xl);padding:0 26px;color:var(--color-text-muted)}
+  .d-marq .track span.hot{-webkit-text-stroke:1.5px var(--accent);color:transparent}
+
+  .d-section{padding:var(--space-32) 0;border-top:1px solid var(--color-border)}
+  .d-shead{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:var(--space-12)}
+  .d-shead h2{font-family:var(--font-display);font-weight:700;font-size:var(--text-3xl);text-transform:uppercase;letter-spacing:-0.02em}
+  .d-shead .idx{font-family:var(--font-mono);font-size:var(--text-sm);color:var(--accent)}
+  /* rows: minimal, non-reactive — color only, no movement on hover */
+  .d-row{display:grid;grid-template-columns:48px 1fr auto;gap:18px;align-items:center;padding:22px 0;border-top:1px solid var(--color-border)}
+  .d-row .n{font-family:var(--font-mono);font-size:var(--text-sm);color:var(--color-text-muted)}
+  .d-row .t{font-family:var(--font-display);font-weight:500;font-size:var(--text-xl);text-transform:uppercase;letter-spacing:-0.01em;transition:color var(--dur-fast)}
+  .d-row .m{font-family:var(--font-mono);font-size:var(--text-xs);text-transform:uppercase;color:var(--color-text-muted)}
+  .d-row:hover .t{color:var(--accent-3)}
+  .d-works{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1px;background:var(--color-border);border:1px solid var(--color-border)}
+  .d-card{background:var(--color-bg);padding:28px}
+  .d-card h3{font-family:var(--font-display);font-weight:500;font-size:var(--text-lg);text-transform:uppercase;margin-bottom:10px}
+  .d-card p{color:var(--color-text-dim);font-size:var(--text-sm)}
+  .d-card .num{font-family:var(--font-mono);font-size:var(--text-xs);color:var(--accent);display:block;margin-bottom:18px}
+  .d-feature{display:grid;grid-template-columns:1.1fr 1fr;gap:40px;align-items:center}
+  .d-feature .big{font-family:var(--font-display);font-weight:700;text-transform:uppercase;font-size:clamp(2.4rem,6vw,4.6rem);line-height:0.92;letter-spacing:-0.03em}
+  .d-feature .panel{aspect-ratio:1;border:1px solid var(--color-border);position:relative;overflow:hidden}
+  .d-feature .panel i{position:absolute;width:60%;height:60%;border-radius:50%;background:var(--grad);filter:blur(30px);top:20%;left:20%;animation:drift3 24s ease-in-out infinite}
+  /* buttons in D: no transform, color swap only (not "reactive") */
+  .btn-static{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:var(--text-sm);padding:14px 24px;border:1px solid var(--color-border-strong);color:var(--color-text);transition:background var(--dur-fast),color var(--dur-fast)}
+  .btn-static:hover{background:var(--color-text);color:var(--color-bg)}
+
+  /* slides — each major section is a full-screen panel; gentle scroll snap when D active */
+  body.snap{scroll-snap-type:y proximity}
+  .d-slide{min-height:100vh;display:flex;flex-direction:column;justify-content:center;scroll-snap-align:start;position:relative}
+  /* slide 2 — B-style brutalist index, clickable rows */
+  .d-index .ixhead{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:var(--space-8)}
+  .d-index .ixhead h2{font-family:var(--font-display);font-weight:700;font-size:var(--text-3xl);text-transform:uppercase;letter-spacing:-0.02em}
+  .d-index .ixhead .idx{font-family:var(--font-mono);font-size:var(--text-sm);color:var(--accent)}
+  .d-ix{display:grid;grid-template-columns:64px 1fr auto;gap:18px;align-items:center;padding:20px 18px;margin:0 -18px;border-top:1px solid var(--color-border);cursor:pointer;transition:background var(--dur-fast),color var(--dur-fast)}
+  .d-ix:last-of-type{border-bottom:1px solid var(--color-border)}
+  .d-ix:hover{background:var(--color-text);color:var(--color-bg)}
+  .d-ix .n{font-family:var(--font-mono);font-size:var(--text-sm);color:var(--color-text-muted)}
+  .d-ix:hover .n,.d-ix:hover .m{color:var(--color-bg)}
+  .d-ix .ti{font-family:var(--font-display);font-weight:500;font-size:var(--text-xl);text-transform:uppercase;letter-spacing:-0.01em;display:flex;align-items:center;gap:14px}
+  .d-ix .ti .ar{opacity:0;transition:opacity var(--dur-fast)}
+  .d-ix:hover .ti .ar{opacity:1}
+  .d-ix .m{font-family:var(--font-mono);font-size:var(--text-xs);text-transform:uppercase;color:var(--color-text-muted)}
+
+  /* hero split: type left, autonomous 3D object right (Lusion placeholder) */
+  .d-herogrid{display:grid;grid-template-columns:1.05fr 0.95fr;gap:40px;align-items:center;width:100%}
+  .scene{perspective:1200px;display:flex;align-items:center;justify-content:center;min-height:52vh;position:relative}
+  .scene::before{content:'';position:absolute;width:60%;height:60%;border-radius:50%;background:var(--grad);filter:blur(80px);opacity:0.45;animation:drift3 20s ease-in-out infinite}
+  /* 3D object lives on its own FIXED stage so it can travel across the page on scroll,
+     independent of the scrolling text. Sits behind content (z1), above atmosphere (z0). */
+  #objstage{position:fixed;inset:0;z-index:1;pointer-events:none;display:flex;align-items:center;justify-content:center}
+  .objwrap{position:relative;width:min(46vh,460px);height:min(46vh,460px);will-change:transform;transition:transform 0.08s linear}
+  #webgl{position:absolute;inset:0;width:100%;height:100%;display:block}
+  .scene{position:relative} /* now just a layout spacer + glow in the hero right column */
+  .scene .fallback{display:none}
+  .scene.no-webgl .fallback{display:block}
+  .obj{transform-style:preserve-3d;animation:spin 28s linear infinite;position:relative;width:min(34vh,260px);height:min(34vh,260px)}
+  @keyframes spin{to{transform:rotateX(360deg) rotateY(720deg)}}
+  .cube{position:absolute;inset:0;transform-style:preserve-3d}
+  .cube .f{position:absolute;inset:0;background:var(--grad);opacity:0.16;border:1px solid rgba(255,255,255,0.28);box-shadow:inset 0 0 60px rgba(255,255,255,0.06)}
+  .cube .f1{transform:translateZ(calc(min(17vh,130px)))}
+  .cube .f2{transform:rotateY(180deg) translateZ(calc(min(17vh,130px)))}
+  .cube .f3{transform:rotateY(90deg) translateZ(calc(min(17vh,130px)))}
+  .cube .f4{transform:rotateY(-90deg) translateZ(calc(min(17vh,130px)))}
+  .cube .f5{transform:rotateX(90deg) translateZ(calc(min(17vh,130px)))}
+  .cube .f6{transform:rotateX(-90deg) translateZ(calc(min(17vh,130px)))}
+  .ring{position:absolute;left:50%;top:50%;width:min(48vh,360px);height:min(48vh,360px);margin:calc(min(-24vh,-180px)) 0 0 calc(min(-24vh,-180px));border:2px solid var(--accent-3);border-radius:50%;transform:rotateX(74deg);animation:spinring 16s linear infinite;opacity:0.55}
+  @keyframes spinring{to{transform:rotateX(74deg) rotateZ(360deg)}}
+
+  @media(max-width:720px){
+    .d-feature{grid-template-columns:1fr}
+    .d-slide{min-height:auto;padding:18vh 0}
+    .d-herogrid{grid-template-columns:1fr}
+    .scene{min-height:38vh;order:-1}
+    .a-feature{grid-template-columns:1fr}
+    .a-shead{flex-direction:column;gap:6px}
+    .b-meta{grid-template-columns:1fr}
+    #variant-nav{flex-wrap:wrap}
+  }
+
+  /* ── Sketch toolbar ─────────────────────────────── */
+  #sketch-tools{position:fixed;bottom:12px;right:12px;z-index:9999;font-family:var(--font-mono);font-size:11px;background:rgba(0,0,0,0.78);color:#fff;padding:8px 10px;border-radius:8px;opacity:0.35;transition:opacity .2s;display:flex;gap:10px;align-items:center;border:1px solid rgba(255,255,255,0.15)}
+  #sketch-tools:hover{opacity:1}
+  #sketch-tools button,#sketch-tools select{background:#1b1b22;color:#fff;border:1px solid #333;border-radius:5px;padding:3px 7px;font-family:var(--font-mono);font-size:11px;cursor:pointer}
+</style>
+</head>
+<body>
+
+<!-- VARIANT TABS -->
+<div id="variant-nav">
+  <span class="brand">SKETCH 001 · DARK KINETIC HOME</span>
+  <button class="variant-tab" onclick="showVariant('a',this)">A · Liquid Hero</button>
+  <button class="variant-tab" onclick="showVariant('b',this)">B · Brutal Grid</button>
+  <button class="variant-tab" onclick="showVariant('c',this)">C · Kinetic Type</button>
+  <button class="variant-tab active" onclick="showVariant('d',this)">D · Synthesis ★ Selected</button>
+</div>
+
+<div id="mesh"></div>
+<div id="grain"></div>
+
+<!-- ============ VARIANT A ============ -->
+<section id="variant-a" class="variant content">
+  <div class="wrap a-hero">
+    <p class="mono" style="margin-bottom:22px">Portfolio / 2026 — montysinger.com</p>
+    <h1 class="a-name"><span class="grad-text">Monty</span><br>Singer</h1>
+    <div class="a-sub mono"><span>Founder of Prometheus</span><span>Builder</span><span>Writer</span></div>
+    <div style="margin-top:40px;display:flex;gap:12px;flex-wrap:wrap">
+      <a class="btn btn-fill magnetic">Read the writing →</a>
+      <a class="btn magnetic">What is Prometheus</a>
+    </div>
+    <div class="a-scrollcue mono">↓ scroll</div>
+  </div>
+
+  <div class="wrap a-section">
+    <div class="a-shead reveal"><h2>Selected Writing</h2><a class="mono" href="#">All essays →</a></div>
+    <div class="a-row reveal"><span class="t">AI is Nibbling the World</span><span class="m mono">Technology</span></div>
+    <div class="a-row reveal"><span class="t">Defiant Optimism</span><span class="m mono">Philosophy</span></div>
+    <div class="a-row reveal"><span class="t">The Pursuit of Happierness</span><span class="m mono">Life</span></div>
+    <div class="a-row reveal"><span class="t">Choosing Faith</span><span class="m mono">Philosophy</span></div>
+    <div class="a-row reveal"><span class="t">The Art of Living Fast and Slow</span><span class="m mono">Life</span></div>
+  </div>
+
+  <div class="wrap a-section">
+    <div class="a-shead reveal"><h2>Works</h2><a class="mono" href="#">All works →</a></div>
+    <div class="a-works">
+      <div class="a-card reveal"><h3>MAHealth Scanner</h3><p>Scan a product, get an instant read on how healthy it actually is.</p></div>
+      <div class="a-card reveal"><h3>Insider Trader</h3><p>Visualizes SEC Form 4 filings to surface unusual exec buying and selling.</p></div>
+      <div class="a-card reveal"><h3>Goaltender</h3><p>Set goals, track them, stay accountable. Personal and professional.</p></div>
+      <div class="a-card reveal"><h3>CRM Bot</h3><p>Logs interactions, manages pipelines, and handles your follow-ups.</p></div>
+      <div class="a-card reveal"><h3>Two Phones</h3><p>Connects two phones and lets you run a live conversation between them.</p></div>
+      <div class="a-card reveal"><h3>Weather Bot</h3><p>A Telegram bot that pings you the daily forecast.</p></div>
+    </div>
+  </div>
+
+  <div class="wrap a-section">
+    <div class="a-feature reveal">
+      <div>
+        <p class="mono" style="margin-bottom:18px;color:var(--accent)">/ Prometheus</p>
+        <p class="big">AI integrations<br>& education.</p>
+        <p style="color:var(--color-text-dim);margin-top:22px;max-width:46ch">Custom automation pipelines, AI tool implementation, and hands-on training. Bridging what AI can do and what businesses actually need.</p>
+        <a class="btn magnetic" style="margin-top:26px">prometheus.today →</a>
+      </div>
+      <div style="aspect-ratio:1;border-radius:var(--radius-lg);background:var(--grad);filter:blur(0.5px);opacity:0.9"></div>
+    </div>
+  </div>
+
+  <div class="wrap a-section" style="text-align:center;padding-bottom:var(--space-32)">
+    <p class="mono reveal" style="color:var(--accent)">/ Monty Monthly</p>
+    <p class="reveal" style="font-family:var(--font-display);font-size:var(--text-3xl);margin:18px 0 26px">A newsletter on building, AI, and life.</p>
+    <a class="btn btn-fill magnetic reveal">Subscribe on Substack →</a>
+  </div>
+</section>
+
+<!-- ============ VARIANT B ============ -->
+<section id="variant-b" class="variant content">
+  <div class="b-wrap">
+    <div class="b-topbar">
+      <span>MONTY SINGER®</span>
+      <nav><a>Writing</a><a>Works</a><a>Prometheus</a><a>Newsletter</a><a>About</a></nav>
+      <span>EST. 2026</span>
+    </div>
+    <div class="b-hero">
+      <span class="idx">(01) — INDEX</span>
+      <h1>Builder,<br><em>Writer,</em><br>Founder.</h1>
+    </div>
+    <div class="b-meta">
+      <div>ROLE<strong>Founder of Prometheus</strong></div>
+      <div>FOCUS<strong>AI · Automation · Essays</strong></div>
+      <div>STATUS<strong>Open to interesting problems</strong></div>
+    </div>
+    <div class="marquee">
+      <div class="track">
+        <span>WRITING</span><span class="hot">PROMETHEUS</span><span>BUILDING</span><span class="hot">AI</span><span>ESSAYS</span><span class="hot">MONTY MONTHLY</span>
+        <span>WRITING</span><span class="hot">PROMETHEUS</span><span>BUILDING</span><span class="hot">AI</span><span>ESSAYS</span><span class="hot">MONTY MONTHLY</span>
+      </div>
+    </div>
+    <div class="b-list">
+      <div class="b-item"><span class="n">01</span><span class="ti">AI is Nibbling the World</span><span class="yr">ESSAY · 2026</span></div>
+      <div class="b-item"><span class="n">02</span><span class="ti">MAHealth Scanner</span><span class="yr">WORK · 2026</span></div>
+      <div class="b-item"><span class="n">03</span><span class="ti">Defiant Optimism</span><span class="yr">ESSAY · 2025</span></div>
+      <div class="b-item"><span class="n">04</span><span class="ti">Insider Trader</span><span class="yr">WORK · 2025</span></div>
+      <div class="b-item"><span class="n">05</span><span class="ti">The Pursuit of Happierness</span><span class="yr">ESSAY · 2025</span></div>
+      <div class="b-item"><span class="n">06</span><span class="ti">Prometheus — AI Integrations</span><span class="yr">VENTURE · 2026</span></div>
+    </div>
+    <div style="padding:32px 18px;border-bottom:1px solid var(--color-border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px">
+      <span style="font-family:var(--font-display);font-size:var(--text-2xl)">Get Monty Monthly →</span>
+      <a class="btn btn-fill magnetic">Subscribe</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ VARIANT C ============ -->
+<section id="variant-c" class="variant content">
+  <div class="wrap c-hero">
+    <p class="mono" style="margin-bottom:20px">— montysinger.com</p>
+    <h1 class="c-name" data-scramble>MONTY SINGER</h1>
+    <div class="c-roles">
+      <div class="rolelist">
+        <div>founder of prometheus.</div>
+        <div>builder of things.</div>
+        <div>writer of essays.</div>
+        <div>perpetual tinkerer.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap c-section">
+    <p class="mono reveal" style="margin-bottom:30px">(01) Writing</p>
+    <div class="c-big-list">
+      <a class="reveal">AI is Nibbling the World<span class="ar"> ↗</span></a>
+      <a class="reveal">Defiant Optimism<span class="ar"> ↗</span></a>
+      <a class="reveal">The Pursuit of Happierness<span class="ar"> ↗</span></a>
+      <a class="reveal">Standing on Sediment<span class="ar"> ↗</span></a>
+    </div>
+  </div>
+
+  <div class="wrap c-section">
+    <p class="mono reveal" style="margin-bottom:30px">(02) Works</p>
+    <div class="c-big-list">
+      <a class="reveal">MAHealth Scanner<span class="ar"> ↗</span></a>
+      <a class="reveal">Insider Trader<span class="ar"> ↗</span></a>
+      <a class="reveal">Goaltender<span class="ar"> ↗</span></a>
+    </div>
+  </div>
+
+  <div class="wrap c-section" style="padding-bottom:var(--space-32)">
+    <p class="mono reveal" style="margin-bottom:20px;color:var(--accent)">(03) Prometheus</p>
+    <p class="reveal" style="font-family:var(--font-display);font-size:clamp(2rem,7vw,5rem);line-height:1;letter-spacing:-0.03em">AI integrations <span class="grad-text">& education.</span></p>
+    <a class="btn magnetic reveal" style="margin-top:30px">prometheus.today →</a>
+  </div>
+</section>
+
+<!-- ============ VARIANT D — SYNTHESIS ============ -->
+<section id="variant-d" class="variant active content">
+  <!-- fixed travelling 3D object stage (scroll-driven: slides off right, returns from left) -->
+  <div id="objstage"><div class="objwrap"><canvas id="webgl"></canvas></div></div>
+
+  <!-- SLIDE 1 — hero: type left, autonomous 3D object right -->
+  <div class="wrap d-hero d-slide">
+    <div class="d-orbs"><i></i><i></i><i></i></div>
+    <div class="d-herogrid">
+      <div>
+        <p class="mono" style="margin-bottom:26px">Portfolio © 2026 — montysinger.com</p>
+        <h1 class="d-name"><span class="word">Monty</span><span class="word out">Singer</span></h1>
+        <div class="d-sub"><span>Founder of Prometheus</span><span>Builder</span><span>Writer</span></div>
+        <div style="margin-top:40px;display:flex;gap:12px;flex-wrap:wrap">
+          <a class="btn-static" href="#index">Read the writing →</a>
+          <a class="btn-static" href="#">What is Prometheus</a>
+        </div>
+      </div>
+      <div class="scene"><!-- spacer: object is rendered on the fixed #objstage --></div>
+    </div>
+    <div class="d-scrollcue">↓ SCROLL</div>
+  </div>
+
+  <!-- SLIDE 2 — B-style brutalist index, clickable links -->
+  <div class="wrap d-slide d-index" id="index">
+    <div class="d-marq" style="margin-bottom:var(--space-12)">
+      <div class="track">
+        <span>WRITING</span><span class="hot">PROMETHEUS</span><span>BUILDING</span><span class="hot">AI</span><span>ESSAYS</span><span class="hot">MONTY MONTHLY</span>
+        <span>WRITING</span><span class="hot">PROMETHEUS</span><span>BUILDING</span><span class="hot">AI</span><span>ESSAYS</span><span class="hot">MONTY MONTHLY</span>
+      </div>
+    </div>
+    <div class="ixhead reveal"><h2>Index</h2><span class="idx">(01) — WRITING &amp; WORKS</span></div>
+    <a class="d-ix reveal" href="#"><span class="n">01</span><span class="ti">AI is Nibbling the World <span class="ar">↗</span></span><span class="m">Essay · 2026</span></a>
+    <a class="d-ix reveal" href="#"><span class="n">02</span><span class="ti">MAHealth Scanner <span class="ar">↗</span></span><span class="m">Work · 2026</span></a>
+    <a class="d-ix reveal" href="#"><span class="n">03</span><span class="ti">Defiant Optimism <span class="ar">↗</span></span><span class="m">Essay · 2025</span></a>
+    <a class="d-ix reveal" href="#"><span class="n">04</span><span class="ti">Insider Trader <span class="ar">↗</span></span><span class="m">Work · 2025</span></a>
+    <a class="d-ix reveal" href="#"><span class="n">05</span><span class="ti">The Pursuit of Happierness <span class="ar">↗</span></span><span class="m">Essay · 2025</span></a>
+    <a class="d-ix reveal" href="#"><span class="n">06</span><span class="ti">Goaltender <span class="ar">↗</span></span><span class="m">Work · 2025</span></a>
+    <a class="d-ix reveal" href="#"><span class="n">07</span><span class="ti">Choosing Faith <span class="ar">↗</span></span><span class="m">Essay · 2024</span></a>
+    <a class="d-ix reveal" href="#"><span class="n">08</span><span class="ti">Two Phones <span class="ar">↗</span></span><span class="m">Work · 2024</span></a>
+  </div>
+
+  <!-- SLIDE 3 — Prometheus -->
+  <div class="wrap d-slide">
+    <div class="d-feature reveal">
+      <div>
+        <span class="idx mono" style="display:block;margin-bottom:18px;color:var(--accent)">(02) — PROMETHEUS</span>
+        <p class="big">AI Integrations<br>&amp; Education</p>
+        <p style="color:var(--color-text-dim);margin-top:22px;max-width:46ch">Custom automation pipelines, AI tool implementation, and hands-on training. Bridging what AI can do and what businesses actually need.</p>
+        <a class="btn-static" style="margin-top:26px" href="#">prometheus.today →</a>
+      </div>
+      <div class="panel"><i></i></div>
+    </div>
+  </div>
+
+  <!-- SLIDE 4 — Monty Monthly -->
+  <div class="wrap d-slide">
+    <div class="d-shead reveal"><h2>Monty Monthly</h2><span class="idx">(03) — NEWSLETTER</span></div>
+    <p class="reveal" style="font-family:var(--font-display);font-size:var(--text-2xl);max-width:30ch;margin-bottom:26px">A monthly dispatch on building, AI, and life.</p>
+    <a class="btn-static reveal" href="#">Subscribe on Substack →</a>
+  </div>
+</section>
+
+<!-- TOOLBAR -->
+<div id="sketch-tools">
+  <span>theme</span>
+  <select onchange="document.querySelector('link[href*=themes]').href='../themes/'+this.value+'.css'">
+    <option value="default">prometheus (orange + black)</option>
+    <option value="nocturne">nocturne (indigo+teal / orange)</option>
+    <option value="ember">ember (crimson+amber / mint)</option>
+    <option value="halogen">halogen (graphite+slate / orange)</option>
+  </select>
+  <button onclick="setVP('375px')">▢ phone</button>
+  <button onclick="setVP('768px')">▢ tablet</button>
+  <button onclick="setVP('100%')">▢ full</button>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+/* ── Variant switching ───────────────────────────── */
+function showVariant(id, btn){
+  document.querySelectorAll('.variant').forEach(v=>v.classList.remove('active'));
+  document.querySelectorAll('.variant-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('variant-'+id).classList.add('active');
+  if(btn) btn.classList.add('active');
+  window.scrollTo(0,0);
+  requestAnimationFrame(initReveals);
+  if(id==='c') scramble(document.querySelector('#variant-c [data-scramble]'));
+  // Variant D uses autonomous drifting orbs, not the cursor-following mesh — hide it.
+  document.getElementById('mesh').style.opacity = (id==='d') ? '0' : '';
+}
+
+/* ── Cursor-reactive gradient mesh (lerped) ──────── */
+const mesh=document.getElementById('mesh');
+let mx=innerWidth/2,my=innerHeight/2,cx=mx,cy=my;
+addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY});
+(function loop(){cx+=(mx-cx)*0.06;cy+=(my-cy)*0.06;mesh.style.left=cx+'px';mesh.style.top=cy+'px';requestAnimationFrame(loop)})();
+
+/* ── Magnetic buttons ────────────────────────────── */
+function bindMagnetic(){
+  document.querySelectorAll('.magnetic').forEach(el=>{
+    if(el._mag) return; el._mag=true;
+    el.addEventListener('mousemove',e=>{const r=el.getBoundingClientRect();el.style.transform=`translate(${(e.clientX-r.left-r.width/2)*0.25}px,${(e.clientY-r.top-r.height/2)*0.35}px)`});
+    el.addEventListener('mouseleave',()=>el.style.transform='');
+  });
+}
+
+/* ── Reveal on scroll ────────────────────────────── */
+let io;
+function initReveals(){
+  if(io) io.disconnect();
+  io=new IntersectionObserver(es=>es.forEach(en=>{if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target)}}),{threshold:0.12});
+  document.querySelectorAll('.variant.active .reveal').forEach(el=>{el.classList.remove('in');io.observe(el)});
+}
+
+/* ── Text scramble ───────────────────────────────── */
+const CH='ABCDEFGHIJKLMNOPQRSTUVWXYZ#%&@$';
+function scramble(el){
+  if(!el) return; const final=el.dataset.final||(el.dataset.final=el.textContent); let f=0;
+  const id=setInterval(()=>{
+    el.textContent=final.split('').map((c,i)=>c===' '?' ':(i<f?final[i]:CH[Math.floor(Math.random()*CH.length)])).join('');
+    f+=0.5; if(f>=final.length){clearInterval(id);el.textContent=final}
+  },28);
+}
+
+/* ── Rotating roles (variant C) ──────────────────── */
+let roleI=0;
+setInterval(()=>{
+  const list=document.querySelector('#variant-c .rolelist'); if(!list) return;
+  roleI=(roleI+1)%4; list.style.transform=`translateY(-${roleI*1.4}em)`;
+},2200);
+
+/* ── Toolbar viewport ────────────────────────────── */
+function setVP(w){document.querySelectorAll('.variant').forEach(v=>{v.style.maxWidth=w;v.style.margin='0 auto';v.style.outline=w==='100%'?'':'1px dashed rgba(255,255,255,0.2)'})}
+
+/* ── Init ────────────────────────────────────────── */
+bindMagnetic(); initReveals();
+document.getElementById('mesh').style.opacity='0'; // default view is D (autonomous orbs)
+
+/* ── Scroll-driven object travel ──────────────────
+   As you scroll through the first viewport: the object slides off to the RIGHT,
+   then re-enters from the LEFT and settles on the left side. Text scrolls up over
+   the fixed background; the object's stage is fixed, so it appears to travel. */
+const objwrap=document.querySelector('.objwrap');
+function travel(){
+  if(!objwrap) return;
+  const vw=innerWidth/100;
+  const p=Math.min(Math.max(window.scrollY/innerHeight,0),1);
+  let xvw;
+  if(p<0.5) xvw = 26 + (78-26)*(p/0.5);          // rest-right (26vw) → off-right (78vw)
+  else      xvw = -78 + (-26+78)*((p-0.5)/0.5);  // off-left (-78vw) → rest-left (-26vw)
+  objwrap.style.transform=`translateX(${(xvw*vw).toFixed(1)}px)`;
+}
+addEventListener('scroll',travel,{passive:true});
+addEventListener('resize',travel);
+travel();
+
+/* ── WebGL hero object: autonomous morphing molten blob (Three.js) ──
+   Loaded from CDN, no build step. In production this becomes an R3F component.
+   Motion is self-driven only — it warps and rotates on its own, never the cursor. */
+function initBlob(){
+  const canvas=document.getElementById('webgl');
+  const sceneEl=document.querySelector('#variant-d .scene');
+  const failBlob=()=>{ if(sceneEl) sceneEl.classList.add('no-webgl'); };
+  if(!canvas||typeof THREE==='undefined'){ failBlob(); return; }
+  let renderer;
+  try{ renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true}); }
+  catch(e){ failBlob(); return; }
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+  renderer.outputEncoding=THREE.sRGBEncoding;
+  renderer.toneMapping=THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure=1.15;
+
+  const scene=new THREE.Scene();
+  const camera=new THREE.PerspectiveCamera(42,1,0.1,100);
+  camera.position.set(0,0,4.4);
+
+  // molten orange blob
+  const geo=new THREE.IcosahedronGeometry(1.3,12);
+  const base=geo.attributes.position.array.slice();
+  const mat=new THREE.MeshStandardMaterial({color:0xff5a33,emissive:0x4a1200,emissiveIntensity:0.5,metalness:0.35,roughness:0.32});
+  const blob=new THREE.Mesh(geo,mat); scene.add(blob);
+
+  // faint gold wireframe shell for depth
+  const wire=new THREE.Mesh(new THREE.IcosahedronGeometry(1.62,2),
+    new THREE.MeshBasicMaterial({color:0xffb23c,wireframe:true,transparent:true,opacity:0.10}));
+  scene.add(wire);
+
+  // lights — warm key + gold rim + orange fill
+  const key=new THREE.DirectionalLight(0xffffff,1.7); key.position.set(3,4,5); scene.add(key);
+  const rim=new THREE.DirectionalLight(0xffb23c,1.3); rim.position.set(-4,-2,-4); scene.add(rim);
+  const fill=new THREE.DirectionalLight(0xff5a33,0.7); fill.position.set(-3,2,3); scene.add(fill);
+  scene.add(new THREE.AmbientLight(0x2a1206,0.7));
+
+  function resize(){
+    const p=canvas.parentElement.getBoundingClientRect();
+    const w=Math.max(p.width,100), h=Math.max(p.height,100);
+    renderer.setSize(w,h,false); camera.aspect=w/h; camera.updateProjectionMatrix();
+  }
+  resize();
+  if(window.ResizeObserver) new ResizeObserver(resize).observe(canvas.parentElement);
+
+  const pos=geo.attributes.position; let t=0;
+  (function tick(){
+    t+=0.006;
+    for(let i=0;i<pos.count;i++){
+      const ix=i*3, bx=base[ix], by=base[ix+1], bz=base[ix+2];
+      const l=Math.hypot(bx,by,bz)||1, nx=bx/l, ny=by/l, nz=bz/l;
+      const n=Math.sin(bx*2.0+t*1.6)+Math.sin(by*2.3+t*1.2)+Math.sin(bz*2.1+t*1.9);
+      const d=1.3+n*0.11;
+      pos.array[ix]=nx*d; pos.array[ix+1]=ny*d; pos.array[ix+2]=nz*d;
+    }
+    pos.needsUpdate=true; geo.computeVertexNormals();
+    blob.rotation.y+=0.0035; blob.rotation.x=Math.sin(t*0.3)*0.22;
+    wire.rotation.y-=0.0018; wire.rotation.z+=0.0010;
+    renderer.render(scene,camera);
+    requestAnimationFrame(tick);
+  })();
+}
+if(document.readyState!=='loading') initBlob(); else addEventListener('DOMContentLoaded',initBlob);
+/* allow deep-linking a variant via #a/#b/#c/#d (used for screenshots) */
+(function(){const h=(location.hash||'').replace('#','').toLowerCase();
+  if(['a','b','c','d'].includes(h)){const btn=document.querySelector(`.variant-tab[onclick*="'${h}'"]`);showVariant(h,btn);}
+  else{const el=document.getElementById(h);if(el){setTimeout(()=>el.scrollIntoView({block:'start'}),120);}}
+})();
+</script>
+</body>
+</html>

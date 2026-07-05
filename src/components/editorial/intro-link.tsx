@@ -22,14 +22,14 @@ export function IntroLink({ children, href, external }: Props) {
         href={href}
         target="_blank"
         rel="noopener noreferrer"
-        className="border-b border-ink"
+        className="border-b border-[var(--color-text)]"
       >
         {children}
       </a>
     );
   }
   return (
-    <Link href={href} className="border-b border-ink">
+    <Link href={href} className="border-b border-[var(--color-text)]">
       {children}
     </Link>
   );

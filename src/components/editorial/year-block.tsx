@@ -29,7 +29,7 @@ export function YearBlock({ year, children }: Props) {
   return (
     <section className="px-6 py-12 md:px-40 md:py-20">
       <div className="grid grid-cols-1 gap-6 md:grid-cols-[180px_1fr] md:gap-20">
-        <div className="text-label uppercase font-bold text-ink md:sticky md:top-9 md:self-start">
+        <div className="text-label uppercase font-bold text-[var(--color-text)] md:sticky md:top-9 md:self-start">
           {year}
         </div>
         <div>{children}</div>

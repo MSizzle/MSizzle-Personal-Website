@@ -1,19 +1,29 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Hanken_Grotesk, JetBrains_Mono } from "next/font/google";
 import { LenisProvider } from "@/components/providers/lenis-provider";
 import { MotionProvider } from "@/components/providers/motion-provider";
 import { Navigation } from "@/components/nav/navigation";
-import { InkFooter } from "@/components/home-v2/ink-footer";
+import { ConditionalFooter } from "@/components/layout/conditional-footer";
 import { MainOffset } from "@/components/main-offset";
 import { UmamiAnalytics } from "@/components/analytics/umami-analytics";
 import { VisitSurvey } from "@/components/visit-survey";
 import { SITE_URL } from "@/lib/seo/site";
 import "./globals.css";
 
-const inter = Inter({
-  variable: "--font-inter",
+// Hanken Grotesk: display + body font for photo-forward design (D-02).
+// Weight 800 is the headline/sig weight used in hero and section headings.
+const hanken = Hanken_Grotesk({
+  variable: "--font-hanken",
   subsets: ["latin"],
-  weight: ["400", "700"],
+  weight: ["400", "500", "700", "800"],
+  display: "swap",
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-jetbrains-mono",
+  subsets: ["latin"],
+  weight: ["400", "500", "700"],
+  display: "swap",
 });
 
 const SITE_DESCRIPTION =
@@ -56,15 +66,15 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={inter.variable}
+      className={`${hanken.variable} ${jetbrainsMono.variable}`}
       suppressHydrationWarning
     >
-      <body className="min-h-screen bg-background text-foreground antialiased">
+      <body className="min-h-screen bg-bg text-text antialiased">
         <LenisProvider>
           <MotionProvider>
             <Navigation />
             <MainOffset>{children}</MainOffset>
-            <InkFooter />
+            <ConditionalFooter />
             <VisitSurvey />
           </MotionProvider>
         </LenisProvider>

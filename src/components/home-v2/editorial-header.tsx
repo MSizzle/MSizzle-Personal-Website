@@ -4,36 +4,32 @@ import { cn } from "@/utils/cn";
 type Props = {
   /**
    * Bolds the matching nav link. Falsy = no link bolded (homepage default).
-   * Per handoff §3/§4: each archive route bolds its own nav label.
+   * Per D-08: 4-item lean primary nav (About, Projects, Writing, Uses).
+   * Each route bolds its own nav label.
    */
-  active?: "Building" | "Writing" | "Events" | "About" | "Links";
+  active?: "About" | "Projects" | "Writing" | "Uses";
 };
 
-// Five nav destinations per D-05 (homepage flips /blog → /writing in this plan).
-// Order matches the Phase 10 inline header verbatim.
+// Four nav destinations per D-08 (lean primary nav).
+// Order: About, Projects, Writing, Uses.
 const LINKS = [
-  { label: "Building", href: "/projects" },
-  { label: "Writing",  href: "/writing"  },
-  { label: "Events",   href: "/events"   },
   { label: "About",    href: "/about"    },
-  { label: "Links",    href: "/links"    },
+  { label: "Projects", href: "/projects" },
+  { label: "Writing",  href: "/writing"  },
+  { label: "Uses",     href: "/uses"     },
 ] as const;
 
 /**
- * Editorial header — shared across /, /writing, /events, /photos per D-25
- * (Option A — co-located with manifesto-reveal.tsx in home-v2/).
+ * Editorial header — shared across all routes per D-08 (lean 4-item primary nav).
  *
- * Extracted from src/app/page.tsx lines 60-94 (Phase 10 inline header) so
- * Plan 11-03 can ship /writing + reuse for /events (Plan 11-04) + /photos
- * (Plan 11-05). The optional `active` prop bolds the matching nav link per
- * handoff §3 ("Writing bolded vs other nav links muted" on /writing) and
- * handoff §4 ("Events bolded" on /events).
+ * Updated in Phase 17.2: nav reduced from 5 items to 4 (About, Projects,
+ * Writing, Uses). "Building" renamed to "Projects". /events and /links removed.
  *
  * Server Component — pure presentational, imports `Link` only. Preserves
  * the 44px tap target (`min-h-11`) and hover opacity transitions from the
- * original Phase 10 markup (HOME-V2-12 carryforward).
+ * original Phase 10 markup.
  *
- * References: D-05 (writing destination flip), D-25 (home-v2/ path).
+ * References: D-08 (lean primary nav), D-10 (remove cut routes).
  */
 export function EditorialHeader({ active }: Props) {
   return (

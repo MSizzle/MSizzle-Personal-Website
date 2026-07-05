@@ -95,6 +95,7 @@ export function VisitSurvey() {
               width={405}
               height={558}
               className="h-auto w-64 object-contain sm:w-[405px]"
+              style={{ height: "auto" }}
               priority
             />
           </m.div>

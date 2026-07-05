@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Monty Singer — Founder of Prometheus, Builder, Writer</title>
+<link rel="stylesheet" href="../themes/default.css">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body data-page="home">
+  <!-- travelling 3D object (fixed stage; flies in from the left on each slide) -->
+  <div id="objstage"><div class="objwrap"><canvas id="webgl"></canvas></div></div>
+
+  <div id="scroller">
+    <!-- SLIDE 1 — hero -->
+    <section class="deck-slide">
+      <div class="wrap">
+        <p class="mono" style="margin-bottom:24px">Portfolio © 2026 — montysinger.com</p>
+        <div class="hero-grid">
+          <div>
+            <h1 class="home-name"><span class="word">Monty</span><span class="word out">Singer</span></h1>
+            <div class="home-sub"><span>Founder of Prometheus</span><span>Builder</span><span>Writer</span></div>
+            <div style="margin-top:36px;display:flex;gap:12px;flex-wrap:wrap">
+              <a class="btn btn-accent" href="writing.html">Read the writing →</a>
+              <a class="btn" href="prometheus.html">What is Prometheus</a>
+            </div>
+            <div class="scrollcue">↓ SCROLL</div>
+          </div>
+          <div aria-hidden="true"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 2 — big-type index (hero-b style) -->
+    <section class="deck-slide">
+      <div class="wrap">
+        <span class="slabel">(01) — Index</span>
+        <div class="big-list">
+          <a href="works.html"><span>What I'm Building</span><span class="tag">→ Works</span></a>
+          <a class="out" href="writing.html"><span>What I'm Writing</span><span class="tag">→ Writing</span></a>
+          <a href="prometheus.html"><span>What I'm Doing</span><span class="tag">→ Prometheus</span></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 3 — Prometheus -->
+    <section class="deck-slide">
+      <div class="wrap">
+        <div class="hero-grid">
+          <div>
+            <span class="slabel">(02) — Prometheus</span>
+            <h2 style="font-family:var(--font-display);font-weight:700;text-transform:uppercase;font-size:clamp(2.2rem,6vw,4.4rem);line-height:0.94;letter-spacing:-0.03em">AI Integrations<br>&amp; Education</h2>
+            <p style="color:var(--color-text-dim);margin-top:20px;max-width:46ch">Custom automation pipelines, AI tool implementation, and hands-on training. Bridging what AI can do and what businesses actually need.</p>
+            <a class="btn" style="margin-top:24px" href="prometheus.html">prometheus.today →</a>
+          </div>
+          <div aria-hidden="true"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 4 — Newsletter -->
+    <section class="deck-slide">
+      <div class="wrap">
+        <span class="slabel">(03) — Newsletter</span>
+        <h2 style="font-family:var(--font-display);font-weight:700;text-transform:uppercase;font-size:var(--text-3xl)">Monty Monthly</h2>
+        <p style="font-family:var(--font-display);font-size:var(--text-2xl);max-width:30ch;margin:18px 0 26px">A monthly dispatch on building, AI, and life.</p>
+        <a class="btn btn-accent" href="newsletter.html">See the issues →</a>
+      </div>
+    </section>
+
+    <!-- SLIDE 5 — footer -->
+    <section class="deck-slide deck-foot">
+      <footer class="site-footer" style="margin-top:0;border-top:0">
+        <div class="wrap">
+          <a href="links.html" class="big grad-text">Let's be friends.</a>
+          <div class="cols">
+            <div><h4>Site</h4><a href="writing.html">Writing</a><a href="works.html">Works</a><a href="prometheus.html">Prometheus</a><a href="about.html">About</a></div>
+            <div><h4>More</h4><a href="newsletter.html">Monty Monthly</a><a href="uses.html">Uses</a><a href="events.html">Events</a><a href="links.html">Links</a></div>
+            <div><h4>Elsewhere</h4><a href="#">Substack ↗</a><a href="#">GitHub ↗</a><a href="#">LinkedIn ↗</a><a href="#">X / Twitter ↗</a></div>
+            <div><h4>Contact</h4><a href="#">monty@prometheus.today</a><a href="prometheus.html">Work with Prometheus</a></div>
+          </div>
+          <div class="colophon"><span>© 2026 Monty Singer</span><span>Founder of Prometheus · Builder · Writer</span></div>
+        </div>
+      </footer>
+    </section>
+  </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="assets/site.js"></script></body>
+</html>

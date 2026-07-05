@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sketch 009 · Alive photo home — refinement (color + type + slide-in)</title>
+<link rel="stylesheet" href="../themes/ink-cobalt.css">
+<!-- font options preloaded so the switcher is instant -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..600&family=Instrument+Serif:ital@0;1&family=Bricolage+Grotesque:wght@400..700&family=Inter:wght@400;500;600&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    /* switchable tokens (JS overrides these) */
+    --font-display:'Fraunces', Georgia, serif;
+    --font-body:'Inter', system-ui, sans-serif;
+    --font-label:'Inter', system-ui, sans-serif;
+    --sig-weight:400;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--color-bg);color:var(--color-text);font-family:var(--font-body);-webkit-font-smoothing:antialiased}
+
+  #page{margin:0 auto;transition:max-width .25s}
+  #page.phone{max-width:390px;box-shadow:0 0 0 1px var(--color-border)}
+  #page.tablet{max-width:860px;box-shadow:0 0 0 1px var(--color-border)}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 clamp(22px,6vw,88px)}
+
+  /* nav */
+  nav.site{display:flex;justify-content:space-between;align-items:center;padding:32px 0}
+  nav.site .mark{font-family:var(--font-display);font-weight:600;font-size:22px;letter-spacing:-.01em}
+  nav.site .mark i{color:var(--accent);font-style:normal}
+  nav.site ul{display:flex;gap:28px;list-style:none;font-family:var(--font-label);font-size:12px;
+    text-transform:uppercase;letter-spacing:.14em;font-weight:500}
+  nav.site a{color:var(--color-text-muted);text-decoration:none;transition:color .18s}
+  nav.site a:hover{color:var(--accent)}
+
+  /* labels */
+  .eyebrow{font-family:var(--font-label);font-size:13px;letter-spacing:.26em;text-transform:uppercase;
+    font-weight:600;color:var(--accent);display:flex;align-items:center;gap:14px}
+  .eyebrow::before{content:"";width:34px;height:1.5px;background:var(--accent)}
+
+  /* ---------- HERO (roomy, evenly spaced) ---------- */
+  .hero{position:relative;min-height:calc(92vh);display:grid;grid-template-columns:1fr auto;gap:56px;
+    align-items:center;padding:clamp(20px,4vh,60px) 0 clamp(40px,7vh,90px)}
+  .hero .col-copy{display:flex;flex-direction:column;justify-content:center}
+  h1.sig{font-family:var(--font-display);font-weight:var(--sig-weight);text-transform:none;
+    line-height:1.02;letter-spacing:-.02em;font-size:clamp(3rem,9vw,7.2rem)}
+  h1.sig .hl{display:block;white-space:nowrap}
+  .hero .eyebrow{margin-bottom:clamp(28px,4vh,44px)}
+  h1.sig{margin-bottom:clamp(30px,4.5vh,48px)}
+  .subtitle{font-family:var(--font-body);color:var(--color-text-dim);max-width:48ch;
+    font-size:clamp(1.05rem,1.7vw,1.4rem);line-height:1.5;margin-bottom:clamp(28px,4vh,42px)}
+  .wayin{font-family:var(--font-label);font-size:12.5px;text-transform:uppercase;letter-spacing:.16em;
+    font-weight:500;color:var(--color-text-muted)}
+  .wayin a{color:var(--color-text);text-decoration:none;border-bottom:1.5px solid var(--accent);padding-bottom:3px}
+  .wayin a:hover{color:var(--accent)}
+  .blob{position:absolute;border-radius:50%;filter:blur(52px);opacity:.5;pointer-events:none;z-index:0;
+    background:radial-gradient(circle,var(--accent-glow),transparent 68%);animation:drift 16s ease-in-out infinite alternate}
+  @keyframes drift{from{transform:translate(0,0) scale(1)}to{transform:translate(5vw,4vh) scale(1.22)}}
+
+  /* ---------- photo system ---------- */
+  .photo{position:relative;overflow:hidden;border:1px solid var(--color-border);border-radius:var(--radius-sm)}
+  .photo .img{position:absolute;inset:0;will-change:transform;background:
+      repeating-linear-gradient(135deg,color-mix(in srgb,var(--accent) 12%,transparent) 0 2px,transparent 2px 12px),
+      linear-gradient(150deg,#e9ebf0 0%,#e2e4ea 45%,#ece9e2 100%)}
+  .photo.dark .img{background:
+      repeating-linear-gradient(135deg,rgba(255,255,255,.05) 0 2px,transparent 2px 13px),
+      linear-gradient(160deg,color-mix(in srgb,var(--accent) 34%,#0d1526),var(--accent-deep) 58%,#0b111f)}
+  .photo .icon{position:absolute;top:13px;left:15px;font-size:15px;color:var(--accent);opacity:.55;z-index:2}
+  .photo.dark .icon{color:#fff;opacity:.7}
+  .photo .cap{position:absolute;bottom:12px;left:12px;font-family:var(--font-label);font-size:11px;
+    text-transform:uppercase;letter-spacing:.1em;font-weight:500;color:var(--accent-deep);
+    background:rgba(250,249,247,.85);backdrop-filter:blur(2px);padding:6px 10px;border:1px solid var(--color-border);
+    border-radius:var(--radius-sm);z-index:2;width:max-content;max-width:calc(100% - 24px)}
+  .photo.dark .cap{color:#eaf0ff;background:rgba(11,17,31,.55);border-color:rgba(255,255,255,.2)}
+
+  /* ---------- sections ---------- */
+  section.beat{padding:clamp(70px,12vw,150px) 0;border-top:1px solid var(--color-border)}
+  .kicker{font-family:var(--font-label);font-size:12px;letter-spacing:.22em;text-transform:uppercase;
+    font-weight:600;color:var(--color-text-muted);margin-bottom:30px;display:flex;gap:12px;align-items:baseline}
+  .kicker b{color:var(--accent);font-weight:600}
+  h2{font-family:var(--font-display);font-weight:var(--sig-weight);font-size:clamp(1.9rem,4vw,3rem);
+    line-height:1.08;letter-spacing:-.015em;max-width:22ch}
+  p.body{margin-top:18px;max-width:56ch;font-size:16.5px;line-height:1.7;color:var(--color-text-dim)}
+  .inline{color:var(--color-text);border-bottom:1.5px solid var(--accent);text-decoration:none}
+  .inline:hover{color:var(--accent)}
+
+  /* ---------- writing (reworked) ---------- */
+  .posts{margin-top:44px;border-top:1px solid var(--color-border)}
+  .post{display:grid;grid-template-columns:auto 1fr auto;gap:22px;align-items:baseline;padding:22px 4px;
+    border-bottom:1px solid var(--color-border);text-decoration:none;color:inherit;transition:padding-left .25s var(--ease-out)}
+  .post:hover{padding-left:16px}
+  .post .num{font-family:var(--font-label);font-size:12px;color:var(--accent);letter-spacing:.08em}
+  .post .t{font-family:var(--font-display);font-weight:var(--sig-weight);font-size:clamp(1.15rem,2vw,1.5rem);line-height:1.2}
+  .post:hover .t{color:var(--accent)}
+  .post .meta{font-family:var(--font-label);font-size:11.5px;text-transform:uppercase;letter-spacing:.1em;color:var(--color-text-muted);white-space:nowrap}
+  .subscribe{margin-top:40px;display:flex;gap:20px;align-items:center;flex-wrap:wrap}
+  .btn{font-family:var(--font-label);font-size:13px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;
+    color:#fff;background:var(--accent);border:none;border-radius:var(--radius-full);padding:14px 26px;cursor:pointer;
+    text-decoration:none;transition:background .18s}
+  .btn:hover{background:var(--accent-hover)}
+  .subscribe .note{font-family:var(--font-body);font-size:14px;color:var(--color-text-muted);max-width:38ch}
+
+  footer.site{padding:clamp(60px,8vw,96px) 0;border-top:1px solid var(--color-border)}
+  .selective{font-family:var(--font-display);font-weight:var(--sig-weight);font-size:clamp(1.5rem,2.8vw,2.1rem);max-width:24ch;line-height:1.18}
+  .selective b{color:var(--accent)}
+  .channels{margin-top:30px;display:flex;gap:24px;flex-wrap:wrap;font-family:var(--font-label);font-size:13px;letter-spacing:.04em}
+  .channels a{color:var(--color-text-muted);text-decoration:none}.channels a:hover{color:var(--accent)}
+  .footmark{margin-top:48px;font-family:var(--font-label);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--color-text-muted)}
+
+  /* ---------- ticker (smaller, real links) ---------- */
+  .marquee{overflow:hidden;position:relative}
+  .marquee .track{display:flex;width:max-content;animation:slide 30s linear infinite}
+  @keyframes slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  .ticker .track{align-items:center}
+  .tick-link{font-family:var(--font-display);font-weight:var(--sig-weight);text-transform:none;
+    font-size:clamp(1.3rem,3.4vw,2.5rem);letter-spacing:-.01em;color:var(--color-text);opacity:.32;
+    text-decoration:none;padding:0 .18em;transition:opacity .2s,color .2s}
+  .tick-link:hover{opacity:1;color:var(--accent)}
+  .tick-sep{color:var(--accent);opacity:.5;font-family:var(--font-display);font-size:clamp(1rem,2.4vw,1.7rem);padding:0 .05em}
+  .marquee.ticker:hover .track{animation-play-state:paused}
+
+  /* ---------- MOTION PRIMITIVES (scroll + ambient) ---------- */
+  .reveal{opacity:0;transform:translateY(30px);transition:opacity .8s var(--ease-out),transform .8s var(--ease-out);transition-delay:var(--d,0s)}
+  .reveal.in{opacity:1;transform:none}
+  /* slide-in from side + settle */
+  .slide{opacity:0;transform:translateX(var(--sx,-72px));transition:opacity .95s var(--ease-out),transform .95s var(--ease-out)}
+  .slide.from-right{--sx:72px}
+  .slide.in{opacity:1;transform:translateX(0)}
+  /* offset accent frame that "gives out to the right" once settled */
+  .framed{position:relative;display:block}
+  .framed::after{content:"";position:absolute;inset:0;border:1.5px solid var(--accent);opacity:0;
+    transform:translate(0,0);transition:transform .9s var(--ease-out) .15s,opacity .9s .15s;pointer-events:none;z-index:-1;border-radius:var(--radius-sm)}
+  .framed.in::after{transform:translate(20px,20px);opacity:.6}
+  .kenburns{animation:kb 22s ease-in-out infinite alternate}
+  @keyframes kb{from{transform:scale(1.03) translateY(0)}to{transform:scale(1.13) translateY(-2%)}}
+  .breathe{animation:breathe 7s ease-in-out infinite}
+  @keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.035)}}
+
+  @media(prefers-reduced-motion:reduce),(--motion:off){
+    .reveal,.slide{opacity:1!important;transform:none!important}
+    .kenburns,.breathe,.blob,.marquee .track{animation:none!important}
+    .framed::after{transform:translate(20px,20px);opacity:.6}
+  }
+  body.no-motion .reveal,body.no-motion .slide{opacity:1!important;transform:none!important}
+  body.no-motion .kenburns,body.no-motion .breathe,body.no-motion .blob,body.no-motion .marquee .track{animation:none!important}
+  body.no-motion .framed::after{transform:translate(20px,20px);opacity:.6}
+
+  @media(max-width:860px){nav.site ul{display:none}
+    .hero{grid-template-columns:1fr;gap:30px;min-height:auto;padding-top:20px}
+    .hero .col-photo{order:-1}.hero .col-photo .photo{width:clamp(170px,46vw,260px)!important}
+    .work-grid{grid-template-columns:1fr!important}}
+
+  /* ---------- dev toolbar (bottom, keeps top clean) ---------- */
+  #tools{position:fixed;bottom:12px;right:12px;z-index:9999;font-family:'JetBrains Mono',monospace;font-size:11px;
+    background:rgba(20,20,24,.9);color:#fff;padding:10px 12px;border-radius:10px;opacity:.6;transition:opacity .2s;
+    display:flex;flex-direction:column;gap:8px;max-width:280px}
+  #tools:hover{opacity:1}
+  #tools .row{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+  #tools .lbl{opacity:.55;width:46px}
+  #tools button{background:transparent;border:1px solid rgba(255,255,255,.25);color:#fff;padding:4px 8px;border-radius:6px;cursor:pointer;font:inherit}
+  #tools button.on{background:var(--accent);border-color:var(--accent)}
+  #tools .sw{width:20px;height:20px;border-radius:50%;border:2px solid transparent;cursor:pointer;padding:0}
+  #tools .sw.on{border-color:#fff}
+</style>
+</head>
+<body>
+<div id="page">
+
+  <div class="wrap">
+    <nav class="site">
+      <div class="mark">Monty<i>.</i></div>
+      <ul><li><a href="#building">Building</a></li><li><a href="#work">Work</a></li><li><a href="#loves">Things I love</a></li><li><a href="#writing">Writing</a></li></ul>
+    </nav>
+
+    <!-- HERO -->
+    <div class="hero">
+      <div class="blob" style="width:42vw;height:42vw;max-width:540px;max-height:540px;top:-6%;right:-4%"></div>
+      <div class="col-copy" style="position:relative;z-index:1">
+        <div class="eyebrow">Founder of Prometheus</div>
+        <h1 class="sig"><span class="hl">Create Order</span><span class="hl">from Chaos</span></h1>
+        <p class="subtitle">I build companies and write about what I am learning. A record of what I am making and the few things I am proud of.</p>
+        <p class="wayin">I write about building monthly. <a href="#writing">Join Monty Monthly →</a></p>
+      </div>
+      <div class="col-photo" style="position:relative;z-index:1">
+        <div class="photo breathe" style="width:clamp(230px,27vw,340px);aspect-ratio:4/5"><div class="img kenburns"></div><span class="icon">◲</span><span class="cap">Portrait · breathing</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TICKER -->
+  <div class="marquee ticker" style="padding:18px 0;border-block:1px solid var(--color-border)">
+    <div class="track" id="ticker-track"></div>
+  </div>
+
+  <div class="wrap">
+    <!-- BUILDING -->
+    <section class="beat" id="building">
+      <div class="kicker reveal"><b>01</b> What I am building</div>
+      <h2 class="reveal" style="--d:.08s">Prometheus — AI integrations and education for people who refuse to be left behind.</h2>
+      <p class="body reveal" style="--d:.16s">The center of my attention right now. If you care about real leverage from AI and not the hype, <a class="inline" href="#">let's talk</a>.</p>
+      <div class="framed slide from-left" style="margin-top:48px"><div class="photo" style="aspect-ratio:16/6.5"><div class="img kenburns"></div><span class="icon">◲</span><span class="cap">Wide Prometheus shot · slides in from the left</span></div></div>
+    </section>
+
+    <!-- WORK -->
+    <section class="beat" id="work">
+      <div class="kicker reveal"><b>02</b> Selected work</div>
+      <h2 class="reveal" style="--d:.08s">A few things I am proud of.</h2>
+      <div class="work-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:48px">
+        <div class="framed slide from-left"><div class="photo" style="aspect-ratio:3/2.2"><div class="img"></div><span class="icon">◲</span><span class="cap">Project one · Product · 2025</span></div></div>
+        <div class="framed slide from-right"><div class="photo" style="aspect-ratio:3/2.2"><div class="img"></div><span class="icon">◲</span><span class="cap">Project two · Build · 2025</span></div></div>
+        <div class="framed slide from-left"><div class="photo" style="aspect-ratio:3/2.2"><div class="img"></div><span class="icon">◲</span><span class="cap">Project three · Writing · 2024</span></div></div>
+        <div class="framed slide from-right"><div class="photo" style="aspect-ratio:3/2.2"><div class="img"></div><span class="icon">◲</span><span class="cap">Project four · Talk · 2024</span></div></div>
+      </div>
+    </section>
+  </div>
+
+  <!-- THINGS I LOVE — infinite marquee -->
+  <section class="beat" id="loves">
+    <div class="wrap"><div class="kicker reveal"><b>03</b> Things I love</div>
+      <h2 class="reveal" style="--d:.08s">The stuff that keeps me curious. Always running.</h2></div>
+    <div class="marquee" style="margin-top:40px"><div class="track" id="loves-track" style="gap:18px"></div></div>
+  </section>
+
+  <div class="wrap">
+    <!-- WRITING (reworked: recent posts + subscribe) -->
+    <section class="beat" id="writing">
+      <div class="kicker reveal"><b>04</b> Writing</div>
+      <h2 class="reveal" style="--d:.08s">Notes on building, in the open.</h2>
+      <div class="posts reveal" style="--d:.16s" id="posts"></div>
+      <div class="subscribe reveal" style="--d:.2s">
+        <a class="btn" href="https://montymonthly.substack.com" target="_blank" rel="noopener">Subscribe to Monty Monthly →</a>
+        <span class="note">One email a month on what I am building and learning. Read everything, or just subscribe.</span>
+      </div>
+    </section>
+
+    <footer class="site">
+      <div class="selective reveal">I take on <b>very little</b>. If it is the right thing, reach out.</div>
+      <div class="channels reveal" style="--d:.1s"><a href="#">Email</a><a href="#">X / Twitter</a><a href="#">LinkedIn</a><a href="#">Monty Monthly</a></div>
+      <div class="footmark">Monty Singer · Founder of Prometheus</div>
+    </footer>
+  </div>
+
+</div><!-- /#page -->
+
+<!-- ================= DEV TOOLBAR ================= -->
+<div id="tools">
+  <div class="row"><span class="lbl">color</span><span id="sw-row"></span></div>
+  <div class="row"><span class="lbl">type</span>
+    <button data-font="editorial" class="on" onclick="setFont('editorial',event)">Fraunces</button>
+    <button data-font="serif" onclick="setFont('serif',event)">Instrument</button>
+    <button data-font="grotesque" onclick="setFont('grotesque',event)">Bricolage</button>
+    <button data-font="tech" onclick="setFont('tech',event)">Grotesk</button>
+  </div>
+  <div class="row"><span class="lbl">view</span>
+    <button class="on" onclick="setVP('full',event)">full</button>
+    <button onclick="setVP('tablet',event)">tablet</button>
+    <button onclick="setVP('phone',event)">phone</button>
+    <span class="lbl" style="width:auto;margin-left:6px">motion</span>
+    <button id="motion-btn" class="on" onclick="toggleMotion(event)">on</button>
+  </div>
+</div>
+
+<script>
+  // ---------- accent switcher ----------
+  const ACCENTS={
+    vermilion:['#e5411f','#c8381a','#a52d13','rgba(229,65,31,.32)'],
+    cobalt:   ['#1a4fd6','#1740ad','#14328a','rgba(26,79,214,.32)'],
+    emerald:  ['#0a8f5b','#0a7a4e','#075f3d','rgba(10,143,91,.30)'],
+    violet:   ['#5a2bd8','#4a22b4','#3a1a8f','rgba(90,43,216,.32)'],
+    magenta:  ['#c81d6b','#a91659','#841145','rgba(200,29,107,.30)'],
+  };
+  function setAccent(name){
+    const [a,h,d,g]=ACCENTS[name];const r=document.documentElement.style;
+    r.setProperty('--accent',a);r.setProperty('--accent-hover',h);r.setProperty('--accent-deep',d);r.setProperty('--accent-glow',g);
+    document.querySelectorAll('#sw-row .sw').forEach(s=>s.classList.toggle('on',s.dataset.a===name));
+  }
+  const swRow=document.getElementById('sw-row');
+  Object.entries(ACCENTS).forEach(([name,c])=>{const b=document.createElement('button');b.className='sw';b.dataset.a=name;b.title=name;b.style.background=c[0];b.onclick=()=>setAccent(name);swRow.appendChild(b);});
+
+  // ---------- font switcher ----------
+  const FONTS={
+    editorial:["'Fraunces', Georgia, serif","'Inter', system-ui, sans-serif","'Inter', system-ui, sans-serif","400"],
+    serif:    ["'Instrument Serif', Georgia, serif","'Inter', system-ui, sans-serif","'Inter', system-ui, sans-serif","400"],
+    grotesque:["'Bricolage Grotesque', system-ui, sans-serif","'Inter', system-ui, sans-serif","'Inter', system-ui, sans-serif","600"],
+    tech:     ["'Space Grotesk', system-ui, sans-serif","'Space Grotesk', system-ui, sans-serif","'JetBrains Mono', monospace","700"],
+  };
+  function setFont(name,e){
+    const [disp,body,label,w]=FONTS[name];const r=document.documentElement.style;
+    r.setProperty('--font-display',disp);r.setProperty('--font-body',body);r.setProperty('--font-label',label);r.setProperty('--sig-weight',w);
+    document.querySelectorAll('#tools [data-font]').forEach(b=>b.classList.toggle('on',b.dataset.font===name));
+  }
+
+  // ---------- ticker (real site links → scroll to section) ----------
+  const tParts=[['Building','#building'],['Work','#work'],['Writing','#writing'],['Things I Love','#loves'],['Uses','/uses']];
+  const tTrack=document.getElementById('ticker-track');
+  function tickerGroup(){const f=document.createDocumentFragment();tParts.forEach(p=>{
+    const a=document.createElement('a');a.className='tick-link';a.textContent=p[0];a.href=p[1];
+    if(p[1].startsWith('#'))a.addEventListener('click',ev=>{ev.preventDefault();const el=document.querySelector(p[1]);if(el)el.scrollIntoView({behavior:'smooth'});});
+    const s=document.createElement('span');s.className='tick-sep';s.textContent='·';f.appendChild(a);f.appendChild(s);});return f;}
+  tTrack.appendChild(tickerGroup());tTrack.appendChild(tickerGroup());
+
+  // ---------- loves marquee ----------
+  const loves=['A place I go','A tool I trust','Off the clock','Reading now'];
+  const lt=document.getElementById('loves-track');
+  [...loves,...loves].forEach(l=>{const d=document.createElement('div');d.style.cssText='flex:0 0 clamp(220px,25vw,310px)';
+    d.innerHTML='<div class="photo" style="aspect-ratio:3/4"><div class="img"></div><span class="icon">◲</span><span class="cap">'+l+'</span></div>';lt.appendChild(d);});
+
+  // ---------- recent posts ----------
+  const posts=[['Why most AI adoption fails before it starts','Jun 2026','6 min'],
+               ['The org chart is the product','May 2026','4 min'],
+               ['What I learned shipping Prometheus v1','Apr 2026','8 min']];
+  const ph=document.getElementById('posts');
+  posts.forEach((p,i)=>{const a=document.createElement('a');a.className='post';a.href='#';
+    a.innerHTML='<span class="num">0'+(i+1)+'</span><span class="t">'+p[0]+'</span><span class="meta">'+p[1]+' · '+p[2]+'</span>';ph.appendChild(a);});
+
+  // ---------- scroll reveals + slide-ins (fire ~halfway up the viewport) ----------
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),
+    {threshold:0,rootMargin:'0px 0px -38% 0px'});
+  document.querySelectorAll('.reveal,.slide,.framed').forEach(el=>io.observe(el));
+
+  // ---------- toolbar: viewport + motion ----------
+  function setVP(mode,e){const pg=document.getElementById('page');pg.classList.remove('phone','tablet');if(mode!=='full')pg.classList.add(mode);
+    [...e.target.parentElement.querySelectorAll('button')].forEach(b=>{if(['full','tablet','phone'].includes(b.textContent))b.classList.remove('on')});e.target.classList.add('on');}
+  function toggleMotion(e){const on=!document.body.classList.contains('no-motion');document.body.classList.toggle('no-motion',on);e.target.textContent=on?'off':'on';e.target.classList.toggle('on',!on);}
+
+  // defaults
+  setAccent('vermilion');
+</script>
+</body>
+</html>
