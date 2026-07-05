@@ -596,6 +596,12 @@ p.body {
   color: var(--accent);
 }
 
+/* Prometheus site screenshot (Building band): wide cropped band on desktop,
+   fuller / more readable frame on narrow screens (see .prometheus-shot usage). */
+.prometheus-shot .photo {
+  aspect-ratio: 16 / 6.5;
+}
+
 /* ── Work grid (2-column photo grid) ── */
 .work-grid {
   display: grid;
@@ -1049,4 +1055,7 @@ footer.site {
   .work-grid    { grid-template-columns: 1fr; }
   .stickynav ul { display: none; }
   .foot-grid    { grid-template-columns: 1fr; gap: 26px; }
+  /* Show the Prometheus screenshot near-full (16/10 source) so its text stays
+     legible on phones instead of collapsing to a thin band. */
+  .prometheus-shot .photo { aspect-ratio: 16 / 10; }
 }

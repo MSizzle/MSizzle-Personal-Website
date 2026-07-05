@@ -21,15 +21,23 @@ export function VisitSurvey() {
 
   useEffect(() => {
     if (sessionStorage.getItem('visit-survey-done')) return
+    let openTimer: ReturnType<typeof setTimeout> | undefined
     const timer = setTimeout(() => {
       setWidgetState('bubble')
-      // Auto-open after a brief pause so user sees the bubble arrive
-      const openTimer = setTimeout(() => {
-        setWidgetState('open')
-      }, 600)
-      return () => clearTimeout(openTimer)
+      // On desktop, auto-open after a brief pause so the user sees the bubble
+      // arrive. On mobile the full survey is intrusive, so it stays a small
+      // tappable bubble until the user opts to open it.
+      const isDesktop = window.matchMedia('(min-width: 640px)').matches
+      if (isDesktop) {
+        openTimer = setTimeout(() => {
+          setWidgetState('open')
+        }, 600)
+      }
     }, 30000)
-    return () => clearTimeout(timer)
+    return () => {
+      clearTimeout(timer)
+      if (openTimer) clearTimeout(openTimer)
+    }
   }, [])
 
   function handleOptionClick() {
@@ -79,7 +87,7 @@ export function VisitSurvey() {
         {(widgetState === 'open' || widgetState === 'thankyou') && (
           <m.div
             key="monty-avatar"
-            className="pointer-events-none relative -mb-2"
+            className="pointer-events-none relative -mb-2 hidden sm:block"
             {...(prefersReducedMotion
               ? {}
               : {

@@ -46,7 +46,7 @@ export function SectionBuilding() {
 
           {/* Wide slide-in shot of the Prometheus site, itself a link out to
               prometheus.today. Drop-shadow settles as .in is added by ScrollReveals. */}
-          <div className="shadowed slide from-left" style={{ marginTop: 44 }}>
+          <div className="shadowed slide from-left prometheus-shot" style={{ marginTop: 44 }}>
             <a
               href="https://prometheus.today"
               target="_blank"
@@ -54,8 +54,10 @@ export function SectionBuilding() {
               aria-label="Visit the Prometheus website"
               style={{ display: "block" }}
             >
+              {/* Aspect ratio is set via .prometheus-shot in globals.css so the shot
+                  crops to a wide band on desktop but shows fuller / more readable on
+                  mobile. No inline aspectRatio here (CSS owns it). */}
               <Photo
-                aspectRatio="16/6.5"
                 src="/home/prometheus.jpg"
                 alt="The Prometheus homepage: an AI integration and automation consultancy"
                 objectPosition="center 38%"
