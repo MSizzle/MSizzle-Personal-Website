@@ -14,7 +14,7 @@ import type { BlogPost } from "@/lib/notion";
  *
  * Band order per D-03:
  *   hero (light) -> Building (dark) -> Work (light)
- *   -> Things I Love (dark) -> Writing (light) -> footer (dark)
+ *   -> Writing / Monty Monthly (dark) -> Things I Love (light) -> footer (dark)
  *
  * Islands mounted here:
  *   StickyNav (D-10): fixed island, z-9000, Subscribe CTA past hero fold.
@@ -48,14 +48,14 @@ export function ExplorativeHomepage({ projects = [], posts = [] }: Props) {
         <SectionWork projects={projects} />
       </section>
 
-      {/* Band 5: Things I Love (dark) */}
-      <section className="band band-dark beat" id="loves">
-        <SectionLoves />
+      {/* Band 5: Writing / Monty Monthly (dark) */}
+      <section className="band band-dark beat" id="writing">
+        <SectionNewsletter posts={posts} />
       </section>
 
-      {/* Band 6: Writing / Monty Monthly (light) */}
-      <section className="band beat" id="writing">
-        <SectionNewsletter posts={posts} />
+      {/* Band 6: Things I Love (light) */}
+      <section className="band beat" id="loves">
+        <SectionLoves />
       </section>
 
       {/* Band 7: Footer (dark) */}

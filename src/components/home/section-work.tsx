@@ -46,7 +46,7 @@ export function SectionWork({ projects = [] }: Props) {
 
         {/* Right column: headline, 2x2 work grid, portfolio link */}
         <div>
-          <h2 className="reveal">A few things I am proud of.</h2>
+          <h2 className="reveal">Some of the work I am proudest of.</h2>
 
           {/* 2x2 grid of slide-in photos alternating from-left / from-right */}
           <div className="work-grid">
@@ -77,7 +77,7 @@ export function SectionWork({ projects = [] }: Props) {
 
           {/* External Prometheus link: T-17.1-02 invariant (rel=noopener noreferrer preserved) */}
           <p className="body mt-4 text-text-dim">
-            More lives at{" "}
+            There is more of it over at{" "}
             <a
               href="https://prometheus.today"
               target="_blank"

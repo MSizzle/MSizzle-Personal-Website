@@ -34,8 +34,8 @@ export function SectionFooter() {
             <h4>Navigate</h4>
             <Link href="#building">Building</Link>
             <Link href="#work">Work</Link>
-            <Link href="#loves">Things I love</Link>
             <Link href="#writing">Writing</Link>
+            <Link href="#loves">Things I love</Link>
             <Link href="/uses">Uses</Link>
           </div>
 

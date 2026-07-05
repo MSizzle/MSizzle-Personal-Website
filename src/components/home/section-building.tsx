@@ -23,28 +23,44 @@ export function SectionBuilding() {
         {/* Right column: headline, body with woven inline link, wide slide-in photo */}
         <div>
           <h2 className="reveal">
-            Prometheus: AI integrations and education for people who refuse to be left behind.
+            <a
+              className="prometheus-link"
+              href="https://prometheus.today"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Prometheus
+            </a>
+            : AI integrations and education.
           </h2>
 
           <p className="body reveal">
-            The center of my attention right now. If you care about real leverage from AI and not
-            the hype,{" "}
+            It is where most of my attention goes these days. If you care about
+            getting real, practical leverage out of AI, and not just the hype
+            around it, that is what I{" "}
             <a className="inline" href="#writing">
-              let&apos;s talk
+              write about each month
             </a>
             .
           </p>
 
-          {/* Wide dark slide-in photo. Drop-shadow settles as .in is added by ScrollReveals. */}
+          {/* Wide slide-in shot of the Prometheus site, itself a link out to
+              prometheus.today. Drop-shadow settles as .in is added by ScrollReveals. */}
           <div className="shadowed slide from-left" style={{ marginTop: 44 }}>
-            <Photo
-              dark
-              aspectRatio="16/6.5"
-              src="/home/monty-stage.jpg"
-              alt="Monty Singer presenting on stage"
-              caption="Building in public"
-              objectPosition="center 42%"
-            />
+            <a
+              href="https://prometheus.today"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Visit the Prometheus website"
+              style={{ display: "block" }}
+            >
+              <Photo
+                aspectRatio="16/6.5"
+                src="/home/prometheus.jpg"
+                alt="The Prometheus homepage: an AI integration and automation consultancy"
+                objectPosition="center 38%"
+              />
+            </a>
           </div>
         </div>
       </div>

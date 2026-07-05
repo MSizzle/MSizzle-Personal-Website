@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { RailBox } from "@/components/home/rail-box";
 import { PhotoMarquee } from "@/components/home/photo-marquee";
 
@@ -19,15 +18,8 @@ export function SectionLoves() {
           </div>
           <div>
             <h2 className="reveal">
-              The stuff that keeps me curious. Always running.
+              A few of the things I love when I step away from the work.
             </h2>
-            {/* Subtle /uses affordance, velvet-rope: link not a prominent CTA (D-13) */}
-            <Link
-              href="/uses"
-              className="inline-block mt-5 text-sm text-text-muted hover:text-accent transition-colors duration-150"
-            >
-              See what I use
-            </Link>
           </div>
         </div>
       </div>
