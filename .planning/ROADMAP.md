@@ -45,7 +45,7 @@ Full milestone detail: [milestones/v2.0-ROADMAP.md](./milestones/v2.0-ROADMAP.md
 - [x] **Phase 15: WebGL Explorative Homepage** - Lusion-grade WebGL scroll-story homepage (real-time 3D hero, fluid interweaving line, themed beats); replaces the superseded slide deck. Desktop-WebGL / mobile-poster. (completed 2026-06-19)
 - [x] **Phase 16: Interior Pages on Notion Data** - All interior pages rebuilt on the new system and wired to existing Notion loaders, plus new /uses and /watching (completed 2026-06-20)
 - [x] **Phase 17: Infrastructure Preservation & SEO Extension** - Verify Notion/image-proxy/analytics intact and extend SEO to the new pages (completed 2026-06-21)
-- [ ] **Phase 17.4: Photo-Forward Homepage Restyle** - Rebuild the homepage to the locked sketch-010 spec (Hanken 800 + Vermilion marker hero, alternating bands, Monty Monthly carousel), superseding the text-forward 17.1 skin
+- [x] **Phase 17.4: Photo-Forward Homepage Restyle** - Rebuild the homepage to the locked sketch-010 spec (Hanken 800 + Vermilion marker hero, alternating bands, Monty Monthly carousel), superseding the text-forward 17.1 skin (completed 2026-07-05)
 - [ ] **Phase 18: v3.0 QA, Perf Gate & Alias Swap** - Production-readiness gate, mobile-perf budget, GO/NO-GO, and production alias promotion
 
 ## Phase Details
@@ -248,7 +248,7 @@ Plans:
 
 **Wave 5** *(gate; depends on 08)* [autonomous: false]
 
-- [ ] 17.4-09-PLAN.md — Automated build/type/test + cobalt/Hanken/no-WebGL greps + human visual verify at localhost:3000 vs sketch 010 incl. reduced-motion proof (D-01..D-13)
+- [x] 17.4-09-PLAN.md — Automated build/type/test + cobalt/Hanken/no-WebGL greps + human visual verify at localhost:3000 vs sketch 010 incl. reduced-motion proof (D-01..D-13)
 
 ### Phase 18: v3.0 QA, Perf Gate & Alias Swap
 
@@ -314,5 +314,5 @@ Phases execute in numeric order: 14 -> 15 -> 16 -> 17 -> 18
 | 17.1. Homepage Rebuild | v3.0 | 4/4 | Complete    | 2026-07-02 |
 | 17.2. Site Information Architecture | v3.0 | 4/4 | Complete    | 2026-07-02 |
 | 17.3. Portfolio | v3.0 | 2/2 | Complete    | 2026-07-02 |
-| 17.4. Photo-Forward Homepage Restyle | v3.0 | 8/9 | In Progress|  |
+| 17.4. Photo-Forward Homepage Restyle | v3.0 | 9/9 | Complete   | 2026-07-05 |
 | 18. v3.0 QA, Perf Gate & Alias Swap | v3.0 | 4/7 | In Progress|  |
