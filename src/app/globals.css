@@ -122,6 +122,9 @@ h1.sig .hl {
   --border: var(--color-border);
   --text:   var(--color-text);
   --fg:     var(--color-text);
+
+  /* Warm cream behind the hero so the white headline card stands out (D-06). */
+  --hero-bg: #f4ecdd;
 }
 
 /* ── Marquee keyframe (used by Marquee component) ── */
@@ -218,6 +221,10 @@ h1.sig .hl {
 .band {
   background: var(--color-bg);
   position: relative;
+}
+/* Hero band is warm cream (.band.hero-band > .band, so it wins the cascade). */
+.band.hero-band {
+  background: var(--hero-bg);
 }
 .band + .band {
   border-top: 1px solid var(--color-border);
