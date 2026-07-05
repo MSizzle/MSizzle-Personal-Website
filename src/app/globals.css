@@ -94,6 +94,14 @@ h1.sig {
   letter-spacing: -0.02em;
   font-size: clamp(2.4rem, 6.2vw, 5.4rem);
   margin-bottom: clamp(28px, 4vh, 44px);
+  /* Solid white card behind the headline (D-06): no orange lift, a slight
+     black drop shadow sets it off and gives the hero structure. Hugs the
+     text via align-self:flex-start in the flex col-copy. Hard corners (D-04). */
+  align-self: flex-start;
+  text-shadow: none;
+  background: #ffffff;
+  padding: clamp(16px, 2.1vw, 28px) clamp(20px, 2.6vw, 38px);
+  box-shadow: 0 12px 34px -10px rgba(0, 0, 0, 0.22);
 }
 h1.sig .hl {
   display: block;
@@ -104,6 +112,16 @@ h1.sig .hl {
 :root {
   --sig:        var(--color-text);              /* near-black ink fill */
   --sig-shadow: 0.055em 0.055em 0 var(--accent); /* hard vermilion lift (D-01) */
+
+  /* Back-compat aliases: pre-v3 token names still referenced by global
+     surfaces (visit-survey popup, navigation, blog/*, about/timeline). The
+     v3 palette migration renamed these to --color-*, which left those
+     components with an undefined background (transparent / invisible over
+     dark bands). Alias them so every surface keeps a solid background. */
+  --bg:     var(--color-bg);
+  --border: var(--color-border);
+  --text:   var(--color-text);
+  --fg:     var(--color-text);
 }
 
 /* ── Marquee keyframe (used by Marquee component) ── */

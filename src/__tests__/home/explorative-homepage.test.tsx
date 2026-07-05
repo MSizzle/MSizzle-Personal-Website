@@ -12,13 +12,6 @@ vi.mock("@/components/home/hero", () => ({
   },
 }));
 
-// Mock CredibilityStrip
-vi.mock("@/components/home/credibility-strip", () => ({
-  CredibilityStrip: function CredibilityStripMock() {
-    return React.createElement("div", { "data-testid": "credibility-strip" });
-  },
-}));
-
 // Mock StickyNav: must render something so we can assert it mounts
 vi.mock("@/components/home/sticky-nav", () => ({
   StickyNav: function StickyNavMock() {

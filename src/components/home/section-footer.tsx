@@ -1,11 +1,11 @@
 import Link from "next/link";
 
 /**
- * SectionFooter: Footer beat (D-12 avail tag + three columns, D-13 velvet-rope).
+ * SectionFooter: Footer beat (D-12 three columns, D-13 velvet-rope).
  * Server Component (RSC only, no client boundary).
  *
- * Velvet-rope preserved (D-13): no "Contact" heading, no contact CTA button.
- * Reach-out is woven into the .selective line and mailto link only.
+ * Velvet-rope preserved (D-13): no "Contact" heading, no contact CTA button,
+ * no availability / reach-out line. Email is only a plain link in Elsewhere.
  * External anchors carry rel="noopener noreferrer" (threat T-17.4-07).
  *
  * This component stays the ONLY footer on /. conditional-footer.tsx returns
@@ -17,17 +17,6 @@ export function SectionFooter() {
   return (
     <footer className="site">
       <div className="wrap">
-        {/* Available for select work tag (D-12) */}
-        <div className="avail">
-          <span className="dot" />
-          Available for select work
-        </div>
-
-        {/* Selective reach-out line, accent-bold on "very little" (D-12) */}
-        <div className="selective reveal">
-          I take on <b>very little</b>. If it is the right thing, reach out.
-        </div>
-
         {/* Three-column footer grid (D-12) */}
         <div className="foot-grid">
           {/* Colophon */}

@@ -1,5 +1,4 @@
 import { Hero } from "./hero";
-import { CredibilityStrip } from "./credibility-strip";
 import { StickyNav } from "./sticky-nav";
 import { ScrollReveals } from "./scroll-reveals";
 import { SectionBuilding } from "./section-building";
@@ -12,7 +11,7 @@ import { SectionFooter } from "./section-footer";
  * ExplorativeHomepage: sketch-010 band-sequence orchestrator (Server Component).
  *
  * Band order per D-03:
- *   hero (light) -> credibility strip (light) -> Building (dark) -> Work (light)
+ *   hero (light) -> Building (dark) -> Work (light)
  *   -> Things I Love (dark) -> Writing (light) -> footer (dark)
  *
  * Islands mounted here:
@@ -32,14 +31,7 @@ export function ExplorativeHomepage() {
       {/* Band 1: Hero (light) - Hero component owns its own section.band wrapper */}
       <Hero />
 
-      {/* Band 2: Credibility strip (light) */}
-      <section className="band beat">
-        <div className="proof">
-          <CredibilityStrip />
-        </div>
-      </section>
-
-      {/* Band 3: Building (dark) */}
+      {/* Band 2: Building (dark) */}
       <section className="band band-dark beat" id="building">
         <SectionBuilding />
       </section>
