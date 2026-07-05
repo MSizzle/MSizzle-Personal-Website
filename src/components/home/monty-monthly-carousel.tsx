@@ -17,7 +17,7 @@ type Props = {
 const SUBSTACK_URL = "https://montymonthly.substack.com";
 
 /**
- * MontyMonthlyCarousel — D-09, D-13
+ * MontyMonthlyCarousel - D-09, D-13
  *
  * Horizontal scroll-snap carousel of Monty Monthly issue cards with:
  * - prev/next arrows (scrollBy ±clientWidth*0.62)
@@ -27,14 +27,14 @@ const SUBSTACK_URL = "https://montymonthly.substack.com";
  * Photo covers are inlined as .photo.dark placeholder blocks (photo.tsx primitive
  * is created in Plan 02; this plan runs in parallel so the markup is inlined).
  *
- * "use client" — passive scroll listener on the track ref; guards SSR.
+ * "use client" - passive scroll listener on the track ref; guards SSR.
  */
 export function MontyMonthlyCarousel({ issues }: Props) {
   const trackRef = useRef<HTMLDivElement>(null);
   const dotsRef = useRef<HTMLDivElement>(null);
 
   /**
-   * syncDots — finds the nearest-centered slide and toggles .on on its dot.
+   * syncDots - finds the nearest-centered slide and toggles .on on its dot.
    * Mirrors sketch syncDots (lines 438-439). Runs inside rAF so it does not
    * thrash layout.
    */
@@ -104,11 +104,11 @@ export function MontyMonthlyCarousel({ issues }: Props) {
 
   return (
     <>
-      {/* Scroll-snap track — .mm-track CSS from Plan 01 (scroll-snap x mandatory + hidden scrollbar) */}
+      {/* Scroll-snap track - .mm-track CSS from Plan 01 (scroll-snap x mandatory + hidden scrollbar) */}
       <div ref={trackRef} className="mm-track">
         {issues.map((issue) => (
           <article key={`issue-${issue.num}`} className="mm-card">
-            {/* Cover placeholder — uses Plan 01 .photo system (photo.tsx created in Plan 02) */}
+            {/* Cover placeholder - uses Plan 01 .photo system (photo.tsx created in Plan 02) */}
             <div className="cover">
               <div className="photo dark" style={{ aspectRatio: "16/8" }}>
                 <div className="img kenburns" />
@@ -136,7 +136,7 @@ export function MontyMonthlyCarousel({ issues }: Props) {
           </article>
         ))}
 
-        {/* Subscribe card — D-09/D-13: link-out only, no email form */}
+        {/* Subscribe card - D-09/D-13: link-out only, no email form */}
         <div className="mm-sub">
           <h3>Get the next one in your inbox.</h3>
           <p>
@@ -154,7 +154,7 @@ export function MontyMonthlyCarousel({ issues }: Props) {
         </div>
       </div>
 
-      {/* Controls row — prev/next + scroll-synced dots */}
+      {/* Controls row - prev/next + scroll-synced dots */}
       <div className="mm-ctrls">
         <button className="mm-btn" onClick={handlePrev} aria-label="previous">
           ‹

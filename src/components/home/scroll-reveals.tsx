@@ -3,17 +3,17 @@
 import { useEffect } from "react";
 
 /**
- * ScrollReveals — headless IntersectionObserver island (D-07, D-08).
+ * ScrollReveals - headless IntersectionObserver island (D-07, D-08).
  *
  * Mount this component once in the page orchestrator (Plan 08). It renders
- * nothing into the DOM — its sole job is to wire one IntersectionObserver
+ * nothing into the DOM - its sole job is to wire one IntersectionObserver
  * that observes every `.reveal`, `.slide`, and `.shadowed` element and adds
  * `.in` when each one enters the viewport.
  *
  * D-07: elements with .reveal/.slide/.shadowed gain `.in` on scroll, enabling
  *   the CSS transitions defined in globals.css (opacity/translateX + shadow settle).
  *
- * D-08: reduced-motion path — if `prefers-reduced-motion: reduce` is set, all
+ * D-08: reduced-motion path - if `prefers-reduced-motion: reduce` is set, all
  *   targets receive `.in` immediately so the static layout is fully visible
  *   without any observer or animation.
  */
@@ -32,7 +32,7 @@ export function ScrollReveals() {
       return;
     }
 
-    // D-07: IntersectionObserver — add .in when element enters viewport,
+    // D-07: IntersectionObserver - add .in when element enters viewport,
     // then unobserve it (fire-once, minimal memory footprint).
     const io = new IntersectionObserver(
       (entries) => {
@@ -53,6 +53,6 @@ export function ScrollReveals() {
     };
   }, []);
 
-  // Headless island — renders nothing into the DOM
+  // Headless island - renders nothing into the DOM
   return null;
 }

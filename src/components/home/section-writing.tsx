@@ -3,8 +3,8 @@ import { SectionLabel } from "@/components/v3/section-label";
 import { Button } from "@/components/v3/button";
 
 /**
- * SectionWriting — static curated essay links (HD-04 / D-13).
- * Server Component — no "use client".
+ * SectionWriting - static curated essay links (HD-04 / D-13).
+ * Server Component - no "use client".
  * D-13: static/curated in v1. Notion-wiring deferred to Phase 16.
  */
 

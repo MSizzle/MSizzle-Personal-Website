@@ -1,8 +1,8 @@
 /* ── CredibilityStrip ──
    "As seen in" placeholder logo strip (D-11).
    Keep-or-cut deferred to real-asset swap.
-   Hard corners (D-04) — no border-radius on marks.
-   Server Component — no "use client". */
+   Hard corners (D-04) - no border-radius on marks.
+   Server Component - no "use client". */
 
 export function CredibilityStrip() {
   return (

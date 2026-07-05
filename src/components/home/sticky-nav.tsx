@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 
 /**
- * StickyNav — D-10, D-13
+ * StickyNav - D-10, D-13
  *
  * Scroll-triggered sticky mini-nav that slides down from the top once the user
  * has scrolled past ~82% of the initial viewport height. Carries a persistent
@@ -41,7 +41,7 @@ export function StickyNav() {
           Monty<i>.</i>
         </div>
 
-        {/* Section anchor links — hidden on mobile via .stickynav ul CSS */}
+        {/* Section anchor links - hidden on mobile via .stickynav ul CSS */}
         <ul>
           <li>
             <a href="#building">Building</a>
@@ -57,7 +57,7 @@ export function StickyNav() {
           </li>
         </ul>
 
-        {/* Persistent Subscribe CTA — scrolls to Writing carousel (D-13: velvet-rope single CTA) */}
+        {/* Persistent Subscribe CTA - scrolls to Writing carousel (D-13: velvet-rope single CTA) */}
         <a className="cta" href="#writing">
           Subscribe
         </a>

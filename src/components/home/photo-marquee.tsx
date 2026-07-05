@@ -8,14 +8,14 @@ type Props = {
 };
 
 /**
- * PhotoMarquee — horizontally-scrolling placeholder photo row (D-07, D-08).
+ * PhotoMarquee - horizontally-scrolling placeholder photo row (D-07, D-08).
  *
  * Renders a duplicated track of `.photo` cards (aspect-ratio 3/4) with captions
  * from `items`. The track is doubled so the CSS `slide` keyframe
  * (translateX 0 → -50%) loops seamlessly.
  *
  * D-07: photo cards with captions animate left as a continuous marquee.
- * D-08: useReducedMotion pauses the CSS animation (belt-and-suspenders —
+ * D-08: useReducedMotion pauses the CSS animation (belt-and-suspenders -
  *   Plan-01 globals.css also kills the animation via media query).
  *
  * The second half of doubled cards is aria-hidden so screen readers see
@@ -50,7 +50,7 @@ export function PhotoMarquee({ items }: Props) {
               style={{ flex: "0 0 clamp(220px,25vw,310px)" }}
               aria-hidden={isDuplicate ? "true" : undefined}
             >
-              {/* Placeholder photo card — matches .photo system in globals.css.
+              {/* Placeholder photo card - matches .photo system in globals.css.
                   Real photography replaces these blocks in a future asset swap. */}
               <div className="photo" style={{ aspectRatio: "3/4" }}>
                 <div className="img" />
