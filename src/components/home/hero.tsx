@@ -60,9 +60,15 @@ export function Hero() {
             </div>
           </div>
 
-          {/* Photo column: portrait fills column, breathes with ambient ken-burns */}
+          {/* Photo column: crossfading portrait carousel (D-07). Slides stack and
+              fade every ~6s via CSS only; the whole frame breathes ambiently.
+              Reduced-motion settles to the first slide (globals.css guard). */}
           <div className="col-photo">
-            <Photo breathe caption="Large portrait" />
+            <div className="pcarousel breathe">
+              <Photo className="pslide" caption="Portrait · Studio" />
+              <Photo className="pslide" caption="Portrait · On stage" />
+              <Photo className="pslide" caption="Portrait · Building" />
+            </div>
           </div>
         </div>
       </div>

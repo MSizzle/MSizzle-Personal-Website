@@ -257,9 +257,9 @@ h1.sig .hw {
 /* ── Hero section layout (D-06) ── */
 .hero {
   display: grid;
-  grid-template-columns: 1fr minmax(320px, 44%);
+  grid-template-columns: 1fr minmax(380px, 52%);
   gap: clamp(28px, 4.5vw, 56px);
-  align-items: stretch;
+  align-items: center;
   flex: 1;
   padding: clamp(10px, 2vh, 30px) 0 clamp(24px, 4vh, 48px);
 }
@@ -279,11 +279,62 @@ h1.sig .hw {
   display: flex;
   z-index: 1;
 }
-.hero .col-photo .photo {
+/* ── Crossfading portrait carousel (D-07/D-08) ──
+   Wider, shorter frame than the old full-height sliver: 52% column + a
+   5/6 aspect box. Slides stack absolutely and crossfade via CSS only
+   (no JS), so it stays a Server Component and the reduced-motion guard
+   below settles it to the first slide. */
+.hero .col-photo .pcarousel {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 5 / 6;
+}
+.hero .col-photo .pcarousel .photo {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
-  min-height: 56vh;
-  aspect-ratio: auto;
+}
+.pslide {
+  opacity: 0;
+  animation: pfade 18s ease-in-out infinite;
+}
+.pslide:first-child {
+  opacity: 1;
+}
+.pslide:nth-child(2) {
+  animation-delay: 6s;
+}
+.pslide:nth-child(3) {
+  animation-delay: 12s;
+}
+/* Distinct placeholder tints so the ~6s crossfade reads before real imagery. */
+.pslide:nth-child(2) .img {
+  background:
+    repeating-linear-gradient(135deg, color-mix(in srgb, var(--accent) 15%, transparent) 0 2px, transparent 2px 12px),
+    linear-gradient(150deg, #efe7dd 0%, #e6ddd0 50%, #f0e9dd 100%);
+}
+.pslide:nth-child(3) .img {
+  background:
+    repeating-linear-gradient(135deg, color-mix(in srgb, var(--accent) 9%, transparent) 0 2px, transparent 2px 12px),
+    linear-gradient(150deg, #e6e9f1 0%, #dee2ec 50%, #eceef4 100%);
+}
+@keyframes pfade {
+  0% {
+    opacity: 0;
+  }
+  5% {
+    opacity: 1;
+  }
+  28% {
+    opacity: 1;
+  }
+  33% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
 }
 .subtitle {
   color: var(--color-text-dim);
@@ -453,7 +504,7 @@ section.beat {
 .hero-ticker {
   background: #141416;
   color: #f5f3ee;
-  padding: 20px 0;
+  padding: clamp(18px, 2.4vw, 30px) 0;
   overflow: hidden;
 }
 .hero-ticker .track {
@@ -475,17 +526,19 @@ section.beat {
   color: var(--accent);
 }
 .hero-ticker .tick-link {
-  padding: 0 clamp(16px, 2.5vw, 28px);
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.18em;
-  font-weight: 600;
+  padding: 0 clamp(16px, 2.5vw, 30px);
+  font-family: var(--font-display);
+  font-weight: var(--sig-weight);
+  font-size: clamp(1.4rem, 3.6vw, 2.7rem);
+  letter-spacing: -0.01em;
   white-space: nowrap;
 }
 .hero-ticker .tick-sep {
-  color: #f5f3ee;
-  opacity: 0.25;
+  color: var(--accent);
+  opacity: 0.5;
   flex-shrink: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1rem, 2.4vw, 1.8rem);
 }
 
 /* ── Section headings and body copy ── */
@@ -892,6 +945,7 @@ body.no-motion .slide {
 body.no-motion .kenburns,
 body.no-motion .breathe,
 body.no-motion .blob,
+body.no-motion .pslide,
 body.no-motion .marquee .track,
 body.no-motion .hero-ticker .track {
   animation: none !important;
@@ -909,6 +963,7 @@ body.no-motion .shadowed .photo {
   .kenburns,
   .breathe,
   .blob,
+  .pslide,
   .marquee .track,
   .hero-ticker .track {
     animation: none !important;
