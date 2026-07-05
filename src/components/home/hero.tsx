@@ -13,7 +13,7 @@ import { Photo } from "./photo";
 
 export function Hero() {
   return (
-    <section className="band hero-band min-h-[86dvh] flex flex-col">
+    <section className="band hero-band min-h-[80dvh] flex flex-col">
       {/* Content: flex-1 so hero grid fills viewport above the ticker */}
       <div className="wrap flex-1 flex flex-col">
         <div className="hero">

@@ -276,10 +276,10 @@ h1.sig .hw {
   gap: clamp(28px, 4.5vw, 56px);
   align-items: center;
   flex: 1;
-  padding: clamp(10px, 2vh, 30px) 0 clamp(24px, 4vh, 48px);
+  padding: clamp(6px, 1vh, 12px) 0 clamp(10px, 1.6vh, 18px);
 }
 .hero .eyebrow {
-  margin-bottom: clamp(26px, 4vh, 42px);
+  margin-bottom: clamp(12px, 2.2vh, 22px);
 }
 .hero .col-copy {
   display: flex;
@@ -303,7 +303,7 @@ h1.sig .hw {
 .hero .col-photo .pcarousel {
   position: relative;
   width: 100%;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 1.2 / 1;
 }
 .hero .col-photo .pcarousel .photo {
   position: absolute;
@@ -522,7 +522,7 @@ section.beat {
 .hero-ticker {
   background: #141416;
   color: #f5f3ee;
-  padding: clamp(18px, 2.4vw, 30px) 0;
+  padding: clamp(10px, 1.4vw, 16px) 0;
   overflow: hidden;
 }
 .hero-ticker .track {
@@ -547,7 +547,7 @@ section.beat {
   padding: 0 clamp(16px, 2.5vw, 30px);
   font-family: var(--font-display);
   font-weight: var(--sig-weight);
-  font-size: clamp(1.4rem, 3.6vw, 2.7rem);
+  font-size: clamp(1.3rem, 3vw, 2.2rem);
   letter-spacing: -0.01em;
   white-space: nowrap;
 }

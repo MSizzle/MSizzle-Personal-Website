@@ -33,7 +33,7 @@ const LINKS = [
  */
 export function EditorialHeader({ active }: Props) {
   return (
-    <header className="hidden md:flex items-baseline justify-between px-6 pt-7 md:px-40 md:pt-9">
+    <header className="hidden md:flex items-baseline justify-between px-6 pt-4 md:px-40 md:pt-5">
       <Link href="/" className="text-[22px] font-bold tracking-tight text-ink">
         Monty Singer
       </Link>
@@ -46,7 +46,7 @@ export function EditorialHeader({ active }: Props) {
                 <Link
                   href={link.href}
                   className={cn(
-                    "flex min-h-11 items-center transition-opacity hover:opacity-60",
+                    "flex min-h-9 items-center transition-opacity hover:opacity-60",
                     isActive ? "font-bold text-ink" : "text-muted"
                   )}
                 >
