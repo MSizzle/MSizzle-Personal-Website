@@ -182,7 +182,10 @@ h1.sig .hl {
 /* ── DARK BAND MECHANISM (D-03 linchpin) ──────────────────────────────────
    .band-dark locally re-declares --color-* tokens so all token-class
    children (text-text, bg-bg, border-border) auto-invert without
-   per-component color hardcoding. This is the key structural primitive. */
+   per-component color hardcoding. This is the key structural primitive.
+   Selector is .band.band-dark (specificity 0,0,2,0) so its dark background
+   beats the later single-class .band rule; dark sections always carry both. */
+.band.band-dark,
 .band-dark {
   --color-text:         #f5f3ee;
   --color-text-dim:     rgba(245, 243, 238, 0.76);
