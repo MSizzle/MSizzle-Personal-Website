@@ -21,6 +21,8 @@
      breathe?     - enable the ambient-breathe keyframe on the container
      priority?    - next/Image priority (use for above-the-fold hero images)
      sizes?       - next/Image sizes hint (responsive)
+     objectPosition? - CSS object-position for the cover crop (e.g. "70% 30%");
+                    tune when a landscape photo is cropped into a portrait slot
      className?   - additional class names (e.g. slide, reveal wrappers) */
 
 import Image from "next/image";
@@ -35,6 +37,7 @@ type Props = {
   breathe?: boolean;
   priority?: boolean;
   sizes?: string;
+  objectPosition?: string;
   className?: string;
 };
 
@@ -47,6 +50,7 @@ export function Photo({
   breathe = false,
   priority = false,
   sizes = "(max-width: 768px) 100vw, 50vw",
+  objectPosition,
   className,
 }: Props) {
   return (
@@ -62,13 +66,14 @@ export function Photo({
             fill
             sizes={sizes}
             priority={priority}
-            style={{ objectFit: "cover" }}
+            style={{ objectFit: "cover", objectPosition }}
           />
         )}
       </div>
       {/* Placeholder marker only when there is no real image */}
       {!src && <span className="icon">◲</span>}
-      {caption && <span className="cap">{caption}</span>}
+      {/* Caption is retained as the alt-text fallback (see Image alt above) but no
+          longer rendered as an on-photo chip — keeps the real images clean. */}
     </div>
   );
 }

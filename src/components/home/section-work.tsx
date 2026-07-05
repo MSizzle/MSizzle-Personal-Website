@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { RailBox } from "@/components/home/rail-box";
 import { Photo } from "@/components/home/photo";
+import type { Project } from "@/lib/notion-projects";
 
 /**
  * SectionWork: Selected work beat (D-03/D-05/D-07).
@@ -14,8 +15,27 @@ import { Photo } from "@/components/home/photo";
  *   - /portfolio link present with "SELECTED" kicker
  *   - no link to the projects page
  *   - Prometheus external anchor keeps rel="noopener noreferrer"
+ *
+ * `projects` is fetched by the async parent (page.tsx) so this stays a sync
+ * component: the first four Featured Notion projects fill the 2x2 grid with
+ * their real cover images (via the /api/notion-cover proxy). Missing covers or
+ * an empty list fall back to the styled placeholder blocks (Notion-down safe).
  */
-export function SectionWork() {
+type Props = { projects?: Project[] };
+
+function captionFor(project: Project | undefined, index: number): string {
+  if (!project) return `Selected work · 0${index + 1}`;
+  const year = project.lastEdited
+    ? new Date(project.lastEdited).getUTCFullYear()
+    : undefined;
+  const tag = project.tags?.[0];
+  return [project.title, tag, year].filter(Boolean).join(" · ");
+}
+
+export function SectionWork({ projects = [] }: Props) {
+  // Always render a 2x2 grid; fill empty cells with placeholders.
+  const cells = Array.from({ length: 4 }, (_, i) => projects[i]);
+
   return (
     <div className="wrap">
       <div className="beat-grid">
@@ -30,18 +50,23 @@ export function SectionWork() {
 
           {/* 2x2 grid of slide-in photos alternating from-left / from-right */}
           <div className="work-grid">
-            <div className="shadowed slide from-left">
-              <Photo aspectRatio="3/2.2" caption="Project one · Product · 2025" />
-            </div>
-            <div className="shadowed slide from-right">
-              <Photo aspectRatio="3/2.2" caption="Project two · Build · 2025" />
-            </div>
-            <div className="shadowed slide from-left">
-              <Photo aspectRatio="3/2.2" caption="Project three · Writing · 2024" />
-            </div>
-            <div className="shadowed slide from-right">
-              <Photo aspectRatio="3/2.2" caption="Project four · Talk · 2024" />
-            </div>
+            {cells.map((project, i) => (
+              <div
+                key={project?.id ?? `placeholder-${i}`}
+                className={`shadowed slide ${i % 2 === 0 ? "from-left" : "from-right"}`}
+              >
+                <Photo
+                  aspectRatio="3/2.2"
+                  src={
+                    project?.cover
+                      ? `/api/notion-cover?pageId=${project.id}`
+                      : undefined
+                  }
+                  alt={project?.cover ? project.title : undefined}
+                  caption={captionFor(project, i)}
+                />
+              </div>
+            ))}
           </div>
 
           {/* Portfolio affordance: D-13 invariant from Phase 17.3 */}

@@ -37,7 +37,14 @@ export function SectionBuilding() {
 
           {/* Wide dark slide-in photo. Drop-shadow settles as .in is added by ScrollReveals. */}
           <div className="shadowed slide from-left" style={{ marginTop: 44 }}>
-            <Photo dark aspectRatio="16/6.5" caption="Wide Prometheus shot" />
+            <Photo
+              dark
+              aspectRatio="16/6.5"
+              src="/home/monty-stage.jpg"
+              alt="Monty Singer presenting on stage"
+              caption="Building in public"
+              objectPosition="center 42%"
+            />
           </div>
         </div>
       </div>

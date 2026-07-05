@@ -51,10 +51,29 @@ export function Hero() {
               fade every ~6s via CSS only; the whole frame breathes ambiently.
               Reduced-motion settles to the first slide (globals.css guard). */}
           <div className="col-photo">
-            <div className="pcarousel breathe">
-              <Photo className="pslide" caption="Portrait · Studio" />
-              <Photo className="pslide" caption="Portrait · On stage" />
-              <Photo className="pslide" caption="Portrait · Building" />
+            <div className="pcarousel">
+              <Photo
+                className="pslide"
+                src="/home/monty-mushrooms.jpg"
+                alt="Monty Singer holding mushroom-grow blocks from an early dorm-room project"
+                caption="Where it started"
+                priority
+                objectPosition="68% 32%"
+              />
+              <Photo
+                className="pslide"
+                src="/home/monty-stage.jpg"
+                alt="Monty Singer presenting the CULTIVATE pitch on stage"
+                caption="On stage"
+                objectPosition="38% 60%"
+              />
+              <Photo
+                className="pslide"
+                src="/home/monty-patricof.jpg"
+                alt="Monty Singer interviewing investor Alan Patricof in a fireside chat"
+                caption="In conversation"
+                objectPosition="28% 40%"
+              />
             </div>
           </div>
         </div>

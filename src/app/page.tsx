@@ -1,24 +1,37 @@
 import { JsonLd } from "@/components/seo/json-ld";
 import { buildPersonSchema } from "@/lib/seo/schemas";
 import { ExplorativeHomepage } from "@/components/home/explorative-homepage";
+import { getFeaturedProjects, type Project } from "@/lib/notion-projects";
+import { getPublishedPosts, type BlogPost } from "@/lib/notion";
 
 /**
- * Homepage — static Server Component for the personal-brand narrative arc.
+ * Homepage — ISR Server Component for the personal-brand narrative arc.
  *
  * Narrative arc: who am I -> what I am building -> how to engage.
- * Rendered as a fully static Server Component with hardcoded JSX copy (D-10).
- * revalidate=false: no Notion fetch on home path, no ISR needed.
  *
- * ExplorativeHomepage assembles the hero and section beats in document order.
- * Phase 17.1-02 will reorder/extend sections to complete the narrative arc.
+ * Fetches the Featured Notion projects (Work grid covers) and the latest
+ * published essays (Monty Monthly carousel covers), then hands them to the
+ * ExplorativeHomepage orchestrator. Fetches are defensive: any Notion failure
+ * yields an empty list and the affected section falls back to placeholders /
+ * hardcoded copy, so the home path never crashes. revalidate=1800 matches
+ * /portfolio and /writing so covers and lists stay fresh without a redeploy.
  */
-export const revalidate = false;
+export const revalidate = 1800;
 
-export default function Home() {
+export default async function Home() {
+  let projects: Project[] = [];
+  let posts: BlogPost[] = [];
+  try {
+    projects = await getFeaturedProjects();
+  } catch {}
+  try {
+    posts = await getPublishedPosts();
+  } catch {}
+
   return (
     <>
       <JsonLd data={buildPersonSchema()} />
-      <ExplorativeHomepage />
+      <ExplorativeHomepage projects={projects} posts={posts} />
     </>
   );
 }

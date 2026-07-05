@@ -272,7 +272,7 @@ h1.sig .hw {
 /* ── Hero section layout (D-06) ── */
 .hero {
   display: grid;
-  grid-template-columns: 1fr minmax(380px, 52%);
+  grid-template-columns: 1fr minmax(420px, 60%);
   gap: clamp(28px, 4.5vw, 56px);
   align-items: center;
   flex: 1;
@@ -295,14 +295,15 @@ h1.sig .hw {
   z-index: 1;
 }
 /* ── Crossfading portrait carousel (D-07/D-08) ──
-   Wider, shorter frame than the old full-height sliver: 52% column + a
-   5/6 aspect box. Slides stack absolutely and crossfade via CSS only
-   (no JS), so it stays a Server Component and the reduced-motion guard
-   below settles it to the first slide. */
+   Wider column (60%) keeps the tall frame's height while giving the photo more
+   width — a square (1/1) box on the wider column lands at roughly the prior 5/6
+   height but noticeably wider, suiting the ~3:2 source photos. Slides stack
+   absolutely and crossfade via CSS only (no JS), so it stays a Server Component
+   and the reduced-motion guard below settles it to the first slide. */
 .hero .col-photo .pcarousel {
   position: relative;
   width: 100%;
-  aspect-ratio: 5 / 6;
+  aspect-ratio: 1 / 1;
 }
 .hero .col-photo .pcarousel .photo {
   position: absolute;
@@ -312,16 +313,23 @@ h1.sig .hw {
 }
 .pslide {
   opacity: 0;
-  animation: pfade 18s ease-in-out infinite;
+  animation: pfade 21s ease-in-out infinite;
 }
 .pslide:first-child {
   opacity: 1;
 }
 .pslide:nth-child(2) {
-  animation-delay: 6s;
+  animation-delay: 7s;
 }
 .pslide:nth-child(3) {
-  animation-delay: 12s;
+  animation-delay: 14s;
+}
+/* Hero portraits sit as a stack (one behind the next) and swap fast — no
+   ken-burns zoom here (the .img kenburns default is disabled in the hero so the
+   photos never scale up). */
+.hero .col-photo .pslide .img {
+  animation: none;
+  transform: none;
 }
 /* Distinct solid placeholder tints so the ~6s crossfade reads before real imagery. */
 .pslide:nth-child(2) .img {
@@ -330,17 +338,21 @@ h1.sig .hw {
 .pslide:nth-child(3) .img {
   background: #dbe2ee; /* solid cool */
 }
+/* Stacked crossfade on a 21s loop (3 photos → ~7s each): each portrait spawns in
+   over ~1.9s (smooth, eased), holds ~5s, then eases out over ~1.5s to reveal the
+   next photo waiting behind it. The fade-out/fade-in windows overlap so there is
+   never a blank frame. No zoom, no drastic dissolve — smooth and unhurried. */
 @keyframes pfade {
   0% {
     opacity: 0;
   }
-  5% {
-    opacity: 1;
-  }
-  28% {
+  9% {
     opacity: 1;
   }
   33% {
+    opacity: 1;
+  }
+  40% {
     opacity: 0;
   }
   100% {

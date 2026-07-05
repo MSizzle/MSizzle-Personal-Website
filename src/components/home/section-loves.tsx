@@ -35,10 +35,10 @@ export function SectionLoves() {
           Add `src: "/home/loves-*.jpg"` to a card to swap in a real photo. */}
       <PhotoMarquee
         items={[
-          { label: "A place I go" },
-          { label: "A tool I trust" },
-          { label: "Off the clock" },
-          { label: "Reading now" },
+          { label: "A place I go", src: "/home/bigsur.jpg", alt: "Pfeiffer Beach keyhole rock at sunset, Big Sur" },
+          { label: "Off the clock", src: "/home/tetons.jpg", alt: "Monty hiking a ridgeline in the Tetons" },
+          { label: "Good company", src: "/home/friends.jpg", alt: "Monty with friends at an evening event" },
+          { label: "A project I loved", src: "/home/monty-mushrooms.jpg", alt: "Monty with an early dorm-room mushroom-growing project" },
         ]}
       />
     </>
