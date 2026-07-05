@@ -17,19 +17,6 @@ export function Hero() {
       {/* Content: flex-1 so hero grid fills viewport above the ticker */}
       <div className="wrap flex-1 flex flex-col">
         <div className="hero">
-          {/* Ambient blob: absolutely positioned within section.band */}
-          <div
-            className="blob"
-            style={{
-              width: "40vw",
-              height: "40vw",
-              maxWidth: "520px",
-              maxHeight: "520px",
-              top: "2%",
-              right: "34%",
-            }}
-          />
-
           {/* Copy column */}
           <div className="col-copy">
             <div className="eyebrow">Founder of Prometheus</div>

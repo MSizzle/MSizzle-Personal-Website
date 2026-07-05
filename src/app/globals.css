@@ -101,7 +101,7 @@ h1.sig {
   text-shadow: none;
   background: #ffffff;
   padding: clamp(16px, 2.1vw, 28px) clamp(20px, 2.6vw, 38px);
-  box-shadow: 0 12px 34px -10px rgba(0, 0, 0, 0.22);
+  box-shadow: 12px 12px 0 var(--color-text); /* hard offset solid shape */
 }
 h1.sig .hl {
   display: block;
@@ -260,17 +260,7 @@ h1.sig .hw {
   margin-left: -0.1em;
 }
 
-/* ── Blob atmosphere (CSS radial gradient + drift keyframe) ── */
-.blob {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(54px);
-  opacity: 0.45;
-  pointer-events: none;
-  z-index: 0;
-  background: radial-gradient(circle, var(--accent-glow), transparent 68%);
-  animation: drift 16s ease-in-out infinite alternate;
-}
+/* Blob atmosphere removed — no gradients / soft glows site-wide (brutalist). */
 
 /* ── Hero section layout (D-06) ── */
 .hero {
@@ -326,16 +316,12 @@ h1.sig .hw {
 .pslide:nth-child(3) {
   animation-delay: 12s;
 }
-/* Distinct placeholder tints so the ~6s crossfade reads before real imagery. */
+/* Distinct solid placeholder tints so the ~6s crossfade reads before real imagery. */
 .pslide:nth-child(2) .img {
-  background:
-    repeating-linear-gradient(135deg, color-mix(in srgb, var(--accent) 15%, transparent) 0 2px, transparent 2px 12px),
-    linear-gradient(150deg, #efe7dd 0%, #e6ddd0 50%, #f0e9dd 100%);
+  background: #ecdfd0; /* solid warm */
 }
 .pslide:nth-child(3) .img {
-  background:
-    repeating-linear-gradient(135deg, color-mix(in srgb, var(--accent) 9%, transparent) 0 2px, transparent 2px 12px),
-    linear-gradient(150deg, #e6e9f1 0%, #dee2ec 50%, #eceef4 100%);
+  background: #dbe2ee; /* solid cool */
 }
 @keyframes pfade {
   0% {
@@ -392,14 +378,10 @@ h1.sig .hw {
   position: absolute;
   inset: 0;
   will-change: transform;
-  background:
-    repeating-linear-gradient(135deg, color-mix(in srgb, var(--accent) 12%, transparent) 0 2px, transparent 2px 12px),
-    linear-gradient(150deg, #e9ebf0 0%, #e2e4ea 45%, #ece9e2 100%);
+  background: #e3e5ec; /* solid neutral placeholder — no gradient */
 }
 .photo.dark .img {
-  background:
-    repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0 2px, transparent 2px 13px),
-    linear-gradient(160deg, color-mix(in srgb, var(--accent) 34%, #0d1526), var(--accent-deep) 58%, #0b111f);
+  background: #212734; /* solid dark placeholder — no gradient */
 }
 .photo .icon {
   position: absolute;
@@ -423,8 +405,7 @@ h1.sig .hw {
   letter-spacing: 0.1em;
   font-weight: 600;
   color: #12245a;
-  background: rgba(255, 255, 255, 0.86);
-  backdrop-filter: blur(2px);
+  background: #ffffff;
   padding: 6px 10px;
   border-radius: var(--radius-sm);
   z-index: 2;
@@ -433,7 +414,7 @@ h1.sig .hw {
 }
 .photo.dark .cap {
   color: #eaf0ff;
-  background: rgba(11, 17, 31, 0.6);
+  background: #0f1420; /* solid — no translucency */
 }
 
 /* ── Structured section layout ── */
@@ -766,8 +747,7 @@ p.body {
   left: 0;
   right: 0;
   z-index: 9000;
-  background: rgba(18, 18, 20, 0.92);
-  backdrop-filter: blur(10px);
+  background: #141416; /* solid — no translucency/blur */
   color: #f5f3ee;
   transform: translateY(-100%);
   transition: transform 0.35s var(--ease-out);
@@ -936,13 +916,15 @@ p.body {
   opacity: 1;
   transform: translateX(0);
 }
-/* Even black drop-shadow settles in when slide completes (D-07) */
+/* Hard offset solid shape settles in when slide completes (D-07). Uses
+   --color-text so it auto-inverts: ink offset on light bands, paper offset
+   on dark bands — always a visible solid block, never a soft gradient. */
 .shadowed .photo {
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0);
+  box-shadow: 0 0 0 var(--color-text);
   transition: box-shadow 0.9s var(--ease-out) 0.12s;
 }
 .shadowed.in .photo {
-  box-shadow: 0 30px 60px -18px rgba(0, 0, 0, 0.5), 0 8px 20px -8px rgba(0, 0, 0, 0.35);
+  box-shadow: 16px 16px 0 var(--color-text);
 }
 .kenburns {
   animation: kb 22s ease-in-out infinite alternate;
@@ -969,7 +951,7 @@ body.no-motion .hero-ticker .track {
   animation: none !important;
 }
 body.no-motion .shadowed .photo {
-  box-shadow: 0 30px 60px -18px rgba(0, 0, 0, 0.5);
+  box-shadow: 16px 16px 0 var(--color-text);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -987,7 +969,7 @@ body.no-motion .shadowed .photo {
     animation: none !important;
   }
   .shadowed .photo {
-    box-shadow: 0 30px 60px -18px rgba(0, 0, 0, 0.5);
+    box-shadow: 16px 16px 0 var(--color-text);
   }
 }
 
