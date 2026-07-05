@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v3.0
 milestone_name: Dark Brutalist Rebuild
-status: executing
+status: completed
 stopped_at: Phase 17.2 UI-SPEC approved
-last_updated: "2026-07-04T15:49:50.040Z"
-last_activity: 2026-07-04 -- Phase 17.4 execution started
+last_updated: "2026-07-05T04:47:10.968Z"
+last_activity: 2026-07-05 -- Phase 17.4 marked complete
 progress:
   total_phases: 9
-  completed_phases: 7
+  completed_phases: 8
   total_plans: 45
-  completed_plans: 33
-  percent: 73
+  completed_plans: 42
+  percent: 89
 ---
 
 # Project State
@@ -25,10 +25,10 @@ See: .planning/PROJECT.md (updated 2026-06-18)
 
 ## Current Position
 
-Phase: 17.4 (photo-forward-homepage-restyle) — EXECUTING
+Phase: 17.4 — COMPLETE
 Plan: 1 of 9
-Status: Executing Phase 17.4
-Last activity: 2026-07-04 -- Phase 17.4 execution started
+Status: Phase 17.4 complete
+Last activity: 2026-07-05 -- Phase 17.4 marked complete
 
 Direction: locked photo-forward restyle from sketch 010 (`.planning/sketches/010-structured-bands-carousel/`) — Hanken Grotesk 800 + Vermilion `#e5411f` marker hero, alternating light/dark bands, hard corners, rail boxes, slide-in photos, Monty Monthly carousel, sticky Subscribe nav, credibility strip, rich footer. Supersedes the 17.1 text-forward skin; preserves who→what→engage velvet-rope IA. Motion scroll/ambient-only (IO + CSS + scroll-snap), no WebGL/Lenis. See memory `v3-homepage-photo-forward-lock` + `17.4-CONTEXT.md`. Phase 18 (QA/perf/alias) parked until this lands.
 
