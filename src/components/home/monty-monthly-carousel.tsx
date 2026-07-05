@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useEffect, useCallback } from "react";
+import { Photo } from "./photo";
 
 export type CarouselIssue = {
   num: string;
@@ -8,6 +9,8 @@ export type CarouselIssue = {
   title: string;
   excerpt: string;
   href?: string;
+  /** Issue cover image path (e.g. "/home/issue-12.jpg"); placeholder if unset. */
+  cover?: string;
 };
 
 type Props = {
@@ -108,15 +111,15 @@ export function MontyMonthlyCarousel({ issues }: Props) {
       <div ref={trackRef} className="mm-track">
         {issues.map((issue) => (
           <article key={`issue-${issue.num}`} className="mm-card">
-            {/* Cover placeholder - uses Plan 01 .photo system (photo.tsx created in Plan 02) */}
+            {/* Real cover when issue.cover is set, else a placeholder block. */}
             <div className="cover">
-              <div className="photo dark" style={{ aspectRatio: "16/8" }}>
-                <div className="img kenburns" />
-                <span className="icon" aria-hidden="true">
-                  ◲
-                </span>
-                <span className="cap">Issue cover</span>
-              </div>
+              <Photo
+                dark
+                aspectRatio="16/8"
+                src={issue.cover}
+                alt={issue.cover ? issue.title : undefined}
+                caption="Issue cover"
+              />
             </div>
             <div className="meta">
               <div className="mm-issue">

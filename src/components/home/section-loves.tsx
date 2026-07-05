@@ -31,9 +31,15 @@ export function SectionLoves() {
           </div>
         </div>
       </div>
-      {/* Full-bleed marquee, outside .wrap intentionally */}
+      {/* Full-bleed marquee, outside .wrap intentionally.
+          Add `src: "/home/loves-*.jpg"` to a card to swap in a real photo. */}
       <PhotoMarquee
-        items={["A place I go", "A tool I trust", "Off the clock", "Reading now"]}
+        items={[
+          { label: "A place I go" },
+          { label: "A tool I trust" },
+          { label: "Off the clock" },
+          { label: "Reading now" },
+        ]}
       />
     </>
   );

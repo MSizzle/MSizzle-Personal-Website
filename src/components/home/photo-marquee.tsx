@@ -1,10 +1,14 @@
 "use client";
 
 import { useReducedMotion } from "motion/react";
+import { Photo } from "./photo";
+
+/** One marquee card: a caption label and an optional real image src. */
+export type MarqueeItem = { label: string; src?: string; alt?: string };
 
 type Props = {
-  /** Caption labels for each placeholder photo card (e.g. "A place I go"). */
-  items: string[];
+  /** Photo cards; `src` renders a real image, otherwise a placeholder block. */
+  items: MarqueeItem[];
 };
 
 /**
@@ -50,13 +54,13 @@ export function PhotoMarquee({ items }: Props) {
               style={{ flex: "0 0 clamp(220px,25vw,310px)" }}
               aria-hidden={isDuplicate ? "true" : undefined}
             >
-              {/* Placeholder photo card - matches .photo system in globals.css.
-                  Real photography replaces these blocks in a future asset swap. */}
-              <div className="photo" style={{ aspectRatio: "3/4" }}>
-                <div className="img" />
-                <span className="icon">◲</span>
-                <span className="cap">{item}</span>
-              </div>
+              {/* Renders a real image when item.src is set, else a placeholder. */}
+              <Photo
+                aspectRatio="3/4"
+                caption={item.label}
+                src={item.src}
+                alt={item.alt}
+              />
             </div>
           );
         })}
