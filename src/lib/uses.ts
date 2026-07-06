@@ -53,3 +53,17 @@ export const USES_DATA: UsesGroup[] = [
     ],
   },
 ];
+
+/**
+ * USES_DATA with TODO/placeholder rows filtered out so the /uses page
+ * never exposes unfinished hardware entries to visitors.
+ * Groups with zero items after filtering are dropped entirely.
+ */
+export const USES_DATA_FILTERED: UsesGroup[] = USES_DATA.map((group) => ({
+  ...group,
+  items: group.items.filter(
+    (item) =>
+      !item.detail.startsWith("TODO") &&
+      !item.detail.toLowerCase().startsWith("placeholder"),
+  ),
+})).filter((group) => group.items.length > 0);

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { USES_DATA } from "@/lib/uses";
+import { USES_DATA_FILTERED } from "@/lib/uses";
 import { WATCHING_ITEMS } from "@/lib/watching";
 import { PageHero } from "@/components/v3/page-hero";
 import { UsesList } from "@/components/v3/uses-list";
@@ -63,7 +63,7 @@ export default function UsesPage() {
         <RuleStrong />
 
         <section className="pb-16">
-          <UsesList groups={USES_DATA} />
+          <UsesList groups={USES_DATA_FILTERED} />
         </section>
 
         {/* Watching section — folded from deleted /watching route (D-07) */}
