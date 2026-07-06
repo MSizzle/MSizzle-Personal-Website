@@ -28,23 +28,6 @@ vi.mock("@/components/home/rail-box", () => ({
   },
 }));
 
-// Mock Photo: renders a div so the component can mount without canvas/image setup
-vi.mock("@/components/home/photo", () => ({
-  Photo: function PhotoMock({
-    caption,
-    aspectRatio,
-  }: {
-    caption?: string;
-    aspectRatio?: string;
-  }) {
-    return React.createElement("div", {
-      "data-testid": "photo",
-      "data-caption": caption,
-      "data-aspect": aspectRatio,
-    });
-  },
-}));
-
 afterEach(() => {
   cleanup();
 });
