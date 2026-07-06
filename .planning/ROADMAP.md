@@ -322,9 +322,9 @@ Phases execute in numeric order: 14 -> 15 -> 16 -> 17 -> 18
 **Goal:** Every project/essay card face is a designed surface: typographic title-cards (Hanken 800 + vermilion, deterministic paper/ink alternation) replace cropped-logo covers and broken placeholders, interior grids carry the brutalist offset-shadow treatment, /writing shows reading time and deks, and all three OG images match the vermilion identity.
 **Requirements**: SC-1 (title-card system), SC-2 (card titles/deks everywhere), SC-3 (offset-shadow grids), SC-4 (reading time + deks on /writing), SC-5 (on-brand OG images)
 **Depends on:** Phase 18
-**Plans:** 3 plans
+**Plans:** 2/3 plans executed
 
 Plans:
-- [ ] 19-01-PLAN.md - TitleCard component + CardCover error fallback + Card integration + card-grid/shadowed CSS (wave 1)
-- [ ] 19-03-PLAN.md - OG image rebuild: fonts + root/blog/projects title-card OG routes (wave 1, parallel)
+- [x] 19-01-PLAN.md - TitleCard component + CardCover error fallback + Card integration + card-grid/shadowed CSS (wave 1)
+- [x] 19-03-PLAN.md - OG image rebuild: fonts + root/blog/projects title-card OG routes (wave 1, parallel)
 - [ ] 19-02-PLAN.md - Homepage Work grid, /writing reading time/deks, /projects always-title-card + offset-shadow grids (wave 2)
