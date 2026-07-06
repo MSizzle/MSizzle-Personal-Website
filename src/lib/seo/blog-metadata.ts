@@ -9,7 +9,7 @@ function truncate(text: string, maxChars: number = 155): string {
 }
 
 export function buildBlogPostMetadata(post: BlogPost): Metadata {
-  const title = `${post.title} | Monty Singer`
+  const title = post.title
   const description = truncate(post.description || `An essay by Monty Singer: ${post.title}.`, 155)
   const url = canonical(`/blog/${post.slug}`)
 

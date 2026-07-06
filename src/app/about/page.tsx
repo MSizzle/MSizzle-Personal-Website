@@ -5,14 +5,14 @@ import { Rule } from "@/components/editorial/rule";
 import { AllLink } from "@/components/editorial/all-link";
 
 export const metadata: Metadata = {
-  title: "About | Monty Singer",
+  title: "About",
   description:
-    "Monty Singer -- builder, writer, Founder of Prometheus.",
+    "Monty Singer — builder, writer, Founder of Prometheus.",
   alternates: { canonical: "/about" },
   openGraph: {
-    title: "About | Monty Singer",
+    title: "About",
     description:
-      "Monty Singer -- builder, writer, Founder of Prometheus.",
+      "Monty Singer — builder, writer, Founder of Prometheus.",
     url: "/about",
     type: "profile",
   },

@@ -24,11 +24,11 @@ import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 export const revalidate = 1800;
 
 export const metadata: Metadata = {
-  title: "Things I Love | Monty Singer",
+  title: "Things I Love",
   description: "Tools, books, and ideas I keep coming back to.",
   alternates: { canonical: "/uses" },
   openGraph: {
-    title: "Things I Love | Monty Singer",
+    title: "Things I Love",
     description: "Tools, books, and ideas I keep coming back to.",
     url: "/uses",
     type: "website",

@@ -14,12 +14,12 @@ import { NewsletterCarousel } from "@/components/v3/newsletter-carousel";
 export const revalidate = 1800;
 
 export const metadata: Metadata = {
-  title: "Writing | Monty Singer",
+  title: "Writing",
   description:
     "Long-form essays on philosophy, technology, and the texture of an attentive life.",
   alternates: { canonical: "/writing" },
   openGraph: {
-    title: "Writing | Monty Singer",
+    title: "Writing",
     description:
       "Long-form essays on philosophy, technology, and the texture of an attentive life.",
     url: "/writing",

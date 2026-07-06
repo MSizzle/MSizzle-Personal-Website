@@ -36,7 +36,7 @@ export async function generateMetadata({
 }: PageProps): Promise<Metadata> {
   const { slug } = await params
   const post = await getPostBySlug(slug)
-  if (!post) return { title: 'Post Not Found | Monty Singer' }
+  if (!post) return { title: 'Post Not Found' }
   return buildBlogPostMetadata(post)
 }
 
