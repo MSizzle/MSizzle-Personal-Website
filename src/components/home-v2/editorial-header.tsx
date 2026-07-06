@@ -33,12 +33,12 @@ const LINKS = [
  */
 export function EditorialHeader({ active }: Props) {
   return (
-    <header className="hidden md:flex items-baseline justify-between px-6 pt-4 md:px-40 md:pt-5">
-      <Link href="/" className="text-[22px] font-bold tracking-tight text-ink">
+    <header className="hidden items-center justify-between border-b border-[color:var(--color-text)] bg-bg px-6 py-3 md:flex md:px-40">
+      <Link href="/" className="text-[22px] font-bold tracking-tight text-text">
         Monty Singer
       </Link>
       <nav>
-        <ul className="flex list-none flex-wrap items-baseline gap-x-6 gap-y-2 text-nav md:gap-x-8">
+        <ul className="flex list-none flex-wrap items-center gap-x-6 gap-y-2 text-[15px] md:gap-x-8">
           {LINKS.map((link) => {
             const isActive = active === link.label;
             return (
@@ -47,7 +47,7 @@ export function EditorialHeader({ active }: Props) {
                   href={link.href}
                   className={cn(
                     "flex min-h-9 items-center transition-opacity hover:opacity-60",
-                    isActive ? "font-bold text-ink" : "text-muted"
+                    isActive ? "font-bold text-text" : "text-text-muted"
                   )}
                 >
                   {link.label}

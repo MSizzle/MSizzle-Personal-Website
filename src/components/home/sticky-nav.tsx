@@ -7,11 +7,11 @@ import { useState, useEffect } from "react";
  *
  * Scroll-triggered sticky mini-nav that slides down from the top once the user
  * has scrolled past ~82% of the initial viewport height. Carries a persistent
- * vermilion Subscribe CTA that smooth-scrolls to the Writing carousel (#writing),
- * whose subscribe card links out to Substack.
+ * vermilion "Say Hi" CTA that opens a prefilled email draft to Monty
+ * (mailto with a ready-to-send subject + greeting).
  *
- * Velvet-rope model preserved (D-13): Subscribe is the only CTA; no email form,
- * no competing engagement buttons.
+ * Single-CTA model: "Say Hi" is the only button; no email form, no competing
+ * engagement buttons.
  *
  * Z-index: relies on Plan 01's `.stickynav` CSS rule (z-index: 9000) to sit
  * above the existing z-50 mobile header (nav/navigation.tsx).
@@ -55,9 +55,12 @@ export function StickyNav() {
           </li>
         </ul>
 
-        {/* Persistent Subscribe CTA - scrolls to Writing carousel (D-13: velvet-rope single CTA) */}
-        <a className="cta" href="#writing">
-          Subscribe
+        {/* Persistent "Say Hi" CTA — opens a prefilled email draft to Monty */}
+        <a
+          className="cta"
+          href="mailto:monty@prometheus.today?subject=Saying%20hi&body=Hi%20Monty%2C%0A%0A"
+        >
+          Say Hi
         </a>
       </div>
     </div>

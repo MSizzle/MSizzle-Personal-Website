@@ -36,8 +36,11 @@ export function Hero() {
 
             {/* Single way-in (D-13): woven prose link, no CTA button, no contact link */}
             <p className="wayin">
-              Once a month I write about what building actually looks like.{" "}
-              <a href="#writing">Join Monty Monthly &#x2192;</a>
+              Once a month I write about what building actually looks like.
+              <br />
+              <a className="mt-2 inline-block" href="#writing">
+                Join Monty Monthly &#x2192;
+              </a>
             </p>
 
             {/* Black status tag with pulsing Vermilion dot */}
