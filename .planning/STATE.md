@@ -113,6 +113,7 @@ None yet. Highest-risk item to watch: the 3D hero object's effect on LCP/PSI (Ph
 | 260706-gbu | Site-wide polish pass: 10 quick fixes from live-site audit (titles, TODO leak, email, nav parity, /portfolio redirect, dead code, fake fallback, survey) | 2026-07-06 | d95933d | [260706-gbu-site-wide-polish-pass-quick-fixes-from-l](./quick/260706-gbu-site-wide-polish-pass-quick-fixes-from-l/) |
 | 260706-hai | Remove em dashes from all user-visible copy (9 strings across about, projects, uses, photos) | 2026-07-06 | a832ddd | [260706-hai-remove-em-dashes-from-all-user-visible-s](./quick/260706-hai-remove-em-dashes-from-all-user-visible-s/) |
 | 260706-lm3 | Replace cringy proud copy on homepage with plainer past-projects copy | 2026-07-06 | de9ffb7 | [260706-lm3-replace-cringy-proud-copy-on-homepage-wi](./quick/260706-lm3-replace-cringy-proud-copy-on-homepage-wi/) |
+| 260706-fast | Hero subtitle rewritten to user-dictated copy; loves heading shortened to "Things I love outside of work." | 2026-07-06 | e126174 | (inline /gsd-fast, no directory) |
 
 ## Deferred Items
 
