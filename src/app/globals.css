@@ -22,7 +22,6 @@
   --accent:               #e5411f;
   --accent-hover:         #c8381a;
   --accent-deep:          #a52d13;
-  --accent-glow:          rgba(229,65,31,0.32);
 
   /* --color-* aliases so Tailwind v4 emits accent utilities (text-accent,
      bg-accent, border-accent, border-l-accent). The bare --accent token is not
@@ -31,10 +30,6 @@
   --color-accent:         #e5411f;
   --color-accent-hover:   #c8381a;
   --color-accent-deep:    #a52d13;
-
-  /* Blob atmosphere (dark glossy + vermilion rim) */
-  --blob-core:            #17171a;
-  --blob-rim:             #e5411f;
 
   /* v3 type scale (translated from prototype :root to @theme token names) */
   --text-xs:   0.72rem;
@@ -415,27 +410,6 @@ h1.sig .hw {
   color: #fff;
   opacity: 0.7;
 }
-.photo .cap {
-  position: absolute;
-  bottom: 12px;
-  left: 12px;
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  font-weight: 600;
-  color: #12245a;
-  background: #ffffff;
-  padding: 6px 10px;
-  border-radius: var(--radius-sm);
-  z-index: 2;
-  width: max-content;
-  max-width: calc(100% - 24px);
-}
-.photo.dark .cap {
-  color: #eaf0ff;
-  background: #0f1420; /* solid — no translucency */
-}
-
 /* ── Structured section layout ── */
 section.beat {
   padding: var(--band-pad) 0;

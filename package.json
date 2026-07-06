@@ -11,8 +11,6 @@
   "dependencies": {
     "@gsap/react": "^2.1.2",
     "@notionhq/client": "^4.0.2",
-    "@react-three/fiber": "^9.6.1",
-    "@react-three/postprocessing": "^3.0.4",
     "@tailwindcss/typography": "^0.5.19",
     "clsx": "^2.1.1",
     "gsap": "^3.14.2",
@@ -26,9 +24,7 @@
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "rss-parser": "^3.13.0",
-    "tailwind-merge": "^3.5.0",
-    "three": "^0.184.0",
-    "three-custom-shader-material": "^6.4.0"
+    "tailwind-merge": "^3.5.0"
   },
   "browserslist": [
     "Chrome >= 100",
@@ -41,7 +37,6 @@
     "not ie 11"
   ],
   "devDependencies": {
-    "@react-three/test-renderer": "^9.1.0",
     "@tailwindcss/postcss": "^4",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.9.1",
@@ -49,7 +44,6 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "@types/three": "^0.184.1",
     "@vitejs/plugin-react": "^6.0.1",
     "eslint": "^9",
     "eslint-config-next": "16.2.1",
