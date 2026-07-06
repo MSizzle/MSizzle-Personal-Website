@@ -87,12 +87,12 @@ describe("Navigation component (Plan 02 / D-13)", () => {
     expect(usesLink).not.toBeNull();
   });
 
-  it("MOBILE_LINKS includes /prometheus link (D-13)", () => {
+  it("MOBILE_LINKS does NOT include /prometheus link (4-item parity with desktop)", () => {
     mockUsePathname.mockReturnValue("/");
     render(<Navigation />);
     const hamburger = screen.getByRole("button", { name: /open navigation menu/i });
     fireEvent.click(hamburger);
     const prometheusLink = document.querySelector('a[href="/prometheus"]');
-    expect(prometheusLink).not.toBeNull();
+    expect(prometheusLink).toBeNull();
   });
 });

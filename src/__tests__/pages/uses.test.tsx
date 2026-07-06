@@ -72,10 +72,10 @@ async function renderUsesPage() {
 }
 
 describe("/uses page — Things I Love (Phase 17.2 / D-06, D-07)", () => {
-  it("metadata.title equals 'Things I Love | Monty Singer'", async () => {
+  it("metadata.title equals 'Things I Love'", async () => {
     const { metadata } = await import("@/app/uses/page");
     const resolved = typeof metadata === "function" ? await metadata() : metadata;
-    expect(resolved.title).toBe("Things I Love | Monty Singer");
+    expect(resolved.title).toBe("Things I Love");
   });
 
   it("metadata.alternates.canonical equals '/uses'", async () => {
@@ -84,10 +84,10 @@ describe("/uses page — Things I Love (Phase 17.2 / D-06, D-07)", () => {
     expect((resolved as any).alternates?.canonical).toBe("/uses");
   });
 
-  it("metadata.openGraph.title equals 'Things I Love | Monty Singer'", async () => {
+  it("metadata.openGraph.title equals 'Things I Love'", async () => {
     const { metadata } = await import("@/app/uses/page");
     const resolved = typeof metadata === "function" ? await metadata() : metadata;
-    expect((resolved as any).openGraph?.title).toBe("Things I Love | Monty Singer");
+    expect((resolved as any).openGraph?.title).toBe("Things I Love");
   });
 
   it("renders breadcrumb 'Home' item", async () => {
