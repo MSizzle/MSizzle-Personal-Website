@@ -1,6 +1,7 @@
 import { Fragment } from "react";
 import type { Metadata } from "next";
-import { getPublishedPosts, type BlogPost } from "@/lib/notion";
+import { getPublishedPosts, getBlocks, type BlogPost } from "@/lib/notion";
+import { calculateReadingTime } from "@/utils/reading-time";
 import { fetchMontyMonthlyIssues } from "@/lib/rss/substack";
 import { RuleStrong } from "@/components/editorial/rule-strong";
 import { YearBlock } from "@/components/editorial/year-block";
@@ -52,9 +53,14 @@ function groupPostsByYear(posts: BlogPost[]): Map<number, BlogPost[]> {
  * Layout per D-03/D-04 (17.2-03):
  *   1. PageHero (v3) -- title "Writing", canonical /writing (unchanged)
  *   2. <RuleStrong />
- *   3. Year-grouped essays -- YearBlock heading above a photo grid of Cards (D-03)
- *      Each Card: cover image via /api/notion-cover proxy (D-02), calm color-only
- *      hover (D-01). Cards link to /blog/[slug] per D-02.
+ *   3. Year-grouped essays -- YearBlock heading above a card-grid of Cards (D-03)
+ *      Essays KEEP real Notion covers when present; title-card is the fallback (SC-1).
+ *      Reading time per D (Phase 19 SC-4) computed from content blocks via
+ *      getBlocks + calculateReadingTime with per-post .catch(() => undefined);
+ *      ISR revalidate=1800 caps Notion call frequency to one fan-out per 30 min.
+ *      Failure degrades gracefully to omitting the reading-time line, never crashing.
+ *      Grid uses Phase 19 card-grid offset-shadow treatment (SC-3): 8px ink shadow,
+ *      vermilion hover, radius 0.
  *   4. <RuleStrong />
  *   5. Monty Monthly section -- NewsletterCarousel fed from Substack RSS (D-04)
  *      /newsletter redirects here (301); no link to /newsletter anywhere.
@@ -62,13 +68,28 @@ function groupPostsByYear(posts: BlogPost[]): Map<number, BlogPost[]> {
  *   7. WritingSubscribeCTA -- Substack outbound CTA
  *
  * Defensive fetches: both Notion and Substack failures render gracefully with
- * empty content rather than crashing. (T-16-07, T-17.2-05)
+ * empty content rather than crashing. (T-16-07, T-17.2-05, T-19-04)
  */
 export default async function WritingPage() {
   let posts: BlogPost[] = [];
   try {
     posts = await getPublishedPosts();
   } catch {}
+
+  // Per-post reading time from content blocks. Each failure degrades gracefully
+  // to undefined (no reading-time line) rather than crashing the page. (T-19-04)
+  const readingTimeEntries = await Promise.all(
+    posts.map(
+      async (post) =>
+        [
+          post.id,
+          await getBlocks(post.id)
+            .then(calculateReadingTime)
+            .catch(() => undefined),
+        ] as const
+    )
+  );
+  const readingTimes = new Map(readingTimeEntries);
 
   const rawIssues = await fetchMontyMonthlyIssues(6);
   const carouselIssues = rawIssues.map((issue) => ({
@@ -93,7 +114,7 @@ export default async function WritingPage() {
 
       <RuleStrong />
 
-      {/* Year-grouped photo grid of cards (D-03, D-04) */}
+      {/* Year-grouped card grid of essays (D-03, D-04, Phase 19 SC-3/SC-4) */}
       <section className="px-6 md:px-40">
         {yearEntries.length === 0 ? (
           <p className="text-center py-12 text-[var(--color-text-muted)]">
@@ -104,21 +125,23 @@ export default async function WritingPage() {
             {yearEntries.map(([year, yearPosts], i, arr) => (
               <Fragment key={year}>
                 <YearBlock year={year}>
-                  {/* Photo grid of Cards (D-03) -- auto-fill minmax 260px */}
-                  <div className="grid [grid-template-columns:repeat(auto-fill,minmax(260px,1fr))] gap-px bg-[var(--color-border)] border border-[var(--color-border)]">
-                    {yearPosts.map((post) => (
+                  {/* Phase 19 SC-3: offset-shadow card grid with vermilion hover */}
+                  <div className="card-grid">
+                    {yearPosts.map((post, i) => (
                       <Card
                         key={post.id}
                         href={`/blog/${post.slug}`}
                         title={post.title}
                         blurb={post.description}
-                        kicker={post.tags?.[0]}
+                        kicker={post.tags?.[0] ?? "Essay"}
                         coverSrc={
                           post.cover
                             ? `/api/notion-cover?pageId=${post.id}`
                             : undefined
                         }
                         coverAlt={post.cover ? post.title : undefined}
+                        readingTime={readingTimes.get(post.id)}
+                        titleCardField={i % 2 === 0 ? "paper" : "ink"}
                       />
                     ))}
                   </div>
@@ -132,7 +155,7 @@ export default async function WritingPage() {
 
       <RuleStrong />
 
-      {/* Monty Monthly section — folded from deleted /newsletter route (D-04).
+      {/* Monty Monthly section -- folded from deleted /newsletter route (D-04).
           Hidden when the Substack RSS fetch returns nothing so we never render
           a bare heading over an empty carousel. */}
       {carouselIssues.length > 0 && (
