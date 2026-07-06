@@ -8,6 +8,7 @@ import { SectionNewsletter } from "./section-newsletter";
 import { SectionFooter } from "./section-footer";
 import type { Project } from "@/lib/notion-projects";
 import type { BlogPost } from "@/lib/notion";
+import type { LoveItem } from "@/lib/notion-loves";
 
 /**
  * ExplorativeHomepage: sketch-010 band-sequence orchestrator (Server Component).
@@ -26,9 +27,9 @@ import type { BlogPost } from "@/lib/notion";
  * Work grid and Monty Monthly carousel. Both default to placeholders/fallback copy
  * when the data is absent, so the tree renders fine with no props (and in tests).
  */
-type Props = { projects?: Project[]; posts?: BlogPost[] };
+type Props = { projects?: Project[]; posts?: BlogPost[]; loves?: LoveItem[] };
 
-export function ExplorativeHomepage({ projects = [], posts = [] }: Props) {
+export function ExplorativeHomepage({ projects = [], posts = [], loves = [] }: Props) {
   return (
     <div className="min-h-screen bg-bg">
       {/* Fixed islands: mounted first so they overlay all bands */}
@@ -55,7 +56,7 @@ export function ExplorativeHomepage({ projects = [], posts = [] }: Props) {
 
       {/* Band 6: Things I Love (light) */}
       <section className="band beat" id="loves">
-        <SectionLoves />
+        <SectionLoves items={loves} />
       </section>
 
       {/* Band 7: Footer (dark) */}

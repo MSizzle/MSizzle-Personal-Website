@@ -1179,3 +1179,137 @@ footer.site {
      legible on phones instead of collapsing to a thin band. */
   .prometheus-shot .photo { aspect-ratio: 16 / 10; }
 }
+
+/* ── Things-I-love pinboard (sketch 012) ─────────────────────────────────────
+   Draggable overlapping cards on the light "loves" band. Brutalist offset
+   solids (no gradients), hard corners, vermilion accent. Interaction is wired
+   in Pinboard's effect; this only styles the faces + drag/hover/reveal states.
+   Full-bleed-ish: lives outside .wrap so the scatter can spread. */
+.pinboard {
+  position: relative;
+  max-width: 1180px;
+  margin: 34px auto 0;
+  padding: 0 40px;
+  touch-action: none;
+  user-select: none;
+}
+.pinboard-field { position: absolute; inset: 0 40px; }
+
+.pb-card {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform-origin: center;
+  cursor: grab;
+  will-change: transform;
+}
+.pb-card.is-dragging { cursor: grabbing; }
+
+.pb-frame {
+  position: relative;
+  overflow: hidden;
+  border: 2px solid var(--color-text);
+  background: var(--color-bg);
+  box-shadow: 7px 7px 0 var(--color-text);
+  transition: box-shadow 0.12s ease, outline-color 0.12s ease;
+  outline: 0 solid var(--accent);
+}
+.pb-card:hover .pb-frame {
+  box-shadow: 10px 10px 0 var(--color-text);
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+.pb-card.is-dragging .pb-frame { box-shadow: 16px 18px 0 rgba(23, 23, 23, 0.32); }
+.pb-frame--cream { background: #f4ecdd; }
+
+/* media / thumbnail area */
+.pb-media { position: relative; display: block; overflow: hidden; background: #a49e93; }
+.pb-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.pb-swatch { display: block; width: 100%; height: 100%; }
+.pb-tag {
+  position: absolute; left: 8px; top: 8px;
+  font-size: 9px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase;
+  background: var(--color-text); color: var(--color-bg); padding: 3px 6px;
+}
+
+/* place (polaroid) */
+.pb-card--place .pb-frame { padding: 10px 10px 0; }
+.pb-media--place { width: 210px; height: 150px; }
+.pb-cap { font-size: 13px; font-weight: 700; padding: 10px 4px 12px; color: var(--color-text); }
+
+/* book */
+.pb-card--book .pb-frame { width: 150px; }
+.pb-media--book { width: 100%; height: 210px; }
+.pb-book-title {
+  position: absolute; left: 14px; right: 14px; bottom: 34px;
+  font-size: 16px; font-weight: 800; line-height: 1.05; color: var(--color-text-inverse);
+}
+.pb-book-author { position: absolute; left: 14px; right: 14px; bottom: 14px; font-size: 11px; color: rgba(247, 245, 240, 0.82); }
+.pb-foot { display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; border-top: 2px solid var(--color-text); }
+.pb-k { font-size: 9px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-text-muted); }
+
+/* youtube */
+.pb-card--youtube .pb-frame { width: 260px; }
+.pb-media--yt { width: 100%; height: 146px; background: #231f1e; }
+.pb-play { position: absolute; inset: 0; display: grid; place-items: center; }
+.pb-play > span { width: 52px; height: 36px; background: var(--accent); border: 2px solid var(--color-text); display: grid; place-items: center; }
+.pb-play > span::after {
+  content: ""; border-left: 14px solid var(--color-bg);
+  border-top: 9px solid transparent; border-bottom: 9px solid transparent; margin-left: 3px;
+}
+.pb-meta { padding: 9px 11px; }
+.pb-meta .pb-t { font-size: 13px; font-weight: 800; line-height: 1.1; }
+.pb-meta .pb-c { font-size: 11px; color: var(--color-text-muted); margin-top: 4px; }
+
+/* hobby (note card) */
+.pb-card--hobby .pb-frame { width: 200px; }
+.pb-media--hobby { width: 100%; height: 120px; }
+.pb-body { padding: 11px 12px 13px; }
+.pb-body .pb-t { font-size: 14px; font-weight: 800; }
+.pb-body .pb-s { font-size: 12px; color: var(--color-text-muted); margin-top: 5px; line-height: 1.3; }
+
+/* the "why I love it" reveal on click */
+.pb-note {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  background: var(--accent); color: var(--color-bg);
+  border-top: 2px solid var(--color-text); padding: 12px;
+  font-size: 12.5px; line-height: 1.35; font-weight: 600;
+  transform: translateY(101%); transition: transform 0.22s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.pb-card.is-open .pb-note { transform: translateY(0); }
+.pb-card.is-open .pb-frame { box-shadow: 10px 10px 0 var(--accent); }
+.pb-note-text { margin: 0; }
+.pb-open { display: inline-block; margin-top: 8px; color: var(--color-bg); font-weight: 800; text-decoration: underline; }
+.pb-close {
+  float: right; margin-left: 8px; font-weight: 800; font-size: 15px; line-height: 1;
+  background: none; border: 0; color: var(--color-bg); cursor: pointer; opacity: 0.9;
+}
+
+/* mobile: graceful downgrade — tidy tappable stack, no dragging */
+@media (max-width: 760px) {
+  .pinboard {
+    position: relative; height: auto !important; min-height: 0 !important;
+    padding: 0 22px; touch-action: auto;
+  }
+  .pinboard-field {
+    position: static; inset: auto;
+    display: flex; flex-direction: column; align-items: center; gap: 26px; width: 100%;
+  }
+  .pb-card {
+    position: static !important;
+    transform: rotate(var(--pb-r, -2deg)) !important;
+    cursor: pointer;
+  }
+  .pb-card--youtube .pb-frame,
+  .pb-card--book .pb-frame,
+  .pb-card--hobby .pb-frame { width: min(88vw, 320px); }
+  .pb-media--place { width: min(80vw, 240px); height: auto; aspect-ratio: 7 / 5; }
+}
+
+/* reduced-motion: the note snaps instead of sliding; drag still works */
+body.no-motion .pb-note,
+body.no-motion .pb-frame { transition: none; }
+@media (prefers-reduced-motion: reduce) {
+  .pb-note,
+  .pb-frame { transition: none; }
+}
