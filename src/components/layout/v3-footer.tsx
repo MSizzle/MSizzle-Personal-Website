@@ -131,7 +131,7 @@ export function V3Footer() {
       {/* Woven socials row — replaces /links page function per D-09 */}
       <div className="mt-12 pt-6 border-t border-[var(--color-border-strong)] flex flex-wrap gap-x-6 gap-y-2 font-display text-sm text-[var(--color-text-inverse)]">
         <a
-          href="mailto:montydsinger@gmail.com"
+          href="mailto:monty@prometheus.today"
           className="hover:text-[var(--accent)] transition-colors"
         >
           Email
