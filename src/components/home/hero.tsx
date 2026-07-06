@@ -32,7 +32,7 @@ export function Hero() {
             <p className="subtitle">
               I build companies and write about what I am learning along the way.
               This is where I keep the things I am making, the ideas I keep coming
-              back to, and the work I am proud to put my name on.
+              back to, and the projects I have shipped.
             </p>
 
             {/* Single way-in (D-13): woven prose link, no CTA button, no contact link */}

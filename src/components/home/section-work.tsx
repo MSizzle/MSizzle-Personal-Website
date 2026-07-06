@@ -50,7 +50,7 @@ export function SectionWork({ projects = [] }: Props) {
 
         {/* Right column: headline, 2x2 work grid, portfolio link */}
         <div>
-          <h2 className="reveal">Some of the work I am proudest of.</h2>
+          <h2 className="reveal">Past projects.</h2>
 
           {/* 2x2 grid of slide-in TitleCards alternating from-left / from-right */}
           <div className="work-grid">
