@@ -26,7 +26,7 @@ export const PHOTOS_BY_YEAR: ArchivePhoto[] = [
   {
     filename: "000092530012.jpeg",
     year: 2025,
-    alt: "Film negative — a year in motion",
+    alt: "Film negative: a year in motion",
     caption: "Film, 2025",
   },
   {
