@@ -584,6 +584,90 @@ p.body {
   margin-top: 44px;
 }
 
+/* ── Phase 19: typographic title-card + offset-shadow card grid ── */
+
+/* Self-colored face (paper or ink field). Never inverts with .band-dark --
+   the field color is hardcoded so adjacent title-cards stay distinct
+   regardless of the parent band's color scheme. */
+.title-card {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 14px;
+  padding: clamp(16px, 2vw, 24px);
+  background: #faf9f7;
+  color: #171717;
+  border: 1px solid var(--color-border);
+  border-radius: 0;
+}
+
+/* Ink field variant: dark background, near-white text. */
+.title-card--ink {
+  background: #17171a;
+  color: #faf9f7;
+}
+
+/* Mono kicker chip on vermilion accent -- DNA from .marker. */
+.title-card-kicker {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  background: #e5411f;
+  color: #ffffff;
+  padding: 5px 9px;
+  align-self: flex-start;
+}
+
+/* Hanken 800 clamped title -- hard corners, no gradient, tight leading. */
+.title-card-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  font-size: clamp(1.3rem, 2.4vw, 1.9rem);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
+
+/* Optional one-line dek below the title. */
+.title-card-dek {
+  font-size: 0.85rem;
+  line-height: 1.4;
+  opacity: 0.72;
+  margin: 6px 0 0;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+/* ── Card grid: offset-shadow brutalist treatment (Plan 02 consumes this) ── */
+/* Right/bottom padding gives the 8px offset shadows room to breathe. */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: clamp(20px, 2.4vw, 32px);
+  padding: 2px 18px 22px 2px;
+}
+
+/* Hard offset solid shadow on card cells -- matches the hero h1.sig treatment. */
+.card-grid > a,
+.card-grid > div {
+  border: 1px solid var(--color-border-strong);
+  box-shadow: 8px 8px 0 var(--color-text);
+  transition: box-shadow 0.18s var(--ease-out), background-color 0.18s var(--ease-out);
+}
+
+/* Vermilion hover: shadow warms to accent on pointer over (D-19 grid treatment). */
+.card-grid > a:hover {
+  box-shadow: 8px 8px 0 var(--color-accent);
+}
+
 /* ── Loves marquee ── */
 .marquee {
   overflow: hidden;
@@ -930,11 +1014,13 @@ p.body {
 /* Hard offset solid shape settles in when slide completes (D-07). Uses
    --color-text so it auto-inverts: ink offset on light bands, paper offset
    on dark bands — always a visible solid block, never a soft gradient. */
-.shadowed .photo {
+.shadowed .photo,
+.shadowed .title-card {
   box-shadow: 0 0 0 var(--color-text);
   transition: box-shadow 0.9s var(--ease-out) 0.12s;
 }
-.shadowed.in .photo {
+.shadowed.in .photo,
+.shadowed.in .title-card {
   box-shadow: 16px 16px 0 var(--color-text);
 }
 .kenburns {
@@ -961,7 +1047,8 @@ body.no-motion .marquee .track,
 body.no-motion .hero-ticker .track {
   animation: none !important;
 }
-body.no-motion .shadowed .photo {
+body.no-motion .shadowed .photo,
+body.no-motion .shadowed .title-card {
   box-shadow: 16px 16px 0 var(--color-text);
 }
 
@@ -979,7 +1066,8 @@ body.no-motion .shadowed .photo {
   .hero-ticker .track {
     animation: none !important;
   }
-  .shadowed .photo {
+  .shadowed .photo,
+  .shadowed .title-card {
     box-shadow: 16px 16px 0 var(--color-text);
   }
 }
