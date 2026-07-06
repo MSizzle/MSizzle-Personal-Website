@@ -28,7 +28,7 @@ See: .planning/PROJECT.md (updated 2026-06-18)
 Phase: 17.4 — COMPLETE
 Plan: 1 of 9
 Status: Phase 17.4 complete
-Last activity: 2026-07-06 -- Completed quick task 260706-gbu: site-wide polish pass (10 fixes from live-site audit)
+Last activity: 2026-07-06 -- Completed quick task 260706-hai: removed em dashes from all user-visible copy
 
 Direction: locked photo-forward restyle from sketch 010 (`.planning/sketches/010-structured-bands-carousel/`) — Hanken Grotesk 800 + Vermilion `#e5411f` marker hero, alternating light/dark bands, hard corners, rail boxes, slide-in photos, Monty Monthly carousel, sticky Subscribe nav, credibility strip, rich footer. Supersedes the 17.1 text-forward skin; preserves who→what→engage velvet-rope IA. Motion scroll/ambient-only (IO + CSS + scroll-snap), no WebGL/Lenis. See memory `v3-homepage-photo-forward-lock` + `17.4-CONTEXT.md`. Phase 18 (QA/perf/alias) parked until this lands.
 
@@ -110,6 +110,7 @@ None yet. Highest-risk item to watch: the 3D hero object's effect on LCP/PSI (Ph
 |---|-------------|------|--------|-----------|
 | 260620-q14 | Repaint /photos page to v3 Pumpkin Amber system | 2026-06-20 | 5101b5e | [260620-q14-repaint-photos-page-to-v3-pumpkin-amber-](./quick/260620-q14-repaint-photos-page-to-v3-pumpkin-amber-/) |
 | 260706-gbu | Site-wide polish pass: 10 quick fixes from live-site audit (titles, TODO leak, email, nav parity, /portfolio redirect, dead code, fake fallback, survey) | 2026-07-06 | d95933d | [260706-gbu-site-wide-polish-pass-quick-fixes-from-l](./quick/260706-gbu-site-wide-polish-pass-quick-fixes-from-l/) |
+| 260706-hai | Remove em dashes from all user-visible copy (9 strings across about, projects, uses, photos) | 2026-07-06 | a832ddd | [260706-hai-remove-em-dashes-from-all-user-visible-s](./quick/260706-hai-remove-em-dashes-from-all-user-visible-s/) |
 
 ## Deferred Items
 
