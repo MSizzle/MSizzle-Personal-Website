@@ -28,7 +28,7 @@ See: .planning/PROJECT.md (updated 2026-06-18)
 Phase: 19
 Plan: Not started
 Status: Milestone complete
-Last activity: 2026-07-06
+Last activity: 2026-07-06 - Completed quick task 260706-tx6: nav rework (Prometheus/Building/Writing/Contact)
 
 Direction: locked photo-forward restyle from sketch 010 (`.planning/sketches/010-structured-bands-carousel/`) — Hanken Grotesk 800 + Vermilion `#e5411f` marker hero, alternating light/dark bands, hard corners, rail boxes, slide-in photos, Monty Monthly carousel, sticky Subscribe nav, credibility strip, rich footer. Supersedes the 17.1 text-forward skin; preserves who→what→engage velvet-rope IA. Motion scroll/ambient-only (IO + CSS + scroll-snap), no WebGL/Lenis. See memory `v3-homepage-photo-forward-lock` + `17.4-CONTEXT.md`. Phase 18 (QA/perf/alias) parked until this lands.
 
@@ -116,6 +116,8 @@ None yet. Highest-risk item to watch: the 3D hero object's effect on LCP/PSI (Ph
 | 260706-fast | Hero subtitle rewritten to user-dictated copy; loves heading shortened to "Things I love outside of work." | 2026-07-06 | e126174 | (inline /gsd-fast, no directory) |
 | 260706-fast2 | Sticky nav restyled to match editorial header (paper field, "Monty Singer" wordmark, muted links; Subscribe CTA kept) | 2026-07-06 | 341c2d9 | (inline /gsd-fast, no directory) |
 | 260706-fast3 | Sticky nav CTA changed Subscribe→"Say Hi" (prefilled mailto); editorial-header restyled to sticky-nav formatting (ink border, muted links via valid text-text/text-text-muted tokens); hero "Join Monty Monthly" moved to its own line | 2026-07-06 | 01315b7 | (inline /gsd-fast, no directory) |
+| 260706-fast4 | Sticky nav mirrored to global header: route links + full-bleed alignment (later superseded by 260706-tx6 nav rework) | 2026-07-06 | 2fabcfa | (inline /gsd-fast, no directory) |
+| 260706-tx6 | Rework primary nav to Prometheus/Building/Writing/Contact; rename /projects→/building (+redirects), delete /about (+redirect to /), wire #contact footer anchor on both footers. Reverses locked D-08. | 2026-07-06 | 93a8146 | [260706-tx6-rework-site-nav-to-prometheus-building-w](./quick/260706-tx6-rework-site-nav-to-prometheus-building-w/) |
 
 ## Deferred Items
 
