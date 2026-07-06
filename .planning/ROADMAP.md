@@ -316,3 +316,13 @@ Phases execute in numeric order: 14 -> 15 -> 16 -> 17 -> 18
 | 17.3. Portfolio | v3.0 | 2/2 | Complete    | 2026-07-02 |
 | 17.4. Photo-Forward Homepage Restyle | v3.0 | 9/9 | Complete   | 2026-07-05 |
 | 18. v3.0 QA, Perf Gate & Alias Swap | v3.0 | 4/7 | In Progress|  |
+
+### Phase 19: Project Cards & Covers Redesign: typographic title-card covers, card titles/deks, offset-shadow grid treatment, reading time on /writing, on-brand OG images
+
+**Goal:** [To be planned]
+**Requirements**: TBD
+**Depends on:** Phase 18
+**Plans:** 0 plans
+
+Plans:
+- [ ] TBD (run /gsd-plan-phase 19 to break down)

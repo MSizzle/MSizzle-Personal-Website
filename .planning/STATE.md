@@ -64,6 +64,7 @@ Next action: `/gsd-plan-phase 15` to decompose the WebGL homepage v1 into plans 
 - Phase 17.2 inserted after Phase 17: Site Information Architecture — nav/cuts/folds/merges for new scope
 - Phase 17.3 inserted after Phase 17: Portfolio — proud-of past work on projects pipeline
 - Phase 17.4 inserted after Phase 17.3 (2026-07-04): Photo-Forward Homepage Restyle — sketch-010 lock (Hanken 800 + Vermilion) supersedes the 17.1 text-forward skin; Phase 18 now depends on 17.4
+- Phase 19 added (2026-07-06): Project Cards & Covers Redesign — typographic title-card covers, card titles/deks, offset-shadow grids, reading time on /writing, on-brand OG images. From the 2026-07-05 live-site audit; supersedes 17.3's /portfolio surface (route deleted + redirected in quick 260706-gbu)
 
 ### v3.0 Roadmap Decisions
 
