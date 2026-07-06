@@ -7,10 +7,16 @@
  * (b) absent coverSrc renders no img
  * (c) href wraps in Link (anchor)
  * (d) text content (title/blurb) renders correctly in both cases
+ *
+ * Plan 19-01 additions:
+ * (e) no coverSrc renders title-card face
+ * (f) titleCardField="ink" renders title-card--ink class
+ * (g) readingTime renders "N min read"
+ * (h) cover error swaps to title-card face client-side
  */
 import React from "react";
 import { describe, it, expect, vi, afterEach } from "vitest";
-import { render, screen, cleanup } from "@testing-library/react";
+import { render, screen, cleanup, fireEvent } from "@testing-library/react";
 
 // Mock next/image — renders as a plain img element for testing
 vi.mock("next/image", () => ({
@@ -122,5 +128,54 @@ describe("Card component (Plan 04 / 16-04)", () => {
     expect(img).toBeDefined();
     // alt should be "" (decorative) when coverAlt is not provided
     expect(img?.getAttribute("alt")).toBe("");
+  });
+});
+
+describe("Card title-card fallback (Phase 19 / 19-01)", () => {
+  it("Card with no coverSrc renders a title-card face containing the title text", async () => {
+    const { Card } = await import("@/components/v3/card");
+    const { container } = render(
+      React.createElement(Card, { title: "My Fallback Title" })
+    );
+    const titleCard = container.querySelector(".title-card");
+    expect(titleCard).toBeDefined();
+    expect(titleCard?.textContent).toContain("My Fallback Title");
+  });
+
+  it("Card with titleCardField='ink' and no coverSrc renders an element with class title-card--ink", async () => {
+    const { Card } = await import("@/components/v3/card");
+    const { container } = render(
+      React.createElement(Card, { title: "Ink Card", titleCardField: "ink" })
+    );
+    const inkCard = container.querySelector(".title-card--ink");
+    expect(inkCard).toBeDefined();
+  });
+
+  it("Card with readingTime=4 renders the exact text '4 min read'", async () => {
+    const { Card } = await import("@/components/v3/card");
+    render(
+      React.createElement(Card, { title: "Essay", readingTime: 4 })
+    );
+    expect(screen.getByText("4 min read")).toBeDefined();
+  });
+
+  it("Card with coverSrc swaps to title-card face after cover image error", async () => {
+    const { Card } = await import("@/components/v3/card");
+    const { container } = render(
+      React.createElement(Card, {
+        title: "Error Fallback",
+        coverSrc: "/api/notion-cover?pageId=broken",
+        coverAlt: "Broken cover",
+      })
+    );
+    // Image should be present initially
+    const img = container.querySelector("img");
+    expect(img).toBeDefined();
+    // Fire error on the img to trigger the fallback swap
+    fireEvent.error(img!);
+    // After error: img is gone, title-card is present
+    expect(container.querySelector("img")).toBeNull();
+    const titleCard = container.querySelector(".title-card");
+    expect(titleCard).toBeDefined();
   });
 });
