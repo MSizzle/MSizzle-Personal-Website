@@ -17,9 +17,7 @@ export function SectionLoves() {
             <RailBox num="03" label="Things I love" />
           </div>
           <div>
-            <h2 className="reveal">
-              A few of the things I love when I step away from the work.
-            </h2>
+            <h2 className="reveal">Things I love outside of work.</h2>
           </div>
         </div>
       </div>
