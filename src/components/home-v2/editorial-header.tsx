@@ -4,32 +4,32 @@ import { cn } from "@/utils/cn";
 type Props = {
   /**
    * Bolds the matching nav link. Falsy = no link bolded (homepage default).
-   * Per D-08: 4-item lean primary nav (About, Projects, Writing, Uses).
-   * Each route bolds its own nav label.
+   * Per quick task 260706-tx6: 4-item nav (Prometheus, Building, Writing, Contact).
+   * Contact is an in-page anchor and never receives the active/bold treatment.
    */
-  active?: "About" | "Projects" | "Writing" | "Uses";
+  active?: "Prometheus" | "Building" | "Writing";
 };
 
-// Four nav destinations per D-08 (lean primary nav).
-// Order: About, Projects, Writing, Uses.
+// Four nav destinations per quick task 260706-tx6 (reverses D-08).
+// Order: Prometheus, Building, Writing, Contact.
 const LINKS = [
-  { label: "About",    href: "/about"    },
-  { label: "Projects", href: "/projects" },
-  { label: "Writing",  href: "/writing"  },
-  { label: "Uses",     href: "/uses"     },
+  { label: "Prometheus", href: "/prometheus" },
+  { label: "Building",   href: "/building"   },
+  { label: "Writing",    href: "/writing"    },
+  { label: "Contact",    href: "#contact"    },
 ] as const;
 
 /**
- * Editorial header — shared across all routes per D-08 (lean 4-item primary nav).
+ * Editorial header — shared across all routes.
  *
- * Updated in Phase 17.2: nav reduced from 5 items to 4 (About, Projects,
- * Writing, Uses). "Building" renamed to "Projects". /events and /links removed.
+ * Updated in quick task 260706-tx6 (2026-07-06): nav reworked to Prometheus,
+ * Building, Writing, Contact per Monty's new direction. This reverses D-08's
+ * About/Projects/Writing/Uses set. Contact is a same-page anchor to the
+ * footer contact block, not a route, and is never bolded as active.
  *
  * Server Component — pure presentational, imports `Link` only. Preserves
  * the 44px tap target (`min-h-11`) and hover opacity transitions from the
  * original Phase 10 markup.
- *
- * References: D-08 (lean primary nav), D-10 (remove cut routes).
  */
 export function EditorialHeader({ active }: Props) {
   return (
@@ -40,6 +40,19 @@ export function EditorialHeader({ active }: Props) {
       <nav>
         <ul className="flex list-none flex-wrap items-center gap-x-6 gap-y-2 text-[15px] md:gap-x-8">
           {LINKS.map((link) => {
+            if (link.href.startsWith("#")) {
+              return (
+                <li key={link.label}>
+                  <a
+                    href={link.href}
+                    className="flex min-h-9 items-center text-text-muted transition-opacity hover:opacity-60"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              );
+            }
+
             const isActive = active === link.label;
             return (
               <li key={link.label}>

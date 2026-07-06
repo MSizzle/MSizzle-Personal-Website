@@ -3,14 +3,14 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
-// Mirrors the global EditorialHeader link set (D-08 lean primary nav):
-// About, Projects, Writing, Uses. Route links, not in-page anchors, so the
-// sticky bar matches the top header it slides over.
+// Mirrors the global EditorialHeader link set (quick task 260706-tx6, reverses D-08):
+// Prometheus, Building, Writing, Contact. Contact is an in-page anchor to the
+// footer; the other three are route links, matching the top header they slide over.
 const LINKS = [
-  { label: "About", href: "/about" },
-  { label: "Projects", href: "/projects" },
+  { label: "Prometheus", href: "/prometheus" },
+  { label: "Building", href: "/building" },
   { label: "Writing", href: "/writing" },
-  { label: "Uses", href: "/uses" },
+  { label: "Contact", href: "#contact" },
 ] as const;
 
 /**
@@ -52,11 +52,17 @@ export function StickyNav() {
 
         {/* Route links mirroring the global header - hidden on mobile via .stickynav ul CSS */}
         <ul>
-          {LINKS.map((link) => (
-            <li key={link.href}>
-              <Link href={link.href}>{link.label}</Link>
-            </li>
-          ))}
+          {LINKS.map((link) =>
+            link.href.startsWith("#") ? (
+              <li key={link.href}>
+                <a href={link.href}>{link.label}</a>
+              </li>
+            ) : (
+              <li key={link.href}>
+                <Link href={link.href}>{link.label}</Link>
+              </li>
+            )
+          )}
         </ul>
 
         {/* Persistent "Say Hi" CTA — opens a prefilled email draft to Monty */}

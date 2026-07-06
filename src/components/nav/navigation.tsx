@@ -5,32 +5,29 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { EditorialHeader } from '@/components/home-v2/editorial-header'
 
-// Mobile drawer — unified link set across all routes per D-08/D-10.
-// Home is reachable via the "Monty Singer" brand link in the mobile bar (no
-// redundant Home entry in the drawer).
-// Cut routes (/events, /links, /watching) removed per D-08; "Building" renamed
-// to "Projects" per D-08. /prometheus remains as secondary route.
+// Mobile drawer — unified link set across all routes per quick task 260706-tx6
+// (reverses D-08). Home is reachable via the "Monty Singer" brand link in the
+// mobile bar (no redundant Home entry in the drawer). Contact is an in-page
+// anchor to the footer, not a route.
 const MOBILE_LINKS = [
-  { href: '/projects',   label: 'Projects'    },
+  { href: '/prometheus', label: 'Prometheus'  },
+  { href: '/building',   label: 'Building'    },
   { href: '/writing',    label: 'Writing'     },
-  { href: '/about',      label: 'About'       },
-  { href: '/uses',       label: 'Uses'        },
+  { href: '#contact',    label: 'Contact'     },
 ]
 
 export function Navigation() {
   const [open, setOpen] = useState(false)
   const pathname = usePathname()
 
-  // Derive the active EditorialHeader label from pathname (D-08 lean nav).
-  // EditorialHeader is globally rendered here; on routes not in this mapping
-  // the prop is undefined so no nav link gets bolded.
-  // Cut routes (/events, /links, /watching) removed per D-08/D-10.
-  // "Building" renamed to "Projects" per D-08.
-  const activeLabel: 'Projects' | 'Writing' | 'About' | 'Uses' | undefined =
-    pathname === '/projects' ? 'Projects'
+  // Derive the active EditorialHeader label from pathname (quick task
+  // 260706-tx6, reverses D-08). EditorialHeader is globally rendered here;
+  // on routes not in this mapping the prop is undefined so no nav link gets
+  // bolded. Contact has no active state (it's an in-page anchor, not a route).
+  const activeLabel: 'Prometheus' | 'Building' | 'Writing' | undefined =
+    pathname === '/prometheus' ? 'Prometheus'
+    : pathname === '/building' ? 'Building'
     : pathname === '/writing' || pathname.startsWith('/blog') ? 'Writing'
-    : pathname === '/about' ? 'About'
-    : pathname === '/uses' ? 'Uses'
     : undefined
 
   return (
@@ -81,16 +78,27 @@ export function Navigation() {
           {/* Drawer — sits above backdrop */}
           <div className="fixed left-0 right-0 top-16 z-40 border-b border-[var(--border)] bg-[var(--bg)] shadow-lg md:hidden">
             <nav className="flex flex-col px-6 py-4">
-              {MOBILE_LINKS.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="flex min-h-[48px] items-center border-b border-[var(--border)] py-3 text-base uppercase tracking-wide last:border-b-0"
-                  onClick={() => setOpen(false)}
-                >
-                  {link.label}
-                </Link>
-              ))}
+              {MOBILE_LINKS.map((link) =>
+                link.href.startsWith('#') ? (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    className="flex min-h-[48px] items-center border-b border-[var(--border)] py-3 text-base uppercase tracking-wide last:border-b-0"
+                    onClick={() => setOpen(false)}
+                  >
+                    {link.label}
+                  </a>
+                ) : (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className="flex min-h-[48px] items-center border-b border-[var(--border)] py-3 text-base uppercase tracking-wide last:border-b-0"
+                    onClick={() => setOpen(false)}
+                  >
+                    {link.label}
+                  </Link>
+                )
+              )}
             </nav>
           </div>
         </>
