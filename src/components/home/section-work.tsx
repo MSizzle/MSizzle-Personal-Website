@@ -12,7 +12,7 @@ import type { Project } from "@/lib/notion-projects";
  * D-05: RailBox index 02, label "Selected work".
  * D-07: 2x2 work-grid of slide-in typographic TitleCard faces alternating from-left/from-right.
  * D-13 (Phase-17.3 invariants preserved):
- *   - /projects link present with "SELECTED" kicker
+ *   - /building link present with "SELECTED" kicker
  *   - no link to /portfolio
  *   - Prometheus external anchor keeps rel="noopener noreferrer"
  * Phase 19 SC-2: D-07 grid now renders typographic TitleCard faces (paper/ink alternation
@@ -70,8 +70,8 @@ export function SectionWork({ projects = [] }: Props) {
             ))}
           </div>
 
-          {/* Projects affordance: consolidated from /portfolio (issue 7) */}
-          <Link href="/projects" className="mt-8 inline-flex items-center gap-2 text-text">
+          {/* Projects affordance: consolidated from /building (issue 7) */}
+          <Link href="/building" className="mt-8 inline-flex items-center gap-2 text-text">
             <span>Projects</span>
             <span className="font-mono text-xs tracking-widest text-text-muted">SELECTED</span>
           </Link>

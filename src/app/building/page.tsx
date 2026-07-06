@@ -12,12 +12,12 @@ export const metadata: Metadata = {
   title: "Building",
   description:
     "Projects, products, and AI systems Monty Singer is building or has built through Prometheus and independent work.",
-  alternates: { canonical: "/projects" },
+  alternates: { canonical: "/building" },
   openGraph: {
     title: "Building",
     description:
       "Projects, products, and AI systems Monty Singer is building or has built through Prometheus and independent work.",
-    url: "/projects",
+    url: "/building",
     type: "website",
   },
 };
@@ -36,14 +36,14 @@ function groupProjectsByYear(projects: Project[]): Map<number, Project[]> {
 }
 
 /**
- * /projects -- Works index page (ARCH-01).
+ * /building -- Works index page (ARCH-01).
  *
  * Layout per D-01..D-04 (16-04) + Phase 19 SC-2/SC-3:
  *   1. PageHero (v3) -- replaces old two-column atmosphere-photo title block
  *   2. <RuleStrong />
  *   3. Year-grouped projects -- YearBlock heading above a card-grid of Cards (D-03)
  *      Every card face is the Card's automatic TitleCard fallback (Phase 19 decision):
- *      logo-lockup Notion covers are retired as card faces; every /projects card is
+ *      logo-lockup Notion covers are retired as card faces; every /building card is
  *      always a typographic title-card. Deterministic paper/ink alternation by index.
  *      project.image remains in the data layer for the detail page (D-02).
  *      Grid uses Phase 19 card-grid offset-shadow treatment (SC-3).
@@ -91,7 +91,7 @@ export default async function BuildingPage() {
                     {yearProjects.map((project, i) => (
                       <Card
                         key={project.id}
-                        href={`/projects/${project.slug}`}
+                        href={`/building/${project.slug}`}
                         title={project.title}
                         blurb={project.description}
                         kicker={project.tags?.[0] ?? "Project"}

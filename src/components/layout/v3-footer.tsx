@@ -40,7 +40,7 @@ export function V3Footer() {
           <ul className="space-y-0">
             <li>
               <Link
-                href="/projects"
+                href="/building"
                 className="block font-display text-sm text-[var(--color-text-inverse)] hover:text-[var(--accent)] transition-colors py-1"
               >
                 Works

@@ -4,7 +4,7 @@ import type { Project } from "@/lib/notion-projects";
 export function ProjectCard({ project }: { project: Project }) {
   return (
     <Link
-      href={`/projects/${project.slug}`}
+      href={`/building/${project.slug}`}
       className="group block border-b border-rule py-4 transition-opacity hover:opacity-60"
     >
       <h3 className="text-base font-normal">

@@ -61,11 +61,11 @@ export default async function ProjectPage({ params }: PageProps) {
         </div>
       )}
 
-      {/* Semantic breadcrumb nav + JSON-LD (sr-only); Building points to /projects */}
+      {/* Semantic breadcrumb nav + JSON-LD (sr-only); Building points to /building */}
       <Breadcrumbs
         items={[
           { name: "Home", href: "/" },
-          { name: "Building", href: "/projects" },
+          { name: "Building", href: "/building" },
           { name: project.title },
         ]}
       />

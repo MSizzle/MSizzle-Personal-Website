@@ -14,12 +14,12 @@ export function buildProjectMetadata(project: Project): Metadata {
     project.description || `${project.title}, a project by Monty Singer.`,
     155
   )
-  const url = canonical(`/projects/${project.slug}`)
+  const url = canonical(`/building/${project.slug}`)
 
   return {
     title,
     description,
-    alternates: { canonical: `/projects/${project.slug}` },
+    alternates: { canonical: `/building/${project.slug}` },
     openGraph: {
       title,
       description,

@@ -21,7 +21,9 @@ const nextConfig: NextConfig = {
       { source: '/links', destination: '/about', permanent: true },
       { source: '/newsletter', destination: '/writing', permanent: true },
       { source: '/watching', destination: '/uses', permanent: true },
-      { source: '/portfolio', destination: '/projects', permanent: true },
+      { source: '/portfolio', destination: '/building', permanent: true },
+      { source: '/projects', destination: '/building', permanent: true },
+      { source: '/projects/:slug', destination: '/building/:slug', permanent: true },
     ]
   },
   images: {
