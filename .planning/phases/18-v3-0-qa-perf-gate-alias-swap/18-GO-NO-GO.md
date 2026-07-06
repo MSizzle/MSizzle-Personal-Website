@@ -67,8 +67,10 @@ git checkout v3 && vercel deploy --prod      # NEVER --prebuilt --prod (see memo
 3. `vercel list --prod=true | head -10` → deployment within last 10 min (alias-drift check)
 4. `curl -sS -o /dev/null -w "%{http_code}" https://montysinger.com/blog/feed.xml` → expect 200
 
-## DQ-04 (post-promote) — PENDING
-| DQ-04 | Alias promoted to v3, post-promote verified | ⏳ PENDING | Fills after Monty promotes |
+## DQ-04 (post-promote) — ✅ PASS (verified live 2026-07-05)
+| DQ-04 | Alias promoted to v3, post-promote verified | ✅ PASS | montysinger.com HTTP 200; hero markers "Create Order"/"from Chaos"/"Founder of Prometheus" live; live CSS accent `#e5411f` ×17 (no amber); feed.xml 200; production deployment Ready (~2h old). Source-level promotion completed in a prior session; Phase 18 QA record backfilled + re-baselined against HEAD this session. |
+
+**No alias drift.** origin/main already carried the full v3 source (source diff main..v3 = empty); this session pushed docs-only commits (GO/NO-GO + evidence).
 
 ---
 
