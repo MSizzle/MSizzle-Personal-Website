@@ -896,6 +896,8 @@ p.body {
    Because the fill is var(--color-text), it auto-inverts in any dark context
    (light on dark) with no extra rule. No gradients (site rule). */
 .nav-cell {
+  position: relative;
+  overflow: hidden;
   display: flex;
   align-items: center;
   padding: 0 clamp(18px, 1.8vw, 30px);
@@ -903,20 +905,41 @@ p.body {
   color: var(--color-text-muted);
   text-decoration: none;
   white-space: nowrap;
-  transition: background-color 0.13s ease, color 0.13s ease;
 }
-/* Active route: full-ink + bold at rest. Defined as an un-layered rule so it
-   beats the un-layered .nav-cell color (Tailwind utilities can't, since
-   un-layered CSS wins over layered utilities in v4). :hover still wins via its
-   higher specificity, so an active cell still inverts on hover. */
+/* Vermilion fill drops from the top edge on hover — a solid pseudo-element
+   wipe (no gradient, per site rule). The label rides above it and flips to
+   paper. Because the fill is --accent and the label is --color-bg, it reads
+   correctly on light and dark bars alike. */
+.nav-cell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--accent);
+  transform: translateY(-100%);
+  transition: transform 0.24s cubic-bezier(0.22, 1, 0.36, 1);
+  z-index: 0;
+}
+.nav-cell > span {
+  position: relative;
+  z-index: 1;
+  transition: color 0.18s ease;
+}
+/* Active route: full-ink + bold at rest. Un-layered so it beats the un-layered
+   .nav-cell color (Tailwind utilities can't, since un-layered CSS wins over
+   layered utilities in v4). The label still flips to paper on hover. */
 .nav-cell--active {
   color: var(--color-text);
   font-weight: 700;
 }
-.nav-cell:hover,
+.nav-cell:hover::before,
+.nav-cell:focus-visible::before {
+  transform: translateY(0);
+}
+.nav-cell:hover > span,
+.nav-cell:focus-visible > span {
+  color: var(--color-bg);
+}
 .nav-cell:focus-visible {
-  background: var(--color-text);
-  color: var(--accent);
   outline: none;
 }
 /* Close the segmented strip with a divider on its right edge. */

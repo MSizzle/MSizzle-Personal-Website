@@ -29,8 +29,9 @@ const LINKS = [
  *
  * Server Component — pure presentational, imports `Link` only. Nav links use
  * the shared `.nav-cell` segmented style (globals.css): broad, full-height
- * cells split by vertical dividers that invert on hover (ink fill, vermilion
- * label). The active route uses `.nav-cell--active` (full-ink + bold at rest).
+ * cells split by vertical dividers. On hover a vermilion fill wipes down from
+ * the top and the label flips to paper. The label is wrapped in a `<span>` so
+ * it rides above the fill. Active route uses `.nav-cell--active`.
  */
 export function EditorialHeader({ active }: Props) {
   return (
@@ -48,7 +49,7 @@ export function EditorialHeader({ active }: Props) {
               return (
                 <li key={link.label} className="flex">
                   <a href={link.href} className="nav-cell">
-                    {link.label}
+                    <span>{link.label}</span>
                   </a>
                 </li>
               );
@@ -61,7 +62,7 @@ export function EditorialHeader({ active }: Props) {
                   href={link.href}
                   className={cn("nav-cell", isActive && "nav-cell--active")}
                 >
-                  {link.label}
+                  <span>{link.label}</span>
                 </Link>
               </li>
             );

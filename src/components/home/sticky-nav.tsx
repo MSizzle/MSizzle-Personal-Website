@@ -51,11 +51,11 @@ export function StickyNav() {
           {LINKS.map((link) =>
             link.href.startsWith("#") ? (
               <li key={link.href}>
-                <a className="nav-cell" href={link.href}>{link.label}</a>
+                <a className="nav-cell" href={link.href}><span>{link.label}</span></a>
               </li>
             ) : (
               <li key={link.href}>
-                <Link className="nav-cell" href={link.href}>{link.label}</Link>
+                <Link className="nav-cell" href={link.href}><span>{link.label}</span></Link>
               </li>
             )
           )}
