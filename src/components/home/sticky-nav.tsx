@@ -1,6 +1,17 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
+
+// Mirrors the global EditorialHeader link set (D-08 lean primary nav):
+// About, Projects, Writing, Uses. Route links, not in-page anchors, so the
+// sticky bar matches the top header it slides over.
+const LINKS = [
+  { label: "About", href: "/about" },
+  { label: "Projects", href: "/projects" },
+  { label: "Writing", href: "/writing" },
+  { label: "Uses", href: "/uses" },
+] as const;
 
 /**
  * StickyNav - D-10, D-13
@@ -39,20 +50,13 @@ export function StickyNav() {
         {/* Brand mark — matches the editorial header wordmark */}
         <div className="mk">Monty Singer</div>
 
-        {/* Section anchor links - hidden on mobile via .stickynav ul CSS */}
+        {/* Route links mirroring the global header - hidden on mobile via .stickynav ul CSS */}
         <ul>
-          <li>
-            <a href="#building">Building</a>
-          </li>
-          <li>
-            <a href="#work">Work</a>
-          </li>
-          <li>
-            <a href="#loves">Loves</a>
-          </li>
-          <li>
-            <a href="#writing">Writing</a>
-          </li>
+          {LINKS.map((link) => (
+            <li key={link.href}>
+              <Link href={link.href}>{link.label}</Link>
+            </li>
+          ))}
         </ul>
 
         {/* Persistent "Say Hi" CTA — opens a prefilled email draft to Monty */}
