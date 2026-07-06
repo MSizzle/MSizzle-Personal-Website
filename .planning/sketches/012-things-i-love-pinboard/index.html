@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Sketch 012 — Things I Love pinboard</title>
+<style>
+  :root{
+    --paper:#faf9f7;
+    --cream:#f4ecdd;
+    --ink:#171717;
+    --ink-muted:#555049;
+    --vermilion:#e5411f;
+    --border:#171717;
+    /* muted placeholder swatches — stand in for real photos/covers */
+    --ph-sage:#8f9e86;
+    --ph-blue:#7c93a6;
+    --ph-clay:#b9805f;
+    --ph-ochre:#c9a14e;
+    --ph-stone:#a49e93;
+    --ph-plum:#8a6f82;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--paper);color:var(--ink);
+    font-family:"Hanken Grotesk",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+    -webkit-font-smoothing:antialiased;}
+  body{padding:0 0 80px}
+
+  /* ---------- band 03 header ---------- */
+  .wrap{max-width:1200px;margin:0 auto;padding:56px 40px 0}
+  .head{display:grid;grid-template-columns:120px 1fr;gap:32px;align-items:start}
+  .rail{border:2px solid var(--border);padding:10px 12px;display:inline-flex;flex-direction:column;
+    line-height:1;background:var(--paper)}
+  .rail .num{font-size:34px;font-weight:800;letter-spacing:-.02em}
+  .rail .lab{font-size:10px;text-transform:uppercase;letter-spacing:.18em;margin-top:8px;color:var(--ink-muted)}
+  h2{font-size:clamp(28px,4vw,46px);font-weight:800;letter-spacing:-.02em;line-height:1.02}
+  .hint{margin-top:14px;font-size:14px;color:var(--ink-muted)}
+  .hint b{color:var(--vermilion);font-weight:800}
+  .tools{margin-top:18px;display:flex;gap:10px}
+  .btn{font:inherit;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.12em;
+    background:var(--paper);color:var(--ink);border:2px solid var(--border);padding:9px 14px;cursor:pointer;
+    box-shadow:4px 4px 0 var(--ink);transition:transform .08s,box-shadow .08s}
+  .btn:hover{color:var(--vermilion)}
+  .btn:active{transform:translate(4px,4px);box-shadow:0 0 0 var(--ink)}
+
+  /* ---------- the board ---------- */
+  .board{position:relative;max-width:1200px;margin:34px auto 0;height:960px;
+    padding:0 40px;touch-action:none;user-select:none}
+  .board__field{position:absolute;inset:0 40px;overflow:visible}
+
+  .card{position:absolute;transform-origin:center;cursor:grab;
+    /* base transform written by JS: translate() rotate() */
+    will-change:transform;transition:box-shadow .12s ease, filter .12s ease}
+  .card:hover{filter:none}
+  .card.dragging{cursor:grabbing;transition:none}
+  .card__frame{position:relative;overflow:hidden;border:2px solid var(--border);background:var(--paper);
+    box-shadow:7px 7px 0 var(--ink);transition:box-shadow .12s ease, outline-color .12s ease;
+    outline:0 solid var(--vermilion)}
+  .card:hover .card__frame{box-shadow:10px 10px 0 var(--ink);outline:3px solid var(--vermilion);outline-offset:3px}
+  .card.dragging .card__frame{box-shadow:16px 18px 0 rgba(23,23,23,.35)}
+
+  /* photo/thumbnail area = solid placeholder swatch */
+  .media{position:relative;display:block;overflow:hidden;background:var(--ph-stone)}
+  .media .tag{position:absolute;left:8px;top:8px;font-size:9px;font-weight:800;letter-spacing:.14em;
+    text-transform:uppercase;background:var(--ink);color:var(--paper);padding:3px 6px}
+  .media .glyph{position:absolute;inset:0;display:grid;place-items:center;font-size:38px;opacity:.9;color:var(--paper)}
+
+  /* ----- type: place (polaroid) ----- */
+  .place .card__frame{padding:10px 10px 0}
+  .place .media{width:210px;height:150px}
+  .place .cap{font-size:13px;font-weight:700;padding:10px 4px 12px;color:var(--ink)}
+
+  /* ----- type: book ----- */
+  .book .card__frame{width:150px}
+  .book .media{width:100%;height:210px;display:flex;flex-direction:column;justify-content:flex-end;padding:14px}
+  .book .media .bt{font-size:16px;font-weight:800;line-height:1.05;color:var(--paper)}
+  .book .media .ba{font-size:11px;margin-top:6px;color:rgba(250,249,247,.8)}
+  .book .foot{display:flex;justify-content:space-between;align-items:center;padding:8px 10px;border-top:2px solid var(--border)}
+  .book .foot .k{font-size:9px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-muted)}
+
+  /* ----- type: youtube ----- */
+  .yt .card__frame{width:260px}
+  .yt .media{width:100%;height:146px;background:#231f1e}
+  .yt .play{position:absolute;inset:0;display:grid;place-items:center}
+  .yt .play span{width:52px;height:36px;background:var(--vermilion);border:2px solid var(--ink);
+    display:grid;place-items:center}
+  .yt .play span::after{content:"";border-left:14px solid var(--paper);border-top:9px solid transparent;
+    border-bottom:9px solid transparent;margin-left:3px}
+  .yt .meta{padding:9px 11px}
+  .yt .meta .t{font-size:13px;font-weight:800;line-height:1.1}
+  .yt .meta .c{font-size:11px;color:var(--ink-muted);margin-top:4px}
+
+  /* ----- type: hobby (note card) ----- */
+  .hobby .card__frame{width:200px;background:var(--cream)}
+  .hobby .media{width:100%;height:120px}
+  .hobby .body{padding:11px 12px 13px}
+  .hobby .body .t{font-size:14px;font-weight:800}
+  .hobby .body .s{font-size:12px;color:var(--ink-muted);margin-top:5px;line-height:1.3}
+
+  /* ----- the "why I love it" reveal on click ----- */
+  .note{position:absolute;left:0;right:0;bottom:0;background:var(--vermilion);color:var(--paper);
+    border-top:2px solid var(--ink);padding:12px 12px;font-size:12.5px;line-height:1.35;font-weight:600;
+    transform:translateY(101%);transition:transform .22s cubic-bezier(.2,.8,.2,1)}
+  .card.open .note{transform:translateY(0)}
+  .card.open .card__frame{box-shadow:10px 10px 0 var(--vermilion)}
+  .note .close{float:right;font-weight:800;opacity:.85}
+
+  .foothint{max-width:1200px;margin:26px auto 0;padding:0 40px;font-size:12px;color:var(--ink-muted)}
+  .sketchtag{position:fixed;right:14px;bottom:12px;font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--ink-muted);background:var(--paper);border:1px solid var(--border);padding:5px 9px}
+
+  /* ---------- mobile: graceful downgrade (no drag) ---------- */
+  @media (max-width:760px){
+    .wrap{padding:40px 22px 0}
+    .head{grid-template-columns:1fr;gap:16px}
+    .board{height:auto;padding:0 22px;display:flex;flex-direction:column;gap:26px;align-items:center;
+      margin-top:26px;touch-action:auto}
+    .board__field{position:static;inset:auto;display:flex;flex-direction:column;gap:26px;align-items:center;width:100%}
+    .card{position:static !important;transform:rotate(var(--r,-2deg)) !important;cursor:pointer}
+    .card.dragging .card__frame{box-shadow:10px 10px 0 var(--ink)}
+    .yt .card__frame,.book .card__frame,.hobby .card__frame{width:min(88vw,320px)}
+    .place .media{width:min(80vw,240px);height:auto;aspect-ratio:7/5}
+  }
+</style>
+</head>
+<body>
+
+  <div class="wrap">
+    <div class="head">
+      <div>
+        <span class="rail"><span class="num">03</span><span class="lab">Things I love</span></span>
+      </div>
+      <div>
+        <h2>Things I love outside of work.</h2>
+        <p class="hint">The stuff I keep coming back to. <b>Grab a card and drag it around</b> &mdash; make your own arrangement. Click one to see why.</p>
+        <div class="tools">
+          <button class="btn" id="shuffle">Shuffle</button>
+          <button class="btn" id="reset">Reset the pile</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="board" id="board">
+    <div class="board__field" id="field">
+      <!-- cards are injected by JS so positions/z-order are easy to reset -->
+    </div>
+  </div>
+
+  <p class="foothint">Sketch 012 &middot; desktop draggable pinboard &middot; placeholder swatches stand in for real photos, book covers &amp; YouTube thumbnails (Notion-backed in the real build). Resize below 760px to preview the mobile downgrade.</p>
+  <div class="sketchtag">Sketch 012 — throwaway</div>
+
+<script>
+// ----- content model (mirrors the proposed Notion "Loves" DB) -----
+const ITEMS = [
+  {type:"place", tag:"Place",  swatch:"--ph-blue",  glyph:"⛰", cap:"Big Sur",          note:"Pfeiffer Beach keyhole rock at golden hour. I go to reset."},
+  {type:"yt",    tag:"Watch",  title:"How to build anything", channel:"Some channel",   note:"The one video I've re-watched more than any other."},
+  {type:"book",  tag:"Read",   bt:"The Book",  ba:"An Author", color:"--ph-clay",        note:"Changed how I think about focus. Reread it every year."},
+  {type:"place", tag:"Place",  swatch:"--ph-sage", glyph:"🥾", cap:"The Tetons",        note:"A ridgeline that made my legs hate me and my brain quiet."},
+  {type:"hobby", tag:"Doing",  t:"Growing mushrooms", s:"Started in a dorm room. Still going.", swatch:"--ph-ochre", glyph:"🍄", note:"My first real 'build a system and watch it work' project."},
+  {type:"yt",    tag:"Watch",  title:"A talk that stuck", channel:"Conference",          note:"18 minutes that reframed a whole year for me."},
+  {type:"book",  tag:"Read",   bt:"Another Title", ba:"Writer Name", color:"--ph-plum",  note:"Dense, slow, worth it. The margins are all notes now."},
+  {type:"place", tag:"Place",  swatch:"--ph-stone", glyph:"🌊", cap:"Good company",     note:"Friends, an evening, nowhere to be. The actual point."},
+  {type:"hobby", tag:"Doing",  t:"Long walks, no phone", s:"Best ideas arrive on foot.", swatch:"--ph-sage", glyph:"🚶", note:"Half of what I make gets figured out walking."},
+  {type:"yt",    tag:"Watch",  title:"Why this works", channel:"Explainer",             note:"The clearest explanation of a hard thing I've found."},
+  {type:"book",  tag:"Read",   bt:"Third Book", ba:"Some Name", color:"--ph-blue",       note:"The one I hand to people who ask where to start."},
+];
+
+// deterministic scatter — looks designed, stable on reload.
+// Loose 4-col / 3-row spread with staggered rows so cards barely touch.
+const LAYOUT = [
+  {x:10,  y:30,  r:-4}, {x:300, y:0,   r:3},  {x:640, y:40,  r:-3}, {x:850, y:10,  r:4},
+  {x:40,  y:340, r:3},  {x:300, y:370, r:-2}, {x:660, y:330, r:5},  {x:860, y:390, r:-3},
+  {x:70,  y:670, r:-3}, {x:340, y:700, r:3},  {x:670, y:660, r:-4},
+];
+
+const field = document.getElementById("field");
+let ztop = 10;
+
+function swatchStyle(v){ return `background:var(${v})`; }
+
+function cardHTML(it){
+  const g = it.glyph ? `<div class="glyph">${it.glyph}</div>` : "";
+  const tag = `<span class="tag">${it.tag}</span>`;
+  if(it.type==="place"){
+    return `<div class="card__frame">
+      <div class="media" style="${swatchStyle(it.swatch)}">${tag}${g}</div>
+      <div class="cap">${it.cap}</div>
+      <div class="note"><span class="close">×</span>${it.note}</div>
+    </div>`;
+  }
+  if(it.type==="book"){
+    return `<div class="card__frame">
+      <div class="media" style="${swatchStyle(it.color)}">${tag}
+        <div class="bt">${it.bt}</div><div class="ba">${it.ba}</div>
+      </div>
+      <div class="foot"><span class="k">Book</span><span class="k">♡</span></div>
+      <div class="note"><span class="close">×</span>${it.note}</div>
+    </div>`;
+  }
+  if(it.type==="yt"){
+    return `<div class="card__frame">
+      <div class="media">${tag}<div class="play"><span></span></div></div>
+      <div class="meta"><div class="t">${it.title}</div><div class="c">▶ ${it.channel}</div></div>
+      <div class="note"><span class="close">×</span>${it.note}</div>
+    </div>`;
+  }
+  // hobby
+  return `<div class="card__frame">
+    <div class="media" style="${swatchStyle(it.swatch)}">${tag}${g}</div>
+    <div class="body"><div class="t">${it.t}</div><div class="s">${it.s}</div></div>
+    <div class="note"><span class="close">×</span>${it.note}</div>
+  </div>`;
+}
+
+function build(layout){
+  field.innerHTML = "";
+  ztop = 10;
+  ITEMS.forEach((it,i)=>{
+    const L = layout[i] || {x:20+i*30,y:20,r:0};
+    const el = document.createElement("div");
+    el.className = "card "+it.type;
+    el.style.setProperty("--r", L.r+"deg");
+    el.dataset.x = L.x; el.dataset.y = L.y; el.dataset.r = L.r;
+    el.style.zIndex = ++ztop;
+    el.style.transform = `translate(${L.x}px, ${L.y}px) rotate(${L.r}deg)`;
+    el.innerHTML = cardHTML(it);
+    field.appendChild(el);
+    wire(el);
+  });
+}
+
+// ----- drag + click-to-reveal -----
+function wire(el){
+  let sx=0, sy=0, ox=0, oy=0, moved=false, pid=null;
+
+  el.addEventListener("pointerdown", e=>{
+    if(window.matchMedia("(max-width:760px)").matches) return; // mobile: no drag
+    if(e.target.closest(".close")) return;
+    pid = e.pointerId;
+    el.setPointerCapture(pid);
+    el.classList.add("dragging");
+    el.style.zIndex = ++ztop;
+    sx = e.clientX; sy = e.clientY;
+    ox = parseFloat(el.dataset.x); oy = parseFloat(el.dataset.y);
+    moved = false;
+  });
+
+  el.addEventListener("pointermove", e=>{
+    if(pid===null) return;
+    const dx = e.clientX - sx, dy = e.clientY - sy;
+    if(Math.abs(dx)>4 || Math.abs(dy)>4) moved = true;
+    const nx = ox+dx, ny = oy+dy;
+    el.dataset.x = nx; el.dataset.y = ny;
+    el.style.transform = `translate(${nx}px, ${ny}px) rotate(${el.dataset.r}deg)`;
+  });
+
+  function end(){
+    if(pid===null) return;
+    try{ el.releasePointerCapture(pid);}catch(_){}
+    pid=null;
+    el.classList.remove("dragging");
+  }
+  el.addEventListener("pointerup", e=>{
+    const wasDrag = moved;
+    end();
+    if(!wasDrag){ el.classList.toggle("open"); el.style.zIndex = ++ztop; }
+  });
+  el.addEventListener("pointercancel", end);
+
+  // mobile tap-to-open
+  el.addEventListener("click", e=>{
+    if(!window.matchMedia("(max-width:760px)").matches) return;
+    if(e.target.closest(".close")){ el.classList.remove("open"); return; }
+    el.classList.toggle("open");
+  });
+  el.querySelector(".close")?.addEventListener("pointerdown", e=>{
+    e.stopPropagation(); el.classList.remove("open");
+  });
+}
+
+function shuffle(){
+  const L = LAYOUT.map(p=>({
+    x: p.x + (Math.random()*80-40),
+    y: p.y + (Math.random()*60-30),
+    r: (Math.random()*16-8)
+  }));
+  build(L);
+}
+
+document.getElementById("reset").addEventListener("click", ()=>build(LAYOUT));
+document.getElementById("shuffle").addEventListener("click", shuffle);
+build(LAYOUT);
+</script>
+</body>
+</html>
