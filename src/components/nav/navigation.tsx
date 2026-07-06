@@ -15,7 +15,6 @@ const MOBILE_LINKS = [
   { href: '/writing',    label: 'Writing'     },
   { href: '/about',      label: 'About'       },
   { href: '/uses',       label: 'Uses'        },
-  { href: '/prometheus', label: 'Prometheus'  },
 ]
 
 export function Navigation() {
