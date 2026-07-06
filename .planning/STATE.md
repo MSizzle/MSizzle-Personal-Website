@@ -5,7 +5,7 @@ milestone_name: Dark Brutalist Rebuild
 status: milestone_complete
 stopped_at: Milestone complete (Phase 19 was final phase)
 last_updated: 2026-07-06T09:46:30.982Z
-last_activity: 2026-07-06 -- Post-nav-rework health check: prod verified live+current, prod build exit-0, secret scan clean, vitest re-greened (141 pass / 0 fail; fixed 8 stale tests from the /projects->/building rename + 17.4 band swap)
+last_activity: 2026-07-07 -- Built the Things-I-Love pinboard (sketch 012 -> gated feature): notion-loves loader + client Pinboard + wiring, fallback to marquee until NOTION_LOVES_DB_ID is set. Suite 156 pass / 0 fail, prod build exit-0.
 progress:
   total_phases: 10
   completed_phases: 8
@@ -99,7 +99,7 @@ Next action: `/gsd-plan-phase 15` to decompose the WebGL homepage v1 into plans 
 
 ### Pending Todos
 
-- 2026-07-06 — Redesign Things I Love section as treasure-hunt collage (YouTube videos, books, discoverable collage background; sketch pass first). `.planning/todos/pending/2026-07-06-things-i-love-treasure-hunt-collage.md`
+- 2026-07-07 — DONE: Things I Love treasure-hunt collage shipped as the draggable pinboard (sketch 012 -> gated feature, notion-loves + Pinboard). Awaiting Monty's Notion "Loves" DB + `NOTION_LOVES_DB_ID` to switch on. `.planning/todos/done/2026-07-06-things-i-love-treasure-hunt-collage.md`
 
 ### Blockers/Concerns
 
