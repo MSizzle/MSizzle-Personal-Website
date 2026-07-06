@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v3.0
 milestone_name: Dark Brutalist Rebuild
-status: executing
-stopped_at: Phase 17.2 UI-SPEC approved
-last_updated: "2026-07-06T06:46:07.915Z"
+status: milestone_complete
+stopped_at: Milestone complete (Phase 19 was final phase)
+last_updated: 2026-07-06T09:46:30.982Z
 last_activity: 2026-07-06 -- Completed quick task 260706-lm3: replaced proud copy with past-projects phrasing
 progress:
   total_phases: 10
   completed_phases: 8
   total_plans: 48
-  completed_plans: 43
+  completed_plans: 87
   percent: 80
 ---
 
@@ -21,14 +21,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-18)
 
 **Core value:** A personal site that feels alive and memorable, *and* legible — not another template blog.
-**Current focus:** Phase 19 — project-cards-covers-redesign
+**Current focus:** Milestone complete
 
 ## Current Position
 
-Phase: 19 (project-cards-covers-redesign) — EXECUTING
-Plan: 1 of 3
-Status: Executing Phase 19
-Last activity: 2026-07-06 -- Completed quick task 260706-lm3: replaced proud copy with past-projects phrasing
+Phase: 19
+Plan: Not started
+Status: Milestone complete
+Last activity: 2026-07-06
 
 Direction: locked photo-forward restyle from sketch 010 (`.planning/sketches/010-structured-bands-carousel/`) — Hanken Grotesk 800 + Vermilion `#e5411f` marker hero, alternating light/dark bands, hard corners, rail boxes, slide-in photos, Monty Monthly carousel, sticky Subscribe nav, credibility strip, rich footer. Supersedes the 17.1 text-forward skin; preserves who→what→engage velvet-rope IA. Motion scroll/ambient-only (IO + CSS + scroll-snap), no WebGL/Lenis. See memory `v3-homepage-photo-forward-lock` + `17.4-CONTEXT.md`. Phase 18 (QA/perf/alias) parked until this lands.
 
