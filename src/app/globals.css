@@ -835,18 +835,20 @@ p.body {
   border-radius: 5px;
 }
 
-/* ── Sticky mini-nav (D-10) — appears past hero fold (z-index:9000) ── */
+/* ── Sticky mini-nav (D-10) — appears past hero fold (z-index:9000).
+   Restyled to match the editorial header (one nav style site-wide):
+   paper field, ink wordmark, sentence-case muted links. Solid, no blur. ── */
 .stickynav {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 9000;
-  background: #141416; /* solid — no translucency/blur */
-  color: #f5f3ee;
+  background: var(--color-bg); /* solid — no translucency/blur */
+  color: var(--color-text);
   transform: translateY(-100%);
   transition: transform 0.35s var(--ease-out);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  border-bottom: 1px solid var(--color-text);
 }
 .stickynav.show {
   transform: none;
@@ -863,30 +865,25 @@ p.body {
 .stickynav .mk {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: 16px;
-}
-.stickynav .mk i {
-  color: var(--accent);
-  font-style: normal;
+  font-size: 22px;
+  letter-spacing: -0.025em;
+  color: var(--color-text);
 }
 .stickynav ul {
   display: flex;
   gap: 22px;
   list-style: none;
-  font-size: 11.5px;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  font-weight: 600;
+  font-size: 15px;
   margin-left: auto;
   margin-right: 20px;
 }
-.stickynav a {
-  color: rgba(245, 243, 238, 0.72);
+.stickynav ul a {
+  color: var(--color-text-muted);
   text-decoration: none;
-  transition: color 0.18s;
+  transition: opacity 0.18s;
 }
-.stickynav a:hover {
-  color: #fff;
+.stickynav ul a:hover {
+  opacity: 0.6;
 }
 .stickynav .cta {
   background: var(--accent);

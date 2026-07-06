@@ -36,10 +36,8 @@ export function StickyNav() {
   return (
     <div className={`stickynav${show ? " show" : ""}`}>
       <div className="inner">
-        {/* Brand mark */}
-        <div className="mk">
-          Monty<i>.</i>
-        </div>
+        {/* Brand mark — matches the editorial header wordmark */}
+        <div className="mk">Monty Singer</div>
 
         {/* Section anchor links - hidden on mobile via .stickynav ul CSS */}
         <ul>
