@@ -115,6 +115,7 @@ None yet. Highest-risk item to watch: the 3D hero object's effect on LCP/PSI (Ph
 | 260706-lm3 | Replace cringy proud copy on homepage with plainer past-projects copy | 2026-07-06 | de9ffb7 | [260706-lm3-replace-cringy-proud-copy-on-homepage-wi](./quick/260706-lm3-replace-cringy-proud-copy-on-homepage-wi/) |
 | 260706-fast | Hero subtitle rewritten to user-dictated copy; loves heading shortened to "Things I love outside of work." | 2026-07-06 | e126174 | (inline /gsd-fast, no directory) |
 | 260706-fast2 | Sticky nav restyled to match editorial header (paper field, "Monty Singer" wordmark, muted links; Subscribe CTA kept) | 2026-07-06 | 341c2d9 | (inline /gsd-fast, no directory) |
+| 260706-fast3 | Sticky nav CTA changed Subscribe→"Say Hi" (prefilled mailto); editorial-header restyled to sticky-nav formatting (ink border, muted links via valid text-text/text-text-muted tokens); hero "Join Monty Monthly" moved to its own line | 2026-07-06 | 01315b7 | (inline /gsd-fast, no directory) |
 
 ## Deferred Items
 
