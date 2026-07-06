@@ -23,15 +23,15 @@ export const USES_DATA: UsesGroup[] = [
     heading: "AI & Development",
     items: [
       { term: "LLM", detail: "Claude (Anthropic) for code, thinking, and research" },
-      { term: "IDE", detail: "Cursor AI — VS Code with native AI editing" },
+      { term: "IDE", detail: "Cursor AI (VS Code with native AI editing)" },
       { term: "Version Control", detail: "Git + GitHub for all projects" },
-      { term: "Workflow", detail: "GSD (Get Shit Done) — AI-native project planning system" },
+      { term: "Workflow", detail: "GSD (Get Shit Done), an AI-native project planning system" },
     ],
   },
   {
     heading: "Productivity",
     items: [
-      { term: "Knowledge", detail: "Notion — notes, projects, writing, and content pipeline" },
+      { term: "Knowledge", detail: "Notion for notes, projects, writing, and the content pipeline" },
       { term: "Calendar", detail: "Google Calendar + Fantastical for scheduling" },
       { term: "Tasks", detail: "Notion databases for task management" },
     ],
@@ -39,7 +39,7 @@ export const USES_DATA: UsesGroup[] = [
   {
     heading: "Communication",
     items: [
-      { term: "Email", detail: "Gmail — primary inbox" },
+      { term: "Email", detail: "Gmail as primary inbox" },
       { term: "Messaging", detail: "Slack for async team communication" },
       { term: "Video", detail: "Zoom and Google Meet for calls" },
     ],

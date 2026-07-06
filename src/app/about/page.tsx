@@ -7,12 +7,12 @@ import { AllLink } from "@/components/editorial/all-link";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "Monty Singer — builder, writer, Founder of Prometheus.",
+    "Monty Singer: builder, writer, Founder of Prometheus.",
   alternates: { canonical: "/about" },
   openGraph: {
     title: "About",
     description:
-      "Monty Singer — builder, writer, Founder of Prometheus.",
+      "Monty Singer: builder, writer, Founder of Prometheus.",
     url: "/about",
     type: "profile",
   },
@@ -38,7 +38,7 @@ export default function AboutPage() {
           <div className="text-feature text-[var(--color-text)]">Prometheus</div>
           <div className="text-body text-[var(--color-text)]">
             <p>
-              A startup that AI-enables enterprise businesses — automating
+              A startup that AI-enables enterprise businesses: automating
               processes, building agentic systems, and increasing operating
               leverage.
             </p>
