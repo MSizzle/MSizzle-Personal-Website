@@ -121,6 +121,7 @@ None yet. Highest-risk item to watch: the 3D hero object's effect on LCP/PSI (Ph
 | 260706-fast5 | Removed footer colophon text + sticky-nav "Say Hi" CTA | 2026-07-06 | 63fa6e6 | (inline /gsd-fast, no directory) |
 | 260706-fast6 | Mechanical keycap press interaction on nav links (.nav-key: hard offset ledge, depress on hover, snap on press, spring-back pop on release; reduced-motion guard) | 2026-07-06 | 03d4864 | (inline /gsd-fast, no directory) |
 | 260706-fast7 | Replaced keycap nav with segmented bar: broad full-height cells + vertical dividers, playful invert-on-hover (ink fill + vermilion text, auto-inverts on dark). Supersedes fast6. | 2026-07-06 | f450564 | (inline /gsd-fast, no directory) |
+| 260706-fast8 | Nav hover changed to V6: vermilion fill wipes DOWN from top edge, label flips to paper (labels wrapped in span). Chosen from a 6-variation local preview. Supersedes fast7 hover. | 2026-07-06 | 8497335 | (inline /gsd-fast, no directory) |
 
 ## Deferred Items
 
