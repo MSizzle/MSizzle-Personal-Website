@@ -19,13 +19,8 @@ export function SectionFooter() {
       <div className="wrap">
         {/* Three-column footer grid (D-12) */}
         <div className="foot-grid">
-          {/* Colophon */}
+          {/* Copyright */}
           <div className="foot-col">
-            <h4>Colophon</h4>
-            <p className="colophon">
-              Designed and built by Monty. Type set in Hanken Grotesk. Content managed in Notion,
-              deployed on Vercel.
-            </p>
             <div className="footmark">© 2026 Monty Singer</div>
           </div>
 

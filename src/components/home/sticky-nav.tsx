@@ -17,12 +17,8 @@ const LINKS = [
  * StickyNav - D-10, D-13
  *
  * Scroll-triggered sticky mini-nav that slides down from the top once the user
- * has scrolled past ~82% of the initial viewport height. Carries a persistent
- * vermilion "Say Hi" CTA that opens a prefilled email draft to Monty
- * (mailto with a ready-to-send subject + greeting).
- *
- * Single-CTA model: "Say Hi" is the only button; no email form, no competing
- * engagement buttons.
+ * has scrolled past ~82% of the initial viewport height. Carries the brand mark
+ * and the primary nav links (Prometheus / Building / Writing / Contact). No CTA.
  *
  * Z-index: relies on Plan 01's `.stickynav` CSS rule (z-index: 9000) to sit
  * above the existing z-50 mobile header (nav/navigation.tsx).
@@ -64,14 +60,6 @@ export function StickyNav() {
             )
           )}
         </ul>
-
-        {/* Persistent "Say Hi" CTA — opens a prefilled email draft to Monty */}
-        <a
-          className="cta"
-          href="mailto:monty@prometheus.today?subject=Saying%20hi&body=Hi%20Monty%2C%0A%0A"
-        >
-          Say Hi
-        </a>
       </div>
     </div>
   );
