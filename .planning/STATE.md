@@ -99,7 +99,7 @@ Next action: `/gsd-plan-phase 15` to decompose the WebGL homepage v1 into plans 
 
 ### Pending Todos
 
-None tracked for v3.0 yet.
+- 2026-07-06 — Redesign Things I Love section as treasure-hunt collage (YouTube videos, books, discoverable collage background; sketch pass first). `.planning/todos/pending/2026-07-06-things-i-love-treasure-hunt-collage.md`
 
 ### Blockers/Concerns
 
