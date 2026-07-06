@@ -32,7 +32,7 @@ export async function generateMetadata({
 }: PageProps): Promise<Metadata> {
   const { slug } = await params;
   const project = await getProjectBySlug(slug);
-  if (!project) return { title: "Project Not Found | Monty Singer" };
+  if (!project) return { title: "Project Not Found" };
   return buildProjectMetadata(project);
 }
 

@@ -41,37 +41,8 @@ function postsToIssues(posts: BlogPost[]): CarouselIssue[] {
   }));
 }
 
-const ISSUES: CarouselIssue[] = [
-  {
-    num: "12",
-    date: "Jun 2026",
-    title: "Why most AI adoption fails before it starts",
-    excerpt:
-      "The failure is almost never the model. It is the org that cannot absorb it.",
-  },
-  {
-    num: "11",
-    date: "May 2026",
-    title: "The org chart is the product",
-    excerpt: "How the shape of a team leaks into the shape of what it ships.",
-  },
-  {
-    num: "10",
-    date: "Apr 2026",
-    title: "What I learned shipping Prometheus v1",
-    excerpt:
-      "Six weeks, one hard pivot, and the feature nobody asked for that mattered most.",
-  },
-  {
-    num: "09",
-    date: "Mar 2026",
-    title: "Taste is a competitive advantage",
-    excerpt: "Why I hire for it and how I try to keep mine sharp.",
-  },
-];
-
 export function SectionNewsletter({ posts = [] }: Props) {
-  const issues = posts.length > 0 ? postsToIssues(posts) : ISSUES;
+  const issues = postsToIssues(posts);
 
   return (
     <div className="wrap">

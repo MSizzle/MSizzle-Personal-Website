@@ -9,14 +9,14 @@ import { Card } from "@/components/v3/card";
 export const revalidate = 1800;
 
 export const metadata: Metadata = {
-  title: "Building | Monty Singer",
+  title: "Building",
   description:
-    "Projects, products, and AI systems Monty Singer is building or has built -- through Prometheus and independent work.",
+    "Projects, products, and AI systems Monty Singer is building or has built — through Prometheus and independent work.",
   alternates: { canonical: "/projects" },
   openGraph: {
-    title: "Building | Monty Singer",
+    title: "Building",
     description:
-      "Projects, products, and AI systems Monty Singer is building or has built -- through Prometheus and independent work.",
+      "Projects, products, and AI systems Monty Singer is building or has built — through Prometheus and independent work.",
     url: "/projects",
     type: "website",
   },
@@ -65,7 +65,7 @@ export default async function BuildingPage() {
         <PageHero
           title="Building"
           crumb="Home / Building"
-          sub="Projects, products, and AI systems I'm building or have built -- through Prometheus and independent work."
+          sub="Projects, products, and AI systems I'm building or have built — through Prometheus and independent work."
         />
       </section>
 

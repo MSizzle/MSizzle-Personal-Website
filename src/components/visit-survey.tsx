@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
+import { usePathname } from 'next/navigation'
 import { m, AnimatePresence, useReducedMotion } from 'motion/react'
 
 const OPTIONS = [
@@ -18,9 +19,11 @@ type WidgetState = 'hidden' | 'bubble' | 'open' | 'thankyou'
 export function VisitSurvey() {
   const [widgetState, setWidgetState] = useState<WidgetState>('hidden')
   const prefersReducedMotion = useReducedMotion()
+  const pathname = usePathname()
 
   useEffect(() => {
-    if (sessionStorage.getItem('visit-survey-done')) return
+    if (pathname !== '/') return
+    if (localStorage.getItem('visit-survey-done')) return
     let openTimer: ReturnType<typeof setTimeout> | undefined
     const timer = setTimeout(() => {
       setWidgetState('bubble')
@@ -33,7 +36,7 @@ export function VisitSurvey() {
           setWidgetState('open')
         }, 600)
       }
-    }, 30000)
+    }, 45000)
     return () => {
       clearTimeout(timer)
       if (openTimer) clearTimeout(openTimer)
@@ -41,7 +44,7 @@ export function VisitSurvey() {
   }, [])
 
   function handleOptionClick() {
-    sessionStorage.setItem('visit-survey-done', 'true')
+    localStorage.setItem('visit-survey-done', 'true')
     setWidgetState('thankyou')
     setTimeout(() => {
       setWidgetState('hidden')
@@ -49,7 +52,7 @@ export function VisitSurvey() {
   }
 
   function handleClose() {
-    sessionStorage.setItem('visit-survey-done', 'true')
+    localStorage.setItem('visit-survey-done', 'true')
     setWidgetState('hidden')
   }
 

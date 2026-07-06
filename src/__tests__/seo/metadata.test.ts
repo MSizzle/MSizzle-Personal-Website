@@ -16,9 +16,9 @@ const fakePost: BlogPost = {
 }
 
 describe('buildBlogPostMetadata', () => {
-  it('uses pipe separator and sets canonical', () => {
+  it('returns bare title (template appends | Monty Singer) and sets canonical', () => {
     const meta = buildBlogPostMetadata(fakePost)
-    expect(meta.title).toBe('Hello World | Monty Singer')
+    expect(meta.title).toBe('Hello World')
     expect(meta.alternates?.canonical).toBe('/blog/hello-world')
     expect((meta.openGraph as { type?: string })?.type).toBe('article')
   })

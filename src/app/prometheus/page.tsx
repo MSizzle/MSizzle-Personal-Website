@@ -6,12 +6,12 @@ import { RuleStrong } from '@/components/editorial/rule-strong'
 import { Rule } from '@/components/editorial/rule'
 
 export const metadata: Metadata = {
-  title: 'Prometheus | AI Integrations and Education | Monty Singer',
+  title: 'Prometheus | AI Integrations and Education',
   description:
     'Prometheus is an AI integrations and education company founded by Monty Singer. Custom automation, AI implementation, and training for businesses.',
   alternates: { canonical: '/prometheus' },
   openGraph: {
-    title: 'Prometheus | AI Integrations and Education | Monty Singer',
+    title: 'Prometheus | AI Integrations and Education',
     description:
       'Prometheus is an AI integrations and education company founded by Monty Singer. Custom automation, AI implementation, and training for businesses.',
     url: '/prometheus',

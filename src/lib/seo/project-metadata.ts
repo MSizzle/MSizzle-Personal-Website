@@ -9,7 +9,7 @@ function truncate(text: string, maxChars: number = 155): string {
 }
 
 export function buildProjectMetadata(project: Project): Metadata {
-  const title = `${project.title} | Monty Singer`
+  const title = project.title
   const description = truncate(
     project.description || `${project.title}, a project by Monty Singer.`,
     155

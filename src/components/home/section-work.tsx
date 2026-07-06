@@ -69,9 +69,9 @@ export function SectionWork({ projects = [] }: Props) {
             ))}
           </div>
 
-          {/* Portfolio affordance: D-13 invariant from Phase 17.3 */}
-          <Link href="/portfolio" className="mt-8 inline-flex items-center gap-2 text-text">
-            <span>Portfolio</span>
+          {/* Projects affordance: consolidated from /portfolio (issue 7) */}
+          <Link href="/projects" className="mt-8 inline-flex items-center gap-2 text-text">
+            <span>Projects</span>
             <span className="font-mono text-xs tracking-widest text-text-muted">SELECTED</span>
           </Link>
 
