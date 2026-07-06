@@ -10,10 +10,10 @@ import { EditorialHeader } from '@/components/home-v2/editorial-header'
 // mobile bar (no redundant Home entry in the drawer). Contact is an in-page
 // anchor to the footer, not a route.
 const MOBILE_LINKS = [
-  { href: '/prometheus', label: 'Prometheus'  },
-  { href: '/building',   label: 'Building'    },
-  { href: '/writing',    label: 'Writing'     },
-  { href: '#contact',    label: 'Contact'     },
+  { href: 'https://prometheus.today', label: 'Prometheus'  },
+  { href: '/building',                label: 'Building'    },
+  { href: '/writing',                 label: 'Writing'     },
+  { href: '#contact',                 label: 'Contact'     },
 ]
 
 export function Navigation() {
@@ -24,9 +24,8 @@ export function Navigation() {
   // 260706-tx6, reverses D-08). EditorialHeader is globally rendered here;
   // on routes not in this mapping the prop is undefined so no nav link gets
   // bolded. Contact has no active state (it's an in-page anchor, not a route).
-  const activeLabel: 'Prometheus' | 'Building' | 'Writing' | undefined =
-    pathname === '/prometheus' ? 'Prometheus'
-    : pathname === '/building' ? 'Building'
+  const activeLabel: 'Building' | 'Writing' | undefined =
+    pathname === '/building' ? 'Building'
     : pathname === '/writing' || pathname.startsWith('/blog') ? 'Writing'
     : undefined
 
@@ -79,12 +78,15 @@ export function Navigation() {
           <div className="fixed left-0 right-0 top-16 z-40 border-b border-[var(--border)] bg-[var(--bg)] shadow-lg md:hidden">
             <nav className="flex flex-col px-6 py-4">
               {MOBILE_LINKS.map((link) =>
-                link.href.startsWith('#') ? (
+                link.href.startsWith('#') || link.href.startsWith('http') ? (
                   <a
                     key={link.href}
                     href={link.href}
                     className="flex min-h-[48px] items-center border-b border-[var(--border)] py-3 text-base uppercase tracking-wide last:border-b-0"
                     onClick={() => setOpen(false)}
+                    {...(link.href.startsWith('http')
+                      ? { target: '_blank', rel: 'noopener noreferrer' }
+                      : {})}
                   >
                     {link.label}
                   </a>

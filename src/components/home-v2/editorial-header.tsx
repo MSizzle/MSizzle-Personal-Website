@@ -7,13 +7,13 @@ type Props = {
    * Per quick task 260706-tx6: 4-item nav (Prometheus, Building, Writing, Contact).
    * Contact is an in-page anchor and never receives the active/bold treatment.
    */
-  active?: "Prometheus" | "Building" | "Writing";
+  active?: "Building" | "Writing";
 };
 
-// Four nav destinations per quick task 260706-tx6 (reverses D-08).
-// Order: Prometheus, Building, Writing, Contact.
+// Four nav destinations. Order: Prometheus, Building, Writing, Contact.
+// Prometheus points at the external company site; Contact is an in-page anchor.
 const LINKS = [
-  { label: "Prometheus", href: "/prometheus" },
+  { label: "Prometheus", href: "https://prometheus.today" },
   { label: "Building",   href: "/building"   },
   { label: "Writing",    href: "/writing"    },
   { label: "Contact",    href: "#contact"    },
@@ -45,10 +45,17 @@ export function EditorialHeader({ active }: Props) {
       <nav className="flex items-stretch">
         <ul className="flex list-none items-stretch text-[15px]">
           {LINKS.map((link) => {
-            if (link.href.startsWith("#")) {
+            const external = link.href.startsWith("http");
+            if (link.href.startsWith("#") || external) {
               return (
                 <li key={link.label} className="flex">
-                  <a href={link.href} className="nav-cell">
+                  <a
+                    href={link.href}
+                    className="nav-cell"
+                    {...(external
+                      ? { target: "_blank", rel: "noopener noreferrer" }
+                      : {})}
+                  >
                     <span>{link.label}</span>
                   </a>
                 </li>

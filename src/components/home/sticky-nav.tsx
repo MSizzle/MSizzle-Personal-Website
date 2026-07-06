@@ -7,7 +7,7 @@ import Link from "next/link";
 // Prometheus, Building, Writing, Contact. Contact is an in-page anchor to the
 // footer; the other three are route links, matching the top header they slide over.
 const LINKS = [
-  { label: "Prometheus", href: "/prometheus" },
+  { label: "Prometheus", href: "https://prometheus.today" },
   { label: "Building", href: "/building" },
   { label: "Writing", href: "/writing" },
   { label: "Contact", href: "#contact" },
@@ -49,9 +49,17 @@ export function StickyNav() {
         {/* Route links mirroring the global header - hidden on mobile via .stickynav ul CSS */}
         <ul>
           {LINKS.map((link) =>
-            link.href.startsWith("#") ? (
+            link.href.startsWith("#") || link.href.startsWith("http") ? (
               <li key={link.href}>
-                <a className="nav-cell" href={link.href}><span>{link.label}</span></a>
+                <a
+                  className="nav-cell"
+                  href={link.href}
+                  {...(link.href.startsWith("http")
+                    ? { target: "_blank", rel: "noopener noreferrer" }
+                    : {})}
+                >
+                  <span>{link.label}</span>
+                </a>
               </li>
             ) : (
               <li key={link.href}>
