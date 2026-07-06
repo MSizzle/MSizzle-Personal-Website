@@ -27,9 +27,10 @@ const LINKS = [
  * About/Projects/Writing/Uses set. Contact is a same-page anchor to the
  * footer contact block, not a route, and is never bolded as active.
  *
- * Server Component — pure presentational, imports `Link` only. Preserves
- * the 44px tap target (`min-h-11`) and hover opacity transitions from the
- * original Phase 10 markup.
+ * Server Component — pure presentational, imports `Link` only. Nav links use
+ * the shared `.nav-key` mechanical-keycap interaction (globals.css): raised on
+ * a hard offset ledge, depress on hover, snap flat on press, spring back on
+ * release.
  */
 export function EditorialHeader({ active }: Props) {
   return (
@@ -43,10 +44,7 @@ export function EditorialHeader({ active }: Props) {
             if (link.href.startsWith("#")) {
               return (
                 <li key={link.label}>
-                  <a
-                    href={link.href}
-                    className="flex min-h-9 items-center text-text-muted transition-opacity hover:opacity-60"
-                  >
+                  <a href={link.href} className="nav-key text-text-muted">
                     {link.label}
                   </a>
                 </li>
@@ -59,7 +57,7 @@ export function EditorialHeader({ active }: Props) {
                 <Link
                   href={link.href}
                   className={cn(
-                    "flex min-h-9 items-center transition-opacity hover:opacity-60",
+                    "nav-key",
                     isActive ? "font-bold text-text" : "text-text-muted"
                   )}
                 >
