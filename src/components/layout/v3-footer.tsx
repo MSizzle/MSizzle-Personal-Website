@@ -87,7 +87,7 @@ export function V3Footer() {
                 rel="noopener noreferrer"
                 className="block font-display text-sm text-[var(--color-text-inverse)] hover:text-[var(--accent)] transition-colors py-1"
               >
-                Prometheus
+                prometheus.today
               </a>
             </li>
           </ul>
