@@ -50,28 +50,28 @@ afterEach(() => {
 });
 
 describe("SectionWork (Phase 17.3 SC-2)", () => {
-  it("SC-2.1: renders a link to /portfolio", async () => {
+  it("SC-2.1: renders a link to /projects", async () => {
     const { SectionWork } = await import("@/components/home/section-work");
     render(React.createElement(SectionWork));
     const allLinks = screen.getAllByRole("link");
-    expect(allLinks.some((l) => l.getAttribute("href") === "/portfolio")).toBe(true);
+    expect(allLinks.some((l) => l.getAttribute("href") === "/projects")).toBe(true);
   });
 
-  it("D-01: does NOT render any link to /projects", async () => {
+  it("D-01: does NOT render any link to /portfolio", async () => {
     const { SectionWork } = await import("@/components/home/section-work");
     render(React.createElement(SectionWork));
     const allLinks = screen.getAllByRole("link");
-    expect(allLinks.every((l) => l.getAttribute("href") !== "/projects")).toBe(true);
+    expect(allLinks.every((l) => l.getAttribute("href") !== "/portfolio")).toBe(true);
   });
 
-  it("SC-2.2: portfolio link displays text Portfolio", async () => {
+  it("SC-2.2: projects link displays text Projects", async () => {
     const { SectionWork } = await import("@/components/home/section-work");
     render(React.createElement(SectionWork));
-    const portfolioLink = screen
+    const projectsLink = screen
       .getAllByRole("link")
-      .find((l) => l.getAttribute("href") === "/portfolio");
-    expect(portfolioLink).toBeDefined();
-    expect(portfolioLink!.textContent).toContain("Portfolio");
+      .find((l) => l.getAttribute("href") === "/projects");
+    expect(projectsLink).toBeDefined();
+    expect(projectsLink!.textContent).toContain("Projects");
   });
 
   it("SC-2.2: portfolio section contains kicker SELECTED", async () => {
