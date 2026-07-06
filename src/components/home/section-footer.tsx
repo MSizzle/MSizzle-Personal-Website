@@ -15,7 +15,7 @@ import Link from "next/link";
  */
 export function SectionFooter() {
   return (
-    <footer className="site">
+    <footer id="contact" className="site">
       <div className="wrap">
         {/* Three-column footer grid (D-12) */}
         <div className="foot-grid">

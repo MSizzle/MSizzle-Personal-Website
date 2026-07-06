@@ -21,7 +21,7 @@ import Link from "next/link";
  */
 export function V3Footer() {
   return (
-    <footer className="border-t border-[var(--color-border-strong)] bg-[var(--color-surface)] text-[var(--color-text-inverse)] px-7 py-14 md:px-40 md:py-20">
+    <footer id="contact" className="border-t border-[var(--color-border-strong)] bg-[var(--color-surface)] text-[var(--color-text-inverse)] px-7 py-14 md:px-40 md:py-20">
       {/* Big signature line — LOCKED copy from prototype 002 index.html */}
       <a
         href="mailto:monty@prometheus.today?subject=Saying%20hi&body=Hi%20Monty%2C%0A%0A"
