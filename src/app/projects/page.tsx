@@ -65,7 +65,7 @@ export default async function BuildingPage() {
         <PageHero
           title="Building"
           crumb="Home / Building"
-          sub="Projects, products, and AI systems I'm building or have built -- through Prometheus and independent work."
+          sub="Projects, products, and AI systems I'm building or have built — through Prometheus and independent work."
         />
       </section>
 
