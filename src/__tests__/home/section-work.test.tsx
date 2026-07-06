@@ -28,25 +28,102 @@ vi.mock("@/components/home/rail-box", () => ({
   },
 }));
 
-// Mock Photo: renders a div so the component can mount without canvas/image setup
-vi.mock("@/components/home/photo", () => ({
-  Photo: function PhotoMock({
-    caption,
-    aspectRatio,
-  }: {
-    caption?: string;
-    aspectRatio?: string;
-  }) {
-    return React.createElement("div", {
-      "data-testid": "photo",
-      "data-caption": caption,
-      "data-aspect": aspectRatio,
-    });
-  },
-}));
-
 afterEach(() => {
   cleanup();
+});
+
+describe("SectionWork title-card faces (Phase 19 / 19-02)", () => {
+  it("renders project titles as visible text in the work grid", async () => {
+    const { SectionWork } = await import("@/components/home/section-work");
+    const projects = [
+      {
+        id: "p1",
+        slug: "ai-assistant",
+        title: "AI Assistant",
+        description: "An AI product",
+        cover: null,
+        image: null,
+        emoji: null,
+        externalUrl: "",
+        tags: ["AI"],
+        featured: true,
+        published: true,
+        lastEdited: "2025-04-01",
+      },
+      {
+        id: "p2",
+        slug: "design-tool",
+        title: "Design Tool",
+        description: "",
+        cover: null,
+        image: null,
+        emoji: null,
+        externalUrl: "",
+        tags: ["Design"],
+        featured: false,
+        published: true,
+        lastEdited: "2025-06-15",
+      },
+    ];
+    render(React.createElement(SectionWork, { projects } as any));
+    expect(screen.getByText("AI Assistant")).toBeDefined();
+    expect(screen.getByText("Design Tool")).toBeDefined();
+  });
+
+  it("renders dek text when project has a description", async () => {
+    const { SectionWork } = await import("@/components/home/section-work");
+    const projects = [
+      {
+        id: "p3",
+        slug: "product",
+        title: "My Product",
+        description: "An AI product",
+        cover: null,
+        image: null,
+        emoji: null,
+        externalUrl: "",
+        tags: [],
+        featured: false,
+        published: true,
+        lastEdited: "2025-01-01",
+      },
+    ];
+    render(React.createElement(SectionWork, { projects } as any));
+    expect(screen.getByText("An AI product")).toBeDefined();
+  });
+
+  it("does not render notion-cover images even when project has a non-null cover", async () => {
+    const { SectionWork } = await import("@/components/home/section-work");
+    const projects = [
+      {
+        id: "p4",
+        slug: "covered",
+        title: "Covered Project",
+        description: "",
+        cover: "https://notion.so/cover.jpg",
+        image: null,
+        emoji: null,
+        externalUrl: "",
+        tags: [],
+        featured: false,
+        published: true,
+        lastEdited: "2025-01-01",
+      },
+    ];
+    render(React.createElement(SectionWork, { projects } as any));
+    const allImgs = document.querySelectorAll("img");
+    const coverImg = Array.from(allImgs).find((img) =>
+      img.getAttribute("src")?.includes("notion-cover")
+    );
+    expect(coverImg).toBeUndefined();
+  });
+
+  it("renders four title-card elements when no projects are provided", async () => {
+    const { SectionWork } = await import("@/components/home/section-work");
+    render(React.createElement(SectionWork));
+    const titleCards = document.querySelectorAll(".title-card");
+    expect(titleCards.length).toBe(4);
+  });
 });
 
 describe("SectionWork (Phase 17.3 SC-2)", () => {

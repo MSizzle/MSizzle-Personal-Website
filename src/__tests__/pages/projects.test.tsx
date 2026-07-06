@@ -158,7 +158,7 @@ describe("/projects page (Plan 04 / PG-03)", () => {
     expect(hrefs).toContain("/projects/design-tool");
   });
 
-  it("renders cover image when project.image is non-null", async () => {
+  it("renders a title-card face instead of a cover image when project.image is non-null (Phase 19)", async () => {
     const { getPublishedProjects } = await import("@/lib/notion-projects");
     vi.mocked(getPublishedProjects).mockResolvedValue([
       {
@@ -177,11 +177,17 @@ describe("/projects page (Plan 04 / PG-03)", () => {
       },
     ]);
     await renderProjectsPage();
+    // Projects no longer use cover images as card faces (Phase 19 decision)
     const allImgs = document.querySelectorAll("img");
     const coverImg = Array.from(allImgs).find((img) =>
       img.getAttribute("src")?.includes("notion-cover?pageId=proj-with-image")
     );
-    expect(coverImg).toBeDefined();
+    expect(coverImg).toBeUndefined();
+    // A title-card element containing the project title should render instead
+    const titleCards = document.querySelectorAll(".title-card");
+    expect(titleCards.length).toBeGreaterThan(0);
+    const titleTexts = Array.from(titleCards).map((el) => el.textContent ?? "");
+    expect(titleTexts.some((t) => t.includes("Project With Image"))).toBe(true);
   });
 
   it("does NOT render cover image when project.image is null", async () => {
@@ -208,6 +214,72 @@ describe("/projects page (Plan 04 / PG-03)", () => {
       img.getAttribute("src")?.includes("notion-cover?pageId=proj-no-image")
     );
     expect(coverImg).toBeUndefined();
+  });
+});
+
+describe("/projects title-card grid (Phase 19 / 19-02)", () => {
+  it("grid container has class card-grid", async () => {
+    const { getPublishedProjects } = await import("@/lib/notion-projects");
+    vi.mocked(getPublishedProjects).mockResolvedValue([
+      {
+        id: "grid-proj",
+        slug: "grid-project",
+        title: "Grid Project",
+        description: "For grid class test",
+        cover: null,
+        image: null,
+        emoji: null,
+        externalUrl: "",
+        tags: [],
+        featured: false,
+        published: true,
+        lastEdited: "2025-04-01",
+      },
+    ]);
+    await renderProjectsPage();
+    const cardGrid = document.querySelector(".card-grid");
+    expect(cardGrid).not.toBeNull();
+  });
+
+  it("first project card has paper field and second has ink field (deterministic index alternation)", async () => {
+    const { getPublishedProjects } = await import("@/lib/notion-projects");
+    vi.mocked(getPublishedProjects).mockResolvedValue([
+      {
+        id: "proj-a",
+        slug: "project-a",
+        title: "Project Alpha",
+        description: "First project",
+        cover: null,
+        image: null,
+        emoji: null,
+        externalUrl: "",
+        tags: [],
+        featured: false,
+        published: true,
+        lastEdited: "2025-06-01",
+      },
+      {
+        id: "proj-b",
+        slug: "project-b",
+        title: "Project Beta",
+        description: "Second project",
+        cover: null,
+        image: null,
+        emoji: null,
+        externalUrl: "",
+        tags: [],
+        featured: false,
+        published: true,
+        lastEdited: "2025-06-01",
+      },
+    ]);
+    await renderProjectsPage();
+    const titleCards = document.querySelectorAll(".title-card");
+    expect(titleCards.length).toBeGreaterThanOrEqual(2);
+    // First card: paper field -- has "title-card" class but NOT "title-card--ink"
+    expect(titleCards[0].classList.contains("title-card--ink")).toBe(false);
+    // Second card: ink field -- has "title-card--ink"
+    expect(titleCards[1].classList.contains("title-card--ink")).toBe(true);
   });
 });
 

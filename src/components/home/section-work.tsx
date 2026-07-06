@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { RailBox } from "@/components/home/rail-box";
-import { Photo } from "@/components/home/photo";
+import { TitleCard } from "@/components/v3/title-card";
 import type { Project } from "@/lib/notion-projects";
 
 /**
@@ -10,30 +10,34 @@ import type { Project } from "@/lib/notion-projects";
  * Server Component only; no client directive.
  * D-03: token classes only auto-invert with the enclosing band variant.
  * D-05: RailBox index 02, label "Selected work".
- * D-07: 2x2 work-grid of slide-in photos alternating from-left/from-right.
+ * D-07: 2x2 work-grid of slide-in typographic TitleCard faces alternating from-left/from-right.
  * D-13 (Phase-17.3 invariants preserved):
- *   - /portfolio link present with "SELECTED" kicker
- *   - no link to the projects page
+ *   - /projects link present with "SELECTED" kicker
+ *   - no link to /portfolio
  *   - Prometheus external anchor keeps rel="noopener noreferrer"
+ * Phase 19 SC-2: D-07 grid now renders typographic TitleCard faces (paper/ink alternation
+ *   deterministic by index). Cover images are no longer used as project card faces.
+ *   Placeholder cells are TitleCards with index kickers when projects are unavailable.
  *
  * `projects` is fetched by the async parent (page.tsx) so this stays a sync
  * component: the first four Featured Notion projects fill the 2x2 grid with
- * their real cover images (via the /api/notion-cover proxy). Missing covers or
- * an empty list fall back to the styled placeholder blocks (Notion-down safe).
+ * typographic title-cards. Missing projects or an empty list fall back to
+ * styled placeholder TitleCards (Notion-down safe).
  */
 type Props = { projects?: Project[] };
 
-function captionFor(project: Project | undefined, index: number): string {
-  if (!project) return `Selected work · 0${index + 1}`;
+function kickerFor(project: Project | undefined, index: number): string {
+  if (!project) return `0${index + 1}`;
   const year = project.lastEdited
     ? new Date(project.lastEdited).getUTCFullYear()
     : undefined;
   const tag = project.tags?.[0];
-  return [project.title, tag, year].filter(Boolean).join(" · ");
+  const label = [tag, year].filter(Boolean).join(" · ");
+  return label || `0${index + 1}`;
 }
 
 export function SectionWork({ projects = [] }: Props) {
-  // Always render a 2x2 grid; fill empty cells with placeholders.
+  // Always render a 2x2 grid; fill empty cells with placeholder TitleCards.
   const cells = Array.from({ length: 4 }, (_, i) => projects[i]);
 
   return (
@@ -48,22 +52,19 @@ export function SectionWork({ projects = [] }: Props) {
         <div>
           <h2 className="reveal">Some of the work I am proudest of.</h2>
 
-          {/* 2x2 grid of slide-in photos alternating from-left / from-right */}
+          {/* 2x2 grid of slide-in TitleCards alternating from-left / from-right */}
           <div className="work-grid">
             {cells.map((project, i) => (
               <div
                 key={project?.id ?? `placeholder-${i}`}
                 className={`shadowed slide ${i % 2 === 0 ? "from-left" : "from-right"}`}
               >
-                <Photo
+                <TitleCard
                   aspectRatio="3/2.2"
-                  src={
-                    project?.cover
-                      ? `/api/notion-cover?pageId=${project.id}`
-                      : undefined
-                  }
-                  alt={project?.cover ? project.title : undefined}
-                  caption={captionFor(project, i)}
+                  field={i % 2 === 0 ? "paper" : "ink"}
+                  title={project?.title ?? "Selected work"}
+                  kicker={kickerFor(project, i)}
+                  dek={project?.description || undefined}
                 />
               </div>
             ))}

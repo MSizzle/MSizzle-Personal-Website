@@ -38,13 +38,15 @@ function groupProjectsByYear(projects: Project[]): Map<number, Project[]> {
 /**
  * /projects -- Works index page (ARCH-01).
  *
- * Layout per D-01..D-04 (16-04):
+ * Layout per D-01..D-04 (16-04) + Phase 19 SC-2/SC-3:
  *   1. PageHero (v3) -- replaces old two-column atmosphere-photo title block
  *   2. <RuleStrong />
- *   3. Year-grouped projects -- YearBlock heading above a photo grid of Cards (D-03)
- *      Each Card: cover image via /api/notion-cover proxy when project.image non-null (D-02)
- *      project.image is the existence signal; coverSrc always uses project.id via proxy.
- *      Calm color-only hover (D-01).
+ *   3. Year-grouped projects -- YearBlock heading above a card-grid of Cards (D-03)
+ *      Every card face is the Card's automatic TitleCard fallback (Phase 19 decision):
+ *      logo-lockup Notion covers are retired as card faces; every /projects card is
+ *      always a typographic title-card. Deterministic paper/ink alternation by index.
+ *      project.image remains in the data layer for the detail page (D-02).
+ *      Grid uses Phase 19 card-grid offset-shadow treatment (SC-3).
  *   4. <RuleStrong />
  *
  * Defensive Notion fetch -- Notion API failure renders empty-state, no crash. (T-16-07)
@@ -71,7 +73,7 @@ export default async function BuildingPage() {
 
       <RuleStrong />
 
-      {/* Year-grouped photo grid of cards (D-03, D-04) */}
+      {/* Year-grouped card grid of projects (D-03, Phase 19 SC-2/SC-3) */}
       <section className="px-6 md:px-40">
         {yearEntries.length === 0 ? (
           <p className="text-center py-12 text-[var(--color-text-muted)]">
@@ -82,21 +84,18 @@ export default async function BuildingPage() {
             {yearEntries.map(([year, yearProjects], i, arr) => (
               <Fragment key={year}>
                 <YearBlock year={year}>
-                  {/* Photo grid of Cards (D-03) -- auto-fill minmax 260px */}
-                  <div className="grid [grid-template-columns:repeat(auto-fill,minmax(260px,1fr))] gap-px bg-[var(--color-border)] border border-[var(--color-border)]">
-                    {yearProjects.map((project) => (
+                  {/* Phase 19 SC-3: offset-shadow card grid with vermilion hover.
+                      Phase 19 SC-2: always-title-card faces (no cover props passed)
+                      so every project card is the typographic TitleCard face. */}
+                  <div className="card-grid">
+                    {yearProjects.map((project, i) => (
                       <Card
                         key={project.id}
                         href={`/projects/${project.slug}`}
                         title={project.title}
                         blurb={project.description}
-                        kicker={project.tags?.[0]}
-                        coverSrc={
-                          project.image
-                            ? `/api/notion-cover?pageId=${project.id}`
-                            : undefined
-                        }
-                        coverAlt={project.image ? project.title : undefined}
+                        kicker={project.tags?.[0] ?? "Project"}
+                        titleCardField={i % 2 === 0 ? "paper" : "ink"}
                       />
                     ))}
                   </div>
