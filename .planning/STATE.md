@@ -118,6 +118,8 @@ None yet. Highest-risk item to watch: the 3D hero object's effect on LCP/PSI (Ph
 | 260706-fast3 | Sticky nav CTA changed Subscribe→"Say Hi" (prefilled mailto); editorial-header restyled to sticky-nav formatting (ink border, muted links via valid text-text/text-text-muted tokens); hero "Join Monty Monthly" moved to its own line | 2026-07-06 | 01315b7 | (inline /gsd-fast, no directory) |
 | 260706-fast4 | Sticky nav mirrored to global header: route links + full-bleed alignment (later superseded by 260706-tx6 nav rework) | 2026-07-06 | 2fabcfa | (inline /gsd-fast, no directory) |
 | 260706-tx6 | Rework primary nav to Prometheus/Building/Writing/Contact; rename /projects→/building (+redirects), delete /about (+redirect to /), wire #contact footer anchor on both footers. Reverses locked D-08. | 2026-07-06 | 93a8146 | [260706-tx6-rework-site-nav-to-prometheus-building-w](./quick/260706-tx6-rework-site-nav-to-prometheus-building-w/) |
+| 260706-fast5 | Removed footer colophon text + sticky-nav "Say Hi" CTA | 2026-07-06 | 63fa6e6 | (inline /gsd-fast, no directory) |
+| 260706-fast6 | Mechanical keycap press interaction on nav links (.nav-key: hard offset ledge, depress on hover, snap on press, spring-back pop on release; reduced-motion guard) | 2026-07-06 | 03d4864 | (inline /gsd-fast, no directory) |
 
 ## Deferred Items
 
