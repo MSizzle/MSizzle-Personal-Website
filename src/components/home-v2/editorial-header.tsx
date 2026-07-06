@@ -28,23 +28,26 @@ const LINKS = [
  * footer contact block, not a route, and is never bolded as active.
  *
  * Server Component — pure presentational, imports `Link` only. Nav links use
- * the shared `.nav-key` mechanical-keycap interaction (globals.css): raised on
- * a hard offset ledge, depress on hover, snap flat on press, spring back on
- * release.
+ * the shared `.nav-cell` segmented style (globals.css): broad, full-height
+ * cells split by vertical dividers that invert on hover (ink fill, vermilion
+ * label). The active route uses `.nav-cell--active` (full-ink + bold at rest).
  */
 export function EditorialHeader({ active }: Props) {
   return (
-    <header className="hidden items-center justify-between border-b border-[color:var(--color-text)] bg-bg px-6 py-3 md:flex md:px-40">
-      <Link href="/" className="text-[22px] font-bold tracking-tight text-text">
+    <header className="hidden items-stretch justify-between border-b border-[color:var(--color-text)] bg-bg px-6 md:flex md:px-40">
+      <Link
+        href="/"
+        className="flex items-center py-3.5 text-[22px] font-bold tracking-tight text-text"
+      >
         Monty Singer
       </Link>
-      <nav>
-        <ul className="flex list-none flex-wrap items-center gap-x-6 gap-y-2 text-[15px] md:gap-x-8">
+      <nav className="flex items-stretch">
+        <ul className="flex list-none items-stretch text-[15px]">
           {LINKS.map((link) => {
             if (link.href.startsWith("#")) {
               return (
-                <li key={link.label}>
-                  <a href={link.href} className="nav-key text-text-muted">
+                <li key={link.label} className="flex">
+                  <a href={link.href} className="nav-cell">
                     {link.label}
                   </a>
                 </li>
@@ -53,13 +56,10 @@ export function EditorialHeader({ active }: Props) {
 
             const isActive = active === link.label;
             return (
-              <li key={link.label}>
+              <li key={link.label} className="flex">
                 <Link
                   href={link.href}
-                  className={cn(
-                    "nav-key",
-                    isActive ? "font-bold text-text" : "text-text-muted"
-                  )}
+                  className={cn("nav-cell", isActive && "nav-cell--active")}
                 >
                   {link.label}
                 </Link>

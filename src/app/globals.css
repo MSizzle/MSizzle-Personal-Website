@@ -854,20 +854,23 @@ p.body {
   transform: none;
 }
 .stickynav .inner {
-  /* Full-bleed to match EditorialHeader (px-6 py-3 md:px-40) so the wordmark
-     and edges line up with the top header when the sticky bar slides in. */
-  padding: 12px 24px;
+  /* Full-bleed gutters match EditorialHeader; no vertical padding so the nav
+     cells can stretch the full bar height and their dividers run edge to edge. */
+  padding: 0 24px;
   display: flex;
-  align-items: center;
+  align-items: stretch;
   justify-content: space-between;
   gap: 20px;
 }
 @media (min-width: 768px) {
   .stickynav .inner {
-    padding: 12px 160px;
+    padding: 0 160px;
   }
 }
 .stickynav .mk {
+  display: flex;
+  align-items: center;
+  padding: 13px 0;
   font-family: var(--font-display);
   font-weight: 700;
   font-size: 22px;
@@ -876,59 +879,49 @@ p.body {
 }
 .stickynav ul {
   display: flex;
-  gap: 22px;
+  align-items: stretch;
+  gap: 0;
   list-style: none;
   font-size: 15px;
   margin-left: auto;
-  margin-right: 20px;
 }
-.stickynav ul a {
-  color: var(--color-text-muted);
-  text-decoration: none;
-}
-.stickynav ul a:hover {
-  color: var(--color-text);
+.stickynav ul li {
+  display: flex;
 }
 
-/* ── Mechanical "keycap" nav links (EditorialHeader + StickyNav) ──
-   Tactile depress on hover, snap flat on press, spring-back pop on release.
-   Depth is a hard offset solid ledge (no gradients, per site rule). The base
-   rule carries a springy overshoot easing; :active swaps in a fast snap so the
-   press is instant and the *release* is what pops back up and scales. */
-.nav-key {
-  display: inline-flex;
+/* ── Segmented nav cells (EditorialHeader + StickyNav) ──
+   Broad, full-height selectable zones separated by vertical dividers. At rest
+   they read as plain labels; on hover the cell inverts as a playful surprise —
+   background fills with the foreground ink and the label turns vermilion.
+   Because the fill is var(--color-text), it auto-inverts in any dark context
+   (light on dark) with no extra rule. No gradients (site rule). */
+.nav-cell {
+  display: flex;
   align-items: center;
-  padding: 4px 10px;
-  border-radius: 4px;
-  transform: translateY(0) scale(1);
-  box-shadow: 0 3px 0 0 var(--color-text);
-  transition:
-    transform 0.42s cubic-bezier(0.34, 1.56, 0.64, 1),
-    box-shadow 0.42s cubic-bezier(0.34, 1.56, 0.64, 1),
-    background-color 0.18s ease;
-  will-change: transform;
+  padding: 0 clamp(18px, 1.8vw, 30px);
+  border-left: 1px solid var(--color-text);
+  color: var(--color-text-muted);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 0.13s ease, color 0.13s ease;
 }
-.nav-key:hover {
-  transform: translateY(2px) scale(0.99);
-  box-shadow: 0 1px 0 0 var(--color-text);
-  background-color: color-mix(in srgb, var(--color-text) 7%, transparent);
+/* Active route: full-ink + bold at rest. Defined as an un-layered rule so it
+   beats the un-layered .nav-cell color (Tailwind utilities can't, since
+   un-layered CSS wins over layered utilities in v4). :hover still wins via its
+   higher specificity, so an active cell still inverts on hover. */
+.nav-cell--active {
+  color: var(--color-text);
+  font-weight: 700;
 }
-.nav-key:active {
-  transform: translateY(3px) scale(0.96);
-  box-shadow: 0 0 0 0 var(--color-text);
-  background-color: color-mix(in srgb, var(--accent) 16%, transparent);
-  transition:
-    transform 0.05s ease-out,
-    box-shadow 0.05s ease-out,
-    background-color 0.05s ease-out;
+.nav-cell:hover,
+.nav-cell:focus-visible {
+  background: var(--color-text);
+  color: var(--accent);
+  outline: none;
 }
-@media (prefers-reduced-motion: reduce) {
-  .nav-key,
-  .nav-key:hover,
-  .nav-key:active {
-    transform: none;
-    transition: background-color 0.15s ease, box-shadow 0.15s ease;
-  }
+/* Close the segmented strip with a divider on its right edge. */
+li:last-child > .nav-cell {
+  border-right: 1px solid var(--color-text);
 }
 .stickynav .cta {
   background: var(--accent);
