@@ -43,8 +43,11 @@ vi.mock("@/lib/rss/substack", () => ({
 }));
 
 // Mock Notion loader — control data in tests
+// getBlocks must be present in the mock factory so the writing page import
+// does not crash after Phase 19 wires getBlocks + calculateReadingTime.
 vi.mock("@/lib/notion", () => ({
   getPublishedPosts: vi.fn(),
+  getBlocks: vi.fn().mockResolvedValue([]),
 }));
 
 afterEach(() => {
@@ -186,5 +189,86 @@ describe("/writing page (Plan 04 / PG-01)", () => {
       img.getAttribute("src")?.includes("notion-cover?pageId=no-cover-post")
     );
     expect(coverImg).toBeUndefined();
+  });
+});
+
+describe("/writing reading time + card-grid (Phase 19 / 19-02)", () => {
+  it("shows '1 min read' when getBlocks resolves with a small block set", async () => {
+    const { getPublishedPosts, getBlocks } = await import("@/lib/notion");
+    vi.mocked(getPublishedPosts).mockResolvedValue([
+      {
+        id: "post-rt",
+        slug: "reading-time-post",
+        title: "Reading Time Post",
+        description: "A test post",
+        published: true,
+        date: "2025-06-01",
+        tags: ["Test"],
+        cover: null,
+        emoji: null,
+        lastEdited: "2025-06-01",
+      },
+    ]);
+    // Mock getBlocks to resolve with a single paragraph: ~50 words -> Math.ceil(50/200)=1
+    vi.mocked(getBlocks).mockResolvedValue([
+      {
+        type: "paragraph",
+        paragraph: {
+          rich_text: [{ plain_text: "word ".repeat(50).trim() }],
+        },
+      },
+    ] as any);
+    await renderWritingPage();
+    expect(screen.getByText("1 min read")).toBeDefined();
+  });
+
+  it("does not show reading time line when getBlocks rejects but still renders the post card", async () => {
+    const { getPublishedPosts, getBlocks } = await import("@/lib/notion");
+    vi.mocked(getPublishedPosts).mockResolvedValue([
+      {
+        id: "post-fail",
+        slug: "failing-blocks-post",
+        title: "Failing Blocks Post",
+        description: "This post will fail blocks fetch",
+        published: true,
+        date: "2025-05-01",
+        tags: [],
+        cover: null,
+        emoji: null,
+        lastEdited: "2025-05-01",
+      },
+    ]);
+    vi.mocked(getBlocks).mockRejectedValue(new Error("Notion API error"));
+    await renderWritingPage();
+    // Post still renders
+    expect(screen.getByText("Failing Blocks Post")).toBeDefined();
+    // No "min read" text rendered
+    const minReadEl = document.querySelector("*");
+    const allText = document.body.textContent ?? "";
+    expect(allText).not.toMatch(/\d+ min read/);
+  });
+
+  it("grid container has class card-grid and not gap-px", async () => {
+    const { getPublishedPosts, getBlocks } = await import("@/lib/notion");
+    vi.mocked(getPublishedPosts).mockResolvedValue([
+      {
+        id: "post-grid",
+        slug: "grid-test-post",
+        title: "Grid Test Post",
+        description: "For grid class assertion",
+        published: true,
+        date: "2025-04-01",
+        tags: [],
+        cover: null,
+        emoji: null,
+        lastEdited: "2025-04-01",
+      },
+    ]);
+    vi.mocked(getBlocks).mockResolvedValue([]);
+    await renderWritingPage();
+    const cardGrid = document.querySelector(".card-grid");
+    expect(cardGrid).not.toBeNull();
+    const gapPxEl = document.querySelector('[class*="gap-px"]');
+    expect(gapPxEl).toBeNull();
   });
 });
