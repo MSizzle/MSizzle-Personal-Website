@@ -25,7 +25,7 @@ describe('OG Image Generation', () => {
   })
 
   it('project slug OG module exports correct shape, has no runtime export, and has non-empty alt', async () => {
-    const module = await import('@/app/projects/[slug]/opengraph-image')
+    const module = await import('@/app/building/[slug]/opengraph-image')
     expect(module.size).toEqual({ width: 1200, height: 630 })
     expect(module.contentType).toBe('image/png')
     expect(typeof module.alt).toBe('string')

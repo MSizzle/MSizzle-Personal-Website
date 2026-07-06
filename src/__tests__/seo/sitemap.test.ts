@@ -19,16 +19,17 @@ describe('sitemap()', () => {
     expect(usesEntry?.changeFrequency).toBe('monthly')
   })
 
-  it('includes at least 6 static routes (/, /about, /prometheus, /projects, /writing, /uses)', async () => {
+  it('includes at least 5 static routes (/, /prometheus, /building, /writing, /uses)', async () => {
     const result = await sitemap()
-    // Static routes: /, /about, /prometheus, /projects, /writing, /uses = 6
-    // /portfolio was consolidated into /projects via 308 redirect (issue 7)
-    // Dynamic routes from mocked Notion return [] so only static routes are present
-    // Filter out blog/ and projects/ slugs to count only static-looking entries
+    // Static routes: /, /prometheus, /building, /writing, /uses = 5
+    // /about was removed and /projects renamed to /building (quick 260706-tx6);
+    // /portfolio consolidated into /building via 308 redirect.
+    // Dynamic routes from mocked Notion return [] so only static routes are present.
+    // Filter out blog/ and building/ slugs to count only static-looking entries.
     const staticLooking = result.filter(
-      (entry) => !entry.url.includes('/blog/') && !entry.url.includes('/projects/')
+      (entry) => !entry.url.includes('/blog/') && !entry.url.includes('/building/')
     )
-    expect(staticLooking.length).toBeGreaterThanOrEqual(6)
+    expect(staticLooking.length).toBeGreaterThanOrEqual(5)
   })
 
   it('does NOT include /portfolio entry (consolidated into /projects)', async () => {

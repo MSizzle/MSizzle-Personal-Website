@@ -127,11 +127,11 @@ describe("SectionWork title-card faces (Phase 19 / 19-02)", () => {
 });
 
 describe("SectionWork (Phase 17.3 SC-2)", () => {
-  it("SC-2.1: renders a link to /projects", async () => {
+  it("SC-2.1: renders a link to /building", async () => {
     const { SectionWork } = await import("@/components/home/section-work");
     render(React.createElement(SectionWork));
     const allLinks = screen.getAllByRole("link");
-    expect(allLinks.some((l) => l.getAttribute("href") === "/projects")).toBe(true);
+    expect(allLinks.some((l) => l.getAttribute("href") === "/building")).toBe(true);
   });
 
   it("D-01: does NOT render any link to /portfolio", async () => {
@@ -141,12 +141,12 @@ describe("SectionWork (Phase 17.3 SC-2)", () => {
     expect(allLinks.every((l) => l.getAttribute("href") !== "/portfolio")).toBe(true);
   });
 
-  it("SC-2.2: projects link displays text Projects", async () => {
+  it("SC-2.2: building link displays text Projects", async () => {
     const { SectionWork } = await import("@/components/home/section-work");
     render(React.createElement(SectionWork));
     const projectsLink = screen
       .getAllByRole("link")
-      .find((l) => l.getAttribute("href") === "/projects");
+      .find((l) => l.getAttribute("href") === "/building");
     expect(projectsLink).toBeDefined();
     expect(projectsLink!.textContent).toContain("Projects");
   });

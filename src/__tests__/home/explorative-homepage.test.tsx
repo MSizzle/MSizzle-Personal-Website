@@ -95,23 +95,23 @@ describe("ExplorativeHomepage orchestrator (17.4 band structure)", () => {
     expect(el?.className).not.toContain("band-dark");
   });
 
-  it("band id=loves is present on a dark band", async () => {
+  it("band id=loves is present on a light band (no band-dark)", async () => {
     const { ExplorativeHomepage } = await import(
       "@/components/home/explorative-homepage"
     );
     const { container } = render(React.createElement(ExplorativeHomepage));
     const el = container.querySelector("#loves");
     expect(el).toBeTruthy();
-    expect(el?.className).toContain("band-dark");
+    expect(el?.className).not.toContain("band-dark");
   });
 
-  it("band id=writing is present on a light band (no band-dark)", async () => {
+  it("band id=writing is present on a dark band", async () => {
     const { ExplorativeHomepage } = await import(
       "@/components/home/explorative-homepage"
     );
     const { container } = render(React.createElement(ExplorativeHomepage));
     const el = container.querySelector("#writing");
     expect(el).toBeTruthy();
-    expect(el?.className).not.toContain("band-dark");
+    expect(el?.className).toContain("band-dark");
   });
 });

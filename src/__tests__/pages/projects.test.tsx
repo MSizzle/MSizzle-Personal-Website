@@ -7,8 +7,11 @@
  * (b) When getPublishedProjects returns [] the text "No projects yet" appears
  * (c) PageHero renders with title="Building"
  *
+ * Route note: /projects was renamed to /building (quick 260706-tx6); these tests
+ * now import @/app/building/* and assert /building hrefs.
+ *
  * Asserts (detail page - Plan 07):
- * (d) Breadcrumbs Building item href is /projects (NOT /building or /works)
+ * (d) Breadcrumbs Building item href is /building
  * (e) PageHero renders with project title
  * (f) Cover image renders with fetchPriority="high" when project.cover exists
  * (g) No cover image when project.cover is null/absent
@@ -72,7 +75,7 @@ afterEach(() => {
 
 // Helper to render the async Server Component in a test context
 async function renderProjectsPage() {
-  const { default: BuildingPage } = await import("@/app/projects/page");
+  const { default: BuildingPage } = await import("@/app/building/page");
   const element = await BuildingPage();
   render(element as any);
 }
@@ -151,11 +154,11 @@ describe("/projects page (Plan 04 / PG-03)", () => {
     await renderProjectsPage();
     expect(screen.getByText("AI Assistant")).toBeDefined();
     expect(screen.getByText("Design Tool")).toBeDefined();
-    // Cards link to /projects/[slug]
+    // Cards link to /building/[slug]
     const links = screen.getAllByRole("link");
     const hrefs = links.map((l) => l.getAttribute("href"));
-    expect(hrefs).toContain("/projects/ai-assistant");
-    expect(hrefs).toContain("/projects/design-tool");
+    expect(hrefs).toContain("/building/ai-assistant");
+    expect(hrefs).toContain("/building/design-tool");
   });
 
   it("renders a title-card face instead of a cover image when project.image is non-null (Phase 19)", async () => {
@@ -302,13 +305,13 @@ const makeMockProject = (overrides: Partial<Record<string, unknown>> = {}) => ({
 });
 
 async function renderProjectDetailPage(slug: string) {
-  const { default: ProjectPage } = await import("@/app/projects/[slug]/page");
+  const { default: ProjectPage } = await import("@/app/building/[slug]/page");
   const element = await (ProjectPage as any)({ params: Promise.resolve({ slug }) });
   render(element as any);
 }
 
 describe("/projects/[slug] detail page (Plan 07 / PG-01, PG-04)", () => {
-  it("Breadcrumbs Building item href is /projects NOT /building (PG-04)", async () => {
+  it("Breadcrumbs Building item href is /building (260706-tx6)", async () => {
     const { getProjectBySlug } = await import("@/lib/notion-projects");
     const { getBlocks } = await import("@/lib/notion");
     vi.mocked(getProjectBySlug).mockResolvedValue(makeMockProject() as any);
@@ -316,8 +319,8 @@ describe("/projects/[slug] detail page (Plan 07 / PG-01, PG-04)", () => {
     await renderProjectDetailPage("my-project");
     const allLinks = document.querySelectorAll("a");
     const hrefs = Array.from(allLinks).map((a) => a.getAttribute("href"));
-    expect(hrefs).toContain("/projects");
-    expect(hrefs).not.toContain("/building");
+    expect(hrefs).toContain("/building");
+    expect(hrefs).not.toContain("/projects");
   });
 
   it("renders project title in PageHero h1 (D-02)", async () => {

@@ -71,12 +71,15 @@ describe("SectionBuilding (17.4-06)", () => {
     expect(slideContainer).not.toBeNull();
   });
 
-  it("renders a dark photo for the dark band", async () => {
+  it("renders the Prometheus screenshot photo (no dark treatment)", async () => {
     const { SectionBuilding } = await import("@/components/home/section-building");
     render(React.createElement(SectionBuilding));
 
+    // The shipped SectionBuilding renders a screenshot of the Prometheus site and
+    // passes no `dark` prop to Photo (the screenshot is not tinted for the dark band).
     const photo = screen.getByTestId("photo");
-    expect(photo.getAttribute("data-dark")).toBe("true");
+    expect(photo).toBeDefined();
+    expect(photo.getAttribute("data-dark")).toBe("false");
   });
 
   it("does not render BigList Building/Writing/Doing", async () => {

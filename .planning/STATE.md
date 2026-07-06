@@ -5,7 +5,7 @@ milestone_name: Dark Brutalist Rebuild
 status: milestone_complete
 stopped_at: Milestone complete (Phase 19 was final phase)
 last_updated: 2026-07-06T09:46:30.982Z
-last_activity: 2026-07-06 -- Completed quick task 260706-lm3: replaced proud copy with past-projects phrasing
+last_activity: 2026-07-06 -- Post-nav-rework health check: prod verified live+current, prod build exit-0, secret scan clean, vitest re-greened (141 pass / 0 fail; fixed 8 stale tests from the /projects->/building rename + 17.4 band swap)
 progress:
   total_phases: 10
   completed_phases: 8
@@ -32,7 +32,7 @@ Last activity: 2026-07-06 - Completed quick task 260706-tx6: nav rework (Prometh
 
 Direction: locked photo-forward restyle from sketch 010 (`.planning/sketches/010-structured-bands-carousel/`) — Hanken Grotesk 800 + Vermilion `#e5411f` marker hero, alternating light/dark bands, hard corners, rail boxes, slide-in photos, Monty Monthly carousel, sticky Subscribe nav, credibility strip, rich footer. Supersedes the 17.1 text-forward skin; preserves who→what→engage velvet-rope IA. Motion scroll/ambient-only (IO + CSS + scroll-snap), no WebGL/Lenis. See memory `v3-homepage-photo-forward-lock` + `17.4-CONTEXT.md`. Phase 18 (QA/perf/alias) parked until this lands.
 
-Prior focus (parked): Phase 18 v3.0 ship gate — 4 of 7 plans done (18-01/02/03/05); 18-04/06/07 remain, re-run after 17.4.
+Phase 18 ship gate: RESOLVED. v3.0 was promoted to production in a prior session (montysinger.com serving v3, GO doc DQ-04 verified live 2026-07-05). Re-verified 2026-07-06 at HEAD `2028fae`: prod HTTP 200 with current markers (incl. prometheus.today), correct redirects (/about, /portfolio -> 308; /building 200), prod build exit-0 (37 pages), client-bundle secret scan clean, vitest 141 pass / 0 fail. The 18-GO-NO-GO.md still lists pre-260706 routes (/portfolio, /about as live) but production is correct; the doc is a historical snapshot, not authoritative over live state.
 
 ## v3.0 Phase Status
 

@@ -1,11 +1,11 @@
 /**
- * Test suite for Navigation component — Plan 02 (16-02).
+ * Test suite for Navigation component — Plan 02 (16-02),
+ * updated for the 260706-tx6 nav rework (reverses D-08).
  *
+ * Current nav set: Prometheus (external) / Building / Writing / Contact (#anchor).
  * Tests verify:
- *  - /uses → activeLabel === 'Uses'
- *  - /watching → activeLabel === 'Watching'
- *  - MOBILE_LINKS includes /uses, /watching, /prometheus entries
- *  - Desktop primary nav stays at 5 links (D-11)
+ *  - /building → activeLabel === 'Building'
+ *  - MOBILE_LINKS includes /building; Prometheus is an external link (not /prometheus)
  */
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen, cleanup, fireEvent } from "@testing-library/react";
@@ -70,29 +70,33 @@ describe("Navigation component (Plan 02 / D-13)", () => {
     expect(header).toBeDefined();
   });
 
-  it("active label is Uses when pathname is /uses (D-13)", () => {
-    mockUsePathname.mockReturnValue("/uses");
+  it("active label is Building when pathname is /building (260706-tx6)", () => {
+    mockUsePathname.mockReturnValue("/building");
     render(<Navigation />);
     const header = screen.getByTestId("editorial-header");
-    expect(header.getAttribute("data-active")).toBe("Uses");
+    expect(header.getAttribute("data-active")).toBe("Building");
   });
 
-  it("MOBILE_LINKS includes /uses link", () => {
+  it("MOBILE_LINKS includes /building link", () => {
     mockUsePathname.mockReturnValue("/");
     render(<Navigation />);
     // Open the mobile drawer via fireEvent (triggers React state update)
     const hamburger = screen.getByRole("button", { name: /open navigation menu/i });
     fireEvent.click(hamburger);
-    const usesLink = document.querySelector('a[href="/uses"]');
-    expect(usesLink).not.toBeNull();
+    const buildingLink = document.querySelector('a[href="/building"]');
+    expect(buildingLink).not.toBeNull();
   });
 
-  it("MOBILE_LINKS does NOT include /prometheus link (4-item parity with desktop)", () => {
+  it("MOBILE_LINKS Prometheus is an external link, not the /prometheus route", () => {
     mockUsePathname.mockReturnValue("/");
     render(<Navigation />);
     const hamburger = screen.getByRole("button", { name: /open navigation menu/i });
     fireEvent.click(hamburger);
-    const prometheusLink = document.querySelector('a[href="/prometheus"]');
-    expect(prometheusLink).toBeNull();
+    // Prometheus now points at the external site (260706-fast9), not the /prometheus route.
+    expect(document.querySelector('a[href="/prometheus"]')).toBeNull();
+    const external = document.querySelector('a[href="https://prometheus.today"]');
+    expect(external).not.toBeNull();
+    expect(external?.getAttribute("target")).toBe("_blank");
+    expect(external?.getAttribute("rel")).toContain("noopener");
   });
 });
