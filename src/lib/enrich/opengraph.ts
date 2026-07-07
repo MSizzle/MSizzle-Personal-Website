@@ -14,6 +14,9 @@ export interface OpenGraph {
   /** og:url canonical link, if the page declares one. */
   canonicalUrl?: string;
   finalUrl: string;
+  /** Several candidate images found on the page (og/twitter first, then inline
+   *  <img>), deduped and filtered of obvious chrome. For the photo picker. */
+  images: string[];
 }
 
 // A handful of named HTML entities show up constantly in titles; decode those
@@ -72,6 +75,29 @@ function readMeta(html: string): Map<string, string> {
 function readTitleTag(html: string): string | undefined {
   const m = html.match(/<title[^>]*>([^<]*)<\/title>/i);
   return m ? decodeEntities(m[1]).trim() || undefined : undefined;
+}
+
+// Junk we never want as a cover candidate: icons, logos, sprites, tracking
+// pixels, data URIs, and vector chrome.
+const IMG_REJECT = /(sprite|logo|icon|favicon|avatar|pixel|1x1|blank|badge|button|spacer|placeholder|loading|\.svg(\?|$))/i;
+
+/** All plausible photo candidates on the page: <img src> (and lazy variants). */
+function readInlineImages(html: string, base: string): string[] {
+  const out: string[] = [];
+  const imgRe = /<img\b[^>]*>/gi;
+  let m: RegExpExecArray | null;
+  while ((m = imgRe.exec(html))) {
+    const tag = m[0];
+    const raw =
+      attr(tag, "src") ??
+      attr(tag, "data-src") ??
+      attr(tag, "data-lazy-src") ??
+      attr(tag, "data-original");
+    if (!raw || raw.startsWith("data:") || IMG_REJECT.test(raw)) continue;
+    const abs = absolutize(raw, base);
+    if (abs && /^https?:\/\//i.test(abs)) out.push(abs);
+  }
+  return out;
 }
 
 /** Resolve a possibly-relative image URL against the page it came from. */
@@ -133,6 +159,20 @@ export async function fetchOpenGraph(rawUrl: string): Promise<OpenGraph | null> 
     meta.get("twitter:image") ??
     meta.get("twitter:image:src");
 
+  // Ordered candidates: the social images first (usually the best), then inline
+  // photos. Deduped, capped so the picker stays snappy.
+  const social = [
+    meta.get("og:image:secure_url"),
+    meta.get("og:image"),
+    meta.get("twitter:image"),
+    meta.get("twitter:image:src"),
+  ]
+    .map((u) => absolutize(u, finalUrl))
+    .filter((u): u is string => Boolean(u));
+  const images = Array.from(
+    new Set([...social, ...readInlineImages(html, finalUrl)])
+  ).slice(0, 12);
+
   return {
     title,
     description,
@@ -141,5 +181,6 @@ export async function fetchOpenGraph(rawUrl: string): Promise<OpenGraph | null> 
     type: meta.get("og:type")?.toLowerCase(),
     canonicalUrl: meta.get("og:url"),
     finalUrl,
+    images,
   };
 }

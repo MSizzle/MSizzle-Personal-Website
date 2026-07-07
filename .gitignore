@@ -42,3 +42,6 @@ next-env.d.ts
 
 # GSD temporary commit-message scratch files
 .planning/**/.commit-msg-*.txt
+
+# Desktop app build artifacts
+desktop/dist/

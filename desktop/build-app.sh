@@ -9,7 +9,14 @@ set -euo pipefail
 
 HERE="$(cd "$(dirname "$0")" && pwd)"
 APP_NAME="Things I Love"
-APP="$HOME/Desktop/${APP_NAME}.app"
+# Target dir defaults to the Desktop; pass one to build elsewhere, e.g.
+#   bash desktop/build-app.sh desktop/dist
+# (macOS App Management blocks overwriting an existing .app on the Desktop, so
+#  when updating, build to desktop/dist and drag it over in Finder, or trash the
+#  old app first and run with no argument.)
+DEST_DIR="${1:-$HOME/Desktop}"
+mkdir -p "$DEST_DIR"
+APP="${DEST_DIR%/}/${APP_NAME}.app"
 WORK="$(mktemp -d)"
 BIN_NAME="ThingsILove"
 

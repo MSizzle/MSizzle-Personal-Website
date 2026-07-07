@@ -25,7 +25,18 @@ function done(message: string, code = 0): never {
 }
 
 async function main() {
-  const input = process.argv[2]?.trim();
+  // Args: <url> [--cover <imageUrl>]. --cover pins the page cover to the photo
+  // the user chose in the picker; enrichment then fills everything else but
+  // leaves the (now non-empty) cover alone.
+  const args = process.argv.slice(2);
+  let cover: string | undefined;
+  const positional: string[] = [];
+  for (let i = 0; i < args.length; i++) {
+    if (args[i] === "--cover") cover = args[++i];
+    else positional.push(args[i]);
+  }
+
+  const input = positional[0]?.trim();
   if (!input) done("No URL provided.", 1);
 
   let url: string;
@@ -65,11 +76,15 @@ async function main() {
   };
   if (publishedProp) properties[publishedProp] = { checkbox: false };
 
-  const page = await notion.pages.create({
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const createParams: any = {
     parent: { database_id: dbId },
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    properties: properties as any,
-  });
+    properties,
+  };
+  if (cover && /^https?:\/\//i.test(cover)) {
+    createParams.cover = { type: "external", external: { url: cover } };
+  }
+  const page = await notion.pages.create(createParams);
 
   // Enrich the row we just created (dynamic import so env is already loaded).
   const { enrichById } = await import("../src/lib/enrich/index");

@@ -1,4 +1,5 @@
 import type { LoveType } from "@/lib/notion-loves";
+import { extractYouTubeId } from "@/lib/notion-loves";
 import { fetchRetry } from "./http";
 import { fetchOpenGraph, type OpenGraph } from "./opengraph";
 
@@ -15,6 +16,9 @@ export interface UrlEnrichResult {
   coverUrl?: string;
   /** Canonical URL to store back (defaults to the input if none found). */
   url?: string;
+  /** Several cover options to choose from (only when opts.candidates). The
+   *  auto-picked coverUrl is always first. */
+  candidates?: string[];
 }
 
 const VALID_TYPES: LoveType[] = ["Place", "Book", "Movie", "YouTube", "Thing"];
@@ -94,6 +98,43 @@ async function tmdbPoster(host: string, url: string): Promise<string | undefined
       : undefined;
   } catch {
     return undefined;
+  }
+}
+
+/** Every resolution of a YouTube video's thumbnail (best first). */
+function youtubeThumbs(watchUrl: string): string[] {
+  const id = extractYouTubeId(watchUrl);
+  if (!id) return [];
+  return ["maxresdefault", "sddefault", "hqdefault", "0"].map(
+    (name) => `https://img.youtube.com/vi/${id}/${name}.jpg`
+  );
+}
+
+/** Posters + backdrops for a themoviedb.org movie page (needs TMDB_API_KEY). */
+async function tmdbStills(host: string, url: string): Promise<string[]> {
+  const key = process.env.TMDB_API_KEY;
+  if (!key || !host.endsWith("themoviedb.org")) return [];
+  const idMatch = url.match(/\/movie\/(\d+)/);
+  if (!idMatch) return [];
+  try {
+    const res = await fetchRetry(
+      `https://api.themoviedb.org/3/movie/${idMatch[1]}/images?api_key=${key}`
+    );
+    if (!res.ok) return [];
+    const data = (await res.json()) as {
+      posters?: { file_path?: string }[];
+      backdrops?: { file_path?: string }[];
+    };
+    const paths = [
+      ...(data.posters ?? []).slice(0, 4),
+      ...(data.backdrops ?? []).slice(0, 4),
+    ];
+    return paths
+      .map((p) => p.file_path)
+      .filter((p): p is string => Boolean(p))
+      .map((p) => `https://image.tmdb.org/t/p/w500${p}`);
+  } catch {
+    return [];
   }
 }
 
@@ -226,7 +267,10 @@ async function aiExtract(
  * With no ANTHROPIC_API_KEY it degrades to OG-only (og:title + a heuristic Type).
  * Returns null only when the page cannot be fetched at all.
  */
-export async function enrichFromUrl(rawUrl: string): Promise<UrlEnrichResult | null> {
+export async function enrichFromUrl(
+  rawUrl: string,
+  opts: { candidates?: boolean } = {}
+): Promise<UrlEnrichResult | null> {
   const og = await fetchOpenGraph(rawUrl);
   if (!og) return null;
 
@@ -245,6 +289,22 @@ export async function enrichFromUrl(rawUrl: string): Promise<UrlEnrichResult | n
   const coverUrl =
     (await tmdbPoster(host, og.finalUrl)) ?? og.image ?? yt?.thumbnail;
 
+  let candidates: string[] | undefined;
+  if (opts.candidates) {
+    // Best-source images first (YouTube thumbs / TMDB stills), then whatever the
+    // page offered. coverUrl leads so the picker defaults to the auto pick.
+    const extra = isYouTube(host)
+      ? youtubeThumbs(rawUrl)
+      : await tmdbStills(host, og.finalUrl);
+    candidates = Array.from(
+      new Set(
+        [coverUrl, ...extra, ...og.images].filter(
+          (u): u is string => Boolean(u)
+        )
+      )
+    ).slice(0, 12);
+  }
+
   return {
     title,
     type,
@@ -252,5 +312,6 @@ export async function enrichFromUrl(rawUrl: string): Promise<UrlEnrichResult | n
     note: ai?.note,
     coverUrl,
     url: og.canonicalUrl ?? og.finalUrl ?? rawUrl,
+    candidates,
   };
 }

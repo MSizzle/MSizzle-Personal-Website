@@ -117,38 +117,115 @@ func runCommand(_ command: String, done: @escaping (Bool, String) -> Void) {
         let data = outPipe.fileHandleForReading.readDataToEndOfFile()
         proc.waitUntilExit()
         let text = String(data: data, encoding: .utf8) ?? ""
-        let last = text.split(whereSeparator: \.isNewline).last.map(String.init) ?? "Done."
-        DispatchQueue.main.async { done(proc.terminationStatus == 0, last) }
+        DispatchQueue.main.async { done(proc.terminationStatus == 0, text) }
     }
+}
+
+// Scripts print a human status (or JSON) as their LAST stdout line; earlier lines
+// are dotenv noise. These pull the piece we want out of the full capture.
+func lastLine(_ s: String) -> String {
+    s.split(whereSeparator: \.isNewline).last.map(String.init)?
+        .trimmingCharacters(in: .whitespaces) ?? "Done."
+}
+
+func jsonLine(_ s: String) -> String? {
+    s.split(whereSeparator: \.isNewline)
+        .map { $0.trimmingCharacters(in: .whitespaces) }
+        .last { $0.hasPrefix("{") }
 }
 
 // MARK: - State
 
 @MainActor
 final class AppState: ObservableObject {
+    enum Phase { case input, picking }
+
+    @Published var phase: Phase = .input
     @Published var url = ""
     @Published var status = "Paste a link to add it, or refresh the site."
     @Published var busy = false
     @Published var ok = true
 
+    // Photo-picker state, populated after the candidates fetch.
+    @Published var candidates: [String] = []
+    @Published var selected = 0
+    @Published var proposedTitle = ""
+    @Published var proposedType = ""
+
     var canAdd: Bool {
         !busy && !url.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
 
+    /// Step 1: fetch cover candidates (nothing is written yet), then show the picker.
     func add() {
         let u = url.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !u.isEmpty, !busy else { return }
         busy = true
         ok = true
+        status = "Finding photos…"
+        runCommand("npx tsx scripts/love-candidates.ts \(shellEscape(u)) 2>/dev/null") {
+            [weak self] ok, out in
+            guard let self else { return }
+            self.busy = false
+            guard
+                ok,
+                let line = jsonLine(out),
+                let data = line.data(using: .utf8),
+                let obj = try? JSONSerialization.jsonObject(with: data) as? [String: Any]
+            else {
+                self.ok = false
+                self.status = "Could not read that link."
+                return
+            }
+            if let err = obj["error"] as? String {
+                self.ok = false
+                self.status = err
+                return
+            }
+            self.proposedTitle = (obj["title"] as? String) ?? ""
+            self.proposedType = (obj["type"] as? String) ?? ""
+            self.candidates = (obj["candidates"] as? [String]) ?? []
+            self.selected = 0
+            if self.candidates.isEmpty {
+                // No photos found: just add it (enrichment auto-picks or leaves blank).
+                self.commit(coverOverride: false)
+            } else {
+                self.status = ""
+                self.phase = .picking
+            }
+        }
+    }
+
+    /// Step 2: create + enrich the row, pinning the chosen cover.
+    func commit(coverOverride: Bool = true) {
+        let u = url.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !u.isEmpty, !busy else { return }
+        busy = true
+        ok = true
         status = "Adding and enriching…"
-        runCommand("npx tsx scripts/add-love.ts \(shellEscape(u)) 2>/dev/null") {
-            [weak self] ok, msg in
+        var cmd = "npx tsx scripts/add-love.ts \(shellEscape(u))"
+        if coverOverride, candidates.indices.contains(selected) {
+            cmd += " --cover \(shellEscape(candidates[selected]))"
+        }
+        cmd += " 2>/dev/null"
+        runCommand(cmd) { [weak self] ok, out in
             guard let self else { return }
             self.busy = false
             self.ok = ok
-            self.status = msg
-            if ok { self.url = "" }
+            self.status = lastLine(out)
+            if ok {
+                self.url = ""
+                self.candidates = []
+                self.phase = .input
+            }
         }
+    }
+
+    func backToInput() {
+        guard !busy else { return }
+        candidates = []
+        phase = .input
+        status = "Paste a link to add it, or refresh the site."
     }
 
     func refresh() {
@@ -157,11 +234,11 @@ final class AppState: ObservableObject {
         ok = true
         status = "Refreshing the site…"
         runCommand("npx tsx scripts/refresh-loves.ts 2>/dev/null") {
-            [weak self] ok, msg in
+            [weak self] ok, out in
             guard let self else { return }
             self.busy = false
             self.ok = ok
-            self.status = msg
+            self.status = lastLine(out)
         }
     }
 }
@@ -199,9 +276,44 @@ struct OffsetSolidStyle: ButtonStyle {
 
 // MARK: - Window content
 
+struct StatusRow: View {
+    @ObservedObject var state: AppState
+    var body: some View {
+        HStack(spacing: 8) {
+            if state.busy {
+                ProgressView().controlSize(.small).scaleEffect(0.85)
+            }
+            Text(state.status)
+                .font(.system(size: 12, weight: .medium))
+                .foregroundColor(state.ok ? .ink.opacity(0.55) : .vermilion)
+                .lineLimit(2)
+                .multilineTextAlignment(.center)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+        .frame(minHeight: 38)
+        .padding(.horizontal, 26)
+        .padding(.bottom, 22)
+    }
+}
+
 struct RootView: View {
     @ObservedObject var state: AppState
+    var body: some View {
+        Group {
+            if state.phase == .picking {
+                PickerView(state: state)
+            } else {
+                InputView(state: state)
+            }
+        }
+        .frame(width: 384, height: 470)
+        .background(Color.paper)
+        .buttonStyle(.plain)
+    }
+}
 
+struct InputView: View {
+    @ObservedObject var state: AppState
     var body: some View {
         VStack(spacing: 0) {
             VStack(spacing: 16) {
@@ -250,24 +362,91 @@ struct RootView: View {
 
             Spacer(minLength: 18)
 
-            HStack(spacing: 8) {
-                if state.busy {
-                    ProgressView().controlSize(.small).scaleEffect(0.85)
-                }
-                Text(state.status)
-                    .font(.system(size: 12, weight: .medium))
-                    .foregroundColor(state.ok ? .ink.opacity(0.55) : .vermilion)
-                    .lineLimit(2)
-                    .multilineTextAlignment(.center)
-                    .fixedSize(horizontal: false, vertical: true)
-            }
-            .frame(minHeight: 38)
-            .padding(.horizontal, 26)
-            .padding(.bottom, 22)
+            StatusRow(state: state)
         }
-        .frame(width: 384, height: 470)
-        .background(Color.paper)
+    }
+}
+
+// One tappable candidate photo.
+struct ThumbCell: View {
+    let urlString: String
+    let selected: Bool
+    let tap: () -> Void
+
+    var body: some View {
+        Button(action: tap) {
+            AsyncImage(url: URL(string: urlString)) { phase in
+                switch phase {
+                case .success(let image):
+                    image.resizable().aspectRatio(contentMode: .fill)
+                case .failure:
+                    Color.hair.overlay(
+                        Image(systemName: "photo").foregroundColor(.ink.opacity(0.25))
+                    )
+                default:
+                    Color.hair.overlay(ProgressView().controlSize(.small))
+                }
+            }
+            .frame(width: 96, height: 96)
+            .clipped()
+            .overlay(
+                Rectangle().strokeBorder(
+                    selected ? Color.vermilion : Color.ink.opacity(0.15),
+                    lineWidth: selected ? 3 : 1
+                )
+            )
+        }
         .buttonStyle(.plain)
+    }
+}
+
+struct PickerView: View {
+    @ObservedObject var state: AppState
+    private let columns = [GridItem(.adaptive(minimum: 96), spacing: 10)]
+
+    var body: some View {
+        VStack(spacing: 12) {
+            VStack(spacing: 3) {
+                Text(state.proposedTitle.isEmpty ? "New entry" : state.proposedTitle)
+                    .font(.system(size: 19, weight: .heavy))
+                    .foregroundColor(.ink)
+                    .lineLimit(1)
+                Text(
+                    state.proposedType.isEmpty
+                        ? "PICK A COVER PHOTO"
+                        : "\(state.proposedType.uppercased()) · PICK A COVER"
+                )
+                .font(.system(size: 10, weight: .bold))
+                .tracking(1.2)
+                .foregroundColor(.vermilion)
+            }
+            .padding(.top, 24)
+
+            ScrollView {
+                LazyVGrid(columns: columns, spacing: 10) {
+                    ForEach(Array(state.candidates.enumerated()), id: \.offset) { idx, url in
+                        ThumbCell(urlString: url, selected: state.selected == idx) {
+                            state.selected = idx
+                        }
+                    }
+                }
+                .padding(.horizontal, 20)
+                .padding(.vertical, 4)
+            }
+
+            HStack(spacing: 10) {
+                Button("Back", action: state.backToInput)
+                    .buttonStyle(OffsetSolidStyle(filled: false, enabled: !state.busy))
+                    .disabled(state.busy)
+                    .frame(width: 110)
+                Button("Add With This Photo") { state.commit() }
+                    .buttonStyle(OffsetSolidStyle(filled: true, enabled: !state.busy))
+                    .disabled(state.busy)
+            }
+            .padding(.horizontal, 24)
+
+            StatusRow(state: state)
+        }
     }
 }
 
@@ -306,7 +485,14 @@ func makeIcons(to dir: String) {
 // Render the window content to a PNG for offscreen visual review.
 @MainActor
 func makePreview(to path: String) {
-    let renderer = ImageRenderer(content: RootView(state: AppState()))
+    let state = AppState()
+    if CommandLine.arguments.contains("--picker") {
+        state.phase = .picking
+        state.proposedTitle = "Inception"
+        state.proposedType = "Movie"
+        state.candidates = Array(repeating: "https://example.com/x.jpg", count: 9)
+    }
+    let renderer = ImageRenderer(content: RootView(state: state))
     renderer.scale = 2
     guard let cg = renderer.cgImage else { return }
     let rep = NSBitmapImageRep(cgImage: cg)
