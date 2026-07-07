@@ -5,7 +5,6 @@ import { SectionBuilding } from "./section-building";
 import { SectionWork } from "./section-work";
 import { SectionLoves } from "./section-loves";
 import { SectionNewsletter } from "./section-newsletter";
-import { SectionFooter } from "./section-footer";
 import type { Project } from "@/lib/notion-projects";
 import type { BlogPost } from "@/lib/notion";
 import type { LoveItem } from "@/lib/notion-loves";
@@ -15,7 +14,8 @@ import type { LoveItem } from "@/lib/notion-loves";
  *
  * Band order per D-03:
  *   hero (light) -> Building (dark) -> Work (light)
- *   -> Writing / Monty Monthly (dark) -> Things I Love (light) -> footer (dark)
+ *   -> Writing / Monty Monthly (dark) -> Things I Love (light)
+ * The site-wide SiteFooter (app/layout.tsx) closes the page.
  *
  * Islands mounted here:
  *   StickyNav (D-10): fixed island, z-9000, Subscribe CTA past hero fold.
@@ -59,10 +59,7 @@ export function ExplorativeHomepage({ projects = [], posts = [], loves = [] }: P
         <SectionLoves items={loves} />
       </section>
 
-      {/* Band 7: Footer (dark) */}
-      <section className="band band-dark">
-        <SectionFooter />
-      </section>
+      {/* Footer is the single site-wide SiteFooter, rendered by app/layout.tsx. */}
     </div>
   );
 }

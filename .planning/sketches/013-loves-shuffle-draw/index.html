@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Sketch 013 — Things I Love: shuffle &amp; draw</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --paper:#faf9f7;
+    --cream:#f4ecdd;
+    --ink:#171717;
+    --ink-muted:#555049;
+    --vermilion:#e5411f;
+    --border:#171717;
+    --ph-sage:#8f9e86;
+    --ph-blue:#7c93a6;
+    --ph-clay:#b9805f;
+    --ph-ochre:#c9a14e;
+    --ph-stone:#a49e93;
+    --ph-plum:#8a6f82;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--paper);color:var(--ink);
+    font-family:"Hanken Grotesk",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+    -webkit-font-smoothing:antialiased}
+  body{padding:0 0 90px}
+
+  /* ---------- band header ---------- */
+  .wrap{max-width:1160px;margin:0 auto;padding:52px 40px 0}
+  .head{display:grid;grid-template-columns:120px 1fr;gap:32px;align-items:start}
+  .rail{border:2px solid var(--border);padding:10px 12px;display:inline-flex;flex-direction:column;
+    line-height:1;background:var(--paper)}
+  .rail .num{font-size:34px;font-weight:800;letter-spacing:-.02em}
+  .rail .lab{font-size:10px;text-transform:uppercase;letter-spacing:.18em;margin-top:8px;color:var(--ink-muted)}
+  h2{font-size:clamp(28px,4vw,46px);font-weight:800;letter-spacing:-.02em;line-height:1.02}
+  .hint{margin-top:14px;font-size:14px;color:var(--ink-muted);max-width:52ch}
+  .hint b{color:var(--vermilion);font-weight:800}
+
+  .tools{margin-top:20px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  .btn{font:inherit;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.12em;
+    background:var(--paper);color:var(--ink);border:2px solid var(--border);padding:10px 15px;cursor:pointer;
+    box-shadow:4px 4px 0 var(--ink);transition:transform .08s,box-shadow .08s,color .08s}
+  .btn:hover{color:var(--vermilion)}
+  .btn:active{transform:translate(4px,4px);box-shadow:0 0 0 var(--ink)}
+  .btn--go{background:var(--vermilion);color:var(--paper);box-shadow:4px 4px 0 var(--ink)}
+  .btn--go:hover{color:var(--paper)}
+  .btn--stop{background:var(--ink);color:var(--paper);box-shadow:4px 4px 0 var(--vermilion);
+    font-size:15px;padding:12px 26px}
+  .btn--stop:hover{color:var(--paper)}
+  .btn[hidden]{display:none}
+  .status{font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-muted)}
+
+  /* ---------- the board ---------- */
+  .board{position:relative;max-width:1160px;margin:30px auto 0;height:600px;padding:0 40px;
+    user-select:none}
+  .field{position:absolute;inset:0 40px;overflow:visible;transition:filter .3s ease}
+  .board.is-drawing .field{filter:none}
+
+  .card{position:absolute;top:0;left:0;width:196px;transform-origin:center;
+    transform:translate(0,0) rotate(0deg);
+    transition:transform .52s cubic-bezier(.22,.9,.24,1);will-change:transform;z-index:1}
+  .card.snap{transition:transform .18s cubic-bezier(.3,.85,.3,1)}
+  .card.dim{opacity:.32;filter:grayscale(.25)}
+  .card.hidden-card{opacity:0;pointer-events:none}
+
+  /* 3D flip shell */
+  .flip{position:relative;width:100%;height:264px;transform-style:preserve-3d;
+    transition:transform .5s cubic-bezier(.4,.1,.2,1)}
+  .card.flipped .flip{transform:rotateY(180deg)}
+  .face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+    border:2px solid var(--border);background:var(--paper);box-shadow:7px 7px 0 var(--ink);overflow:hidden}
+  .card.peek .face.front{box-shadow:11px 11px 0 var(--ink)}
+  .card.drawn .face{box-shadow:12px 12px 0 var(--vermilion)}
+
+  .front{display:flex;flex-direction:column}
+  .media{position:relative;height:170px;display:grid;place-items:center;background:var(--ph-stone)}
+  .media .tag{position:absolute;left:8px;top:8px;font-size:9px;font-weight:800;letter-spacing:.14em;
+    text-transform:uppercase;background:var(--ink);color:var(--paper);padding:3px 6px}
+  .media .glyph{font-size:44px}
+  .cap{padding:11px 12px 13px;display:flex;flex-direction:column;gap:4px;background:var(--paper)}
+  .cap .t{font-size:15px;font-weight:800;line-height:1.05}
+  .cap .s{font-size:11.5px;color:var(--ink-muted)}
+
+  /* back = the note reveal */
+  .back{transform:rotateY(180deg);background:var(--vermilion);color:var(--paper);
+    display:flex;flex-direction:column;justify-content:space-between;padding:16px 15px}
+  .back .lab{font-size:9px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;opacity:.8}
+  .back .why{font-size:14px;line-height:1.4;font-weight:600}
+  .back .who{font-size:12px;font-weight:800;letter-spacing:.02em}
+
+  /* subtle deck platform shown while drawing */
+  .deckmark{position:absolute;left:50%;top:50%;width:210px;height:278px;transform:translate(-50%,-50%);
+    border:2px dashed var(--ink);opacity:0;transition:opacity .3s ease;pointer-events:none;z-index:0}
+  .board.is-drawing .deckmark{opacity:.28}
+
+  .foothint{max-width:1160px;margin:22px auto 0;padding:0 40px;font-size:12px;color:var(--ink-muted)}
+  .sketchtag{position:fixed;right:14px;bottom:12px;font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--ink-muted);background:var(--paper);border:1px solid var(--border);padding:5px 9px}
+
+  @media (prefers-reduced-motion: reduce){
+    .card,.flip{transition-duration:.001ms !important}
+  }
+  @media (max-width:760px){
+    .wrap{padding:38px 20px 0}
+    .head{grid-template-columns:1fr;gap:14px}
+    .board{height:560px;padding:0 16px}
+    .field{inset:0 16px}
+    .card{width:150px}
+    .flip{height:214px}
+    .media{height:128px}
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="head">
+      <div class="rail"><span class="num">03</span><span class="lab">Loves</span></div>
+      <div>
+        <h2>Things I love outside of work.</h2>
+        <p class="hint">Drag them around, or let the board pick for you. Hit <b>Draw a card</b>, watch them riffle, and press <b>Stop</b> to flip one up. <b>Shuffle</b> scatters the whole board.</p>
+        <div class="tools">
+          <button class="btn btn--go" id="draw">Draw a card</button>
+          <button class="btn" id="shuffle">Shuffle</button>
+          <button class="btn btn--stop" id="stop" hidden>Stop</button>
+          <button class="btn" id="again" hidden>Draw again</button>
+          <button class="btn" id="back" hidden>Back to board</button>
+          <span class="status" id="status"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="board" id="board">
+    <div class="deckmark"></div>
+    <div class="field" id="field"></div>
+  </div>
+
+  <p class="foothint">Sketch only. The real board is Notion-backed (band 03) and every card links out; this mockup uses placeholder swatches and copy.</p>
+  <div class="sketchtag">Sketch 013 · shuffle &amp; draw</div>
+
+<script>
+(() => {
+  // --- placeholder data (stands in for the Notion "Things I Love" rows) ---
+  const CARDS = [
+    { t:"Fight Club", s:"David Fincher, 1999", tag:"Film", glyph:"🎬", color:"var(--ph-plum)",
+      who:"David Fincher, 1999", why:"The first film that made me realize editing is the whole trick. I still notice a new cut every rewatch." },
+    { t:"How to Get Filthy Rich in Rising Asia", s:"Mohsin Hamid", tag:"Book", glyph:"📖", color:"var(--ph-clay)",
+      who:"Mohsin Hamid", why:"A whole life told in second person. It should not work and it completely does." },
+    { t:"Namibia Desert Live", s:"NamibiaCam", tag:"Watch", glyph:"▶", color:"var(--ph-ochre)",
+      who:"NamibiaCam", why:"A 24/7 waterhole stream. I leave it on while I work and wait for the giraffes." },
+    { t:"Lake Como", s:"Lombardy, Italy", tag:"Place", glyph:"⛰", color:"var(--ph-blue)",
+      who:"Lombardy, Italy", why:"Rented a tiny boat with no plan and got gently lost for an afternoon. Best kind of lost." },
+    { t:"Midnight in Paris", s:"Woody Allen, 2011", tag:"Film", glyph:"🎬", color:"var(--ph-sage)",
+      who:"Woody Allen, 2011", why:"Comfort movie. The idea that every era romanticizes an earlier one has stuck with me." },
+    { t:"Mechanical keyboards", s:"a mild obsession", tag:"Thing", glyph:"⌨", color:"var(--ph-stone)",
+      who:"a mild obsession", why:"I did not need a third one. I bought a third one. No regrets, mostly." },
+    { t:"Dune", s:"Frank Herbert", tag:"Book", glyph:"📖", color:"var(--ph-plum)",
+      who:"Frank Herbert", why:"Read it once for the story, again for the politics, a third time for the ecology." },
+    { t:"Cold plunges", s:"the 6am kind", tag:"Thing", glyph:"❄", color:"var(--ph-blue)",
+      who:"the 6am kind", why:"Hate every second before, love every minute after. The dumbest reliable mood fix I know." },
+  ];
+
+  const field = document.getElementById("field");
+  const board = document.getElementById("board");
+  const statusEl = document.getElementById("status");
+  const btn = {
+    draw: document.getElementById("draw"),
+    shuffle: document.getElementById("shuffle"),
+    stop: document.getElementById("stop"),
+    again: document.getElementById("again"),
+    back: document.getElementById("back"),
+  };
+
+  let W = 0, H = 0, CW = 196, CH = 264;
+  const els = [];
+
+  // Build cards
+  CARDS.forEach((c, i) => {
+    const el = document.createElement("div");
+    el.className = "card";
+    el.innerHTML = `
+      <div class="flip">
+        <div class="face front">
+          <div class="media" style="background:${c.color}">
+            <span class="tag">${c.tag}</span><span class="glyph">${c.glyph}</span>
+          </div>
+          <div class="cap"><div class="t">${c.t}</div><div class="s">${c.s}</div></div>
+        </div>
+        <div class="face back">
+          <div class="lab">Why I love it</div>
+          <div class="why">${c.why}</div>
+          <div class="who">${c.who}</div>
+        </div>
+      </div>`;
+    field.appendChild(el);
+    els.push(el);
+  });
+
+  function measure(){
+    const r = field.getBoundingClientRect();
+    W = r.width; H = r.height;
+    CW = els[0].offsetWidth; CH = els[0].offsetHeight;
+  }
+  function rand(a,b){ return a + Math.random()*(b-a); }
+  function place(el, x, y, r, scale){
+    el.style.transform = `translate(${x}px, ${y}px) rotate(${r}deg)` + (scale?` scale(${scale})`:"");
+  }
+
+  // ---- board scatter (with optional staggered spring) ----
+  function scatter(stagger){
+    measure();
+    const maxX = Math.max(0, W - CW), maxY = Math.max(0, H - CH);
+    els.forEach((el, i) => {
+      el.classList.remove("dim","drawn","flipped","peek","hidden-card","snap");
+      el.style.zIndex = 1 + i;
+      const d = stagger ? i*45 : 0;
+      el.style.transitionDelay = d + "ms";
+      const x = rand(0, maxX), y = rand(0, maxY), r = rand(-8, 8);
+      place(el, x, y, r);
+    });
+    if (stagger) setTimeout(() => els.forEach(el => el.style.transitionDelay = ""), els.length*45 + 550);
+  }
+
+  // ---- draw: gather into a deck, riffle, stop, reveal ----
+  let riffle = null, ptr = 0;
+  function deckPos(i){
+    const cx = (W - CW)/2, cy = (H - CH)/2;
+    return { x: cx + rand(-3,3), y: cy + rand(-3,3), r: rand(-4,4) };
+  }
+  function startDraw(){
+    measure();
+    board.classList.add("is-drawing");
+    setButtons("drawing");
+    statusEl.textContent = "Riffling…";
+    els.forEach((el, i) => {
+      el.classList.remove("dim","drawn","flipped","peek");
+      el.style.transitionDelay = (i*18) + "ms";
+      const p = deckPos(i);
+      el.style.zIndex = 1 + i;
+      place(el, p.x, p.y, p.r);
+    });
+    setTimeout(() => {
+      els.forEach(el => { el.style.transitionDelay=""; el.classList.add("snap"); });
+      ptr = Math.floor(Math.random()*els.length);
+      riffle = setInterval(step, 78);
+    }, 430);
+  }
+  function step(){
+    els.forEach(el => el.classList.remove("peek"));
+    ptr = (ptr + 1) % els.length;
+    const el = els[ptr];
+    // bring to top with a small lift + tease flip
+    el.style.zIndex = 100;
+    el.classList.add("peek");
+    const p = deckPos(ptr);
+    place(el, p.x, p.y - 16, rand(-3,3));
+    // demote everyone else's z so the stack reads
+    els.forEach((o,i) => { if(o!==el) o.style.zIndex = 1 + i; });
+  }
+  function stopDraw(){
+    if (!riffle) return;
+    clearInterval(riffle); riffle = null;
+    const el = els[ptr];
+    els.forEach(o => { o.classList.remove("snap","peek"); if(o!==el) o.classList.add("dim"); });
+    // move the winner forward + up, scale, then flip
+    el.classList.add("drawn");
+    el.style.zIndex = 200;
+    const cx = (W - CW)/2, cy = (H - CH)/2;
+    place(el, cx, cy - 26, 0, 1.16);
+    setTimeout(() => el.classList.add("flipped"), 260);
+    board.classList.remove("is-drawing");
+    setButtons("revealed");
+    statusEl.textContent = "Your card:";
+  }
+
+  function setButtons(state){
+    const show = (b, on) => b.hidden = !on;
+    show(btn.draw,    state==="board");
+    show(btn.shuffle, state==="board");
+    show(btn.stop,    state==="drawing");
+    show(btn.again,   state==="revealed");
+    show(btn.back,    state==="revealed");
+    if (state==="board") statusEl.textContent = "";
+  }
+
+  btn.draw.addEventListener("click", startDraw);
+  btn.stop.addEventListener("click", stopDraw);
+  btn.shuffle.addEventListener("click", () => { setButtons("board"); scatter(true); });
+  btn.again.addEventListener("click", startDraw);
+  btn.back.addEventListener("click", () => { setButtons("board"); scatter(true); });
+
+  // init
+  requestAnimationFrame(() => { measure(); scatter(false); setButtons("board"); });
+  window.addEventListener("resize", () => { if(!riffle && !board.classList.contains("is-drawing")) scatter(false); });
+})();
+</script>
+</body>
+</html>

@@ -25,12 +25,6 @@ vi.mock("next/link", () => ({
     React.createElement("a", { href, ...props }, children),
 }));
 
-// Mock WritingSubscribeCTA — avoid rendering its internals
-vi.mock("@/components/home-v2/writing-subscribe-cta", () => ({
-  WritingSubscribeCTA: () =>
-    React.createElement("div", { "data-testid": "writing-subscribe-cta" }),
-}));
-
 // Mock NewsletterCarousel — avoid rendering carousel internals (D-04 fold)
 vi.mock("@/components/v3/newsletter-carousel", () => ({
   NewsletterCarousel: () =>

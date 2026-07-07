@@ -1,10 +1,11 @@
 /**
- * Test suite for V3Footer component — Plan 02 (16-02).
+ * Test suite for SiteFooter — the single site-wide footer (sketch 014 concept
+ * 01). Replaced V3Footer + the homepage SectionFooter.
  *
- * Verifies the full-sitemap footer renders correctly with Pumpkin Amber tokens,
- * locked "Let's be friends." copy, and all required route links.
+ * Verifies the signature, the route links, external-link security, and that it
+ * keeps id="contact" (the nav "Contact" anchor target).
  */
-import { describe, it, expect, beforeEach } from "vitest";
+import { describe, it, expect, beforeEach, vi } from "vitest";
 import { render, screen, cleanup } from "@testing-library/react";
 
 beforeEach(() => {
@@ -28,44 +29,42 @@ vi.mock("next/link", () => ({
   ),
 }));
 
-import { V3Footer } from "@/components/layout/v3-footer";
-import { vi } from "vitest";
+import { SiteFooter } from "@/components/layout/site-footer";
 
-describe("V3Footer component (Plan 02 / D-11, D-12)", () => {
-  it('renders "Let\'s be friends." headline text (locked copy from prototype 002)', () => {
-    render(<V3Footer />);
-    expect(screen.getByText("Let's be friends.")).toBeDefined();
+describe("SiteFooter (single site-wide footer)", () => {
+  it("renders the Monty Singer signature", () => {
+    render(<SiteFooter />);
+    expect(screen.getByText("Monty Singer")).toBeDefined();
   });
 
-  it("renders /uses link in footer nav (Stack under Building column)", () => {
-    render(<V3Footer />);
-    const usesLink = document.querySelector('a[href="/uses"]');
-    expect(usesLink).not.toBeNull();
+  it("keeps id=contact so the nav Contact anchor still targets it", () => {
+    const { container } = render(<SiteFooter />);
+    expect(container.querySelector("footer#contact")).not.toBeNull();
   });
 
-  it("renders /prometheus external link in footer nav (Community column)", () => {
-    render(<V3Footer />);
-    const prometheusLink = document.querySelector('a[href="https://prometheus.today"]');
-    expect(prometheusLink).not.toBeNull();
+  it("renders the core route links (Building, Writing, Things I Love)", () => {
+    render(<SiteFooter />);
+    expect(document.querySelector('a[href="/building"]')).not.toBeNull();
+    expect(document.querySelector('a[href="/writing"]')).not.toBeNull();
+    expect(document.querySelector('a[href="/uses"]')).not.toBeNull();
   });
 
-  it("external prometheus link has noopener noreferrer (T-16-04 security)", () => {
-    render(<V3Footer />);
-    const prometheusLink = document.querySelector('a[href="https://prometheus.today"]');
-    expect(prometheusLink).not.toBeNull();
-    expect(prometheusLink?.getAttribute("rel")).toBe("noopener noreferrer");
-    expect(prometheusLink?.getAttribute("target")).toBe("_blank");
+  it("external links carry target=_blank + rel=noopener noreferrer", () => {
+    render(<SiteFooter />);
+    const x = document.querySelector('a[href="https://x.com/thefullmonty0"]');
+    expect(x).not.toBeNull();
+    expect(x?.getAttribute("rel")).toBe("noopener noreferrer");
+    expect(x?.getAttribute("target")).toBe("_blank");
   });
 
-  it("footer uses Pumpkin Amber surface token (no v2 tokens)", () => {
-    const { container } = render(<V3Footer />);
-    const footer = container.querySelector("footer");
-    expect(footer).not.toBeNull();
-    // Verify Pumpkin Amber class is present (bg-[var(--color-surface)])
-    expect(footer?.className).toContain("--color-surface");
-    // Verify no v2 tokens present
-    expect(footer?.className).not.toContain("bg-footer-bg");
-    expect(footer?.className).not.toContain("text-ink");
-    expect(footer?.className).not.toContain("bg-paper");
+  it("does NOT render the retired footer copy", () => {
+    render(<SiteFooter />);
+    expect(screen.queryByText("Let's be friends.")).toBeNull();
+    expect(screen.queryByText(/End of archive/i)).toBeNull();
+  });
+
+  it("has no em dash in its rendered copy (CLAUDE.md rule)", () => {
+    const { container } = render(<SiteFooter />);
+    expect(container.textContent ?? "").not.toMatch(/[—–]/);
   });
 });

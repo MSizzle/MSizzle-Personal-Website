@@ -74,3 +74,12 @@ After Phase 15 built the locked direction (Crimson Poster slide deck), user feed
 - **Palette:** "Crimson Poster" (crimson field + crimson type) → **red-on-red is illegible.** New direction in `themes/crimson-line.css`: near-black canvas, off-white name, crimson DEMOTED to a sparing accent (line / dots / hover), never the name.
 If sketch 003 wins, the LOCKED palette + slide-deck structure decisions above must be superseded.
 - **Scope expansion (sketch 004):** user wants a more ambitious *explorative* homepage — rotating pixel-avatar hologram on a podium (hero), scroll-cue that scales the hero, the line going *fluid/interweaving*, a rotating 3D horse beat, and a "Watching"/YouTube gallery that ends with a video zooming to fill the screen and the next section emerging from inside it. Implies real 3D (Three.js/GLTF models for avatar + horse) and scroll-pinned transitions — heavier than the Phase 15 build. Asset sourcing (pixel-avatar, horse model) is an open dependency.
+
+## Sketch 013 — Things I Love: shuffle & draw (2026-07-07)
+Fun interactivity mockup for band 03 (builds on 012 pinboard). Two mechanics on the same board:
+- **Draw a card:** cards gather into a centered deck, riffle (top card cycles with a lift), press **Stop** and the drawn card flips up to reveal its "why I love it" note (Vermilion back). Then Draw again / Back to board.
+- **Shuffle:** re-scatters the whole board to new positions + rotations with a staggered spring.
+Reuses the 012 brand system exactly (paper/cream/ink/Vermilion, Hanken 800, 2px borders, hard offset shadows, no gradients). Throwaway HTML in `013-loves-shuffle-draw/index.html`; previews: `preview.png` (board), `state-drawing.png` (riffle), `state-reveal.png` (flip). Pending user feedback on feel before wiring into the real `pinboard.tsx`.
+
+## Sketch 014 — Footer concepts (2026-07-07)
+User disliked both existing footers ("Let's be friends." V3Footer and "End of archive" WritingSubscribeCTA) and the homepage SectionFooter; wanted ONE fresh footer site-wide. Mocked three concepts (01 editorial ledger / 02 vermilion stamp / 03 minimal rule bar). **User picked 01.** Built as `src/components/layout/site-footer.tsx`, wired via app/layout.tsx for every page; deleted v3-footer, section-footer, conditional-footer, writing-subscribe-cta. Verified: every route now has exactly one footer.

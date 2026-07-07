@@ -47,11 +47,6 @@ vi.mock("@/components/home/section-newsletter", () => ({
     return React.createElement("span", null, "Newsletter content");
   },
 }));
-vi.mock("@/components/home/section-footer", () => ({
-  SectionFooter: function SectionFooterMock() {
-    return React.createElement("span", null, "Footer content");
-  },
-}));
 
 describe("ExplorativeHomepage orchestrator (17.4 band structure)", () => {
   afterEach(() => {

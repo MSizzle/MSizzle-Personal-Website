@@ -5,7 +5,6 @@ import { calculateReadingTime } from "@/utils/reading-time";
 import { fetchMontyMonthlyIssues } from "@/lib/rss/substack";
 import { RuleStrong } from "@/components/editorial/rule-strong";
 import { YearBlock } from "@/components/editorial/year-block";
-import { WritingSubscribeCTA } from "@/components/home-v2/writing-subscribe-cta";
 import { PageHero } from "@/components/v3/page-hero";
 import { Card } from "@/components/v3/card";
 import { NewsletterCarousel } from "@/components/v3/newsletter-carousel";
@@ -170,8 +169,6 @@ export default async function WritingPage() {
           <RuleStrong />
         </>
       )}
-
-      <WritingSubscribeCTA />
     </>
   );
 }
