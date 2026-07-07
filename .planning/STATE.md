@@ -5,7 +5,7 @@ milestone_name: Dark Brutalist Rebuild
 status: milestone_complete
 stopped_at: Milestone complete (Phase 19 was final phase)
 last_updated: 2026-07-06T09:46:30.982Z
-last_activity: 2026-07-07 -- Built the Things-I-Love pinboard (sketch 012 -> gated feature): notion-loves loader + client Pinboard + wiring, fallback to marquee until NOTION_LOVES_DB_ID is set. Suite 156 pass / 0 fail, prod build exit-0.
+last_activity: 2026-07-07 -- SHIPPED the Things-I-Love pinboard live on montysinger.com (homepage band 03): notion-loves loader + client Pinboard + Movie type. Monty created + shared the "Things I Love" Notion DB (id 39632e75-4858-80b0-91dd-d707b7d0a7f0), set NOTION_LOVES_DB_ID on Vercel prod, curated 7 items (2 Movie, 1 Book, 3 Thing, 1 YouTube). Deployed via explicit `vercel deploy --prod` (GitHub auto-deploy from main did NOT fire this push); alias promoted to new deployment, no drift, cover proxy 200. Suite 157 pass / 0 fail.
 progress:
   total_phases: 10
   completed_phases: 8
@@ -99,7 +99,7 @@ Next action: `/gsd-plan-phase 15` to decompose the WebGL homepage v1 into plans 
 
 ### Pending Todos
 
-- 2026-07-07 — DONE: Things I Love treasure-hunt collage shipped as the draggable pinboard (sketch 012 -> gated feature, notion-loves + Pinboard). Awaiting Monty's Notion "Loves" DB + `NOTION_LOVES_DB_ID` to switch on. `.planning/todos/done/2026-07-06-things-i-love-treasure-hunt-collage.md`
+- 2026-07-07 — LIVE: Things I Love treasure-hunt collage shipped as the draggable pinboard and deployed to montysinger.com (notion-loves + Pinboard, Notion DB curated + NOTION_LOVES_DB_ID set on Vercel prod). `.planning/todos/done/2026-07-06-things-i-love-treasure-hunt-collage.md`
 
 ### Blockers/Concerns
 
