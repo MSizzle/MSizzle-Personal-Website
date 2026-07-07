@@ -31,7 +31,8 @@ const ITEMS: LoveItem[] = [
     youtubeId: "dQw4w9WgXcQ",
     note: "Re-watched more than any other.",
   }),
-  make({ id: "h1", type: "Hobby", title: "Mushrooms", subtitle: "Since a dorm room" }),
+  make({ id: "h1", type: "Thing", title: "Mushrooms", subtitle: "Since a dorm room" }),
+  make({ id: "m1", type: "Movie", title: "Fight Club", subtitle: "Fincher", cover: "https://notion.so/p.jpg" }),
 ];
 
 afterEach(() => cleanup());
@@ -39,7 +40,14 @@ afterEach(() => cleanup());
 describe("Pinboard (sketch 012)", () => {
   it("renders one card per item", () => {
     const { container } = render(<Pinboard items={ITEMS} />);
-    expect(container.querySelectorAll(".pb-card").length).toBe(4);
+    expect(container.querySelectorAll(".pb-card").length).toBe(ITEMS.length);
+  });
+
+  it("renders a Movie as a portrait card tagged Film", () => {
+    const { container } = render(<Pinboard items={ITEMS} />);
+    const movie = container.querySelector(".pb-card--movie");
+    expect(movie).not.toBeNull();
+    expect(movie!.textContent).toContain("Film");
   });
 
   it("renders a YouTube thumbnail from the video id", () => {

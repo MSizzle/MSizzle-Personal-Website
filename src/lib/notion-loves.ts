@@ -31,8 +31,8 @@ async function withRetry<T>(fn: () => Promise<T>, retries = 3): Promise<T> {
 
 // --- Types ---
 
-export type LoveType = "Place" | "Book" | "YouTube" | "Hobby";
-const LOVE_TYPES: LoveType[] = ["Place", "Book", "YouTube", "Hobby"];
+export type LoveType = "Place" | "Book" | "Movie" | "YouTube" | "Thing";
+const LOVE_TYPES: LoveType[] = ["Place", "Book", "Movie", "YouTube", "Thing"];
 
 export interface LoveItem {
   id: string;
@@ -90,8 +90,8 @@ function extractLoveProperties(page: PageObjectResponse): LoveItem {
   const typeProp = props["Type"] || props["type"];
   const rawType =
     typeProp?.type === "select" ? typeProp.select?.name ?? "" : "";
-  // Notion label "Thing" maps to the generic Hobby card style.
-  const normalizedType = rawType === "Thing" ? "Hobby" : rawType;
+  // Legacy "Hobby" label maps to the generic "Thing" card style.
+  const normalizedType = rawType === "Hobby" ? "Thing" : rawType;
   const type: LoveType = LOVE_TYPES.includes(normalizedType as LoveType)
     ? (normalizedType as LoveType)
     : "Place";

@@ -1237,8 +1237,9 @@ footer.site {
 .pb-media--place { width: 210px; height: 150px; }
 .pb-cap { font-size: 13px; font-weight: 700; padding: 10px 4px 12px; color: var(--color-text); }
 
-/* book */
-.pb-card--book .pb-frame { width: 150px; }
+/* book + movie (portrait cover cards) */
+.pb-card--book .pb-frame,
+.pb-card--movie .pb-frame { width: 150px; }
 .pb-media--book { width: 100%; height: 210px; }
 .pb-book-title {
   position: absolute; left: 14px; right: 14px; bottom: 34px;
@@ -1261,9 +1262,9 @@ footer.site {
 .pb-meta .pb-t { font-size: 13px; font-weight: 800; line-height: 1.1; }
 .pb-meta .pb-c { font-size: 11px; color: var(--color-text-muted); margin-top: 4px; }
 
-/* hobby (note card) */
-.pb-card--hobby .pb-frame { width: 200px; }
-.pb-media--hobby { width: 100%; height: 120px; }
+/* thing (generic note card) */
+.pb-card--thing .pb-frame { width: 200px; }
+.pb-media--thing { width: 100%; height: 120px; }
 .pb-body { padding: 11px 12px 13px; }
 .pb-body .pb-t { font-size: 14px; font-weight: 800; }
 .pb-body .pb-s { font-size: 12px; color: var(--color-text-muted); margin-top: 5px; line-height: 1.3; }
@@ -1302,7 +1303,8 @@ footer.site {
   }
   .pb-card--youtube .pb-frame,
   .pb-card--book .pb-frame,
-  .pb-card--hobby .pb-frame { width: min(88vw, 320px); }
+  .pb-card--movie .pb-frame,
+  .pb-card--thing .pb-frame { width: min(88vw, 320px); }
   .pb-media--place { width: min(80vw, 240px); height: auto; aspect-ratio: 7 / 5; }
 }
 

@@ -62,7 +62,8 @@ function coverSrc(item: LoveItem): string | null {
 function tagFor(type: LoveItem["type"]): string {
   if (type === "YouTube") return "Watch";
   if (type === "Book") return "Read";
-  if (type === "Hobby") return "Doing";
+  if (type === "Movie") return "Film";
+  if (type === "Thing") return "Thing";
   return "Place";
 }
 
@@ -100,7 +101,7 @@ function CardFace({ item }: { item: LoveItem }) {
     </div>
   ) : null;
 
-  if (item.type === "Book") {
+  if (item.type === "Book" || item.type === "Movie") {
     return (
       <div className="pb-frame">
         <div className="pb-media pb-media--book">
@@ -110,7 +111,7 @@ function CardFace({ item }: { item: LoveItem }) {
           {item.subtitle ? <span className="pb-book-author">{item.subtitle}</span> : null}
         </div>
         <div className="pb-foot">
-          <span className="pb-k">Book</span>
+          <span className="pb-k">{item.type === "Movie" ? "Film" : "Book"}</span>
           <span className="pb-k">&#9825;</span>
         </div>
         {note}
@@ -137,10 +138,10 @@ function CardFace({ item }: { item: LoveItem }) {
     );
   }
 
-  if (item.type === "Hobby") {
+  if (item.type === "Thing") {
     return (
       <div className="pb-frame pb-frame--cream">
-        <div className="pb-media pb-media--hobby">
+        <div className="pb-media pb-media--thing">
           {media}
           <span className="pb-tag">{tag}</span>
         </div>
