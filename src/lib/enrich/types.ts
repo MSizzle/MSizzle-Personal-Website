@@ -26,6 +26,10 @@ export type Provider = (input: EnrichInput) => Promise<ProviderResult | null>;
 
 /** The set of fields the engine may write back to a Notion page. */
 export interface LovePatch {
+  /** Written to the Name (title) property — set by the URL-first path only. */
+  title?: string;
+  /** Written to the Type (select) property — set by the URL-first path only. */
+  type?: LoveType;
   subtitle?: string;
   url?: string;
   note?: string;

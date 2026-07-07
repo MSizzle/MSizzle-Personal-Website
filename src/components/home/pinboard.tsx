@@ -4,21 +4,36 @@ import { useEffect, useRef, type CSSProperties } from "react";
 import type { LoveItem } from "@/lib/notion-loves";
 
 /**
- * Pinboard: the "Things I love" treasure-hunt board (sketch 012).
+ * Pinboard: the "Things I love" treasure-hunt board (sketch 012), plus the
+ * shuffle / draw-a-card mechanic (sketch 013).
  *
  * A loose, staggered scatter of overlapping cards you can drag around; a card
  * lifts to the top while dragging and, on a click (no drag), slides up a note
  * telling you why it's here. Places render as polaroids, books as covers,
  * YouTube as thumbnails, hobbies as note cards.
  *
+ * A small toolbar (Draw a card / Shuffle) sits above the field. Draw gathers
+ * every card to a center deck, riffles the top card, and waits for Stop;
+ * stopping dims the rest of the board, centers the winner, and slides its
+ * note open (the existing reveal affordance above doubles as the "flip").
+ * Shuffle (and "Back to board" after a draw) re-scatters everything at new
+ * random positions with the same spring-like transition.
+ *
  * Client island: interaction is wired imperatively in an effect against the
  * SSR'd markup (pointer transforms only, no WebGL/Lenis), so the component
  * never re-renders after mount and drag state is never clobbered. Layout is a
  * pure function of index, so server and client agree (no hydration mismatch).
+ * The draw/shuffle state (current phase, riffle pointer/timer) is likewise
+ * kept in plain closures, not React state, for the same reason.
  *
- * Below 760px it degrades to a tidy, tappable, non-draggable stack (CSS).
+ * Below 760px it degrades to a tidy, tappable, non-draggable stack (CSS); the
+ * draw/shuffle toolbar is hidden there too, since "gather to a center deck"
+ * has no meaning once cards are a static vertical list (tap-to-reveal already
+ * covers the same "why I love this" payoff on mobile).
  * Every card's link stays reachable via the note panel, so the board is usable
- * without dragging (keyboard + reduced-motion friendly).
+ * without dragging (keyboard + reduced-motion friendly). Under
+ * prefers-reduced-motion, scatter/gather/riffle skip their transitions and
+ * the riffle's cycling is replaced by an instant, single random pick.
  */
 
 const COLS = 4;
@@ -263,11 +278,199 @@ export function Pinboard({ items }: { items: LoveItem[] }) {
       });
     });
 
+    // --- Draw a card / Shuffle (sketch 013) --------------------------------
+    // Kept as plain closures over the same imperative style as the drag
+    // wiring above: no React state, so re-renders never clobber mid-riffle
+    // DOM state. All of it is a no-op on mobile, where the toolbar is
+    // CSS-hidden and cards are a static list.
+    const toolbar = board.querySelector<HTMLElement>(".pb-tools");
+    const btnDraw = toolbar?.querySelector<HTMLButtonElement>('[data-pb="draw"]') ?? null;
+    const btnShuffle = toolbar?.querySelector<HTMLButtonElement>('[data-pb="shuffle"]') ?? null;
+    const btnStop = toolbar?.querySelector<HTMLButtonElement>('[data-pb="stop"]') ?? null;
+    const btnAgain = toolbar?.querySelector<HTMLButtonElement>('[data-pb="again"]') ?? null;
+    const btnBack = toolbar?.querySelector<HTMLButtonElement>('[data-pb="back"]') ?? null;
+    const statusEl = toolbar?.querySelector<HTMLElement>('[data-pb="status"]') ?? null;
+    const field = board.querySelector<HTMLElement>(".pinboard-field");
+
+    if (
+      toolbar && btnDraw && btnShuffle && btnStop && btnAgain && btnBack &&
+      statusEl && field && cards.length > 0
+    ) {
+      type Phase = "board" | "drawing" | "revealed";
+      let phase: Phase = "board";
+      let riffleTimer: ReturnType<typeof setInterval> | null = null;
+      let ptr = 0;
+
+      const reduceMotion = () =>
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const rand = (a: number, b: number) => a + Math.random() * (b - a);
+      const fieldSize = () => {
+        const r = field.getBoundingClientRect();
+        return { w: r.width, h: r.height };
+      };
+      const place = (el: HTMLElement, x: number, y: number, r: number) => {
+        el.dataset.x = String(x);
+        el.dataset.y = String(y);
+        el.style.transform = `translate(${x}px, ${y}px) rotate(${r}deg)`;
+      };
+      const deckPos = (el: HTMLElement, w: number, h: number) => ({
+        x: (w - el.offsetWidth) / 2 + rand(-3, 3),
+        y: (h - el.offsetHeight) / 2 + rand(-3, 3),
+        r: rand(-4, 4),
+      });
+      const clearCardState = (el: HTMLElement) => {
+        el.classList.remove("pb-dim", "pb-peek", "pb-drawn", "pb-riffle", "pb-anim", "is-open");
+      };
+
+      const setButtons = (state: Phase) => {
+        phase = state;
+        btnDraw.hidden = state !== "board";
+        btnShuffle.hidden = state !== "board";
+        btnStop.hidden = state !== "drawing";
+        btnAgain.hidden = state !== "revealed";
+        btnBack.hidden = state !== "revealed";
+        if (state === "board") statusEl.textContent = "";
+      };
+
+      // Re-scatter every card to new random positions within the field.
+      const scatter = () => {
+        const { w, h } = fieldSize();
+        const animate = !reduceMotion();
+        cards.forEach((el, i) => {
+          clearCardState(el);
+          if (animate) el.classList.add("pb-anim");
+          const maxX = Math.max(0, w - el.offsetWidth);
+          const maxY = Math.max(0, h - el.offsetHeight);
+          place(el, rand(0, maxX), rand(0, maxY), rand(-8, 8));
+          el.style.zIndex = String(i + 10);
+        });
+        if (animate) {
+          window.setTimeout(() => cards.forEach((el) => el.classList.remove("pb-anim")), 560);
+        }
+      };
+
+      const startDraw = () => {
+        if (isMobile() || phase === "drawing") return;
+        const { w, h } = fieldSize();
+        setButtons("drawing");
+        statusEl.textContent = "Riffling…";
+        cards.forEach(clearCardState);
+
+        if (reduceMotion()) {
+          // Instant path: settle on one random card, no cycling flicker.
+          cards.forEach((el, i) => {
+            const p = deckPos(el, w, h);
+            place(el, p.x, p.y, p.r);
+            el.style.zIndex = String(i + 10);
+          });
+          ptr = Math.floor(Math.random() * cards.length);
+          const el = cards[ptr];
+          el.classList.add("pb-peek");
+          el.style.zIndex = "300";
+          return;
+        }
+
+        cards.forEach((el, i) => {
+          el.classList.add("pb-anim");
+          const p = deckPos(el, w, h);
+          place(el, p.x, p.y, p.r);
+          el.style.zIndex = String(i + 10);
+        });
+
+        window.setTimeout(() => {
+          cards.forEach((el) => el.classList.remove("pb-anim"));
+          ptr = Math.floor(Math.random() * cards.length);
+          riffleTimer = setInterval(() => {
+            const { w: rw, h: rh } = fieldSize();
+            cards.forEach((el) => el.classList.remove("pb-peek"));
+            ptr = (ptr + 1) % cards.length;
+            const el = cards[ptr];
+            el.classList.add("pb-riffle", "pb-peek");
+            el.style.zIndex = "300";
+            const p = deckPos(el, rw, rh);
+            place(el, p.x, p.y - 14, p.r);
+            cards.forEach((o, i) => {
+              if (o !== el) o.style.zIndex = String(i + 10);
+            });
+          }, 80);
+        }, 420);
+      };
+
+      const stopDraw = () => {
+        if (phase !== "drawing") return;
+        if (riffleTimer) {
+          clearInterval(riffleTimer);
+          riffleTimer = null;
+        }
+        const { w, h } = fieldSize();
+        const el = cards[ptr];
+        const animate = !reduceMotion();
+        cards.forEach((o) => {
+          o.classList.remove("pb-riffle", "pb-peek");
+          if (o !== el) o.classList.add("pb-dim");
+        });
+        el.classList.add("pb-drawn");
+        if (animate) el.classList.add("pb-anim");
+        el.style.zIndex = "500";
+        place(el, (w - el.offsetWidth) / 2, (h - el.offsetHeight) / 2 - 20, 0);
+        window.setTimeout(() => el.classList.add("is-open"), animate ? 280 : 0);
+        setButtons("revealed");
+        statusEl.textContent = "Your card:";
+      };
+
+      const onDrawClick = () => startDraw();
+      const onShuffleClick = () => {
+        if (isMobile() || phase === "drawing") return;
+        setButtons("board");
+        scatter();
+      };
+      const onStopClick = () => stopDraw();
+      const onAgainClick = () => startDraw();
+      const onBackClick = () => {
+        if (isMobile()) return;
+        setButtons("board");
+        scatter();
+      };
+
+      btnDraw.addEventListener("click", onDrawClick);
+      btnShuffle.addEventListener("click", onShuffleClick);
+      btnStop.addEventListener("click", onStopClick);
+      btnAgain.addEventListener("click", onAgainClick);
+      btnBack.addEventListener("click", onBackClick);
+
+      cleanups.push(() => {
+        if (riffleTimer) clearInterval(riffleTimer);
+        btnDraw.removeEventListener("click", onDrawClick);
+        btnShuffle.removeEventListener("click", onShuffleClick);
+        btnStop.removeEventListener("click", onStopClick);
+        btnAgain.removeEventListener("click", onAgainClick);
+        btnBack.removeEventListener("click", onBackClick);
+      });
+    }
+
     return () => cleanups.forEach((fn) => fn());
   }, [items]);
 
   return (
     <div className="pinboard" ref={boardRef} style={{ minHeight: boardHeight }}>
+      <div className="pb-tools">
+        <button type="button" className="pb-btn pb-btn--go" data-pb="draw">
+          Draw a card
+        </button>
+        <button type="button" className="pb-btn" data-pb="shuffle">
+          Shuffle
+        </button>
+        <button type="button" className="pb-btn pb-btn--stop" data-pb="stop" hidden>
+          Stop
+        </button>
+        <button type="button" className="pb-btn" data-pb="again" hidden>
+          Draw again
+        </button>
+        <button type="button" className="pb-btn" data-pb="back" hidden>
+          Back to board
+        </button>
+        <span className="pb-status" data-pb="status" />
+      </div>
       <div className="pinboard-field">
         {items.map((item, i) => {
           const { x, y, r } = layoutFor(i);

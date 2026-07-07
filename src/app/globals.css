@@ -1315,3 +1315,81 @@ body.no-motion .pb-frame { transition: none; }
   .pb-note,
   .pb-frame { transition: none; }
 }
+
+/* ── Draw a card / Shuffle toolbar (sketch 013) ──────────────────────────────
+   Same brutalist offset-solid button as the rest of the site: hard border,
+   flat drop shadow, press-to-flatten. Lives above .pinboard-field, inside the
+   same max-width/padding rhythm as the band's own .wrap. */
+.pb-tools {
+  position: relative;
+  z-index: 20;
+  max-width: 1180px;
+  margin: 0 auto 22px;
+  padding: 0 40px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+.pb-btn {
+  font: inherit;
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  background: var(--color-bg);
+  color: var(--color-text);
+  border: 2px solid var(--color-text);
+  padding: 10px 15px;
+  cursor: pointer;
+  box-shadow: 4px 4px 0 var(--color-text);
+  transition: transform 0.08s ease, box-shadow 0.08s ease, color 0.08s ease;
+}
+.pb-btn:hover { color: var(--accent); }
+.pb-btn:active { transform: translate(4px, 4px); box-shadow: 0 0 0 var(--color-text); }
+.pb-btn--go { background: var(--accent); color: var(--color-bg); }
+.pb-btn--go:hover { color: var(--color-bg); }
+.pb-btn--stop {
+  background: var(--color-text);
+  color: var(--color-bg);
+  box-shadow: 4px 4px 0 var(--accent);
+  font-size: 13px;
+  padding: 11px 22px;
+}
+.pb-btn--stop:hover { color: var(--color-bg); }
+.pb-btn[hidden] { display: none; }
+.pb-status {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+/* Animated repositioning for shuffle/gather/riffle. Drag itself never gets
+   these classes, so 1:1 pointer movement stays untransitioned. */
+.pb-card.pb-anim { transition: transform 0.5s cubic-bezier(0.22, 0.9, 0.24, 1); }
+.pb-card.pb-riffle { transition: transform 0.16s cubic-bezier(0.3, 0.85, 0.3, 1); }
+.pb-card.pb-dim .pb-frame { opacity: 0.32; filter: grayscale(0.25); }
+.pb-card.pb-peek .pb-frame {
+  box-shadow: 11px 11px 0 var(--color-text);
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+.pb-card.pb-drawn { z-index: 500 !important; }
+.pb-card.pb-drawn .pb-frame { box-shadow: 12px 12px 0 var(--accent); }
+
+@media (max-width: 760px) {
+  /* "gather to a center deck" has no meaning once cards are a static
+     vertical list; tap-to-reveal already covers the same payoff. */
+  .pb-tools { display: none; }
+}
+
+body.no-motion .pb-card.pb-anim,
+body.no-motion .pb-card.pb-riffle {
+  transition: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .pb-card.pb-anim,
+  .pb-card.pb-riffle { transition: none; }
+}

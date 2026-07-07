@@ -11,6 +11,7 @@ import { bookLookup } from "./book";
 import { youtubeLookup } from "./youtube";
 import { wikipediaLookup } from "./wikipedia";
 import { draftNote } from "./note-draft";
+import { enrichFromUrl } from "./from-url";
 
 // --- Notion client & rate limiter (same pattern as notion-loves.ts) ---
 
@@ -128,14 +129,27 @@ function readRow(page: PageObjectResponse): Row {
   };
 }
 
+/** True when any of the core card fields (name, type, cover, subtitle) is blank. */
+function missingCore(row: Row): boolean {
+  return (
+    row.title.trim() === "" ||
+    row.type === null ||
+    !row.hasCover ||
+    row.subtitle.trim() === ""
+  );
+}
+
 /**
- * A row is a candidate when it is not yet published, has a name and a recognized
- * type, and is still missing its cover or its subtitle. Published rows are never
- * touched; nothing here overwrites a field the user already filled.
+ * A row is a candidate when it is not yet published and still incomplete. Two
+ * ways in: a URL is present (the URL-first path can fill Name, Type, cover and
+ * subtitle from scratch), or the legacy Name+Type path applies (a recognized
+ * type and a name are set, but the cover or subtitle is blank). Published rows
+ * are never touched; nothing here overwrites a field the user already filled.
  */
 export function needsEnrichment(row: Row): boolean {
+  if (row.published) return false;
+  if (row.url.trim() !== "") return missingCore(row);
   return (
-    !row.published &&
     row.title.trim() !== "" &&
     row.type !== null &&
     (!row.hasCover || row.subtitle.trim() === "")
@@ -144,8 +158,9 @@ export function needsEnrichment(row: Row): boolean {
 
 function skipReason(row: Row): string {
   if (row.published) return "already published";
-  if (row.title.trim() === "") return "no name";
-  if (row.type === null) return "no recognized Type";
+  if (row.url.trim() === "" && row.title.trim() === "") return "no name and no URL";
+  if (row.url.trim() === "" && row.type === null)
+    return "no recognized Type (and no URL to detect it from)";
   return "already has cover and subtitle";
 }
 
@@ -167,6 +182,35 @@ function providerFor(type: LoveType): Provider {
 
 /** Compute the fields to write. Only ever fills blanks; never overwrites. */
 async function computePatch(row: Row): Promise<LovePatch> {
+  // URL-first: a pasted link can populate a row that has no name or type yet.
+  if (row.url.trim() !== "") return computePatchFromUrl(row);
+  return computePatchFromNameType(row);
+}
+
+/** The URL-first path: derive every blank field from the row's pasted URL. */
+async function computePatchFromUrl(row: Row): Promise<LovePatch> {
+  const patch: LovePatch = {};
+
+  let result: Awaited<ReturnType<typeof enrichFromUrl>> = null;
+  try {
+    result = await enrichFromUrl(row.url);
+  } catch (err) {
+    console.warn(`  URL enrich error for ${row.url}: ${(err as Error).message}`);
+  }
+  if (!result) return patch;
+
+  if (row.title.trim() === "" && result.title) patch.title = result.title;
+  if (row.type === null && result.type) patch.type = result.type;
+  if (!row.hasCover && result.coverUrl) patch.coverUrl = result.coverUrl;
+  if (row.subtitle.trim() === "" && result.subtitle)
+    patch.subtitle = result.subtitle;
+  if (row.note.trim() === "" && result.note) patch.note = result.note;
+
+  return patch;
+}
+
+/** The legacy path: look an item up from its existing Name + Type. */
+async function computePatchFromNameType(row: Row): Promise<LovePatch> {
   const patch: LovePatch = {};
   if (!row.type) return patch;
 
@@ -217,6 +261,14 @@ async function applyPatch(
   const props = page.properties;
   const properties: Record<string, unknown> = {};
 
+  if (patch.title !== undefined) {
+    const k = firstKey(props, ["Name", "Title", "title"]);
+    if (k) properties[k] = { title: [{ text: { content: patch.title } }] };
+  }
+  if (patch.type !== undefined) {
+    const k = firstKey(props, ["Type", "type"]);
+    if (k) properties[k] = { select: { name: patch.type } };
+  }
   if (patch.subtitle !== undefined) {
     const k = firstKey(props, ["Subtitle", "subtitle"]);
     if (k) properties[k] = { rich_text: [{ text: { content: patch.subtitle } }] };
@@ -308,7 +360,14 @@ async function enrichPage(
     }
   }
 
-  return { ...base, status: "enriched", fields };
+  // Surface a freshly-detected name/type (URL-first rows read as blank/null).
+  return {
+    ...base,
+    title: patch.title ?? base.title,
+    type: patch.type ?? base.type,
+    status: "enriched",
+    fields,
+  };
 }
 
 /** Scan the whole DB and enrich every candidate row. */
