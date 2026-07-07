@@ -37,8 +37,12 @@ import type { LoveItem } from "@/lib/notion-loves";
  */
 
 const COLS = 4;
-const COL_W = 288; // horizontal step between columns
-const ROW_H = 330; // vertical step between rows
+const FIELD_W = 1080; // desktop scatter field inner width (≈ .pinboard-field)
+const CARD_MAX_W = 260; // widest card, kept off the right edge
+const CARD_MAX_H = 300; // tallest card, kept off the bottom edge
+const ROW_H = 300; // ideal vertical step when the board isn't capped
+const BOARD_MAX_H = 720; // hard cap: the board never grows past this (fixed area)
+const MOBILE_LIMIT = 5; // cards shown before "See more" on the mobile stack
 
 /** Deterministic 0..1 pseudo-random from an index + salt (SSR-stable). */
 function seeded(i: number, salt: number): number {
@@ -52,12 +56,34 @@ interface Pos {
   r: number;
 }
 
-function layoutFor(i: number): Pos {
+/**
+ * Fixed-area board height: grows with item count up to BOARD_MAX_H, then stops.
+ * Past the cap, extra rows are compressed into the same area (a denser pile) by
+ * layoutFor rather than making the board taller.
+ */
+function boardHeightFor(n: number): number {
+  const rows = Math.max(1, Math.ceil(n / COLS));
+  return Math.min(rows * ROW_H + 40, BOARD_MAX_H);
+}
+
+/**
+ * Scatter position for card `i` of `n`, always within the fixed board area.
+ * Columns spread across FIELD_W; rows spread evenly across whatever height the
+ * board settled on, so adding items packs them tighter instead of growing the
+ * canvas. Deterministic (seeded) so SSR and client agree.
+ */
+function layoutFor(i: number, n: number): Pos {
   const col = i % COLS;
   const row = Math.floor(i / COLS);
-  const x = col * COL_W + (seeded(i, 1) * 48 - 8);
-  const y =
-    row * ROW_H + (seeded(i, 2) * 64 - 18) + (col % 2 === 0 ? 0 : 26);
+  const rows = Math.max(1, Math.ceil(n / COLS));
+
+  const usableW = FIELD_W - CARD_MAX_W;
+  const usableH = Math.max(0, boardHeightFor(n) - CARD_MAX_H);
+  const stepX = COLS > 1 ? usableW / (COLS - 1) : 0;
+  const stepY = rows > 1 ? usableH / (rows - 1) : 0;
+
+  const x = col * stepX + (seeded(i, 1) * 40 - 20);
+  const y = row * stepY + (seeded(i, 2) * 40 - 20) + (col % 2 === 0 ? 0 : 20);
   const r = seeded(i, 3) * 10 - 5;
   return { x, y, r };
 }
@@ -192,8 +218,7 @@ function hashId(id: string): number {
 export function Pinboard({ items }: { items: LoveItem[] }) {
   const boardRef = useRef<HTMLDivElement>(null);
 
-  const rows = Math.ceil(items.length / COLS);
-  const boardHeight = rows * ROW_H + 240;
+  const boardHeight = boardHeightFor(items.length);
 
   useEffect(() => {
     const board = boardRef.current;
@@ -278,6 +303,16 @@ export function Pinboard({ items }: { items: LoveItem[] }) {
       });
     });
 
+    // --- Mobile "See more" -------------------------------------------------
+    // On the mobile stack (CSS media query) cards past MOBILE_LIMIT are hidden
+    // until this reveals them. Purely a class toggle, no React state, so it
+    // never clobbers the imperative card transforms. No-op on desktop, where
+    // the button is CSS-hidden and the field is the full scatter.
+    const btnMore = board.querySelector<HTMLButtonElement>('[data-pb="more"]');
+    const onMore = () => board.classList.add("is-expanded");
+    btnMore?.addEventListener("click", onMore);
+    cleanups.push(() => btnMore?.removeEventListener("click", onMore));
+
     // --- Draw a card / Shuffle (sketch 013) --------------------------------
     // Kept as plain closures over the same imperative style as the drag
     // wiring above: no React state, so re-renders never clobber mid-riffle
@@ -286,6 +321,7 @@ export function Pinboard({ items }: { items: LoveItem[] }) {
     const toolbar = board.querySelector<HTMLElement>(".pb-tools");
     const btnDraw = toolbar?.querySelector<HTMLButtonElement>('[data-pb="draw"]') ?? null;
     const btnShuffle = toolbar?.querySelector<HTMLButtonElement>('[data-pb="shuffle"]') ?? null;
+    const btnOrganize = toolbar?.querySelector<HTMLButtonElement>('[data-pb="organize"]') ?? null;
     const btnStop = toolbar?.querySelector<HTMLButtonElement>('[data-pb="stop"]') ?? null;
     const btnAgain = toolbar?.querySelector<HTMLButtonElement>('[data-pb="again"]') ?? null;
     const btnBack = toolbar?.querySelector<HTMLButtonElement>('[data-pb="back"]') ?? null;
@@ -293,8 +329,8 @@ export function Pinboard({ items }: { items: LoveItem[] }) {
     const field = board.querySelector<HTMLElement>(".pinboard-field");
 
     if (
-      toolbar && btnDraw && btnShuffle && btnStop && btnAgain && btnBack &&
-      statusEl && field && cards.length > 0
+      toolbar && btnDraw && btnShuffle && btnOrganize && btnStop && btnAgain &&
+      btnBack && statusEl && field && cards.length > 0
     ) {
       type Phase = "board" | "drawing" | "revealed";
       let phase: Phase = "board";
@@ -347,14 +383,27 @@ export function Pinboard({ items }: { items: LoveItem[] }) {
         phase = state;
         btnDraw.hidden = state !== "board";
         btnShuffle.hidden = state !== "board";
+        btnOrganize.hidden = state !== "board";
         btnStop.hidden = state !== "drawing";
         btnAgain.hidden = state !== "revealed";
         btnBack.hidden = state !== "revealed";
         if (state === "board") statusEl.textContent = "";
       };
 
+      // Restore the board to its default fixed height and remove any topic
+      // labels the "Organize" view added. Called before any layout that owns
+      // the field (scatter / draw), so those never inherit the taller,
+      // organized board.
+      let topicLabels: HTMLElement[] = [];
+      const clearTopics = () => {
+        topicLabels.forEach((l) => l.remove());
+        topicLabels = [];
+        board.style.height = `${boardHeightFor(cards.length)}px`;
+      };
+
       // Re-scatter every card to new random positions within the field.
       const scatter = () => {
+        clearTopics();
         const { w, h } = fieldSize();
         const animate = !reduceMotion();
         cards.forEach((el, i) => {
@@ -372,6 +421,7 @@ export function Pinboard({ items }: { items: LoveItem[] }) {
 
       const startDraw = () => {
         if (isMobile() || phase === "drawing") return;
+        clearTopics();
         const { w, h } = fieldSize();
         setButtons("drawing");
         statusEl.textContent = "Riffling…";
@@ -445,7 +495,91 @@ export function Pinboard({ items }: { items: LoveItem[] }) {
         statusEl.textContent = "Your card:";
       };
 
+      // Organize by topic: gather the loose scatter into a tidy grid, one
+      // labelled row per type (Places, Books, Films, Watch, Things). Cards keep
+      // their drag handlers, so it's still a live board — just sorted. The board
+      // grows to fit the grid (an explicit, opt-in view); Shuffle / Draw call
+      // clearTopics() to snap back to the fixed-area scatter.
+      const TOPIC_ORDER = ["place", "book", "movie", "youtube", "thing"];
+      const TOPIC_LABEL: Record<string, string> = {
+        place: "Places",
+        book: "Books",
+        movie: "Films",
+        youtube: "Watch",
+        thing: "Things",
+      };
+      const typeOf = (el: HTMLElement) =>
+        (Array.from(el.classList).find((c) => c.startsWith("pb-card--")) ?? "")
+          .replace("pb-card--", "") || "other";
+
+      const organize = () => {
+        if (isMobile() || phase === "drawing") return;
+        clearTopics();
+        setButtons("board");
+        const animate = !reduceMotion();
+
+        const groups = new Map<string, HTMLElement[]>();
+        cards.forEach((el) => {
+          const t = typeOf(el);
+          (groups.get(t) ?? groups.set(t, []).get(t)!).push(el);
+        });
+        const ordered = [...groups.entries()].sort(
+          (a, b) =>
+            (TOPIC_ORDER.indexOf(a[0]) + 1 || 99) -
+            (TOPIC_ORDER.indexOf(b[0]) + 1 || 99)
+        );
+
+        const { w } = fieldSize();
+        const LABEL_H = 34; // space above each row for its heading
+        const ROW_GAP = 30; // gap below a row before the next heading
+        const COL_STEP = 250; // ideal horizontal step within a row
+        let y = 6;
+        let z = 10;
+
+        ordered.forEach(([type, els]) => {
+          // Heading for the topic row.
+          const label = document.createElement("div");
+          label.className = "pb-topic";
+          label.textContent = `${TOPIC_LABEL[type] ?? "More"} · ${els.length}`;
+          label.style.top = `${y}px`;
+          field.appendChild(label);
+          topicLabels.push(label);
+
+          const cardsY = y + LABEL_H;
+          const cardW = els[0]?.offsetWidth || CARD_MAX_W;
+          const perRow = Math.max(1, Math.floor((w + 24) / COL_STEP));
+          // If a topic overflows one visual row, let cards overlap horizontally
+          // rather than wrapping, so each topic stays a single band.
+          const step =
+            els.length > 1
+              ? Math.min(COL_STEP, (w - cardW) / (els.length - 1))
+              : 0;
+          let rowH = 0;
+          els.forEach((el, i) => {
+            clearCardState(el);
+            if (animate) el.classList.add("pb-anim");
+            const x = step ? i * step : (w - cardW) / 2;
+            place(el, x, cardsY, seeded(i, 7) * 4 - 2);
+            el.style.zIndex = String(++z);
+            rowH = Math.max(rowH, el.offsetHeight);
+          });
+          void perRow; // single-band layout; perRow kept for future wrapping
+          y = cardsY + rowH + ROW_GAP;
+        });
+
+        // Grow the board to fit the organized grid (bigger than the fixed
+        // scatter area on purpose — this is an explicit, expanded view).
+        board.style.height = `${y + 20}px`;
+        if (animate) {
+          window.setTimeout(
+            () => cards.forEach((el) => el.classList.remove("pb-anim")),
+            560
+          );
+        }
+      };
+
       const onDrawClick = () => startDraw();
+      const onOrganizeClick = () => organize();
       const onShuffleClick = () => {
         if (isMobile() || phase === "drawing") return;
         setButtons("board");
@@ -460,6 +594,7 @@ export function Pinboard({ items }: { items: LoveItem[] }) {
       };
 
       btnDraw.addEventListener("click", onDrawClick);
+      btnOrganize.addEventListener("click", onOrganizeClick);
       btnShuffle.addEventListener("click", onShuffleClick);
       btnStop.addEventListener("click", onStopClick);
       btnAgain.addEventListener("click", onAgainClick);
@@ -467,7 +602,9 @@ export function Pinboard({ items }: { items: LoveItem[] }) {
 
       cleanups.push(() => {
         if (riffleTimer) clearInterval(riffleTimer);
+        topicLabels.forEach((l) => l.remove());
         btnDraw.removeEventListener("click", onDrawClick);
+        btnOrganize.removeEventListener("click", onOrganizeClick);
         btnShuffle.removeEventListener("click", onShuffleClick);
         btnStop.removeEventListener("click", onStopClick);
         btnAgain.removeEventListener("click", onAgainClick);
@@ -479,13 +616,16 @@ export function Pinboard({ items }: { items: LoveItem[] }) {
   }, [items]);
 
   return (
-    <div className="pinboard" ref={boardRef} style={{ minHeight: boardHeight }}>
+    <div className="pinboard" ref={boardRef} style={{ height: boardHeight }}>
       <div className="pb-tools">
         <button type="button" className="pb-btn pb-btn--go" data-pb="draw">
           Draw a card
         </button>
         <button type="button" className="pb-btn" data-pb="shuffle">
           Shuffle
+        </button>
+        <button type="button" className="pb-btn" data-pb="organize">
+          Organize by topic
         </button>
         <button type="button" className="pb-btn pb-btn--stop" data-pb="stop" hidden>
           Stop
@@ -500,7 +640,7 @@ export function Pinboard({ items }: { items: LoveItem[] }) {
       </div>
       <div className="pinboard-field">
         {items.map((item, i) => {
-          const { x, y, r } = layoutFor(i);
+          const { x, y, r } = layoutFor(i, items.length);
           return (
             <div
               key={item.id}
@@ -521,6 +661,11 @@ export function Pinboard({ items }: { items: LoveItem[] }) {
           );
         })}
       </div>
+      {items.length > MOBILE_LIMIT ? (
+        <button type="button" className="pb-btn pb-more" data-pb="more">
+          See more ({items.length - MOBILE_LIMIT})
+        </button>
+      ) : null}
     </div>
   );
 }

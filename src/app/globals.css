@@ -1296,6 +1296,23 @@ footer.site {
   background: none; border: 0; color: var(--color-bg); cursor: pointer; opacity: 0.9;
 }
 
+/* topic heading injected by "Organize by topic" (desktop only). Sits in the
+   gap above each sorted row; pointer-events off so it never blocks a drag. */
+.pb-topic {
+  position: absolute;
+  left: 4px;
+  z-index: 2;
+  pointer-events: none;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+/* "See more" lives only on the mobile stack (revealed by JS); off on desktop */
+.pb-more { display: none; }
+
 /* mobile: graceful downgrade — tidy tappable stack, no dragging */
 @media (max-width: 760px) {
   .pinboard {
@@ -1316,6 +1333,18 @@ footer.site {
   .pb-card--movie .pb-frame,
   .pb-card--thing .pb-frame { width: min(88vw, 320px); }
   .pb-media--place { width: min(80vw, 240px); height: auto; aspect-ratio: 7 / 5; }
+  .pb-topic { display: none; }
+
+  /* collapse the stack to the first MOBILE_LIMIT (5) cards until expanded */
+  .pinboard:not(.is-expanded) .pinboard-field .pb-card:nth-child(n + 6) {
+    display: none;
+  }
+  .pb-more {
+    display: block;
+    width: fit-content;
+    margin: 26px auto 0;
+  }
+  .pinboard.is-expanded .pb-more { display: none; }
 }
 
 /* reduced-motion: the note snaps instead of sliding; drag still works */
