@@ -90,8 +90,10 @@ function extractLoveProperties(page: PageObjectResponse): LoveItem {
   const typeProp = props["Type"] || props["type"];
   const rawType =
     typeProp?.type === "select" ? typeProp.select?.name ?? "" : "";
-  const type: LoveType = LOVE_TYPES.includes(rawType as LoveType)
-    ? (rawType as LoveType)
+  // Notion label "Thing" maps to the generic Hobby card style.
+  const normalizedType = rawType === "Thing" ? "Hobby" : rawType;
+  const type: LoveType = LOVE_TYPES.includes(normalizedType as LoveType)
+    ? (normalizedType as LoveType)
     : "Place";
 
   const urlProp = props["URL"] || props["url"];
@@ -101,7 +103,8 @@ function extractLoveProperties(page: PageObjectResponse): LoveItem {
   const published =
     publishedProp?.type === "checkbox" ? publishedProp.checkbox : false;
 
-  const orderProp = props["Order"] || props["order"];
+  const orderProp =
+    props["Order"] || props["Order (Optional)"] || props["order"];
   const order = orderProp?.type === "number" ? orderProp.number : null;
 
   const cover = page.cover
@@ -162,7 +165,10 @@ export async function getLovesItems(): Promise<LoveItem[]> {
       cursor = response.has_more ? response.next_cursor ?? undefined : undefined;
     } while (cursor);
 
-    const items = pages.map(extractLoveProperties);
+    const items = pages
+      .map(extractLoveProperties)
+      // Drop rows with no name — nothing to label a card with (likely a draft).
+      .filter((item) => item.title.trim() !== "");
 
     // Manual Order ascending, nulls last; ties keep the query's last-edited-desc.
     return items.sort((a, b) => {
