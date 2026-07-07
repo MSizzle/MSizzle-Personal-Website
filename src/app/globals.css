@@ -1262,9 +1262,19 @@ footer.site {
 .pb-meta .pb-t { font-size: 13px; font-weight: 800; line-height: 1.1; }
 .pb-meta .pb-c { font-size: 11px; color: var(--color-text-muted); margin-top: 4px; }
 
-/* thing (generic note card) */
+/* thing (generic note card) — a catch-all whose images are any shape (photos,
+   art, screenshots). Cropping them into a short landscape strip cut the good
+   part off (e.g. tall photography links), so let the media take the image's own
+   aspect ratio instead. Capped so a very tall photo can't dominate the board;
+   the swatch fallback keeps a shape before/without an image. */
 .pb-card--thing .pb-frame { width: 200px; }
-.pb-media--thing { width: 100%; height: 120px; }
+.pb-media--thing { width: 100%; min-height: 120px; background: #efece6; }
+.pb-card--thing .pb-img {
+  height: auto;
+  max-height: 300px;
+  object-fit: contain;
+}
+.pb-card--thing .pb-swatch { height: 120px; }
 .pb-body { padding: 11px 12px 13px; }
 .pb-body .pb-t { font-size: 14px; font-weight: 800; }
 .pb-body .pb-s { font-size: 12px; color: var(--color-text-muted); margin-top: 5px; line-height: 1.3; }

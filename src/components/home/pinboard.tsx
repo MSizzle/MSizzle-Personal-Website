@@ -308,10 +308,31 @@ export function Pinboard({ items }: { items: LoveItem[] }) {
         const r = field.getBoundingClientRect();
         return { w: r.width, h: r.height };
       };
-      const place = (el: HTMLElement, x: number, y: number, r: number) => {
+      const place = (
+        el: HTMLElement,
+        x: number,
+        y: number,
+        r: number,
+        s = 1
+      ) => {
         el.dataset.x = String(x);
         el.dataset.y = String(y);
-        el.style.transform = `translate(${x}px, ${y}px) rotate(${r}deg)`;
+        el.style.transform = `translate(${x}px, ${y}px) rotate(${r}deg) scale(${s})`;
+      };
+      // How big to blow cards up once they leave the board: the gathered deck
+      // grows to fill the field, and the drawn winner grows further. Sized to
+      // the field (cards are small next to a ~900px board) and capped so a very
+      // tall board can't produce an absurd card. Scale is around the card's
+      // center (transform-origin: center), so the deck stays centered.
+      const DECK_FRAC = 0.52;
+      const REVEAL_FRAC = 0.74;
+      const SCALE_CAP = 2.6;
+      const fitScale = (el: HTMLElement, w: number, h: number, frac: number) => {
+        const s = Math.min(
+          (w * frac) / el.offsetWidth,
+          (h * frac) / el.offsetHeight
+        );
+        return Math.max(1, Math.min(s, SCALE_CAP));
       };
       const deckPos = (el: HTMLElement, w: number, h: number) => ({
         x: (w - el.offsetWidth) / 2 + rand(-3, 3),
@@ -360,7 +381,7 @@ export function Pinboard({ items }: { items: LoveItem[] }) {
           // Instant path: settle on one random card, no cycling flicker.
           cards.forEach((el, i) => {
             const p = deckPos(el, w, h);
-            place(el, p.x, p.y, p.r);
+            place(el, p.x, p.y, p.r, fitScale(el, w, h, DECK_FRAC));
             el.style.zIndex = String(i + 10);
           });
           ptr = Math.floor(Math.random() * cards.length);
@@ -373,7 +394,7 @@ export function Pinboard({ items }: { items: LoveItem[] }) {
         cards.forEach((el, i) => {
           el.classList.add("pb-anim");
           const p = deckPos(el, w, h);
-          place(el, p.x, p.y, p.r);
+          place(el, p.x, p.y, p.r, fitScale(el, w, h, DECK_FRAC));
           el.style.zIndex = String(i + 10);
         });
 
@@ -388,7 +409,7 @@ export function Pinboard({ items }: { items: LoveItem[] }) {
             el.classList.add("pb-riffle", "pb-peek");
             el.style.zIndex = "300";
             const p = deckPos(el, rw, rh);
-            place(el, p.x, p.y - 14, p.r);
+            place(el, p.x, p.y - 14, p.r, fitScale(el, rw, rh, DECK_FRAC));
             cards.forEach((o, i) => {
               if (o !== el) o.style.zIndex = String(i + 10);
             });
@@ -412,7 +433,13 @@ export function Pinboard({ items }: { items: LoveItem[] }) {
         el.classList.add("pb-drawn");
         if (animate) el.classList.add("pb-anim");
         el.style.zIndex = "500";
-        place(el, (w - el.offsetWidth) / 2, (h - el.offsetHeight) / 2 - 20, 0);
+        place(
+          el,
+          (w - el.offsetWidth) / 2,
+          (h - el.offsetHeight) / 2 - 20,
+          0,
+          fitScale(el, w, h, REVEAL_FRAC)
+        );
         window.setTimeout(() => el.classList.add("is-open"), animate ? 280 : 0);
         setButtons("revealed");
         statusEl.textContent = "Your card:";
