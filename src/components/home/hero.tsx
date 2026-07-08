@@ -96,7 +96,7 @@ export function Hero() {
           <span className="tick-sep">·</span>
           <a className="tick-link" href="#loves">Things I Love</a>
           <span className="tick-sep">·</span>
-          <a className="tick-link" href="#contact">Contact</a>
+          <a className="tick-link" href="/contact">Contact</a>
           <span className="tick-sep">·</span>
           {/* Group 2: exact duplicate for seamless animation loop */}
           <a className="tick-link" href="https://prometheus.today" target="_blank" rel="noopener noreferrer">Prometheus</a>
@@ -107,7 +107,7 @@ export function Hero() {
           <span className="tick-sep">·</span>
           <a className="tick-link" href="#loves">Things I Love</a>
           <span className="tick-sep">·</span>
-          <a className="tick-link" href="#contact">Contact</a>
+          <a className="tick-link" href="/contact">Contact</a>
           <span className="tick-sep">·</span>
         </div>
       </div>

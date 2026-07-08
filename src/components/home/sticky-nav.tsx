@@ -4,13 +4,14 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 
 // Mirrors the global EditorialHeader link set (quick task 260706-tx6, reverses D-08):
-// Prometheus, Building, Writing, Contact. Contact is an in-page anchor to the
-// footer; the other three are route links, matching the top header they slide over.
+// Prometheus, Building, Writing, Contact. Contact is the /contact route (quick
+// task 260708-lqc; was a #contact footer anchor), matching the top header these
+// links slide over.
 const LINKS = [
   { label: "Prometheus", href: "https://prometheus.today" },
   { label: "Building", href: "/building" },
   { label: "Writing", href: "/writing" },
-  { label: "Contact", href: "#contact" },
+  { label: "Contact", href: "/contact" },
 ] as const;
 
 /**
