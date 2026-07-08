@@ -43,6 +43,8 @@ const CARD_MAX_H = 300; // tallest card, kept off the bottom edge
 const ROW_H = 300; // ideal vertical step when the board isn't capped
 const BOARD_MAX_H = 720; // hard cap: the board never grows past this (fixed area)
 const MOBILE_LIMIT = 5; // cards shown before "See more" on the mobile stack
+const ROWS = 3; // cards start spread across three horizontal lines
+const THREE_LINE_MIN_H = 660; // board floor so the three start lines get real vertical gaps
 
 /** Deterministic 0..1 pseudo-random from an index + salt (SSR-stable). */
 function seeded(i: number, salt: number): number {
@@ -65,35 +67,42 @@ interface Pos {
  */
 function boardHeightFor(n: number): number {
   const rows = Math.max(1, Math.ceil(n / COLS));
-  return Math.min(rows * ROW_H + 40, BOARD_MAX_H);
+  const grid = Math.min(rows * ROW_H + 40, BOARD_MAX_H);
+  // Once there are enough cards to fill all three start lines, keep the board
+  // tall enough that those lines get real vertical separation (never past the
+  // fixed-area cap).
+  if (n >= ROWS) return Math.min(BOARD_MAX_H, Math.max(grid, THREE_LINE_MIN_H));
+  return grid;
 }
 
 /**
  * Scatter position for card `i` of `n`, always within the fixed board area.
- * Cards start as a loose, random cluster around the board's center — a rough
- * circle/pile you then drag apart — rather than a tidy grid. Deterministic
- * (seeded) so SSR and client agree.
+ * Cards start spread out along three horizontal lines rather than piled in a
+ * center cluster: consecutive cards round-robin across the rows and step evenly
+ * across the width, with a little seeded wobble so the lines read as
+ * hand-pinned rather than a ruler-straight grid. Deterministic (seeded) so SSR
+ * and client agree.
  */
 function layoutFor(i: number, n: number): Pos {
   const usableW = FIELD_W - CARD_MAX_W;
   const usableH = Math.max(0, boardHeightFor(n) - CARD_MAX_H);
-  const cx = usableW / 2;
-  const cy = usableH / 2;
 
-  // Circular cluster around the middle: a seeded angle + radius drops each card
-  // somewhere in a loose ellipse centered on the board, so the cards overlap
-  // and pile toward the center instead of lining up. sqrt on the radius keeps
-  // the disc from clumping everything dead-center; a small angular jitter (salt
-  // 4) breaks up any lingering regularity. Clamped to the usable area so cards
-  // never spill past the board edges, and fully deterministic (seeded) so SSR
-  // and client agree.
-  const angle = (seeded(i, 1) + seeded(i, 4) * 0.15) * Math.PI * 2;
-  const radius = Math.sqrt(0.08 + 0.92 * seeded(i, 2));
-  const spreadX = usableW * 0.42;
-  const spreadY = usableH * 0.46;
-  const x = clamp(cx + Math.cos(angle) * radius * spreadX, 0, usableW);
-  const y = clamp(cy + Math.sin(angle) * radius * spreadY, 0, usableH);
-  const r = seeded(i, 3) * 16 - 8;
+  const row = i % ROWS; // round-robin down the three lines
+  const col = Math.floor(i / ROWS); // position along a line
+  const perRow = Math.max(1, Math.ceil(n / ROWS)); // columns in the fullest row
+
+  // Even horizontal spread along each line; a single-column line sits at the
+  // left. Jitter is a fraction of the step so cards never crowd back together.
+  const stepX = perRow > 1 ? usableW / (perRow - 1) : 0;
+  const jitterX = (seeded(i, 1) - 0.5) * Math.min(stepX * 0.28, 34);
+  const x = clamp(col * stepX + jitterX, 0, usableW);
+
+  // Three evenly-spaced vertical lines, with a small seeded wobble.
+  const stepY = ROWS > 1 ? usableH / (ROWS - 1) : 0;
+  const jitterY = (seeded(i, 2) - 0.5) * Math.min(stepY * 0.22, 26);
+  const y = clamp(row * stepY + jitterY, 0, usableH);
+
+  const r = seeded(i, 3) * 12 - 6;
   return { x, y, r };
 }
 
