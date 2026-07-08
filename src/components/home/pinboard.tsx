@@ -450,13 +450,19 @@ export function Pinboard({
           const cell = cells[i];
           const cx = cell % cols;
           const cy = Math.floor(cell / cols);
-          // Jitter within the cell (clamped so the card stays inside the field).
-          const slackX = Math.max(0, cellW - el.offsetWidth);
-          const slackY = Math.max(0, cellH - el.offsetHeight);
-          const x = Math.min(cx * cellW + rand(0, slackX), Math.max(0, w - el.offsetWidth));
-          const y = Math.min(cy * cellH + rand(0, slackY), Math.max(0, h - el.offsetHeight));
-          place(el, x, y, rand(-8, 8));
-          el.style.zIndex = String(i + 10);
+          const maxX = Math.max(0, w - el.offsetWidth);
+          const maxY = Math.max(0, h - el.offsetHeight);
+          // Anchor to the shuffled cell's center, then spill well past the cell
+          // bounds so cards overlap and clump unevenly — a chaotic pile, not a
+          // tidy one-per-cell grid. Clamped so nothing leaves the field.
+          const baseX = cx * cellW + (cellW - el.offsetWidth) / 2;
+          const baseY = cy * cellH + (cellH - el.offsetHeight) / 2;
+          const x = clamp(baseX + rand(-cellW * 0.6, cellW * 0.6), 0, maxX);
+          const y = clamp(baseY + rand(-cellH * 0.6, cellH * 0.6), 0, maxY);
+          // Wilder tilt + fully-random stacking so overlaps look scattered
+          // rather than dealt left-to-right.
+          place(el, x, y, rand(-11, 11));
+          el.style.zIndex = String(10 + Math.floor(Math.random() * cards.length * 3));
         });
         if (animate) {
           window.setTimeout(() => cards.forEach((el) => el.classList.remove("pb-anim")), 560);
