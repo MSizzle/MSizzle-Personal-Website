@@ -50,6 +50,8 @@ function seeded(i: number, salt: number): number {
   return s / 233280;
 }
 
+const clamp = (v: number, lo: number, hi: number) => Math.max(lo, Math.min(v, hi));
+
 interface Pos {
   x: number;
   y: number;
@@ -82,9 +84,16 @@ function layoutFor(i: number, n: number): Pos {
   const stepX = COLS > 1 ? usableW / (COLS - 1) : 0;
   const stepY = rows > 1 ? usableH / (rows - 1) : 0;
 
-  const x = col * stepX + (seeded(i, 1) * 40 - 20);
-  const y = row * stepY + (seeded(i, 2) * 40 - 20) + (col % 2 === 0 ? 0 : 20);
-  const r = seeded(i, 3) * 10 - 5;
+  // Loose, jumbled scatter on first paint (not a tidy grid): heavier seeded
+  // jitter plus a per-column vertical stagger break up the rows/columns.
+  // Clamped to the usable area so cards never spill past the board edges, and
+  // fully deterministic (seeded) so SSR and client agree.
+  const jitterX = seeded(i, 1) * 90 - 45;
+  const jitterY = seeded(i, 2) * 90 - 45;
+  const stagger = seeded(col, 4) * 70 - 35 + (col % 2 === 0 ? 0 : 28);
+  const x = clamp(col * stepX + jitterX, 0, usableW);
+  const y = clamp(row * stepY + jitterY + stagger, 0, usableH);
+  const r = seeded(i, 3) * 16 - 8;
   return { x, y, r };
 }
 
@@ -215,10 +224,20 @@ function hashId(id: string): number {
   return h;
 }
 
-export function Pinboard({ items }: { items: LoveItem[] }) {
+export function Pinboard({
+  items,
+  categoryOrder = [],
+}: {
+  items: LoveItem[];
+  /** Type-select option order from Notion; orders the Organize-by-topic bands. */
+  categoryOrder?: string[];
+}) {
   const boardRef = useRef<HTMLDivElement>(null);
 
   const boardHeight = boardHeightFor(items.length);
+
+  // Stable string key so the effect re-wires only when the actual order changes.
+  const categoryKey = categoryOrder.join("");
 
   useEffect(() => {
     const board = boardRef.current;
@@ -401,17 +420,42 @@ export function Pinboard({ items }: { items: LoveItem[] }) {
         board.style.height = `${boardHeightFor(cards.length)}px`;
       };
 
-      // Re-scatter every card to new random positions within the field.
+      // Re-scatter every card across the field. Rather than a pure-random
+      // position per card (which piles cards on top of each other), assign each
+      // card to a distinct, randomly-shuffled grid cell and jitter it within
+      // that cell — so Shuffle actually reshuffles positions while spreading the
+      // cards over the whole board instead of stacking them.
       const scatter = () => {
         clearTopics();
         const { w, h } = fieldSize();
         const animate = !reduceMotion();
+
+        const n = cards.length;
+        const cols = Math.max(1, Math.min(COLS, n));
+        const rows = Math.max(1, Math.ceil(n / cols));
+        const cellW = w / cols;
+        const cellH = h / rows;
+
+        // Fisher–Yates shuffle of the grid cells, so each card lands in its own
+        // cell in a fresh random arrangement every Shuffle.
+        const cells = Array.from({ length: rows * cols }, (_, k) => k);
+        for (let k = cells.length - 1; k > 0; k--) {
+          const j = Math.floor(Math.random() * (k + 1));
+          [cells[k], cells[j]] = [cells[j], cells[k]];
+        }
+
         cards.forEach((el, i) => {
           clearCardState(el);
           if (animate) el.classList.add("pb-anim");
-          const maxX = Math.max(0, w - el.offsetWidth);
-          const maxY = Math.max(0, h - el.offsetHeight);
-          place(el, rand(0, maxX), rand(0, maxY), rand(-8, 8));
+          const cell = cells[i];
+          const cx = cell % cols;
+          const cy = Math.floor(cell / cols);
+          // Jitter within the cell (clamped so the card stays inside the field).
+          const slackX = Math.max(0, cellW - el.offsetWidth);
+          const slackY = Math.max(0, cellH - el.offsetHeight);
+          const x = Math.min(cx * cellW + rand(0, slackX), Math.max(0, w - el.offsetWidth));
+          const y = Math.min(cy * cellH + rand(0, slackY), Math.max(0, h - el.offsetHeight));
+          place(el, x, y, rand(-8, 8));
           el.style.zIndex = String(i + 10);
         });
         if (animate) {
@@ -496,21 +540,25 @@ export function Pinboard({ items }: { items: LoveItem[] }) {
       };
 
       // Organize by topic: gather the loose scatter into a tidy grid, one
-      // labelled row per type (Places, Books, Films, Watch, Things). Cards keep
-      // their drag handlers, so it's still a live board — just sorted. The board
-      // grows to fit the grid (an explicit, opt-in view); Shuffle / Draw call
-      // clearTopics() to snap back to the fixed-area scatter.
-      const TOPIC_ORDER = ["place", "book", "movie", "youtube", "thing"];
-      const TOPIC_LABEL: Record<string, string> = {
-        place: "Places",
-        book: "Books",
-        movie: "Films",
-        youtube: "Watch",
-        thing: "Things",
+      // labelled row per category. Categories are the raw Notion "Type" value
+      // on each card (data-category), so the number of bands adapts to the DB —
+      // add a Type option in Notion and it shows up here as its own band. Bands
+      // follow Notion's select-option order (categoryOrder); a value missing
+      // from that list sorts after, alphabetically; cards with no Type collect
+      // in an "Uncategorized" band shown last. Cards keep their drag handlers,
+      // so it's still a live board — just sorted. The board grows to fit the
+      // grid (an explicit, opt-in view); Shuffle / Draw call clearTopics() to
+      // snap back to the fixed-area scatter.
+      const UNCATEGORIZED = "Uncategorized";
+      const catOf = (el: HTMLElement) =>
+        (el.dataset.category ?? "").trim() || UNCATEGORIZED;
+      const catRank = (name: string) => {
+        if (name === UNCATEGORIZED) return Number.MAX_SAFE_INTEGER;
+        const i = categoryOrder.indexOf(name);
+        // Known Notion options keep their order; unknown-but-named categories
+        // sort just before Uncategorized.
+        return i === -1 ? Number.MAX_SAFE_INTEGER - 1 : i;
       };
-      const typeOf = (el: HTMLElement) =>
-        (Array.from(el.classList).find((c) => c.startsWith("pb-card--")) ?? "")
-          .replace("pb-card--", "") || "other";
 
       const organize = () => {
         if (isMobile() || phase === "drawing") return;
@@ -520,27 +568,35 @@ export function Pinboard({ items }: { items: LoveItem[] }) {
 
         const groups = new Map<string, HTMLElement[]>();
         cards.forEach((el) => {
-          const t = typeOf(el);
-          (groups.get(t) ?? groups.set(t, []).get(t)!).push(el);
+          const c = catOf(el);
+          (groups.get(c) ?? groups.set(c, []).get(c)!).push(el);
         });
-        const ordered = [...groups.entries()].sort(
-          (a, b) =>
-            (TOPIC_ORDER.indexOf(a[0]) + 1 || 99) -
-            (TOPIC_ORDER.indexOf(b[0]) + 1 || 99)
-        );
+        const ordered = [...groups.entries()].sort((a, b) => {
+          const ra = catRank(a[0]);
+          const rb = catRank(b[0]);
+          if (ra !== rb) return ra - rb;
+          return a[0].localeCompare(b[0]);
+        });
 
         const { w } = fieldSize();
         const LABEL_H = 34; // space above each row for its heading
         const ROW_GAP = 30; // gap below a row before the next heading
         const COL_STEP = 250; // ideal horizontal step within a row
-        let y = 6;
+        // The field is absolutely inset to the pinboard's top edge, so it sits
+        // under the (z-20) toolbar. Start the first topic row below the
+        // toolbar's bottom so its label ("Places") never hides behind the
+        // Draw / Shuffle / Organize buttons. Clamps to 6 when there's no
+        // overlap (e.g. layouts where the field starts below the tools).
+        const fieldTop = field.getBoundingClientRect().top;
+        const toolbarBottom = toolbar.getBoundingClientRect().bottom;
+        let y = Math.max(6, toolbarBottom - fieldTop + 12);
         let z = 10;
 
-        ordered.forEach(([type, els]) => {
+        ordered.forEach(([name, els]) => {
           // Heading for the topic row.
           const label = document.createElement("div");
           label.className = "pb-topic";
-          label.textContent = `${TOPIC_LABEL[type] ?? "More"} · ${els.length}`;
+          label.textContent = `${name} · ${els.length}`;
           label.style.top = `${y}px`;
           field.appendChild(label);
           topicLabels.push(label);
@@ -558,7 +614,9 @@ export function Pinboard({ items }: { items: LoveItem[] }) {
           els.forEach((el, i) => {
             clearCardState(el);
             if (animate) el.classList.add("pb-anim");
-            const x = step ? i * step : (w - cardW) / 2;
+            // Left-align every band, including single-card bands (step === 0),
+            // so a lone card sits at the row's start rather than centered.
+            const x = i * step;
             place(el, x, cardsY, seeded(i, 7) * 4 - 2);
             el.style.zIndex = String(++z);
             rowH = Math.max(rowH, el.offsetHeight);
@@ -613,7 +671,10 @@ export function Pinboard({ items }: { items: LoveItem[] }) {
     }
 
     return () => cleanups.forEach((fn) => fn());
-  }, [items]);
+    // categoryKey (join of categoryOrder) re-wires organize when the Notion
+    // option order changes; categoryOrder itself is read inside the effect.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [items, categoryKey]);
 
   return (
     <div className="pinboard" ref={boardRef} style={{ height: boardHeight }}>
@@ -645,6 +706,7 @@ export function Pinboard({ items }: { items: LoveItem[] }) {
             <div
               key={item.id}
               className={`pb-card pb-card--${item.type.toLowerCase()}`}
+              data-category={item.category}
               data-x={x}
               data-y={y}
               data-r={r}
