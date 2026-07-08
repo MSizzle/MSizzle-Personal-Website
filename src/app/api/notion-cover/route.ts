@@ -1,7 +1,18 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { Client } from "@notionhq/client";
+import sharp from "sharp";
 
 const notion = new Client({ auth: process.env.NOTION_TOKEN });
+
+// Cover images render in small card / pinboard slots, never full-bleed, so we
+// downscale + re-encode to WebP at the proxy instead of streaming Notion's raw
+// 300-700KB originals. A caller can request a specific width via ?w= (e.g. a
+// retina 2x card slot); default 640 covers every current surface. Clamped so a
+// crafted URL can't ask us to render a huge image.
+const DEFAULT_WIDTH = 640;
+const MIN_WIDTH = 64;
+const MAX_WIDTH = 1280;
+const WEBP_QUALITY = 72;
 
 export async function GET(request: NextRequest) {
   const { searchParams } = request.nextUrl;
@@ -10,6 +21,11 @@ export async function GET(request: NextRequest) {
   if (!pageId) {
     return NextResponse.json({ error: "Missing pageId parameter" }, { status: 400 });
   }
+
+  const wParam = Number.parseInt(searchParams.get("w") ?? "", 10);
+  const width = Number.isFinite(wParam)
+    ? Math.min(MAX_WIDTH, Math.max(MIN_WIDTH, wParam))
+    : DEFAULT_WIDTH;
 
   try {
     const page = await notion.pages.retrieve({ page_id: pageId });
@@ -28,9 +44,27 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: "Failed to fetch image" }, { status: 502 });
     }
 
-    const contentType = upstream.headers.get("content-type") ?? "image/jpeg";
+    const original = Buffer.from(await upstream.arrayBuffer());
 
-    return new NextResponse(upstream.body, {
+    // Downscale + re-encode. `.rotate()` first so EXIF-oriented photos come out
+    // upright; `withoutEnlargement` never upscales a small source. Any decode
+    // failure (unsupported/animated format, corrupt bytes) falls through to
+    // streaming the original so a cover never silently disappears.
+    let body: Buffer;
+    let contentType: string;
+    try {
+      body = await sharp(original)
+        .rotate()
+        .resize({ width, withoutEnlargement: true })
+        .webp({ quality: WEBP_QUALITY })
+        .toBuffer();
+      contentType = "image/webp";
+    } catch {
+      body = original;
+      contentType = upstream.headers.get("content-type") ?? "image/jpeg";
+    }
+
+    return new NextResponse(new Uint8Array(body), {
       status: 200,
       headers: {
         "Content-Type": contentType,

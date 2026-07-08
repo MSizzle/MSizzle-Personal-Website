@@ -47,6 +47,22 @@ function groupPostsByYear(posts: BlogPost[]): Map<number, BlogPost[]> {
 }
 
 /**
+ * Format an RSS pubDate ("Wed, 02 Jul 2026 12:00:00 GMT") as a readable
+ * "July 2, 2026". Falls back to the raw string if the date can't be parsed so
+ * the carousel never renders "Invalid Date".
+ */
+function formatIssueDate(pubDate: string): string {
+  const d = new Date(pubDate);
+  if (Number.isNaN(d.getTime())) return pubDate;
+  return new Intl.DateTimeFormat("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(d);
+}
+
+/**
  * /writing -- merged essay archive + Monty Monthly surface (D-03, D-04).
  *
  * Layout per D-03/D-04 (17.2-03), restyled to match /building:
@@ -93,8 +109,9 @@ export default async function WritingPage() {
   const rawIssues = await fetchMontyMonthlyIssues(6);
   const carouselIssues = rawIssues.map((issue) => ({
     title: issue.title,
-    date: issue.pubDate,
+    date: formatIssueDate(issue.pubDate),
     href: issue.link || undefined,
+    thumbnail: issue.thumbnail,
   }));
 
   const postsByYear = groupPostsByYear(posts);

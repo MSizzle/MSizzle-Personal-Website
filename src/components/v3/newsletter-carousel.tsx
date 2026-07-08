@@ -1,9 +1,12 @@
 import Link from "next/link";
+import Image from "next/image";
 
 type Issue = {
   title: string;
   date: string;
   href?: string;
+  /** Cover image pulled from the Substack RSS feed; null when the issue has none. */
+  thumbnail?: string | null;
 };
 
 type Props = {
@@ -22,11 +25,22 @@ export function NewsletterCarousel({ issues }: Props) {
       {issues.map((issue) => {
         const body = (
           <>
-            {/* Thumb with placeholder glyph (replaces CSS ::after{content:'MM'}) */}
-            <div className="aspect-[3/2] bg-surface border-b-2 border-accent flex items-center justify-center">
-              <span className="font-display font-bold text-2xl text-text-muted" aria-hidden="true">
-                MM
-              </span>
+            {/* Issue cover from the Substack feed; falls back to the "MM" glyph
+                when an issue has no image. */}
+            <div className="relative aspect-[3/2] bg-surface border-b-2 border-accent flex items-center justify-center overflow-hidden">
+              {issue.thumbnail ? (
+                <Image
+                  src={issue.thumbnail}
+                  alt=""
+                  fill
+                  sizes="300px"
+                  className="object-cover"
+                />
+              ) : (
+                <span className="font-display font-bold text-2xl text-text-muted" aria-hidden="true">
+                  MM
+                </span>
+              )}
             </div>
             {/* Card body */}
             <div className="p-[18px]">

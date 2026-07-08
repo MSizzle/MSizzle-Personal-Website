@@ -15,16 +15,25 @@ export type MontyMonthlyIssue = {
   thumbnail: string | null
 }
 
+// Substack's enclosure is often a .heic source (Chrome/Firefox can't render
+// HEIC), while the <img> in content:encoded and media:thumbnail are web-safe
+// JPEG/WebP. Prefer the first candidate whose underlying source isn't HEIC, and
+// only fall back to a HEIC URL if nothing else is available.
+function isRenderable(url: string): boolean {
+  return !/\.(heic|heif)(\?|#|$)/i.test(decodeURIComponent(url))
+}
+
 function extractThumbnail(item: CustomItem): string | null {
-  if (item.enclosure?.url) return item.enclosure.url
+  const candidates: string[] = []
+  if (item.enclosure?.url) candidates.push(item.enclosure.url)
   const mediaUrl = item['media:thumbnail']?.$?.url
-  if (mediaUrl) return mediaUrl
+  if (mediaUrl) candidates.push(mediaUrl)
   const encoded = item['content:encoded']
   if (encoded) {
     const m = encoded.match(/<img[^>]+src="([^"]+)"/i)
-    if (m) return m[1]
+    if (m) candidates.push(m[1])
   }
-  return null
+  return candidates.find(isRenderable) ?? candidates[0] ?? null
 }
 
 export async function fetchMontyMonthlyIssues(limit: number = 10): Promise<MontyMonthlyIssue[]> {
