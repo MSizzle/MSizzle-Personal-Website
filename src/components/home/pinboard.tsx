@@ -70,29 +70,29 @@ function boardHeightFor(n: number): number {
 
 /**
  * Scatter position for card `i` of `n`, always within the fixed board area.
- * Columns spread across FIELD_W; rows spread evenly across whatever height the
- * board settled on, so adding items packs them tighter instead of growing the
- * canvas. Deterministic (seeded) so SSR and client agree.
+ * Cards start as a loose, random cluster around the board's center — a rough
+ * circle/pile you then drag apart — rather than a tidy grid. Deterministic
+ * (seeded) so SSR and client agree.
  */
 function layoutFor(i: number, n: number): Pos {
-  const col = i % COLS;
-  const row = Math.floor(i / COLS);
-  const rows = Math.max(1, Math.ceil(n / COLS));
-
   const usableW = FIELD_W - CARD_MAX_W;
   const usableH = Math.max(0, boardHeightFor(n) - CARD_MAX_H);
-  const stepX = COLS > 1 ? usableW / (COLS - 1) : 0;
-  const stepY = rows > 1 ? usableH / (rows - 1) : 0;
+  const cx = usableW / 2;
+  const cy = usableH / 2;
 
-  // Loose, jumbled scatter on first paint (not a tidy grid): heavier seeded
-  // jitter plus a per-column vertical stagger break up the rows/columns.
-  // Clamped to the usable area so cards never spill past the board edges, and
-  // fully deterministic (seeded) so SSR and client agree.
-  const jitterX = seeded(i, 1) * 90 - 45;
-  const jitterY = seeded(i, 2) * 90 - 45;
-  const stagger = seeded(col, 4) * 70 - 35 + (col % 2 === 0 ? 0 : 28);
-  const x = clamp(col * stepX + jitterX, 0, usableW);
-  const y = clamp(row * stepY + jitterY + stagger, 0, usableH);
+  // Circular cluster around the middle: a seeded angle + radius drops each card
+  // somewhere in a loose ellipse centered on the board, so the cards overlap
+  // and pile toward the center instead of lining up. sqrt on the radius keeps
+  // the disc from clumping everything dead-center; a small angular jitter (salt
+  // 4) breaks up any lingering regularity. Clamped to the usable area so cards
+  // never spill past the board edges, and fully deterministic (seeded) so SSR
+  // and client agree.
+  const angle = (seeded(i, 1) + seeded(i, 4) * 0.15) * Math.PI * 2;
+  const radius = Math.sqrt(0.08 + 0.92 * seeded(i, 2));
+  const spreadX = usableW * 0.42;
+  const spreadY = usableH * 0.46;
+  const x = clamp(cx + Math.cos(angle) * radius * spreadX, 0, usableW);
+  const y = clamp(cy + Math.sin(angle) * radius * spreadY, 0, usableH);
   const r = seeded(i, 3) * 16 - 8;
   return { x, y, r };
 }
