@@ -15,13 +15,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     projects = await getPublishedProjects()
   } catch {}
 
-  // Static routes: /, /prometheus, /building, /writing = 4
+  // Static routes: /, /prometheus, /building, /writing, /contact = 5
   // (/uses removed — "Things I Love" now lives as the homepage #loves section.)
+  // (/contact added in quick task 260708-lqc — dedicated contact route.)
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: SITE_URL, lastModified: new Date(), changeFrequency: 'weekly', priority: 1 },
     { url: `${SITE_URL}/prometheus`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.9 },
     { url: `${SITE_URL}/building`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
     { url: `${SITE_URL}/writing`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
+    { url: `${SITE_URL}/contact`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
   ]
 
   const postRoutes: MetadataRoute.Sitemap = posts.map((post) => ({

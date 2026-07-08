@@ -2,7 +2,8 @@
  * Test suite for Navigation component — Plan 02 (16-02),
  * updated for the 260706-tx6 nav rework (reverses D-08).
  *
- * Current nav set: Prometheus (external) / Building / Writing / Contact (#anchor).
+ * Current nav set: Prometheus (external) / Building / Writing / Contact (/contact route,
+ * quick task 260708-lqc; was a #contact footer anchor).
  * Tests verify:
  *  - /building → activeLabel === 'Building'
  *  - MOBILE_LINKS includes /building; Prometheus is an external link (not /prometheus)

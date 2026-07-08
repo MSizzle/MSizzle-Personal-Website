@@ -3,7 +3,8 @@
  * 01). Replaced V3Footer + the homepage SectionFooter.
  *
  * Verifies the signature, the route links, external-link security, and that it
- * keeps id="contact" (the nav "Contact" anchor target).
+ * keeps id="contact". (The nav "Contact" now points at the /contact route as of
+ * quick task 260708-lqc; the footer id is retained as a stable in-page anchor.)
  */
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import { render, screen, cleanup } from "@testing-library/react";

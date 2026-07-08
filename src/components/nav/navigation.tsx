@@ -7,13 +7,13 @@ import { EditorialHeader } from '@/components/home-v2/editorial-header'
 
 // Mobile drawer — unified link set across all routes per quick task 260706-tx6
 // (reverses D-08). Home is reachable via the "Monty Singer" brand link in the
-// mobile bar (no redundant Home entry in the drawer). Contact is an in-page
-// anchor to the footer, not a route.
+// mobile bar (no redundant Home entry in the drawer). Contact is the /contact
+// route (quick task 260708-lqc; was a #contact footer anchor).
 const MOBILE_LINKS = [
   { href: 'https://prometheus.today', label: 'Prometheus'  },
   { href: '/building',                label: 'Building'    },
   { href: '/writing',                 label: 'Writing'     },
-  { href: '#contact',                 label: 'Contact'     },
+  { href: '/contact',                 label: 'Contact'     },
 ]
 
 export function Navigation() {
@@ -23,10 +23,12 @@ export function Navigation() {
   // Derive the active EditorialHeader label from pathname (quick task
   // 260706-tx6, reverses D-08). EditorialHeader is globally rendered here;
   // on routes not in this mapping the prop is undefined so no nav link gets
-  // bolded. Contact has no active state (it's an in-page anchor, not a route).
-  const activeLabel: 'Building' | 'Writing' | undefined =
+  // bolded. Contact is now the /contact route (quick task 260708-lqc) and
+  // bolds active there.
+  const activeLabel: 'Building' | 'Writing' | 'Contact' | undefined =
     pathname === '/building' ? 'Building'
     : pathname === '/writing' || pathname.startsWith('/blog') ? 'Writing'
+    : pathname === '/contact' ? 'Contact'
     : undefined
 
   return (

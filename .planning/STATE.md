@@ -124,6 +124,7 @@ None yet. Highest-risk item to watch: the 3D hero object's effect on LCP/PSI (Ph
 | 260706-fast7 | Replaced keycap nav with segmented bar: broad full-height cells + vertical dividers, playful invert-on-hover (ink fill + vermilion text, auto-inverts on dark). Supersedes fast6. | 2026-07-06 | f450564 | (inline /gsd-fast, no directory) |
 | 260706-fast8 | Nav hover changed to V6: vermilion fill wipes DOWN from top edge, label flips to paper (labels wrapped in span). Chosen from a 6-variation local preview. Supersedes fast7 hover. | 2026-07-06 | 8497335 | (inline /gsd-fast, no directory) |
 | 260706-fast9 | Prometheus nav item now links to external https://prometheus.today (new tab, rel=noopener) across header/sticky/mobile; dropped from active-route logic. /prometheus page still exists, now unlinked. | 2026-07-06 | ebe6df9 | (inline /gsd-fast, no directory) |
+| 260708-lqc | Dedicated /contact route with big brutalist link rows (ContactRow = external-aware ListRow variant): Email/X/LinkedIn/Monty Monthly. Nav "Contact" rewired #contact→/contact (desktop + mobile, active state); sitemap + tests updated. Footer unchanged. | 2026-07-08 | committed to main | [260708-lqc-contact-page-dedicated-contact-route-wit](./quick/260708-lqc-contact-page-dedicated-contact-route-wit/) |
 
 ## Deferred Items
 

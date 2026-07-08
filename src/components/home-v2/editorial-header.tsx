@@ -5,18 +5,18 @@ type Props = {
   /**
    * Bolds the matching nav link. Falsy = no link bolded (homepage default).
    * Per quick task 260706-tx6: 4-item nav (Prometheus, Building, Writing, Contact).
-   * Contact is an in-page anchor and never receives the active/bold treatment.
+   * Contact is now a route (/contact, quick task 260708-lqc) so it can be bolded active.
    */
-  active?: "Building" | "Writing";
+  active?: "Building" | "Writing" | "Contact";
 };
 
 // Four nav destinations. Order: Prometheus, Building, Writing, Contact.
-// Prometheus points at the external company site; Contact is an in-page anchor.
+// Prometheus points at the external company site; Contact is now the /contact route.
 const LINKS = [
   { label: "Prometheus", href: "https://prometheus.today" },
   { label: "Building",   href: "/building"   },
   { label: "Writing",    href: "/writing"    },
-  { label: "Contact",    href: "#contact"    },
+  { label: "Contact",    href: "/contact"    },
 ] as const;
 
 /**
@@ -24,8 +24,8 @@ const LINKS = [
  *
  * Updated in quick task 260706-tx6 (2026-07-06): nav reworked to Prometheus,
  * Building, Writing, Contact per Monty's new direction. This reverses D-08's
- * About/Projects/Writing/Uses set. Contact is a same-page anchor to the
- * footer contact block, not a route, and is never bolded as active.
+ * About/Projects/Writing/Uses set. Contact became the /contact route in quick
+ * task 260708-lqc (was a #contact footer anchor) and is bolded active there.
  *
  * Server Component — pure presentational, imports `Link` only. Nav links use
  * the shared `.nav-cell` segmented style (globals.css): broad, full-height
