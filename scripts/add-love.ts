@@ -74,7 +74,11 @@ async function main() {
     [titleProp]: { title: [] },
     [urlProp]: { url },
   };
-  if (publishedProp) properties[publishedProp] = { checkbox: true };
+  // Create the row UNPUBLISHED. enrichById() skips published rows
+  // (needsEnrichment bails on `row.published`), so publishing on creation would
+  // leave the row blank forever. We flip Published=true below, after enrichment
+  // has actually filled Name/Type/cover/subtitle.
+  if (publishedProp) properties[publishedProp] = { checkbox: false };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const createParams: any = {
@@ -90,7 +94,22 @@ async function main() {
   const { enrichById } = await import("../src/lib/enrich/index");
   const result = await enrichById(page.id);
 
-  // Refresh the live site so the new (once published) row shows without waiting.
+  // Publish only once enrichment produced a usable card, so a blank row never
+  // reaches the site. If nothing was found, the row stays unpublished for Monty
+  // to finish by hand in Notion.
+  if (publishedProp && result.status === "enriched") {
+    try {
+      await notion.pages.update({
+        page_id: page.id,
+        properties: { [publishedProp]: { checkbox: true } },
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } as any);
+    } catch {
+      // Non-fatal: the row is enriched; Monty can tick Published by hand.
+    }
+  }
+
+  // Refresh the live site so the new (now published) row shows without waiting.
   const site = process.env.NEXT_PUBLIC_SITE_URL || "https://montysinger.com";
   const token = process.env.ENRICH_LOVES_TOKEN;
   if (token) {
