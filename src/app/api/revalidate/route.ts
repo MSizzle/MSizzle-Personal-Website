@@ -14,7 +14,7 @@ export const dynamic = "force-dynamic";
  * Bookmark that link (it is the "refresh" button on the free Notion plan), or
  * point a Notion button at it once you upgrade.
  */
-const PATHS = ["/", "/writing", "/building", "/uses"];
+const PATHS = ["/", "/writing", "/building"];
 
 function handle(request: NextRequest) {
   if (!isAuthorized(request)) {

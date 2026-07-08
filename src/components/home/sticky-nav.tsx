@@ -43,8 +43,9 @@ export function StickyNav() {
   return (
     <div className={`stickynav${show ? " show" : ""}`}>
       <div className="inner">
-        {/* Brand mark — matches the editorial header wordmark */}
-        <div className="mk">Monty Singer</div>
+        {/* Brand mark — matches the editorial header wordmark; always a live
+            link back to the homepage (parity with the top header + mobile bar). */}
+        <Link href="/" className="mk">Monty Singer</Link>
 
         {/* Route links mirroring the global header - hidden on mobile via .stickynav ul CSS */}
         <ul>

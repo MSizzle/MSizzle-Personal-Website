@@ -83,30 +83,31 @@ export function Hero() {
       </div>
 
       {/* Pinned hero marquee strip: black, full-bleed, section-link anchors.
-          Two identical groups so the CSS slide loop is seamless (translateX -50%). */}
+          Two identical groups so the CSS slide loop is seamless (translateX -50%).
+          Labels: Prometheus (external) · Building · Writing · Things I Love · Contact. */}
       <div className="hero-ticker">
         <div className="track">
           {/* Group 1 */}
-          <a className="tick-link" href="#building">Building</a>
+          <a className="tick-link" href="https://prometheus.today" target="_blank" rel="noopener noreferrer">Prometheus</a>
           <span className="tick-sep">·</span>
-          <a className="tick-link" href="#work">Work</a>
+          <a className="tick-link" href="#building">Building</a>
           <span className="tick-sep">·</span>
           <a className="tick-link" href="#writing">Writing</a>
           <span className="tick-sep">·</span>
           <a className="tick-link" href="#loves">Things I Love</a>
           <span className="tick-sep">·</span>
-          <a className="tick-link" href="/uses">Uses</a>
+          <a className="tick-link" href="#contact">Contact</a>
           <span className="tick-sep">·</span>
           {/* Group 2: exact duplicate for seamless animation loop */}
-          <a className="tick-link" href="#building">Building</a>
+          <a className="tick-link" href="https://prometheus.today" target="_blank" rel="noopener noreferrer">Prometheus</a>
           <span className="tick-sep">·</span>
-          <a className="tick-link" href="#work">Work</a>
+          <a className="tick-link" href="#building">Building</a>
           <span className="tick-sep">·</span>
           <a className="tick-link" href="#writing">Writing</a>
           <span className="tick-sep">·</span>
           <a className="tick-link" href="#loves">Things I Love</a>
           <span className="tick-sep">·</span>
-          <a className="tick-link" href="/uses">Uses</a>
+          <a className="tick-link" href="#contact">Contact</a>
           <span className="tick-sep">·</span>
         </div>
       </div>

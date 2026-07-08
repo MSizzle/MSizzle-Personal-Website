@@ -11,25 +11,23 @@ vi.mock('@/lib/notion-projects', () => ({
 import sitemap from '@/app/sitemap'
 
 describe('sitemap()', () => {
-  it('includes /uses entry with priority 0.6 and changeFrequency monthly', async () => {
+  it('does NOT include /uses entry (page removed; Things I Love is the homepage #loves section)', async () => {
     const result = await sitemap()
     const usesEntry = result.find((entry) => entry.url.endsWith('/uses'))
-    expect(usesEntry).toBeDefined()
-    expect(usesEntry?.priority).toBe(0.6)
-    expect(usesEntry?.changeFrequency).toBe('monthly')
+    expect(usesEntry).toBeUndefined()
   })
 
-  it('includes at least 5 static routes (/, /prometheus, /building, /writing, /uses)', async () => {
+  it('includes at least 4 static routes (/, /prometheus, /building, /writing)', async () => {
     const result = await sitemap()
-    // Static routes: /, /prometheus, /building, /writing, /uses = 5
+    // Static routes: /, /prometheus, /building, /writing = 4
     // /about was removed and /projects renamed to /building (quick 260706-tx6);
-    // /portfolio consolidated into /building via 308 redirect.
+    // /portfolio consolidated into /building via 308 redirect; /uses removed.
     // Dynamic routes from mocked Notion return [] so only static routes are present.
     // Filter out blog/ and building/ slugs to count only static-looking entries.
     const staticLooking = result.filter(
       (entry) => !entry.url.includes('/blog/') && !entry.url.includes('/building/')
     )
-    expect(staticLooking.length).toBeGreaterThanOrEqual(5)
+    expect(staticLooking.length).toBeGreaterThanOrEqual(4)
   })
 
   it('does NOT include /portfolio entry (consolidated into /projects)', async () => {

@@ -5,7 +5,7 @@ import { calculateReadingTime } from "@/utils/reading-time";
 import { fetchMontyMonthlyIssues } from "@/lib/rss/substack";
 import { RuleStrong } from "@/components/editorial/rule-strong";
 import { YearBlock } from "@/components/editorial/year-block";
-import { PageHero } from "@/components/v3/page-hero";
+import { PageHeroBand } from "@/components/v3/page-hero-band";
 import { Card } from "@/components/v3/card";
 import { NewsletterCarousel } from "@/components/v3/newsletter-carousel";
 
@@ -49,9 +49,9 @@ function groupPostsByYear(posts: BlogPost[]): Map<number, BlogPost[]> {
 /**
  * /writing -- merged essay archive + Monty Monthly surface (D-03, D-04).
  *
- * Layout per D-03/D-04 (17.2-03):
- *   1. PageHero (v3) -- title "Writing", canonical /writing (unchanged)
- *   2. <RuleStrong />
+ * Layout per D-03/D-04 (17.2-03), restyled to match /building:
+ *   1. PageHeroBand (v3) -- full-bleed vermilion band, title "Writing"
+ *      (replaces the pale PageHero so Writing reads like Building)
  *   3. Year-grouped essays -- YearBlock heading above a card-grid of Cards (D-03)
  *      Essays KEEP real Notion covers when present; title-card is the fallback (SC-1).
  *      Reading time per D (Phase 19 SC-4) computed from content blocks via
@@ -102,16 +102,13 @@ export default async function WritingPage() {
 
   return (
     <>
-      {/* PageHero -- v3 title block (replaces atmosphere-photo two-column grid) */}
-      <section className="px-6 md:px-40">
-        <PageHero
-          title="Writing"
-          crumb="Home / Writing"
-          sub="Essays on philosophy, technology, and the texture of an attentive life."
-        />
-      </section>
-
-      <RuleStrong />
+      {/* Full-bleed vermilion hero band -- matches /building's PageHeroBand
+          (replaces the pale PageHero so Writing and Building read the same). */}
+      <PageHeroBand
+        title="Writing"
+        crumb="Home / Writing"
+        sub="Essays on philosophy, technology, and the texture of an attentive life."
+      />
 
       {/* Year-grouped card grid of essays (D-03, D-04, Phase 19 SC-3/SC-4) */}
       <section className="px-6 md:px-40">

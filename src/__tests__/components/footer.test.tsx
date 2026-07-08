@@ -46,7 +46,7 @@ describe("SiteFooter (single site-wide footer)", () => {
     render(<SiteFooter />);
     expect(document.querySelector('a[href="/building"]')).not.toBeNull();
     expect(document.querySelector('a[href="/writing"]')).not.toBeNull();
-    expect(document.querySelector('a[href="/uses"]')).not.toBeNull();
+    expect(document.querySelector('a[href="/#loves"]')).not.toBeNull();
   });
 
   it("external links carry target=_blank + rel=noopener noreferrer", () => {

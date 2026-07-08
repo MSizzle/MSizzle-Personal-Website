@@ -16,7 +16,7 @@ import Link from "next/link";
 const EXPLORE = [
   { label: "Building", href: "/building" },
   { label: "Writing", href: "/writing" },
-  { label: "Things I Love", href: "/uses" },
+  { label: "Things I Love", href: "/#loves" },
   { label: "Prometheus", href: "/prometheus" },
 ];
 
