@@ -17,7 +17,13 @@ import type { LoveItem } from "@/lib/notion-loves";
  * width. The band wrapper (section.band beat#loves) is supplied by the
  * orchestrator (explorative-homepage.tsx).
  */
-export function SectionLoves({ items = [] }: { items?: LoveItem[] }) {
+export function SectionLoves({
+  items = [],
+  categoryOrder = [],
+}: {
+  items?: LoveItem[];
+  categoryOrder?: string[];
+}) {
   return (
     <>
       <div className="wrap">
@@ -32,7 +38,7 @@ export function SectionLoves({ items = [] }: { items?: LoveItem[] }) {
       </div>
 
       {items.length > 0 ? (
-        <Pinboard items={items} />
+        <Pinboard items={items} categoryOrder={categoryOrder} />
       ) : (
         /* Fallback marquee, outside .wrap intentionally, until the Notion
            "Things I Love" DB is populated. */

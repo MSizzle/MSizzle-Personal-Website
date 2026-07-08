@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import { TitleCard } from "@/components/v3/title-card";
 import { CardCover } from "@/components/v3/card-cover";
+import { EmojiBadge } from "@/components/v3/emoji-badge";
 
 type Props = {
   kicker?: string;
@@ -22,6 +23,18 @@ type Props = {
    * for deterministic SSG/ISR output. Never pass a random value.
    */
   titleCardField?: "paper" | "ink";
+  /**
+   * Emoji rendered as a colored badge tile face (Building index). Used when no
+   * coverSrc is provided: the emoji sits centered on badgeField and the title
+   * appears once in the text block below. Takes precedence over the TitleCard
+   * fallback. Ignored when coverSrc is present.
+   */
+  badgeEmoji?: string;
+  /**
+   * Field color for the emoji badge tile: "ink" | "cream" | "vermilion" |
+   * "gray". MUST be driven deterministically by callers from list index.
+   */
+  badgeField?: "ink" | "cream" | "vermilion" | "gray";
 };
 
 /**
@@ -50,6 +63,8 @@ export function Card({
   coverAlt,
   readingTime,
   titleCardField,
+  badgeEmoji,
+  badgeField,
 }: Props) {
   // Pre-build the fallback face once -- passed into CardCover so it doesn't
   // need to re-import TitleCard, keeping CardCover's API generic.
@@ -62,25 +77,30 @@ export function Card({
     />
   );
 
-  // Cover slot: CardCover handles error swap client-side; title-card is the
-  // direct fallback when no cover URL is provided at all.
+  const hasCover = Boolean(coverSrc);
+  // Emoji badge is the face when there's no real cover image (Building index).
+  const hasBadge = !hasCover && Boolean(badgeEmoji);
+
+  // Cover slot precedence: real image → emoji badge → typographic title-card.
   const coverSlot = coverSrc ? (
     <CardCover
       src={coverSrc}
       alt={coverAlt ?? ""}
       fallback={titleCardFace}
     />
+  ) : hasBadge ? (
+    <EmojiBadge emoji={badgeEmoji!} field={badgeField} />
   ) : (
     titleCardFace
   );
 
-  // Text block below the cover. When a cover is present (image face), show
-  // kicker, title, blurb, and readingTime in the padded area.
-  // When a cover is ABSENT (title-card face), title and kicker live on the
-  // face itself -- the text block only renders if blurb or readingTime exists.
-  const hasCover = Boolean(coverSrc);
+  // Text block below the cover. When a cover OR emoji badge is present, the
+  // title, kicker, blurb, and readingTime render in the padded area (name once).
+  // When only a title-card face shows, title and kicker live on the face
+  // itself -- the text block only renders if blurb or readingTime exists.
+  const showTitleBlock = hasCover || hasBadge;
 
-  const textBlock = hasCover ? (
+  const textBlock = showTitleBlock ? (
     <div className="p-[26px]">
       {kicker && (
         <span className="font-mono text-xs text-accent block mb-[14px]">{kicker}</span>

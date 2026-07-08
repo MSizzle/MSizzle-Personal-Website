@@ -6,6 +6,7 @@ import type { LoveItem } from "@/lib/notion-loves";
 
 function make(partial: Partial<LoveItem> & Pick<LoveItem, "id" | "type">): LoveItem {
   return {
+    category: partial.type,
     title: "Title",
     subtitle: "",
     note: "",

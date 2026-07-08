@@ -3,7 +3,7 @@ import { buildPersonSchema } from "@/lib/seo/schemas";
 import { ExplorativeHomepage } from "@/components/home/explorative-homepage";
 import { getFeaturedProjects, type Project } from "@/lib/notion-projects";
 import { getPublishedPosts, type BlogPost } from "@/lib/notion";
-import { getLovesItems, type LoveItem } from "@/lib/notion-loves";
+import { getLovesData, type LoveItem } from "@/lib/notion-loves";
 
 /**
  * Homepage — ISR Server Component for the personal-brand narrative arc.
@@ -23,6 +23,7 @@ export default async function Home() {
   let projects: Project[] = [];
   let posts: BlogPost[] = [];
   let loves: LoveItem[] = [];
+  let loveCategories: string[] = [];
   try {
     projects = await getFeaturedProjects();
   } catch {}
@@ -30,13 +31,20 @@ export default async function Home() {
     posts = await getPublishedPosts();
   } catch {}
   try {
-    loves = await getLovesItems();
+    const lovesData = await getLovesData();
+    loves = lovesData.items;
+    loveCategories = lovesData.categoryOrder;
   } catch {}
 
   return (
     <>
       <JsonLd data={buildPersonSchema()} />
-      <ExplorativeHomepage projects={projects} posts={posts} loves={loves} />
+      <ExplorativeHomepage
+        projects={projects}
+        posts={posts}
+        loves={loves}
+        loveCategories={loveCategories}
+      />
     </>
   );
 }

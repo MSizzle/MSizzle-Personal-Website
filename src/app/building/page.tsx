@@ -3,8 +3,12 @@ import type { Metadata } from "next";
 import { getPublishedProjects, type Project } from "@/lib/notion-projects";
 import { RuleStrong } from "@/components/editorial/rule-strong";
 import { YearBlock } from "@/components/editorial/year-block";
-import { PageHero } from "@/components/v3/page-hero";
+import { PageHeroBand } from "@/components/v3/page-hero-band";
 import { Card } from "@/components/v3/card";
+
+/** Deterministic badge-field rotation for the emoji-badge card faces. Cycled
+ *  by list index so adjacent cards alternate ink / cream / vermilion / gray. */
+const BADGE_FIELDS = ["ink", "cream", "vermilion", "gray"] as const;
 
 export const revalidate = 1800;
 
@@ -38,16 +42,17 @@ function groupProjectsByYear(projects: Project[]): Map<number, Project[]> {
 /**
  * /building -- Works index page (ARCH-01).
  *
- * Layout per D-01..D-04 (16-04) + Phase 19 SC-2/SC-3:
- *   1. PageHero (v3) -- replaces old two-column atmosphere-photo title block
- *   2. <RuleStrong />
- *   3. Year-grouped projects -- YearBlock heading above a card-grid of Cards (D-03)
- *      Every card face is the Card's automatic TitleCard fallback (Phase 19 decision):
- *      logo-lockup Notion covers are retired as card faces; every /building card is
- *      always a typographic title-card. Deterministic paper/ink alternation by index.
+ * Layout (D-01 restyle over Phase 19 SC-2/SC-3):
+ *   1. PageHeroBand (v3) -- full-bleed vermilion band, white headline + ink
+ *      offset-shadow. Replaces the pale white-card-on-paper PageHero.
+ *   2. Year-grouped projects -- YearBlock heading above a card-grid of Cards (D-03)
+ *      Each card face is an EmojiBadge: the project's Notion emoji on an
+ *      alternating colored field (ink/cream/vermilion/gray), title once below.
+ *      Notion covers stay logo-lockups (retired as card faces in Phase 19); the
+ *      emoji is the consistent per-project icon that every project carries.
  *      project.image remains in the data layer for the detail page (D-02).
  *      Grid uses Phase 19 card-grid offset-shadow treatment (SC-3).
- *   4. <RuleStrong />
+ *   3. <RuleStrong />
  *
  * Defensive Notion fetch -- Notion API failure renders empty-state, no crash. (T-16-07)
  */
@@ -62,16 +67,13 @@ export default async function BuildingPage() {
 
   return (
     <>
-      {/* PageHero -- v3 title block (replaces atmosphere-photo two-column grid) */}
-      <section className="px-6 md:px-40">
-        <PageHero
-          title="Building"
-          crumb="Home / Building"
-          sub="Projects, products, and AI systems I'm building or have built through Prometheus and independent work."
-        />
-      </section>
-
-      <RuleStrong />
+      {/* Full-bleed vermilion hero band (D-01 restyle) -- replaces the pale
+          white-card-on-paper PageHero with a high-contrast solid field. */}
+      <PageHeroBand
+        title="Building"
+        crumb="Home / Building"
+        sub="Projects, products, and AI systems I'm building or have built through Prometheus and independent work."
+      />
 
       {/* Year-grouped card grid of projects (D-03, Phase 19 SC-2/SC-3) */}
       <section className="px-6 md:px-40">
@@ -95,6 +97,8 @@ export default async function BuildingPage() {
                         title={project.title}
                         blurb={project.description}
                         kicker={project.tags?.[0] ?? "Project"}
+                        badgeEmoji={project.emoji ?? undefined}
+                        badgeField={BADGE_FIELDS[i % BADGE_FIELDS.length]}
                         titleCardField={i % 2 === 0 ? "paper" : "ink"}
                       />
                     ))}

@@ -646,6 +646,71 @@ p.body {
   overflow: hidden;
 }
 
+/* ── Emoji badge card face (Building index — icon-badge-on-color) ──────────
+   Large project emoji centered on a solid colored field. Same 4/3 proportion
+   as CardCover so the text block below aligns across a mixed grid. Hard
+   corners, solid fields (no gradients). Field color is caller-driven. */
+.emoji-badge {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-bottom: 1px solid var(--color-border);
+}
+.emoji-badge .glyph {
+  font-size: clamp(3.5rem, 8vw, 6rem);
+  line-height: 1;
+  filter: drop-shadow(0 5px 12px rgba(0, 0, 0, 0.16));
+  transition: transform 0.28s var(--ease-out);
+}
+/* Playful lift on card hover — ties into the site's interactive-forward feel. */
+.card-grid > a:hover .emoji-badge .glyph {
+  transform: scale(1.09) rotate(-3deg);
+}
+.emoji-badge--ink       { background: #17171a; }
+.emoji-badge--cream     { background: #f4ecdd; }
+.emoji-badge--vermilion { background: var(--accent); }
+.emoji-badge--gray      { background: #dbe2ee; }
+
+/* ── Vermilion / ink full-bleed subpage hero band (D-01 restyle) ───────────
+   Replaces the pale white-card-on-paper hero with a high-contrast solid band.
+   Headline is white Hanken 800 with a hard ink offset-shadow (brutalist DNA). */
+.hero-band {
+  position: relative;
+  background: var(--accent);
+  color: #fff;
+}
+.hero-band--ink {
+  background: #141416;
+}
+.hero-band-crumb {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.72);
+  margin-bottom: clamp(20px, 3vh, 30px);
+}
+.hero-band-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  text-transform: uppercase;
+  line-height: 0.86;
+  letter-spacing: -0.03em;
+  font-size: clamp(2.8rem, 11vw, 8rem);
+  color: #fff;
+  text-shadow: 8px 8px 0 #17171a; /* hard ink offset on vermilion (brutalist) */
+}
+.hero-band-sub {
+  margin-top: clamp(20px, 3vh, 28px);
+  max-width: 54ch;
+  font-size: 1.15rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.92);
+}
+
 /* ── Card grid: offset-shadow brutalist treatment (Plan 02 consumes this) ── */
 /* Right/bottom padding gives the 8px offset shadows room to breathe. */
 .card-grid {
@@ -1193,7 +1258,12 @@ footer.site {
   touch-action: none;
   user-select: none;
 }
-.pinboard-field { position: absolute; inset: 0 40px; }
+/* z-index:1 makes the field its own stacking context, one atomic layer below
+   the toolbar (.pb-tools, z-index:20). Every card lives inside the field, so no
+   card — however high its own z-index climbs while dragging/drawing (300, 500,
+   …) — can ever paint above the toolbar buttons; they stay clickable and
+   visible at all times. */
+.pinboard-field { position: absolute; inset: 0 40px; z-index: 1; }
 
 .pb-card {
   position: absolute;

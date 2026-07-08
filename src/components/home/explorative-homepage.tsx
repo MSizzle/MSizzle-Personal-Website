@@ -27,9 +27,20 @@ import type { LoveItem } from "@/lib/notion-loves";
  * Work grid and Monty Monthly carousel. Both default to placeholders/fallback copy
  * when the data is absent, so the tree renders fine with no props (and in tests).
  */
-type Props = { projects?: Project[]; posts?: BlogPost[]; loves?: LoveItem[] };
+type Props = {
+  projects?: Project[];
+  posts?: BlogPost[];
+  loves?: LoveItem[];
+  /** Type-select option order from Notion; drives Organize-by-topic bands. */
+  loveCategories?: string[];
+};
 
-export function ExplorativeHomepage({ projects = [], posts = [], loves = [] }: Props) {
+export function ExplorativeHomepage({
+  projects = [],
+  posts = [],
+  loves = [],
+  loveCategories = [],
+}: Props) {
   return (
     <div className="min-h-screen bg-bg">
       {/* Fixed islands: mounted first so they overlay all bands */}
@@ -56,7 +67,7 @@ export function ExplorativeHomepage({ projects = [], posts = [], loves = [] }: P
 
       {/* Band 6: Things I Love (light) */}
       <section className="band beat" id="loves">
-        <SectionLoves items={loves} />
+        <SectionLoves items={loves} categoryOrder={loveCategories} />
       </section>
 
       {/* Footer is the single site-wide SiteFooter, rendered by app/layout.tsx. */}

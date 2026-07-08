@@ -22,6 +22,7 @@ const oneItem: LoveItem[] = [
   {
     id: "p1",
     type: "Place",
+    category: "Place",
     title: "Big Sur",
     subtitle: "",
     note: "",
