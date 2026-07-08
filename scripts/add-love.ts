@@ -3,15 +3,15 @@
  *
  *   npx tsx scripts/add-love.ts "https://…"
  *
- * Backs the desktop "Add to Things I Love" app: it creates a draft row holding
- * just the URL (Published = false), runs the URL-first enrichment on that single
- * row (auto-detecting Name, Type, cover, subtitle, note), then refreshes the
- * live site. Prints a single human-readable status line as its LAST stdout line
- * so the AppleScript wrapper can show it in a notification.
+ * Backs the desktop "Add to Things I Love" app: it creates a row holding just
+ * the URL (Published = true), runs the URL-first enrichment on that single row
+ * (auto-detecting Name, Type, cover, subtitle, note), then refreshes the live
+ * site. Prints a single human-readable status line as its LAST stdout line so
+ * the AppleScript wrapper can show it in a notification.
  *
  * Loads .env.local (then .env) before touching Notion, exactly like
- * enrich-loves.ts. The row is left UNPUBLISHED on purpose: Monty reviews it in
- * Notion and ticks Published when he wants it on the site.
+ * enrich-loves.ts. The row is Published on creation so it goes straight to the
+ * site; Monty can untick Published in Notion later if he wants to pull it.
  */
 import { config } from "dotenv";
 
@@ -74,7 +74,7 @@ async function main() {
     [titleProp]: { title: [] },
     [urlProp]: { url },
   };
-  if (publishedProp) properties[publishedProp] = { checkbox: false };
+  if (publishedProp) properties[publishedProp] = { checkbox: true };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const createParams: any = {
@@ -105,7 +105,7 @@ async function main() {
 
   const name = result.title?.trim() || "(untitled draft)";
   if (result.status === "enriched") {
-    done(`Added "${name}" (${result.type ?? "?"}). Review + publish in Notion.`);
+    done(`Added + published "${name}" (${result.type ?? "?"}). It's live.`);
   }
   if (result.status === "no-data") {
     done(`Saved the URL, but found nothing to auto-fill. Finish it in Notion.`);
