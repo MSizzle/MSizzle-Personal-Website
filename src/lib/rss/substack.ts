@@ -12,7 +12,22 @@ export type MontyMonthlyIssue = {
   title: string
   link: string
   pubDate: string
+  /** Short plain-text excerpt derived from the issue body, for carousel cards. */
+  description: string
   thumbnail: string | null
+}
+
+/** Strip HTML from the issue body and return a short plain-text excerpt. */
+function extractDescription(item: CustomItem): string {
+  const html = item['content:encoded']
+  if (!html) return ''
+  const text = html
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/&[a-z]+;/gi, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+  if (text.length <= 200) return text
+  return text.slice(0, 200).replace(/\s+\S*$/, '') + '…'
 }
 
 // Substack's enclosure is often a .heic source (Chrome/Firefox can't render
@@ -49,6 +64,7 @@ export async function fetchMontyMonthlyIssues(limit: number = 10): Promise<Monty
       title: (item as unknown as { title?: string }).title ?? '',
       link: (item as unknown as { link?: string }).link ?? '',
       pubDate: (item as unknown as { pubDate?: string }).pubDate ?? '',
+      description: extractDescription(item as unknown as CustomItem),
       thumbnail: extractThumbnail(item as unknown as CustomItem),
     }))
   } catch {

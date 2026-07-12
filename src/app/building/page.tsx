@@ -86,9 +86,10 @@ export default async function BuildingPage() {
             {yearEntries.map(([year, yearProjects], i, arr) => (
               <Fragment key={year}>
                 <YearBlock year={year}>
-                  {/* Phase 19 SC-3: offset-shadow card grid with vermilion hover.
-                      Phase 19 SC-2: always-title-card faces (no cover props passed)
-                      so every project card is the typographic TitleCard face. */}
+                  {/* Offset-shadow card grid with vermilion hover. Cards show the
+                      project's real Notion cover when it has one; projects with no
+                      cover fall back to the emoji badge, then the typographic
+                      TitleCard face (Card precedence: coverSrc -> badge -> title). */}
                   <div className="card-grid">
                     {yearProjects.map((project, i) => (
                       <Card
@@ -97,6 +98,12 @@ export default async function BuildingPage() {
                         title={project.title}
                         blurb={project.description}
                         kicker={project.tags?.[0] ?? "Project"}
+                        coverSrc={
+                          project.cover
+                            ? `/api/notion-cover?pageId=${project.id}`
+                            : undefined
+                        }
+                        coverAlt={project.cover ? project.title : undefined}
                         badgeEmoji={project.emoji ?? undefined}
                         badgeField={BADGE_FIELDS[i % BADGE_FIELDS.length]}
                         titleCardField={i % 2 === 0 ? "paper" : "ink"}

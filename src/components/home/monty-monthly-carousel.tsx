@@ -9,6 +9,8 @@ export type CarouselIssue = {
   title: string;
   excerpt: string;
   href?: string;
+  /** When true, href points off-site (Substack) and opens in a new tab. */
+  external?: boolean;
   /** Issue cover image path (e.g. "/home/issue-12.jpg"); placeholder if unset. */
   cover?: string;
 };
@@ -130,7 +132,7 @@ export function MontyMonthlyCarousel({ issues }: Props) {
               <a
                 className="mm-read"
                 href={issue.href ?? SUBSTACK_URL}
-                target={issue.href ? undefined : "_blank"}
+                target={issue.href && !issue.external ? undefined : "_blank"}
                 rel="noopener noreferrer"
               >
                 Read issue →

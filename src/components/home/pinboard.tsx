@@ -110,10 +110,11 @@ function layoutFor(i: number, n: number): Pos {
 const SWATCHES = ["#8f9e86", "#7c93a6", "#b9805f", "#c9a14e", "#a49e93", "#8a6f82"];
 
 function coverSrc(item: LoveItem): string | null {
-  if (item.type === "YouTube") {
-    return item.youtubeId
-      ? `https://img.youtube.com/vi/${item.youtubeId}/hqdefault.jpg`
-      : null;
+  // A Watch card whose URL points at a video gets the YouTube thumbnail. When
+  // the URL is a channel (no parseable video id), fall through to the Notion
+  // page cover so a manually-set screenshot still shows instead of a blank swatch.
+  if (item.type === "YouTube" && item.youtubeId) {
+    return `https://img.youtube.com/vi/${item.youtubeId}/hqdefault.jpg`;
   }
   return item.cover ? `/api/notion-cover?pageId=${item.id}` : null;
 }

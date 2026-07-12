@@ -6,7 +6,7 @@ import { SectionWork } from "./section-work";
 import { SectionLoves } from "./section-loves";
 import { SectionNewsletter } from "./section-newsletter";
 import type { Project } from "@/lib/notion-projects";
-import type { BlogPost } from "@/lib/notion";
+import type { MontyMonthlyIssue } from "@/lib/rss/substack";
 import type { LoveItem } from "@/lib/notion-loves";
 
 /**
@@ -29,7 +29,8 @@ import type { LoveItem } from "@/lib/notion-loves";
  */
 type Props = {
   projects?: Project[];
-  posts?: BlogPost[];
+  /** Latest Monty Monthly issues from the Substack RSS feed (carousel cards). */
+  montyIssues?: MontyMonthlyIssue[];
   loves?: LoveItem[];
   /** Type-select option order from Notion; drives Organize-by-topic bands. */
   loveCategories?: string[];
@@ -37,7 +38,7 @@ type Props = {
 
 export function ExplorativeHomepage({
   projects = [],
-  posts = [],
+  montyIssues = [],
   loves = [],
   loveCategories = [],
 }: Props) {
@@ -62,7 +63,7 @@ export function ExplorativeHomepage({
 
       {/* Band 5: Writing / Monty Monthly (dark) */}
       <section className="band band-dark beat" id="writing">
-        <SectionNewsletter posts={posts} />
+        <SectionNewsletter issues={montyIssues} />
       </section>
 
       {/* Band 6: Things I Love (light) */}
