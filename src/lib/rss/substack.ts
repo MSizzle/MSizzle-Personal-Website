@@ -17,13 +17,39 @@ export type MontyMonthlyIssue = {
   thumbnail: string | null
 }
 
+const NAMED_ENTITIES: Record<string, string> = {
+  amp: '&',
+  lt: '<',
+  gt: '>',
+  quot: '"',
+  apos: "'",
+  nbsp: ' ',
+  hellip: '…',
+  mdash: '—',
+  ndash: '–',
+  rsquo: '’',
+  lsquo: '‘',
+  rdquo: '”',
+  ldquo: '“',
+}
+
+/**
+ * Decode a fixed set of common named HTML entities plus decimal and hex
+ * numeric entities. Unrecognized named entities fall back to a single space.
+ * Runs on already tag-stripped text, so it cannot reintroduce markup.
+ */
+export function decodeHtmlEntities(str: string): string {
+  return str
+    .replace(/&#x([0-9a-f]+);/gi, (_, hex: string) => String.fromCodePoint(parseInt(hex, 16)))
+    .replace(/&#(\d+);/g, (_, dec: string) => String.fromCodePoint(parseInt(dec, 10)))
+    .replace(/&([a-z]+);/gi, (_, name: string) => NAMED_ENTITIES[name.toLowerCase()] ?? ' ')
+}
+
 /** Strip HTML from the issue body and return a short plain-text excerpt. */
 function extractDescription(item: CustomItem): string {
   const html = item['content:encoded']
   if (!html) return ''
-  const text = html
-    .replace(/<[^>]+>/g, ' ')
-    .replace(/&[a-z]+;/gi, ' ')
+  const text = decodeHtmlEntities(html.replace(/<[^>]+>/g, ' '))
     .replace(/\s+/g, ' ')
     .trim()
   if (text.length <= 200) return text
