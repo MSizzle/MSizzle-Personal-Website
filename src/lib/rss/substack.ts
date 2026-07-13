@@ -6,13 +6,16 @@ type CustomItem = {
   enclosure?: { url?: string }
   'media:thumbnail'?: { $?: { url?: string } }
   'content:encoded'?: string
+  // rss-parser maps the RSS <description> (Substack's issue subtitle) to these.
+  contentSnippet?: string
+  content?: string
 }
 
 export type MontyMonthlyIssue = {
   title: string
   link: string
   pubDate: string
-  /** Short plain-text excerpt derived from the issue body, for carousel cards. */
+  /** Issue subtitle from the feed <description>, falling back to a body excerpt. */
   description: string
   thumbnail: string | null
 }
@@ -43,6 +46,19 @@ export function decodeHtmlEntities(str: string): string {
     .replace(/&#x([0-9a-f]+);/gi, (_, hex: string) => String.fromCodePoint(parseInt(hex, 16)))
     .replace(/&#(\d+);/g, (_, dec: string) => String.fromCodePoint(parseInt(dec, 10)))
     .replace(/&([a-z]+);/gi, (_, name: string) => NAMED_ENTITIES[name.toLowerCase()] ?? ' ')
+}
+
+/**
+ * Substack's <description> is the hand-written issue subtitle (a real summary),
+ * unlike the body, which opens with the same template boilerplate every month.
+ * Fall back to the body excerpt only when the subtitle is missing.
+ */
+function extractSubtitle(item: CustomItem): string {
+  const raw = item.contentSnippet ?? item.content ?? ''
+  const text = decodeHtmlEntities(raw.replace(/<[^>]+>/g, ' '))
+    .replace(/\s+/g, ' ')
+    .trim()
+  return text || extractDescription(item)
 }
 
 /** Strip HTML from the issue body and return a short plain-text excerpt. */
@@ -90,7 +106,7 @@ export async function fetchMontyMonthlyIssues(limit: number = 10): Promise<Monty
       title: (item as unknown as { title?: string }).title ?? '',
       link: (item as unknown as { link?: string }).link ?? '',
       pubDate: (item as unknown as { pubDate?: string }).pubDate ?? '',
-      description: extractDescription(item as unknown as CustomItem),
+      description: extractSubtitle(item as unknown as CustomItem),
       thumbnail: extractThumbnail(item as unknown as CustomItem),
     }))
   } catch {

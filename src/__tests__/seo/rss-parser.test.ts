@@ -38,6 +38,49 @@ describe('fetchMontyMonthlyIssues', () => {
     expect(items[1].thumbnail).toBeNull()
   })
 
+  it('uses the feed <description> subtitle as description, decoded', async () => {
+    const Parser = (await import('rss-parser')).default as unknown as ReturnType<typeof vi.fn>
+    Parser.mockImplementation(function () {
+      return {
+        parseURL: async () => ({
+          items: [
+            {
+              title: 'June 2026',
+              link: 'https://sub/june',
+              pubDate: '2026-06-30',
+              contentSnippet: 'I moved to Malaysia. | Starting Network School | The Slice of Life',
+              'content:encoded': '<p>This email&#8217;s purpose is to: share what I&#8217;m up to</p>',
+            },
+          ],
+        }),
+      }
+    })
+    const { fetchMontyMonthlyIssues } = await import('@/lib/rss/substack')
+    const items = await fetchMontyMonthlyIssues()
+    expect(items[0].description).toBe('I moved to Malaysia. | Starting Network School | The Slice of Life')
+  })
+
+  it('falls back to the body excerpt when the subtitle is missing', async () => {
+    const Parser = (await import('rss-parser')).default as unknown as ReturnType<typeof vi.fn>
+    Parser.mockImplementation(function () {
+      return {
+        parseURL: async () => ({
+          items: [
+            {
+              title: 'No subtitle',
+              link: 'https://sub/x',
+              pubDate: '2026-01-01',
+              'content:encoded': '<p>Body text I&#8217;m keeping</p>',
+            },
+          ],
+        }),
+      }
+    })
+    const { fetchMontyMonthlyIssues } = await import('@/lib/rss/substack')
+    const items = await fetchMontyMonthlyIssues()
+    expect(items[0].description).toBe('Body text I’m keeping')
+  })
+
   it('caps at 10 items', async () => {
     const Parser = (await import('rss-parser')).default as unknown as ReturnType<typeof vi.fn>
     Parser.mockImplementation(function () {
