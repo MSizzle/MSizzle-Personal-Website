@@ -28,7 +28,7 @@ See: .planning/PROJECT.md (updated 2026-06-18)
 Phase: 19
 Plan: Not started
 Status: Milestone complete
-Last activity: 2026-07-06 - Completed quick task 260706-tx6: nav rework (Prometheus/Building/Writing/Contact)
+Last activity: 2026-07-13 - Completed quick task 260713-lex: decode HTML entities in Monty Monthly excerpts
 
 Direction: locked photo-forward restyle from sketch 010 (`.planning/sketches/010-structured-bands-carousel/`) — Hanken Grotesk 800 + Vermilion `#e5411f` marker hero, alternating light/dark bands, hard corners, rail boxes, slide-in photos, Monty Monthly carousel, sticky Subscribe nav, credibility strip, rich footer. Supersedes the 17.1 text-forward skin; preserves who→what→engage velvet-rope IA. Motion scroll/ambient-only (IO + CSS + scroll-snap), no WebGL/Lenis. See memory `v3-homepage-photo-forward-lock` + `17.4-CONTEXT.md`. Phase 18 (QA/perf/alias) parked until this lands.
 
@@ -125,6 +125,7 @@ None yet. Highest-risk item to watch: the 3D hero object's effect on LCP/PSI (Ph
 | 260706-fast8 | Nav hover changed to V6: vermilion fill wipes DOWN from top edge, label flips to paper (labels wrapped in span). Chosen from a 6-variation local preview. Supersedes fast7 hover. | 2026-07-06 | 8497335 | (inline /gsd-fast, no directory) |
 | 260706-fast9 | Prometheus nav item now links to external https://prometheus.today (new tab, rel=noopener) across header/sticky/mobile; dropped from active-route logic. /prometheus page still exists, now unlinked. | 2026-07-06 | ebe6df9 | (inline /gsd-fast, no directory) |
 | 260708-lqc | Dedicated /contact route with big brutalist link rows (ContactRow = external-aware ListRow variant): Email/X/LinkedIn/Monty Monthly. Nav "Contact" rewired #contact→/contact (desktop + mobile, active state); sitemap + tests updated. Footer unchanged. | 2026-07-08 | committed to main | [260708-lqc-contact-page-dedicated-contact-route-wit](./quick/260708-lqc-contact-page-dedicated-contact-route-wit/) |
+| 260713-lex | Decode HTML entities (named + numeric decimal/hex) in Monty Monthly Substack excerpts so carousel subtitle no longer shows raw &#8217; codes | 2026-07-13 | ad69b0d | [260713-lex-fix-monty-monthly-excerpt-showing-raw-ht](./quick/260713-lex-fix-monty-monthly-excerpt-showing-raw-ht/) |
 
 ## Deferred Items
 
