@@ -23,7 +23,7 @@ const FAQS = [
   {
     question: 'What does Prometheus do?',
     answer:
-      'Prometheus helps businesses implement AI into their workflows through custom automation pipelines, AI tool integration, and hands-on education and training.',
+      'Prometheus helps eight and nine figure businesses make money, save resources, and leverage technology through custom automation pipelines, AI tool integration, and hands-on education and training.',
   },
   {
     question: 'Who is Prometheus for?',
@@ -50,7 +50,7 @@ export default function PrometheusPage() {
         <PageHero
           title="Prometheus"
           crumb="Home / Prometheus"
-          sub="AI integrations and education."
+          sub="Applied AI"
         />
       </section>
 
@@ -63,9 +63,9 @@ export default function PrometheusPage() {
           <div className="text-feature text-[var(--color-text)]">What I Do</div>
           <div className="text-body text-[var(--color-text)]">
             <p>
-              Custom AI automation pipelines; AI tool implementation and
-              integration; AI education and training for teams; workflow
-              optimization with AI.
+              We automate workflows to save businesses time and money, advise
+              enterprises on internal AI adoption to answer the big questions,
+              and serve as an AI-enabled partner for your enterprise.
             </p>
           </div>
         </div>
@@ -78,10 +78,10 @@ export default function PrometheusPage() {
           <div className="text-feature text-[var(--color-text)]">Document Automation</div>
           <div className="text-body text-[var(--color-text)]">
             <p>
-              An orthodontic practice. Built an automated pipeline that converts
-              patient PDF reports into formatted PowerPoint presentations,
-              eliminating hours of manual work per week. HIPAA-compliant local
-              architecture.
+              An orthodontic practice was rebuilding the same patient slide decks
+              by hand every week. We built a pipeline that turns their PDF reports
+              into finished PowerPoint presentations automatically. It runs
+              locally, stays HIPAA-compliant, and gives back hours every week.
             </p>
           </div>
         </div>
@@ -94,9 +94,10 @@ export default function PrometheusPage() {
           <div className="text-feature text-[var(--color-text)]">Research Tooling</div>
           <div className="text-body text-[var(--color-text)]">
             <p>
-              A boutique hospitality company. Scoped and designed a custom
-              research tool and website for a property rental business,
-              including automated content workflows.
+              A boutique hospitality chain needed to research properties faster
+              and publish without the busywork. We scoped and designed a custom
+              research tool and website for their rental business, with content
+              workflows that run themselves.
             </p>
           </div>
         </div>
@@ -109,8 +110,8 @@ export default function PrometheusPage() {
           <div className="text-feature text-[var(--color-text)]">Start a project</div>
           <div className="text-body text-[var(--color-text)]">
             <p>
-              Visit prometheus.today to learn more, or email to discuss a
-              project.
+              The full story lives at prometheus.today. If you have a workflow
+              that should run itself, email me and we will scope it.
             </p>
             <div className="mt-4 flex flex-wrap gap-6">
               <a
@@ -122,12 +123,20 @@ export default function PrometheusPage() {
                 prometheus.today &rarr;
               </a>
               <a
-                href="mailto:monty@prometheus.today"
+                href="mailto:info@prometheus.today"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-block border-b border-[var(--color-text)] pb-1 text-label uppercase text-[var(--color-text)]"
               >
-                monty@prometheus.today &rarr;
+                info@prometheus.today &rarr;
+              </a>
+              <a
+                href="https://x.com/themontysinger"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block border-b border-[var(--color-text)] pb-1 text-label uppercase text-[var(--color-text)]"
+              >
+                @themontysinger &rarr;
               </a>
             </div>
           </div>

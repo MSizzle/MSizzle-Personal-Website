@@ -35,9 +35,8 @@ export function SectionBuilding() {
           </h2>
 
           <p className="body reveal">
-            It is where most of my attention goes these days. If you care about
-            getting real, practical leverage out of AI, and not just the hype
-            around it, that is what I{" "}
+            Biggest current focus: If you want real, practical leverage from AI
+            and not just the hype, that is what I{" "}
             <a className="inline" href="#writing">
               write about each month
             </a>
