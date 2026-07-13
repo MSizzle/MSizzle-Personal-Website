@@ -23,7 +23,7 @@ const FAQS = [
   {
     question: 'What does Prometheus do?',
     answer:
-      'Prometheus helps eight and nine figure businesses make money, save resources, and leverage technology through custom automation pipelines, AI tool integration, and hands-on education and training.',
+      'Prometheus helps eight- and nine-figure businesses make money, save resources, and leverage technology through custom automation pipelines, AI tool integration, and hands-on education and training.',
   },
   {
     question: 'Who is Prometheus for?',

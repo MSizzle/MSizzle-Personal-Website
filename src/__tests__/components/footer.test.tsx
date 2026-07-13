@@ -52,7 +52,7 @@ describe("SiteFooter (single site-wide footer)", () => {
 
   it("external links carry target=_blank + rel=noopener noreferrer", () => {
     render(<SiteFooter />);
-    const x = document.querySelector('a[href="https://x.com/thefullmonty0"]');
+    const x = document.querySelector('a[href="https://x.com/themontysinger"]');
     expect(x).not.toBeNull();
     expect(x?.getAttribute("rel")).toBe("noopener noreferrer");
     expect(x?.getAttribute("target")).toBe("_blank");

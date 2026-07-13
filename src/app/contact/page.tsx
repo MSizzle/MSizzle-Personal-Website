@@ -35,8 +35,8 @@ const LINKS = [
   {
     numeral: "02",
     title: "X / Twitter",
-    href: "https://x.com/thefullmonty0",
-    handle: "@thefullmonty0",
+    href: "https://x.com/themontysinger",
+    handle: "@themontysinger",
     action: "Follow",
     external: true,
   },

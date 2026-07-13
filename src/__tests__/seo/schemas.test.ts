@@ -21,7 +21,7 @@ describe('buildPersonSchema', () => {
     expect(schema.sameAs).toEqual([
       'https://linkedin.com/in/monty-singer',
       'https://github.com/MSizzle',
-      'https://x.com/thefullmonty0',
+      'https://x.com/themontysinger',
     ])
     expect(schema.alumniOf).toEqual({
       '@type': 'CollegeOrUniversity',

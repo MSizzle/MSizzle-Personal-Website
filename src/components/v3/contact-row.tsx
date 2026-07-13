@@ -22,7 +22,7 @@ type Props = {
   title: ReactNode;
   /** Destination: mailto:, https://, etc. */
   href: string;
-  /** Handle rendered below the title, e.g. "@thefullmonty0" */
+  /** Handle rendered below the title, e.g. "@themontysinger" */
   handle?: ReactNode;
   /** Trailing action word in the third column, e.g. "Follow" */
   action?: ReactNode;

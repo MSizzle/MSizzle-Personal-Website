@@ -22,7 +22,7 @@ const EXPLORE = [
 
 const ELSEWHERE: { label: string; href: string; external: boolean }[] = [
   { label: "Email", href: "mailto:monty@prometheus.today", external: false },
-  { label: "X / Twitter", href: "https://x.com/thefullmonty0", external: true },
+  { label: "X / Twitter", href: "https://x.com/themontysinger", external: true },
   { label: "LinkedIn", href: "https://linkedin.com/in/monty-singer", external: true },
   { label: "Monty Monthly", href: "https://montymonthly.substack.com", external: true },
 ];
