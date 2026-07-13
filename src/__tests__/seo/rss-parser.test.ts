@@ -1,4 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { decodeHtmlEntities } from '@/lib/rss/substack'
 
 vi.mock('rss-parser', () => {
   return {
@@ -60,5 +61,87 @@ describe('fetchMontyMonthlyIssues', () => {
     const { fetchMontyMonthlyIssues } = await import('@/lib/rss/substack')
     const items = await fetchMontyMonthlyIssues()
     expect(items).toEqual([])
+  })
+})
+
+describe('decodeHtmlEntities', () => {
+  it('decodes &amp;', () => {
+    expect(decodeHtmlEntities('a &amp; b')).toBe('a & b')
+  })
+
+  it('decodes &lt;', () => {
+    expect(decodeHtmlEntities('&lt;div&gt;')).toBe('<div>')
+  })
+
+  it('decodes &gt;', () => {
+    expect(decodeHtmlEntities('a &gt; b')).toBe('a > b')
+  })
+
+  it('decodes &quot;', () => {
+    expect(decodeHtmlEntities('&quot;hi&quot;')).toBe('"hi"')
+  })
+
+  it('decodes &apos;', () => {
+    expect(decodeHtmlEntities('it&apos;s')).toBe("it's")
+  })
+
+  it('decodes &nbsp; to a space', () => {
+    expect(decodeHtmlEntities('a&nbsp;b')).toBe('a b')
+  })
+
+  it('decodes &hellip;', () => {
+    expect(decodeHtmlEntities('wait&hellip;')).toBe('wait…')
+  })
+
+  it('decodes &mdash;', () => {
+    expect(decodeHtmlEntities('a &mdash; b')).toBe('a — b')
+  })
+
+  it('decodes &ndash;', () => {
+    expect(decodeHtmlEntities('a &ndash; b')).toBe('a – b')
+  })
+
+  it('decodes &rsquo; to U+2019', () => {
+    expect(decodeHtmlEntities('I&rsquo;m')).toBe('I’m')
+  })
+
+  it('decodes &lsquo; to U+2018', () => {
+    expect(decodeHtmlEntities('&lsquo;hi')).toBe('‘hi')
+  })
+
+  it('decodes &rdquo; to U+201D', () => {
+    expect(decodeHtmlEntities('hi&rdquo;')).toBe('hi”')
+  })
+
+  it('decodes &ldquo; to U+201C', () => {
+    expect(decodeHtmlEntities('&ldquo;hi')).toBe('“hi')
+  })
+
+  it('matches entity names case-insensitively', () => {
+    expect(decodeHtmlEntities('a &AMP; b')).toBe('a & b')
+  })
+
+  it('decodes decimal numeric entities via code point', () => {
+    expect(decodeHtmlEntities('I&#8217;m')).toBe('I’m')
+  })
+
+  it('decodes hex numeric entities via code point', () => {
+    expect(decodeHtmlEntities('I&#x2019;m')).toBe('I’m')
+  })
+
+  it('decodes hex numeric entities with uppercase X and uppercase hex digits', () => {
+    expect(decodeHtmlEntities('I&#X2019;m')).toBe('I’m')
+  })
+
+  it('falls back to a space for an unrecognized named entity', () => {
+    expect(decodeHtmlEntities('a&foobar;b')).toBe('a b')
+  })
+
+  it('decodes mixed entities in place', () => {
+    expect(decodeHtmlEntities('I&#8217;m happy &mdash; really!')).toBe('I’m happy — really!')
+  })
+
+  it('passes plain text with no entities through unchanged', () => {
+    expect(decodeHtmlEntities('no entities here')).toBe('no entities here')
   })
 })
