@@ -32,6 +32,7 @@ describe('fetchMontyMonthlyIssues', () => {
       title: 'Issue 1',
       link: 'https://sub/1',
       pubDate: '2026-03-01',
+      description: '',
       thumbnail: 'https://img/1.jpg',
     })
     expect(items[1].thumbnail).toBeNull()
