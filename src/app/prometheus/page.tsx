@@ -64,8 +64,8 @@ export default function PrometheusPage() {
           <div className="text-body text-[var(--color-text)]">
             <p>
               We automate workflows to save businesses time and money, advise
-              enterprises on internal AI adoption to answer the big questions,
-              and serve as an AI-enabled partner for your enterprise.
+              enterprises on internal AI adoption, and serve as an ongoing AI
+              partner.
             </p>
           </div>
         </div>
@@ -111,7 +111,7 @@ export default function PrometheusPage() {
           <div className="text-body text-[var(--color-text)]">
             <p>
               The full story lives at prometheus.today. If you have a workflow
-              that should run itself, email me and we will scope it.
+              that should run itself, email us and we will scope it.
             </p>
             <div className="mt-4 flex flex-wrap gap-6">
               <a
