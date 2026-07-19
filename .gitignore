@@ -45,3 +45,12 @@ next-env.d.ts
 
 # Desktop app build artifacts
 desktop/dist/
+
+# Playwright MCP scratch output (console logs, page dumps, screenshots)
+.playwright-mcp/
+
+# Loose personal essays / scratch docs in repo root
+/*.pdf
+/*.docx
+/claude-code-prompt.md
+/src/app/montysinger-v2-spec.md

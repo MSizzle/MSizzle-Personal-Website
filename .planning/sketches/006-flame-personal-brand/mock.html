@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Monty · Flame personal-brand mock (dark vs light)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=Space+Grotesk:wght@300..600&display=swap" rel="stylesheet">
+<style>
+  /* ---- Prometheus flame palette (extracted from prometheus.today) ---- */
+  :root{
+    --flame-core:#E84820;
+    --flame-glow:#FF6B2B;
+    --flame-amber:#FF9F1C;
+    --ember:#D63916;
+    --serif:'Fraunces', Georgia, serif;
+    --sans:'Space Grotesk', system-ui, sans-serif;
+  }
+  .dark{
+    --bg:#0A0A0A; --surface:#111111; --surface2:#161311;
+    --text:#F2EEE9; --muted:#8A8078; --faint:#5A524A;
+    --hair:rgba(255,107,43,0.14); --hair-soft:rgba(255,255,255,0.06);
+    --glow:radial-gradient(60% 80% at 50% 0%, rgba(232,72,32,0.16), transparent 70%);
+  }
+  .light{
+    --bg:#FBF8F3; --surface:#F0EDEA; --surface2:#EDEAE7;
+    --text:#16120E; --muted:#8A8078; --faint:#B9AEA1;
+    --hair:rgba(232,72,32,0.16); --hair-soft:rgba(0,0,0,0.07);
+    --glow:radial-gradient(60% 80% at 50% 0%, rgba(232,72,32,0.10), transparent 70%);
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#000;font-family:var(--sans);-webkit-font-smoothing:antialiased}
+
+  .frame{background:var(--bg);color:var(--text);position:relative;overflow:hidden;padding:0 clamp(20px,7vw,110px)}
+  .frame::before{content:"";position:absolute;inset:0;background:var(--glow);pointer-events:none}
+  .label{position:sticky;top:0;z-index:5;display:flex;justify-content:space-between;align-items:center;
+    padding:14px 0;font-family:var(--sans);font-size:11px;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--muted);border-bottom:1px solid var(--hair-soft);background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(8px)}
+  .label b{color:var(--flame-glow);font-weight:500}
+
+  .wrap{max-width:1120px;margin:0 auto;position:relative;z-index:1}
+
+  /* ---- top nav (understated) ---- */
+  nav{display:flex;justify-content:space-between;align-items:center;padding:34px 0 0}
+  nav .mark{font-family:var(--serif);font-size:19px;font-weight:500;letter-spacing:.01em}
+  nav .mark i{color:var(--flame-core);font-style:normal}
+  nav ul{display:flex;gap:30px;list-style:none;font-size:13.5px;letter-spacing:.02em}
+  nav a{color:var(--muted);text-decoration:none;transition:color .2s}
+  nav a:hover{color:var(--text)}
+
+  /* ---- hero ---- */
+  header{padding:min(16vh,150px) 0 min(13vh,120px)}
+  .eyebrow{font-size:12px;letter-spacing:.32em;text-transform:uppercase;color:var(--flame-core);margin-bottom:26px}
+  .eyebrow::before{content:"";display:inline-block;width:26px;height:1px;background:var(--flame-core);vertical-align:middle;margin-right:12px}
+  h1{font-family:var(--serif);font-weight:340;font-size:clamp(44px,8.2vw,104px);line-height:.98;letter-spacing:-.015em}
+  h1 em{font-style:italic;color:var(--flame-glow)}
+  .lede{margin-top:30px;max-width:30ch;font-size:clamp(16px,1.7vw,20px);line-height:1.55;color:var(--muted)}
+  .way-in{margin-top:40px;font-size:14px;color:var(--faint);letter-spacing:.02em}
+  .way-in a{color:var(--text);text-decoration:none;border-bottom:1px solid var(--flame-core);padding-bottom:2px}
+
+  /* ---- section scaffold ---- */
+  section{padding:76px 0;border-top:1px solid var(--hair-soft)}
+  .kicker{display:flex;gap:14px;align-items:baseline;font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--muted);margin-bottom:34px}
+  .kicker span{color:var(--flame-core);font-family:var(--sans)}
+  h2{font-family:var(--serif);font-weight:360;font-size:clamp(26px,3.6vw,40px);line-height:1.08;letter-spacing:-.01em;max-width:20ch}
+  p.body{margin-top:18px;max-width:56ch;font-size:16.5px;line-height:1.65;color:var(--muted)}
+  .inline{color:var(--text);text-decoration:none;border-bottom:1px solid var(--flame-core)}
+
+  /* ---- building / work grid ---- */
+  .cards{display:grid;grid-template-columns:1fr 1fr;gap:1px;margin-top:40px;background:var(--hair-soft);border:1px solid var(--hair-soft)}
+  .card{background:var(--bg);padding:30px 28px;min-height:172px;display:flex;flex-direction:column;justify-content:space-between;transition:background .25s}
+  .card:hover{background:var(--surface)}
+  .card .no{font-size:12px;color:var(--flame-core);letter-spacing:.1em}
+  .card h3{font-family:var(--serif);font-weight:400;font-size:23px;margin-top:8px}
+  .card p{font-size:14px;color:var(--muted);margin-top:10px;line-height:1.5}
+  .card .tag{font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint);margin-top:18px}
+
+  /* ---- writing / velvet gate ---- */
+  .gate{margin-top:36px;padding:34px 32px;border:1px solid var(--hair);background:
+     linear-gradient(180deg,color-mix(in srgb,var(--flame-core) 6%,transparent),transparent);border-radius:2px}
+  .gate .essay{font-family:var(--serif);font-size:22px;font-weight:400}
+  .gate .meta{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin-top:8px}
+  .gate .sub{margin-top:22px;display:flex;gap:14px;align-items:center;flex-wrap:wrap;font-size:14.5px;color:var(--muted)}
+  .gate input{flex:1;min-width:200px;background:transparent;border:none;border-bottom:1px solid var(--hair);
+    color:var(--text);font-family:var(--sans);font-size:15px;padding:10px 2px;outline:none}
+  .gate input::placeholder{color:var(--faint)}
+  .gate .go{font-family:var(--sans);font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--flame-glow);
+    background:none;border:none;cursor:pointer;white-space:nowrap}
+
+  /* ---- footer ---- */
+  footer{padding:80px 0 90px;border-top:1px solid var(--hair-soft)}
+  .selective{font-family:var(--serif);font-style:italic;font-size:clamp(20px,2.6vw,30px);color:var(--text);max-width:24ch;line-height:1.25}
+  .selective b{color:var(--flame-core);font-style:normal;font-weight:400}
+  .channels{margin-top:34px;display:flex;gap:26px;font-size:14px;flex-wrap:wrap}
+  .channels a{color:var(--muted);text-decoration:none;border-bottom:1px solid transparent;transition:.2s;padding-bottom:2px}
+  .channels a:hover{color:var(--text);border-color:var(--flame-core)}
+  .foot-mark{margin-top:56px;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--faint)}
+
+  @media(max-width:720px){.cards{grid-template-columns:1fr}nav ul{display:none}}
+</style>
+</head>
+<body>
+
+<!-- ================= DARK FLAME ================= -->
+<div class="frame dark">
+  <div class="label"><span>Direction A · <b>Dark flame</b> · Fraunces + Space Grotesk</span><span>scroll ↓ for light</span></div>
+  <div class="wrap">
+    <nav>
+      <div class="mark">Monty<i>.</i></div>
+      <ul><li><a href="#">Building</a></li><li><a href="#">Work</a></li><li><a href="#">Things I love</a></li><li><a href="#">Writing</a></li></ul>
+    </nav>
+
+    <header>
+      <div class="eyebrow">Founder of Prometheus</div>
+      <h1>I build and teach<br>at the <em>edge of AI.</em></h1>
+      <p class="lede">A personal record of what I am making, what I value, and the few things I am proud of.</p>
+      <p class="way-in">If our work should overlap, the way in is <a href="#">Monty Monthly</a>.</p>
+    </header>
+
+    <section>
+      <div class="kicker"><span>01</span> What I am building</div>
+      <h2>Prometheus — AI integrations and education for people who refuse to be left behind.</h2>
+      <p class="body">The center of my attention right now. If you care about getting real leverage from AI and not just the hype, <a class="inline" href="#">let's talk</a>.</p>
+    </section>
+
+    <section>
+      <div class="kicker"><span>02</span> Selected work</div>
+      <div class="cards">
+        <div class="card"><div><div class="no">01</div><h3>Project one</h3><p>A line on why it mattered and what it moved.</p></div><div class="tag">Product · 2025</div></div>
+        <div class="card"><div><div class="no">02</div><h3>Project two</h3><p>A line on why it mattered and what it moved.</p></div><div class="tag">Build · 2025</div></div>
+        <div class="card"><div><div class="no">03</div><h3>Project three</h3><p>A line on why it mattered and what it moved.</p></div><div class="tag">Writing · 2024</div></div>
+        <div class="card"><div><div class="no">04</div><h3>Project four</h3><p>A line on why it mattered and what it moved.</p></div><div class="tag">Talk · 2024</div></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="kicker"><span>03</span> Writing</div>
+      <h2>A few pieces in the open. The rest lives inside Monty Monthly.</h2>
+      <div class="gate">
+        <div class="essay">Why most AI adoption fails before it starts</div>
+        <div class="meta">Essay · from Monty Monthly</div>
+        <div class="sub">
+          <span>Read the rest where I actually write:</span>
+          <input placeholder="you@email.com" aria-label="email">
+          <button class="go">Subscribe →</button>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="selective">I take on <b>very little</b>. If it is the right thing, reach out.</div>
+      <div class="channels"><a href="#">Email</a><a href="#">X / Twitter</a><a href="#">LinkedIn</a><a href="#">Monty Monthly</a></div>
+      <div class="foot-mark">Monty Singer · Founder of Prometheus</div>
+    </footer>
+  </div>
+</div>
+
+<!-- ================= LIGHT FLAME ================= -->
+<div class="frame light">
+  <div class="label"><span>Direction B · <b>Light flame</b> · Fraunces + Space Grotesk</span><span>same content, warm-white ground</span></div>
+  <div class="wrap">
+    <nav>
+      <div class="mark">Monty<i>.</i></div>
+      <ul><li><a href="#">Building</a></li><li><a href="#">Work</a></li><li><a href="#">Things I love</a></li><li><a href="#">Writing</a></li></ul>
+    </nav>
+
+    <header>
+      <div class="eyebrow">Founder of Prometheus</div>
+      <h1>I build and teach<br>at the <em>edge of AI.</em></h1>
+      <p class="lede">A personal record of what I am making, what I value, and the few things I am proud of.</p>
+      <p class="way-in">If our work should overlap, the way in is <a href="#">Monty Monthly</a>.</p>
+    </header>
+
+    <section>
+      <div class="kicker"><span>01</span> What I am building</div>
+      <h2>Prometheus — AI integrations and education for people who refuse to be left behind.</h2>
+      <p class="body">The center of my attention right now. If you care about getting real leverage from AI and not just the hype, <a class="inline" href="#">let's talk</a>.</p>
+    </section>
+
+    <section>
+      <div class="kicker"><span>02</span> Selected work</div>
+      <div class="cards">
+        <div class="card"><div><div class="no">01</div><h3>Project one</h3><p>A line on why it mattered and what it moved.</p></div><div class="tag">Product · 2025</div></div>
+        <div class="card"><div><div class="no">02</div><h3>Project two</h3><p>A line on why it mattered and what it moved.</p></div><div class="tag">Build · 2025</div></div>
+        <div class="card"><div><div class="no">03</div><h3>Project three</h3><p>A line on why it mattered and what it moved.</p></div><div class="tag">Writing · 2024</div></div>
+        <div class="card"><div><div class="no">04</div><h3>Project four</h3><p>A line on why it mattered and what it moved.</p></div><div class="tag">Talk · 2024</div></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="kicker"><span>03</span> Writing</div>
+      <h2>A few pieces in the open. The rest lives inside Monty Monthly.</h2>
+      <div class="gate">
+        <div class="essay">Why most AI adoption fails before it starts</div>
+        <div class="meta">Essay · from Monty Monthly</div>
+        <div class="sub">
+          <span>Read the rest where I actually write:</span>
+          <input placeholder="you@email.com" aria-label="email">
+          <button class="go">Subscribe →</button>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="selective">I take on <b>very little</b>. If it is the right thing, reach out.</div>
+      <div class="channels"><a href="#">Email</a><a href="#">X / Twitter</a><a href="#">LinkedIn</a><a href="#">Monty Monthly</a></div>
+      <div class="foot-mark">Monty Singer · Founder of Prometheus</div>
+    </footer>
+  </div>
+</div>
+
+</body>
+</html>
