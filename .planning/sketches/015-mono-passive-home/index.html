@@ -816,6 +816,16 @@ revealAll();
   window.eScatter();
   window.addEventListener('resize', window.eScatter);
 })();
+
+/* Deep link: open the file with #e (or #a..#d) to land straight in that variant.
+   Runs last, after eScatter exists, so the board scatters on arrival. */
+(function () {
+  var want = (location.hash || '').replace('#', '').toLowerCase();
+  var idx = { a: 0, b: 1, c: 2, d: 3, e: 4 }[want];
+  if (idx === undefined) return;
+  var tab = document.querySelectorAll('.variant-tab')[idx];
+  if (tab) tab.click();
+})();
 </script>
 
 </body>
