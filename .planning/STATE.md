@@ -2,11 +2,11 @@
 gsd_state_version: 1.0
 milestone: v4.0
 milestone_name: Mono Restyle
-status: planning
-last_updated: "2026-07-20T13:50:42.313Z"
+status: roadmapped
+last_updated: "2026-07-20T00:00:00.000Z"
 last_activity: 2026-07-20
 progress:
-  total_phases: 0
+  total_phases: 6
   completed_phases: 0
   total_plans: 0
   completed_plans: 0
@@ -17,115 +17,116 @@ progress:
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-06-18)
+See: .planning/PROJECT.md (updated 2026-07-20)
 
 **Core value:** A personal site that feels alive and memorable, *and* legible — not another template blog.
-**Current focus:** Milestone complete
+**Current focus:** v4.0 Mono Restyle — Phase 20 (Mono Token Foundation)
 
 ## Current Position
 
-Phase: Not started (defining requirements)
+Phase: 20 — Mono Token Foundation
 Plan: —
-Status: Defining requirements
-Last activity: 2026-07-20 — Milestone v4.0 started
+Status: Roadmapped, not yet planned
+Last activity: 2026-07-20 — v4.0 roadmap created (Phases 20-25, 27 requirements mapped)
 
-## v3.0 Phase Status
+Progress: [                    ] 0/6 phases
+
+## v4.0 Phase Status
 
 | Phase | Status | Started | Completed |
 |-------|--------|---------|-----------|
-| 14 — Branch & Crimson Poster Foundation | complete | 2026-06-18 | 2026-06-18 |
-| 15 — WebGL Explorative Homepage (deck superseded) | re-planning | 2026-06-18 | — |
-| 16 — Interior Pages on Notion Data | not_started | — | — |
-| 17 — Infrastructure Preservation & SEO Extension | not_started | — | — |
-| 18 — v3.0 QA, Perf Gate & Alias Swap | not_started | — | — |
+| 20 — Mono Token Foundation | not_started | — | — |
+| 21 — Mono Homepage Rebuild | not_started | — | — |
+| 22 — Things I Love in Mono | not_started | — | — |
+| 23 — Site Sweep & Mono OG | not_started | — | — |
+| 24 — True Inversion Dark Mode | not_started | — | — |
+| 25 — v4.0 QA, Perf Gate & Alias Swap | not_started | — | — |
 
-v1.0 (Phases 1-7) and v2.0 (Phases 8-13) shipped — see `milestones/v1.0-ROADMAP.md` and `milestones/v2.0-ROADMAP.md`.
+v1.0 (Phases 1-7), v2.0 (Phases 8-13), and v3.0 (Phases 14-19) are closed — see `milestones/v1.0-ROADMAP.md`, `milestones/v2.0-ROADMAP.md`, and the Completed Phases table in `ROADMAP.md`.
 
 ## Active Work
 
-v3.0 presentation-layer rebuild on the existing Next.js 16 / React 19 / Tailwind v4 / Notion stack — infra preserved.
+v4.0 is a **restyle of a live, working site**, not new feature work. Design is fully locked by
+`.planning/sketches/015-mono-passive-home/` variant E. No exploration phases.
 
-**Phase 15 pivot (2026-06-18):** The Slide-Deck Homepage (CHOMP wheel deck + Crimson Poster palette) was built (15-01..15-05 committed on `v3`) and paused at the 15-06 human checkpoint, then **superseded**. Red-on-red hurt legibility and the discrete deck didn't match the desired "wandering" feel. New direction — an expansive **WebGL explorative scroll-story** (near-black/off-white/crimson-accent; 3D hero, fluid line, themed beats; Lusion-grade) — validated via sketches 003–005 (`.planning/sketches/`) and de-risked by perf spike 001 (`.planning/spikes/`, GO-WITH-CUTS). Phase 15 was re-scoped in place (keeps the homepage slot; avoids renumbering 16–18); deck plan artifacts archived under `.planning/phases/15-slide-deck-homepage-3d-hero/superseded-deck/`. Reusable carry-forward: HeroBlob, HeroBlobCanvas, FallbackPoster, WebGL2 detection, section content, v3 tokens. Experimental spike code on throwaway branch `spike/webgl-perf` (unmerged). See memory homepage-webgl-direction + nextjs16-dynamic-ssr-false.
+Trigger: the shipped photo-forward homepage read as a founder pitch ("I'm not in photos smiling,
+this is just a bit about me") and the Vermilion/clay palette was rejected outright. The lock:
+pure black/white with **zero accent**, type-only hero, motion stripped to a single slow fade,
+terminal-format writing list, Things I Love pinboard kept but recolored.
 
-Phase 15 context captured 2026-06-19 (`15-CONTEXT.md`): v1 = WebGL hero (procedural stand-in) + scroll-cue + section beats + fallback poster; fluid line = v2; YouTube zoom-through = v3; real GLB models swap in later; assets = parallel/non-blocking. v1-area decisions are recommended defaults (REC) to confirm at plan time.
-
-Next action: `/gsd-plan-phase 15` to decompose the WebGL homepage v1 into plans (reads `15-CONTEXT.md`, sketches 003–005, spike 001). Parallel: kick off the asset workstream (voxel-Monty + horse GLB).
+Next action: `/gsd-plan-phase 20` to decompose the mono token foundation.
 
 ## Accumulated Context
 
+### v4.0 Roadmap Decisions
+
+- **Tokens land first (Phase 20).** The palette is entirely token-driven in `src/app/globals.css`
+  (lines 8-32), so the retheme is cheap and most of the 17 `accent`-referencing files under `src/`
+  follow for free. Everything else in the milestone builds on the mono system existing.
+- **Known hardcoded survivals are scheduled explicitly**, because a token edit will not catch them:
+  `globals.css:618` (`#e5411f`), `globals.css:122` (`--hero-bg` cream `#f4ecdd`),
+  `globals.css:673` (`.emoji-badge--cream`), `globals.css:1293` (`.pb-frame--cream`) — all Phase 20;
+  the three `opengraph-image.tsx` routes (root, `blog/[slug]`, `building/[slug]`) — Phase 23.
+- **The branch + preview (DQ-01) lives in Phase 20**, not a separate ops phase — same pattern as
+  v3.0's Phase 14.
+- **Homepage and pinboard are separate phases (21, 22).** TL-01 is a *preservation* requirement:
+  `src/components/home/pinboard.tsx` (749 lines) must keep its behaviour exactly, palette only.
+  Splitting it out keeps the homepage rebuild from accidentally rewriting it.
+- **Dark mode is its own phase (24) and comes late.** It is genuinely new scope — `next-themes` is
+  NOT a current dependency and there is no theme toggle anywhere in `src/`. It is sequenced after
+  the mono system exists because inversion needs something to invert.
+- **Ship phase (25) carries v3.0 Phase 18's remainder.** That QA was never run against a design
+  about to be replaced, so DQ-01..DQ-05 re-run it against v4.0.
+- **Granularity: standard (6 phases).** Derived from the natural order — tokens → homepage →
+  pinboard → sweep → dark mode → ship.
+
+### Open Risks
+
+- **DM-02 is the hardest requirement in the milestone.** The site uses inversion (black block on
+  white) as its entire emphasis/hover language, so on a dark ground a "black block" hover has
+  nothing to invert against. Phase 24 must resolve this by design, not defer it.
+- **Sketch 015's own stated main risk:** does mono read as *cooler* or as *unfinished*? Vermilion
+  was doing real structural work; watch whether hairlines and mono labels carry that load.
+
+### Known Pre-Existing Test Failures (NOT v4.0 regressions)
+
+Three vitest failures on the homepage predate this milestone: `section-building` HD-04 and
+`explorative-homepage` TD-03/HD-05. The Phase 21 homepage rebuild will likely delete or rewrite
+those tests. Do not attribute them to v4.0 work.
+
+### v1.0-v3.0 Carryforward (still active context)
+
+- Next.js 16 App Router / React 19 / Tailwind v4 / Notion `@notionhq/client` v5
+- Notion pipeline, image proxy routes, SEO surface, and Umami analytics are **untouched** by v4.0
+- Image proxy route over build-time download for Notion images; ISR revalidation at 30 minutes
+- `notion.dataSources.query` (v5 API); `databases.query` deprecated in v5
+- nextjs16: `dynamic({ssr:false})` must live in a `"use client"` loader or the build fails
+- nextjs16: Image `priority` does not auto-emit `fetchPriority` — set `fetchPriority="high"` for LCP
+- Production domain montysinger.com (Namecheap registrar/DNS)
+- Umami at https://analytics.montysinger.com (Neon Postgres, Namecheap CNAME)
+- Vercel prod deploy: **never `--prebuilt --prod`**; watch alias drift after `vercel deploy --prod`
+- PSI mobile is authoritative for perf, not local Lighthouse (±15pt local variance)
+- GO/NO-GO doc is the authoritative QA artifact (v1.0 retro lesson)
+- Site copy rules: no em dashes, no location, "Georgetown University" only, sole professional
+  identity is Founder of Prometheus
+- Surviving from v3 design: Hanken Grotesk 800 display, hard corners (radius 0), no-gradients rule
+- Current nav: Prometheus (external) / Building / Writing / Contact; `/about` deleted, `/uses`
+  unlinked; Contact is the `/contact` route
+
 ### Roadmap Evolution
 
-- Phase 17.1 inserted after Phase 17: Homepage Rebuild — personal-brand arc, current aesthetic, replaces WebGL blob
-- Phase 17.2 inserted after Phase 17: Site Information Architecture — nav/cuts/folds/merges for new scope
-- Phase 17.3 inserted after Phase 17: Portfolio — proud-of past work on projects pipeline
-- Phase 17.4 inserted after Phase 17.3 (2026-07-04): Photo-Forward Homepage Restyle — sketch-010 lock (Hanken 800 + Vermilion) supersedes the 17.1 text-forward skin; Phase 18 now depends on 17.4
-- Phase 19 added (2026-07-06): Project Cards & Covers Redesign — typographic title-card covers, card titles/deks, offset-shadow grids, reading time on /writing, on-brand OG images. From the 2026-07-05 live-site audit; supersedes 17.3's /portfolio surface (route deleted + redirected in quick 260706-gbu)
-
-### v3.0 Roadmap Decisions
-
-- **Foundation lands before pages.** Phase 14 (branch + Crimson Poster `@theme` tokens + brutalist primitives) ships first because it unblocks every page. The branch setup itself (DQ-01) lives here, not in a separate "ops" phase.
-- **Homepage + 3D object ship as one phase (15).** The slide-deck homepage and the lazy R3F 3D hero are the centerpiece and the highest-risk work; the deck controller depends on the object's per-slide entrance, so they ship together rather than split. The object is lazy-loaded off the LCP path with a no-WebGL / reduced-motion fallback to protect the perf budget.
-- **Interior pages are a vertical slice (16)** wired directly to the EXISTING Notion loaders (IN-01/IN-02 verified here as content flows through), including the two new pages /uses and /watching.
-- **SEO extension + infra-preservation verification (17)** is its own checkpoint after pages exist, since `/uses` and `/watching` must be added to sitemap/feed/JSON-LD and Umami must be confirmed on every new route.
-- **QA + perf gate + alias swap (18)** follows the v2.0 Phase 13 pattern: GO/NO-GO doc is the authoritative artifact, PSI mobile is authoritative for perf, `vercel build --prod` is the readiness gate, and the production alias is promoted at parity. Never `--prebuilt --prod`; watch for alias drift post-promotion.
-- **Granularity: standard (5 phases).** Derived from the natural build order (foundation → centerpiece → pages → infra/SEO → ship), not padded.
-
-### v2.0 Roadmap Decisions (carried context)
-
-- Phase ordering: deletions before tokens (reversible, unblocks visual work).
-- GO/NO-GO doc is the authoritative QA artifact (v1.0 retro lesson).
-- PSI authoritative for mobile, not local Lighthouse (±15pt local variance).
-- `vercel build --prod` is the production-readiness gate.
-
-### v1.0 Carryforward (still active context)
-
-- Next.js 16.2.1; provider hierarchy ThemeProvider > LenisProvider > MotionProvider
-- Image proxy route over build-time download for Notion images
-- notion.dataSources.query (v5 API); databases.query deprecated in v5
-- Direct block rendering instead of markdown conversion
-- ISR revalidation at 30 minutes
-- GSAP ticker drives Lenis — prevents ScrollTrigger desync
-- MotionConfig reducedMotion='user' at provider level
-- Production domain montysinger.com (Namecheap registrar/DNS), NOT msizzle.com
-- Umami at https://analytics.montysinger.com (Neon Postgres, Namecheap CNAME)
-- Site copy rules: no em dashes, no location, "Georgetown University" only, sole professional identity Founder of Prometheus
-- nextjs16: Image priority does not auto-emit fetchPriority — set fetchPriority="high" explicitly for LCP
-- Vercel prod deploy: never `--prebuilt --prod`; watch alias drift after `vercel deploy --prod`
-
-### Pending Todos
-
-- 2026-07-07 — LIVE: Things I Love treasure-hunt collage shipped as the draggable pinboard and deployed to montysinger.com (notion-loves + Pinboard, Notion DB curated + NOTION_LOVES_DB_ID set on Vercel prod). `.planning/todos/done/2026-07-06-things-i-love-treasure-hunt-collage.md`
+- Phases 17.1-17.4 inserted during v3.0 (homepage rebuild, IA, portfolio, photo-forward restyle)
+- Phase 19 added 2026-07-06: Project Cards & Covers Redesign
+- v3.0 closed 2026-07-20 with Phase 18 at 4/7; its QA remainder folded into v4.0 Phase 25
+- v4.0 roadmap created 2026-07-20: Phases 20-25, 27 requirements, 100% coverage
 
 ### Blockers/Concerns
 
-None yet. Highest-risk item to watch: the 3D hero object's effect on LCP/PSI (Phase 15 lazy-load + fallback strategy; gated in Phase 18).
-
-### Quick Tasks Completed
-
-| # | Description | Date | Commit | Directory |
-|---|-------------|------|--------|-----------|
-| 260620-q14 | Repaint /photos page to v3 Pumpkin Amber system | 2026-06-20 | 5101b5e | [260620-q14-repaint-photos-page-to-v3-pumpkin-amber-](./quick/260620-q14-repaint-photos-page-to-v3-pumpkin-amber-/) |
-| 260706-gbu | Site-wide polish pass: 10 quick fixes from live-site audit (titles, TODO leak, email, nav parity, /portfolio redirect, dead code, fake fallback, survey) | 2026-07-06 | d95933d | [260706-gbu-site-wide-polish-pass-quick-fixes-from-l](./quick/260706-gbu-site-wide-polish-pass-quick-fixes-from-l/) |
-| 260706-hai | Remove em dashes from all user-visible copy (9 strings across about, projects, uses, photos) | 2026-07-06 | a832ddd | [260706-hai-remove-em-dashes-from-all-user-visible-s](./quick/260706-hai-remove-em-dashes-from-all-user-visible-s/) |
-| 260706-lm3 | Replace cringy proud copy on homepage with plainer past-projects copy | 2026-07-06 | de9ffb7 | [260706-lm3-replace-cringy-proud-copy-on-homepage-wi](./quick/260706-lm3-replace-cringy-proud-copy-on-homepage-wi/) |
-| 260706-fast | Hero subtitle rewritten to user-dictated copy; loves heading shortened to "Things I love outside of work." | 2026-07-06 | e126174 | (inline /gsd-fast, no directory) |
-| 260706-fast2 | Sticky nav restyled to match editorial header (paper field, "Monty Singer" wordmark, muted links; Subscribe CTA kept) | 2026-07-06 | 341c2d9 | (inline /gsd-fast, no directory) |
-| 260706-fast3 | Sticky nav CTA changed Subscribe→"Say Hi" (prefilled mailto); editorial-header restyled to sticky-nav formatting (ink border, muted links via valid text-text/text-text-muted tokens); hero "Join Monty Monthly" moved to its own line | 2026-07-06 | 01315b7 | (inline /gsd-fast, no directory) |
-| 260706-fast4 | Sticky nav mirrored to global header: route links + full-bleed alignment (later superseded by 260706-tx6 nav rework) | 2026-07-06 | 2fabcfa | (inline /gsd-fast, no directory) |
-| 260707-h76 | Things I Love auto-enrichment (Notion rows autocompleted from Name+Type via TMDB/Google Books+Open Library/YouTube/Wikipedia + AI Note draft; page-cover posters) + on-demand /api/revalidate; triggers = npm run enrich-loves + daily Vercel cron + webhook-ready POST | 2026-07-07 | pending | [260707-h76-loves-auto-enrich](./quick/260707-h76-loves-auto-enrich/) |
-| 260706-tx6 | Rework primary nav to Prometheus/Building/Writing/Contact; rename /projects→/building (+redirects), delete /about (+redirect to /), wire #contact footer anchor on both footers. Reverses locked D-08. | 2026-07-06 | 93a8146 | [260706-tx6-rework-site-nav-to-prometheus-building-w](./quick/260706-tx6-rework-site-nav-to-prometheus-building-w/) |
-| 260706-fast5 | Removed footer colophon text + sticky-nav "Say Hi" CTA | 2026-07-06 | 63fa6e6 | (inline /gsd-fast, no directory) |
-| 260706-fast6 | Mechanical keycap press interaction on nav links (.nav-key: hard offset ledge, depress on hover, snap on press, spring-back pop on release; reduced-motion guard) | 2026-07-06 | 03d4864 | (inline /gsd-fast, no directory) |
-| 260706-fast7 | Replaced keycap nav with segmented bar: broad full-height cells + vertical dividers, playful invert-on-hover (ink fill + vermilion text, auto-inverts on dark). Supersedes fast6. | 2026-07-06 | f450564 | (inline /gsd-fast, no directory) |
-| 260706-fast8 | Nav hover changed to V6: vermilion fill wipes DOWN from top edge, label flips to paper (labels wrapped in span). Chosen from a 6-variation local preview. Supersedes fast7 hover. | 2026-07-06 | 8497335 | (inline /gsd-fast, no directory) |
-| 260706-fast9 | Prometheus nav item now links to external https://prometheus.today (new tab, rel=noopener) across header/sticky/mobile; dropped from active-route logic. /prometheus page still exists, now unlinked. | 2026-07-06 | ebe6df9 | (inline /gsd-fast, no directory) |
-| 260708-lqc | Dedicated /contact route with big brutalist link rows (ContactRow = external-aware ListRow variant): Email/X/LinkedIn/Monty Monthly. Nav "Contact" rewired #contact→/contact (desktop + mobile, active state); sitemap + tests updated. Footer unchanged. | 2026-07-08 | committed to main | [260708-lqc-contact-page-dedicated-contact-route-wit](./quick/260708-lqc-contact-page-dedicated-contact-route-wit/) |
-| 260713-lex | Decode HTML entities (named + numeric decimal/hex) in Monty Monthly Substack excerpts so carousel subtitle no longer shows raw &#8217; codes | 2026-07-13 | ad69b0d | [260713-lex-fix-monty-monthly-excerpt-showing-raw-ht](./quick/260713-lex-fix-monty-monthly-excerpt-showing-raw-ht/) |
-| 260713-fast | Monty Monthly card description now uses feed <description> subtitle (real monthly summary) instead of body excerpt that opened with template boilerplate; body excerpt kept as fallback | 2026-07-13 | cb6cda6 | (inline /gsd-fast, no directory) |
+None blocking. Highest-risk item: DM-02 (inversion language on a dark ground) in Phase 24.
 
 ## Deferred Items
 
-Items acknowledged and deferred at v2.0 milestone close on 2026-05-21:
+Carried from the v2.0 close on 2026-05-21 (tech debt, non-blocking):
 
 | Category | Item | Status |
 |----------|------|--------|
@@ -135,17 +136,16 @@ Items acknowledged and deferred at v2.0 milestone close on 2026-05-21:
 | verification | 08/08-VERIFICATION.md | human_needed |
 | verification | 09/09-VERIFICATION.md | human_needed |
 | verification | 10/10-VERIFICATION.md | human_needed |
-| quick_task | 260409-js5-restyle-visit-survey-from-modal-to-chat- | missing |
-| quick_task | 260409-lle-add-notion-powered-events-feature-with-e | missing |
-| quick_task | 260417-2h5-move-carousel-above-hero-text-stretch-fu | missing |
-| quick_task | 260417-3fn-shrink-works-logos-remove-boxes-make-log | missing |
 
-Close-out rationale: v2.0 shipped via Phase 13 GO sign-off. These items predate Phase 13 and were non-blocking per operator decision. Carried forward as tech debt.
+Deferred from v4.0 requirements (Future Requirements):
+
+- Real photography direction for the pinboard cards (currently Notion page covers + YouTube thumbs)
+- A real reading-time value from Notion for the terminal writing block, not a computed estimate
 
 ## Session Continuity
 
-Last session: 2026-07-03T03:38:11.126Z
-Stopped at: Phase 17.2 UI-SPEC approved
+Last session: 2026-07-20
+Stopped at: v4.0 roadmap created (Phases 20-25)
 Resume file: None
 
 ---
@@ -153,5 +153,5 @@ Resume file: None
 *State initialized: 2026-03-31*
 *v1.0 closed: 2026-04-16 (GO per Phase 6) · bookkeeping reconciled 2026-05-20*
 *v2.0 shipped: 2026-05-21 (GO per Phase 13)*
-*v3.0 roadmap drafted: 2026-06-18*
-</content>
+*v3.0 closed: 2026-07-20 (Phase 18 at 4/7, remainder folded into v4.0)*
+*v4.0 roadmap drafted: 2026-07-20*

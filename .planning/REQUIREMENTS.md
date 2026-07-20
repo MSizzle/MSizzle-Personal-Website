@@ -67,4 +67,46 @@ v3.0's requirements are archived at `.planning/milestones/v3.0-REQUIREMENTS.md`.
 
 ## Traceability
 
-Filled by the roadmapper.
+All 27 v4.0 requirements map to exactly one phase. No orphans, no duplicates.
+
+| Requirement | Phase | Phase Name | Status |
+|-------------|-------|------------|--------|
+| MO-01 | Phase 20 | Mono Token Foundation | Pending |
+| MO-02 | Phase 20 | Mono Token Foundation | Pending |
+| MO-03 | Phase 20 | Mono Token Foundation | Pending |
+| MO-04 | Phase 23 | Site Sweep & Mono OG | Pending |
+| MO-05 | Phase 20 | Mono Token Foundation | Pending |
+| HP-01 | Phase 21 | Mono Homepage Rebuild | Pending |
+| HP-02 | Phase 21 | Mono Homepage Rebuild | Pending |
+| HP-03 | Phase 21 | Mono Homepage Rebuild | Pending |
+| HP-04 | Phase 21 | Mono Homepage Rebuild | Pending |
+| HP-05 | Phase 21 | Mono Homepage Rebuild | Pending |
+| MS-01 | Phase 21 | Mono Homepage Rebuild | Pending |
+| MS-02 | Phase 21 | Mono Homepage Rebuild | Pending |
+| MS-03 | Phase 22 | Things I Love in Mono | Pending |
+| TL-01 | Phase 22 | Things I Love in Mono | Pending |
+| TL-02 | Phase 22 | Things I Love in Mono | Pending |
+| TL-03 | Phase 22 | Things I Love in Mono | Pending |
+| SW-01 | Phase 23 | Site Sweep & Mono OG | Pending |
+| SW-02 | Phase 23 | Site Sweep & Mono OG | Pending |
+| SW-03 | Phase 23 | Site Sweep & Mono OG | Pending |
+| DM-01 | Phase 24 | True Inversion Dark Mode | Pending |
+| DM-02 | Phase 24 | True Inversion Dark Mode | Pending |
+| DM-03 | Phase 24 | True Inversion Dark Mode | Pending |
+| DQ-01 | Phase 20 | Mono Token Foundation | Pending |
+| DQ-02 | Phase 25 | v4.0 QA, Perf Gate & Alias Swap | Pending |
+| DQ-03 | Phase 25 | v4.0 QA, Perf Gate & Alias Swap | Pending |
+| DQ-04 | Phase 25 | v4.0 QA, Perf Gate & Alias Swap | Pending |
+| DQ-05 | Phase 25 | v4.0 QA, Perf Gate & Alias Swap | Pending |
+
+**Coverage by phase:**
+
+| Phase | Requirements | Count |
+|-------|--------------|-------|
+| Phase 20 — Mono Token Foundation | MO-01, MO-02, MO-03, MO-05, DQ-01 | 5 |
+| Phase 21 — Mono Homepage Rebuild | HP-01, HP-02, HP-03, HP-04, HP-05, MS-01, MS-02 | 7 |
+| Phase 22 — Things I Love in Mono | MS-03, TL-01, TL-02, TL-03 | 4 |
+| Phase 23 — Site Sweep & Mono OG | MO-04, SW-01, SW-02, SW-03 | 4 |
+| Phase 24 — True Inversion Dark Mode | DM-01, DM-02, DM-03 | 3 |
+| Phase 25 — v4.0 QA, Perf Gate & Alias Swap | DQ-02, DQ-03, DQ-04, DQ-05 | 4 |
+| **Total** | | **27** |

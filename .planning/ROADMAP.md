@@ -4,293 +4,140 @@
 
 - ✅ **v1.0 Build & Launch** — Phases 1-7 (shipped 2026-04-16, archived 2026-05-20). See [milestones/v1.0-ROADMAP.md](./milestones/v1.0-ROADMAP.md).
 - ✅ **v2.0 Editorial Redesign** — Phases 8-13 (shipped 2026-05-21, archived 2026-05-21). See [milestones/v2.0-ROADMAP.md](./milestones/v2.0-ROADMAP.md).
-- 🚧 **v3.0 Dark Brutalist Rebuild** — Phases 14-18 (planning).
+- ✅ **v3.0 Dark Brutalist Rebuild** — Phases 14-19 (closed 2026-07-20; Phase 18 closed at 4/7, QA remainder folded into v4.0).
+- 🚧 **v4.0 Mono Restyle** — Phases 20-25 (planning).
 
 ## Phases
 
-<details>
-<summary>✅ v1.0 Build & Launch (Phases 1-7) — SHIPPED 2026-04-16</summary>
+### 🚧 v4.0 Mono Restyle (Phases 20-25)
 
-- [x] Phase 1: Foundation (1/1 plan) — completed 2026-03-31
-- [x] Phase 2: Notion CMS Integration (1/1 plan) — completed 2026-03-31
-- [x] Phase 3: Core Pages (6/6 plans) — completed 2026-04-02
-- [x] Phase 4: Animation & Polish (3/3 plans) — completed 2026-04-03
-- [x] Phase 5: Analytics (2/2 plans) — completed 2026-04-03
-- [x] Phase 6: Pre-Launch QA (6/6 plans) — completed 2026-04-16 (GO verdict)
-- [x] Phase 7: SEO Overhaul (11/11 plans) — completed 2026-04-16
+**Milestone Goal:** Strip the site to pure black and white with zero accent, and rebuild the homepage as a quiet editorial index that reads "here's a bit about me" rather than a founder pitch. Design is locked by `.planning/sketches/015-mono-passive-home/` variant E — this milestone ports it, it does not explore it.
 
-Full milestone detail: [milestones/v1.0-ROADMAP.md](./milestones/v1.0-ROADMAP.md)
-
-</details>
-
-<details>
-<summary>✅ v2.0 Editorial Redesign (Phases 8-13) — SHIPPED 2026-05-21</summary>
-
-- [x] Phase 8: Motion Subtractions (7/7 plans) — completed 2026-05-21
-- [x] Phase 9: Design Tokens & Editorial Primitives (9/9 plans) — completed 2026-05-21
-- [x] Phase 10: Editorial Homepage (7/7 plans) — completed 2026-05-21
-- [x] Phase 11: Archive Pages (5/5 plans) — completed 2026-05-21
-- [x] Phase 12: Sub-page Restyle Sweep (7/7 plans) — completed 2026-05-21
-- [x] Phase 13: v2.0 QA & GO/NO-GO (6/6 plans) — completed 2026-05-21 (GO verdict, signed)
-
-Full milestone detail: [milestones/v2.0-ROADMAP.md](./milestones/v2.0-ROADMAP.md)
-
-</details>
-
-### 🚧 v3.0 Dark Brutalist Rebuild (Phases 14-18)
-
-**Milestone Goal:** Rebuild the presentation layer of montysinger.com as a dark, flat, brutalist site (Crimson Poster palette, wheel-driven slide-deck homepage, lazy-loaded 3D hero object) while preserving all existing infrastructure. Built on a `v3` branch, previewed on Vercel, and promoted via alias swap at parity + QA.
-
-- [x] **Phase 14: Branch & Crimson Poster Foundation** - `v3` branch + Crimson Poster `@theme` tokens and brutalist primitives, previewed on Vercel (completed 2026-06-19)
-- [x] **Phase 15: WebGL Explorative Homepage** - Lusion-grade WebGL scroll-story homepage (real-time 3D hero, fluid interweaving line, themed beats); replaces the superseded slide deck. Desktop-WebGL / mobile-poster. (completed 2026-06-19)
-- [x] **Phase 16: Interior Pages on Notion Data** - All interior pages rebuilt on the new system and wired to existing Notion loaders, plus new /uses and /watching (completed 2026-06-20)
-- [x] **Phase 17: Infrastructure Preservation & SEO Extension** - Verify Notion/image-proxy/analytics intact and extend SEO to the new pages (completed 2026-06-21)
-- [x] **Phase 17.4: Photo-Forward Homepage Restyle** - Rebuild the homepage to the locked sketch-010 spec (Hanken 800 + Vermilion marker hero, alternating bands, Monty Monthly carousel), superseding the text-forward 17.1 skin (completed 2026-07-05)
-- [ ] **Phase 18: v3.0 QA, Perf Gate & Alias Swap** - Production-readiness gate, mobile-perf budget, GO/NO-GO, and production alias promotion
+- [ ] **Phase 20: Mono Token Foundation** - Retheme `globals.css` to pure black/white with zero accent, kill every hardcoded survival, establish inversion as the emphasis language, on a branch with a live Vercel preview
+- [ ] **Phase 21: Mono Homepage Rebuild** - Rebuild the homepage to sketch 015 variant E: type-only hero, Swiss numbered Building index, terminal writing log, one continuous ground, motion stripped to a single slow fade
+- [ ] **Phase 22: Things I Love in Mono** - Recolor the pinboard to greyscale with a black note panel while preserving its shipped behaviour exactly, and prove reduced-motion across every surviving animation
+- [ ] **Phase 23: Site Sweep & Mono OG** - Carry mono to every interior route, neutralize Notion inline text colors, retire non-content photography, and regenerate all three OG images without `#e5411f`
+- [ ] **Phase 24: True Inversion Dark Mode** - Build light/dark theming from scratch (no `next-themes` today) so the whole site inverts cleanly and the inversion-based emphasis language still reads on a dark ground
+- [ ] **Phase 25: v4.0 QA, Perf Gate & Alias Swap** - Perf budget, vitest + SEO regression gate, human visual QA over every route, then promote production by explicit alias swap
 
 ## Phase Details
 
-### Phase 14: Branch & Crimson Poster Foundation
+### Phase 20: Mono Token Foundation
 
-**Goal**: The `v3` branch exists on a Vercel preview and renders the Crimson Poster design system — tokens plus a full set of brutalist primitives — ready to build pages on.
-**Depends on**: Phase 13 (v2.0 shipped; existing stack is the base)
-**Requirements**: DS-01, DS-02, DS-03, DS-04, DS-05, DQ-01
+**Goal**: The site renders on a pure black-and-white token system with no accent color available anywhere, and that system is reviewable on a Vercel preview before it touches production.
+**Depends on**: Phase 19 (v3.0 shipped design is the base being replaced)
+**Requirements**: MO-01, MO-02, MO-03, MO-05, DQ-01
 **Success Criteria** (what must be TRUE):
 
-  1. The `v3` branch is live on a Vercel preview URL with the production site unaffected.
-  2. A primitives showcase renders the Crimson Poster palette (crimson-orange field #d93c1e, black accent, near-black text, no gradients) with display headings in crimson lifted by a hard black drop shadow and an outline-stroke variant.
-  3. Space Grotesk (display) and JetBrains Mono (labels) load on a defined type scale via Tailwind v4 `@theme` tokens.
-  4. Every brutalist primitive (rules, section labels, clickable list rows, big-type list, buttons, marquee, cards) is available and demonstrated.
-  5. With `prefers-reduced-motion` set, autonomous and scroll-driven animation is disabled and content stays fully usable.
+  1. Every surface renders on a `#ffffff` ground with `#000000` ink and `rgba(0,0,0,0.14)` hairlines; no warm paper, cream, or tinted grey appears on any route.
+  2. Searching the codebase for Vermilion (`#e5411f`, `#c8381a`, `#a52d13`), cream `#f4ecdd`, and warm paper `#faf9f7` returns zero hits in the token layer or in the known hardcoded survivals — `globals.css:618`, `globals.css:122` (`--hero-bg`), `globals.css:673` (`.emoji-badge--cream`), `globals.css:1293` (`.pb-frame--cream`).
+  3. Every hover and emphasis state that previously used the accent now reads as an inversion (black block on white) or a type-weight change, with no hue anywhere.
+  4. Hanken Grotesk 800 display type, radius-0 hard corners, and the no-gradients rule are intact after the retheme.
+  5. A visitor with the preview URL sees the mono system on a Vercel deployment while montysinger.com still serves the v3 design unchanged.
 
-**Plans**: 4 plans
-
-- [x] 14-01-PLAN.md — v3 branch + deploy baseline + Crimson Poster @theme tokens, sig utility, Space Grotesk/JetBrains Mono fonts
-- [x] 14-02-PLAN.md — Static brutalist primitives (Rule, RuleStrong, SectionLabel, Chip, ListRow, Button, BigList, PageHero, Marquee)
-- [x] 14-03-PLAN.md — Composite + animated primitives (Card, VideoCard, NewsletterCarousel, UsesList, Reveal)
-- [x] 14-04-PLAN.md — /v3-specimen showcase route + production build gate (DQ-01 readiness)
-
+**Plans**: TBD
 **UI hint**: yes
 
-### Phase 15: WebGL Explorative Homepage
+**Sequencing note**: The palette is entirely token-driven in `src/app/globals.css` (lines 8-32), so this phase is cheap and unblocks everything. The 17 files under `src/` that reference `accent` mostly follow the tokens for free; only the four hardcoded survivals above need explicit edits. The three `opengraph-image.tsx` routes also hardcode `#e5411f` but are handled in Phase 23 alongside the rest of the sweep.
 
-**Goal**: The homepage is an expansive, Lusion-grade WebGL "explorative scroll-story" -- a real-time 3D hero object, a fluid interweaving scroll line, and themed section beats you wander down -- that stays inside the project's perf budget. Replaces the superseded slide deck.
-**Depends on**: Phase 14
-**Direction validated by**: sketches 003-005 (`.planning/sketches/`) + perf spike 001 (`.planning/spikes/`, GO-WITH-CUTS). See memory homepage-webgl-direction.
-**Requirements**: TD-01, TD-02, TD-03 (3D object / lazy-load / fallback -- carry forward), HD-04 (big-type index), HD-05 (touch/small-screen fallback). _HD-01, HD-02, HD-03 (CHOMP wheel-deck nav) are superseded._
+### Phase 21: Mono Homepage Rebuild
+
+**Goal**: The homepage is a quiet editorial index built to sketch 015 variant E — a visitor lands on type, scans work and writing, and meets no pitch.
+**Depends on**: Phase 20
+**Requirements**: HP-01, HP-02, HP-03, HP-04, HP-05, MS-01, MS-02
 **Success Criteria** (what must be TRUE):
 
-  1. Palette: near-black canvas, off-white name (NO red-on-red), crimson as a sparing accent (line / rim / hover).
-  2. Desktop renders a live WebGL 3D hero (PBR/clearcoat, RoomEnvironment IBL, crimson rim, bloom) with GPU vertex-shader morph; canvas is `dynamic({ssr:false})` in a `"use client"` loader, mounted after LCP.
-  3. LCP element is SSR'd text/poster -- never the canvas; mobile LCP/PSI stays within the budget already won.
-  4. Mobile / pointer:coarse / small-screen / reduced-motion / no-WebGL2 -> static poster (`public/hero-blob-poster.webp`), no canvas.
-  5. Expansive scroll-story structure with four section beats (Building, Writing, Newsletter, Footer); GLB swap-in seam built; v1 ships on the procedural blob stand-in.
+  1. Above the fold a visitor sees type only: the rotating portrait carousel (stage pitch, fireside chat, mushroom blocks) is gone and no photograph appears in the hero.
+  2. Building renders as a Swiss numbered index (`001`, `002`, `003`) whose rows invert to a solid black block on hover.
+  3. Writing renders in terminal format — `~/writing`, dates flush left, read time flush right, no frame around the block — so the blog scans as a log.
+  4. Scrolling the homepage moves across one continuous white ground with no alternating light/dark band slam.
+  5. A visitor can reach work and essays without passing a subscribe CTA; Monty Monthly appears only as a quiet footer-level line, with no sticky nav button.
+  6. The only motion left on the page is a slow opacity fade-up on scroll: the hero link marquee, pulsing status dot, photo ken-burns, and slide-in-from-side reveals no longer occur.
 
-**Plans**: 5 plans
-
-- [x] 15-01-PLAN.md — Palette swap (globals.css Crimson Line tokens + deck CSS removal) + 1x1 poster placeholder + test scaffolds
-- [x] 15-02-PLAN.md — GPU vertex-shader HeroBlob (CSM migration) + HeroBlobCanvas (Bloom/postprocessing) + HeroPodium
-- [x] 15-03-PLAN.md — canvas-loader.tsx (after-LCP dynamic mount) + explorative-homepage.tsx (gate orchestrator) + page.tsx swap
-- [x] 15-04-PLAN.md — FallbackPoster + four section beats (Building, Writing, Newsletter, Footer)
-- [x] 15-05-PLAN.md — Playwright poster capture + scroll-cue + GLB swap-in seam + visual verification checkpoint
-
-**Carry-forward from the superseded deck**: HeroBlob, HeroBlobCanvas, FallbackPoster, WebGL2 detection, section content, v3 tokens.
-**Build cuts (from spike 001, non-negotiable)**: desktop-only WebGL; defer canvas mount past LCP; GPU vertex-shader morph (no per-frame JS computeVertexNormals); trim/lazy postprocessing; produce the poster asset; confirm on Vercel preview PSI mobile.
-**UI hint**: yes
-**Note**: directory slug `15-slide-deck-homepage-3d-hero` is legacy (kept to avoid breaking references).
-
-### Phase 16: Interior Pages on Notion Data
-
-**Goal**: Every interior page is rebuilt in the Pumpkin Amber system, sourced from the existing Notion pipeline, with a shared nav and footer and the two new pages (/uses, /watching) live.
-**Depends on**: Phase 15
-**Requirements**: PG-01, PG-02, PG-03, PG-04, PG-05, IN-01, IN-02
-**Success Criteria** (what must be TRUE):
-
-  1. Writing index, Essay reading view, Works index, Project detail, About, Prometheus, Newsletter, Events, and Links render in the new system with content sourced from Notion as today (ISR 30min, dataSources.query v5 unchanged), and Notion images serve through the existing proxy routes.
-  2. The essay reading view shows breadcrumb, reading time, publish date, prose, and related essays; the writing and works indexes show excerpts.
-  3. A new `/uses` page (grouped tools and stack) is built and linked.
-  4. A new `/watching` page lists favorite YouTube videos as cards that link out to YouTube.
-  5. A shared nav and footer link all pages with correct active states and breadcrumbs.
-
-**Plans**: 9 plans
-
-- [x] 16-01-PLAN.md — next.config.ts (add YouTube remotePattern, remove /uses redirect) + src/lib/uses.ts + src/lib/watching.ts + Wave 0 test scaffolds
-- [x] 16-02-PLAN.md — Navigation active-label extension (/uses, /watching, Prometheus in mobile) + V3Footer full sitemap + ConditionalFooter swap
-- [x] 16-03-PLAN.md — Editorial component token repaint (ListRow, YearBlock, Rule, RuleStrong, SectionLabel, AllLink) to Pumpkin Amber
-- [x] 16-04-PLAN.md — Writing index + Projects index repainted with v3 PageHero + Pumpkin Amber tokens
-- [x] 16-05-PLAN.md — New /uses page (UsesList + USES_DATA) + new /watching page (VideoCard grid + WATCHING_ITEMS)
-- [x] 16-06-PLAN.md — Essay reading view (/blog/[slug]) repainted with PageHero, full-bleed cover, reading meta, related essays
-- [x] 16-07-PLAN.md — Project detail (/projects/[slug]) repainted with full-bleed cover, breadcrumb, Pumpkin Amber tokens
-- [x] 16-08-PLAN.md — About, Prometheus, Newsletter, Events, Links pages repainted with PageHero + Pumpkin Amber tokens
-- [x] 16-09-PLAN.md — Automated gate (vitest + build + ISR audit + token audit) + human visual checkpoint on v3 preview
-
+**Plans**: TBD
 **UI hint**: yes
 
-### Phase 17: Infrastructure Preservation & SEO Extension
+**Sequencing note**: Touches `src/components/home/` — `hero.tsx`, `explorative-homepage.tsx`, `section-building.tsx`, `section-work.tsx`, `section-newsletter.tsx`, `section-loves.tsx`, `photo.tsx`, `photo-marquee.tsx`, `scroll-reveals.tsx`, `sticky-nav.tsx`, `monty-monthly-carousel.tsx`, `rail-box.tsx`. **Do not touch `pinboard.tsx`** — TL-01 is a preservation requirement handled in Phase 22. Three vitest failures on the homepage (`section-building` HD-04, `explorative-homepage` TD-03/HD-05) **predate this milestone**; this rebuild is expected to delete or rewrite those tests rather than fix them, and they must not be logged as regressions introduced here.
 
-**Goal**: All preserved infrastructure (Notion, image proxy, SEO, analytics) is verified intact on the `v3` branch, and SEO is extended to the two new pages.
-**Depends on**: Phase 16
-**Requirements**: IN-03, IN-04
+### Phase 22: Things I Love in Mono
+
+**Goal**: The pinboard looks like it belongs to the mono site while behaving exactly as it does in production today.
+**Depends on**: Phase 21
+**Requirements**: TL-01, TL-02, TL-03, MS-03
 **Success Criteria** (what must be TRUE):
 
-  1. Sitemap, robots, blog feed, `src/lib/seo`, JSON-LD, and per-page metadata are preserved and now include the new `/uses` and `/watching` pages.
-  2. Umami analytics loads and tracks on every page of the `v3` preview.
-  3. The blog feed, sitemap, and robots resolve correctly on the preview with no regressions versus production.
+  1. A visitor can still scatter-browse across three start lines, drag cards, click a card to slide a note up over it, see per-type card kinds (book/film cover, YouTube thumb, Thing note card, Place polaroid), and press Organize by topic to gather the board into topic rows — identical to production.
+  2. The board renders with no color: the `SWATCHES` array is greyscale, `.pb-frame--cream` has lost its cream fill, and the note panel that was Vermilion is black.
+  3. A visitor can tell a Book from a Film from a Record from a Hobby by shape and border weight alone, with no hue carrying the distinction.
+  4. With `prefers-reduced-motion` set, every remaining animation on the site — including the pinboard's scatter, drag, and note slide — degrades to a static, fully usable state.
 
-**Plans**: 1 plan
-Plans:
+**Plans**: TBD
+**UI hint**: yes
 
-- [x] 17-01-PLAN.md — Add /uses + /watching to sitemap + automated regression gate (IN-03, IN-04)
+**Sequencing note**: `src/components/home/pinboard.tsx` is 749 lines of shipped, working behaviour. This phase changes its palette only. **Do not schedule a pinboard rewrite.** Under 760px the board must still degrade to a tappable stack with the toolbar hidden, as shipped.
 
-### Phase 17.1: Homepage Rebuild (INSERTED)
+### Phase 23: Site Sweep & Mono OG
 
-**Goal**: The homepage is rebuilt around a personal-brand narrative arc (who am I → what I am building → how to engage), rendered in the CURRENT aesthetic (Pumpkin Amber palette + current fonts), replacing the superseded WebGL blob scroll-story. The WebGL/blob canvas is removed from the home path. Full agreed direction lives in project memory `personal-brand-homepage-direction`.
-**Depends on**: Phase 17
-**Requirements**: TBD (set at plan time; governed by CONTEXT.md D-01..D-12)
+**Goal**: Every route beyond the homepage reads as one mono system, and nothing — not a sub-page, not a Notion-authored text color, not a social preview image — can reintroduce a hue.
+**Depends on**: Phase 22
+**Requirements**: SW-01, SW-02, SW-03, MO-04
 **Success Criteria** (what must be TRUE):
 
-  1. The homepage renders the who → what → engage arc in the current aesthetic, with no WebGL/blob canvas on the home path.
-  2. Sections present and populated top-to-bottom: hero (Founder of Prometheus + one-liner + one woven "way in" to Monty Monthly), what-I'm-building (Prometheus + current work, CTA woven into prose), selected-work/portfolio teaser, "things I love" teaser, writing + Monty Monthly gate (a flagship essay or two shown open), understated footer contact (email + socials woven in).
-  3. Engagement is woven/contextual only: no CTA button and no contact page; the primary "way in" is Monty Monthly (velvet-rope principle).
+  1. Writing, blog post, building, project detail, contact, and prometheus all render in the mono system with no accent survivals on any element or hover state.
+  2. Sharing any of the three OG-image routes (root, `blog/[slug]`, `building/[slug]`) produces a black-and-white preview card; `#e5411f` no longer appears in any `opengraph-image.tsx`.
+  3. A post authored in Notion using amber, orange, blue, or gray inline text renders as ink/dim/muted greys on the site.
+  4. Photography appears only where it is content — Things I Love cards and Notion project covers; the hero portraits, the wide Prometheus screenshot, and the photo-marquee fallback are gone.
 
-**Plans**: 4 plans
+**Plans**: TBD
+**UI hint**: yes
 
-**Wave 1**
+### Phase 24: True Inversion Dark Mode
 
-- [x] 17.1-01-PLAN.md — Blob removal + text-forward hero + orchestrator refactor (explorative-homepage.tsx becomes Server Component, no canvas gate)
-
-**Wave 2** *(parallel; both depend on 17.1-01)*
-
-- [x] 17.1-02-PLAN.md — New section-work.tsx + section-loves.tsx + orchestrator final assembly (D-06 narrative arc order, SectionWriting retired)
-- [x] 17.1-03-PLAN.md — Section narrative copy adaptations: section-building (Prometheus-forward), section-newsletter (essay teasers + newsletter gate), section-footer (velvet-rope tone)
-
-**Wave 3** *(depends on Wave 2 completion)*
-
-- [x] 17.1-04-PLAN.md — Automated build gate + human visual verify at localhost:3000 (D-12)
-
-### Phase 17.2: Site Information Architecture (INSERTED)
-
-**Goal**: The site IA matches the new scope. New nav (Building, Work, Things I love, Writing, Prometheus). Cut /events and /photos. Delete /specimen and /v3-specimen dev pages. Fold /links socials into the woven footer/contact layer. Reframe /uses as "Things I love" and fold /watching into it. Merge /writing + /newsletter into a single "Writing / Monty Monthly" surface (hybrid: a few open flagship essays + the newsletter gate). Keep /about and /prometheus as dedicated pages.
-**Depends on**: Phase 17.1
-**Requirements**: D-01, D-02, D-03, D-04, D-05, D-06, D-07, D-08, D-09, D-10 (governed by 17.2-CONTEXT.md)
+**Goal**: A visitor can flip the entire site between a white ground and a black ground as a true inversion, and every emphasis surface still reads correctly on both.
+**Depends on**: Phase 23
+**Requirements**: DM-01, DM-02, DM-03
 **Success Criteria** (what must be TRUE):
 
-  1. Nav reflects the new set; /events, /photos, /specimen, /v3-specimen no longer exist (routes + nav + sitemap all updated).
-  2. /links is folded into the footer/contact layer; /watching is folded into a reframed /uses ("Things I love").
-  3. /writing and /newsletter are merged into one "Writing / Monty Monthly" surface; sitemap, nav, and internal links are consistent with the new IA with no broken links.
+  1. A visitor can toggle the site between light (white ground, black ink) and dark (black ground, white ink), and every route inverts.
+  2. On a dark ground, every element whose emphasis language is inversion — Building index rows on hover, the pinboard note panel, tags, buttons — remains clearly visible and distinct from the ground; no inverted surface disappears into black.
+  3. The chosen theme survives navigating between routes and a full page reload, with no flash of the wrong ground on first paint.
 
-**Plans**: 4 plans
+**Plans**: TBD
+**UI hint**: yes
 
-**Wave 1**
+**Sequencing note**: This is genuinely new scope. `next-themes` is **not** currently a dependency and there is no theme toggle anywhere in `src/` — it must be built from scratch. It is sequenced after the mono system exists because inversion needs something to invert. **DM-02 is the hardest requirement in the milestone:** the site uses inversion (black block on white) as its entire emphasis and hover language, so on a dark ground a "black block" hover has nothing to invert against. That tension must be resolved by an explicit design decision in this phase, not deferred.
 
-- [x] 17.2-01-PLAN.md — 5 x 301 redirects in next.config.ts + 7 route dir deletions + sitemap.ts trimmed to 6 routes + SEO/component test lockstep
+### Phase 25: v4.0 QA, Perf Gate & Alias Swap
 
-**Wave 2** *(parallel; both depend on 17.2-01)*
-
-- [x] 17.2-02-PLAN.md — Nav/footer link sweep (EditorialHeader 4-item nav, Navigation MOBILE_LINKS, V3Footer + section-footer + slide-footer restructure)
-- [x] 17.2-03-PLAN.md — /uses reframe "Things I Love" + Watching section (VideoCard + WATCHING_ITEMS); /writing merge Monty Monthly section + update page tests
-
-**Wave 3** *(depends on Wave 2 completion)*
-
-- [x] 17.2-04-PLAN.md — Automated validation gate (grep + vitest + build) + human visual checkpoint on /uses, /writing, nav, footer, redirects
-
-### Phase 17.3: Portfolio (INSERTED)
-
-**Goal**: A real portfolio surface for proud past work exists, built on the existing /projects (Notion) pipeline in the current aesthetic, and linked from the homepage "selected work" section.
-**Depends on**: Phase 17.1
-**Requirements**: SC-1 (portfolio surface), SC-2 (homepage link) — set at plan time; no formal REQ IDs in REQUIREMENTS.md
+**Goal**: The mono site is proven correct, fast, and regression-free, and montysinger.com serves it.
+**Depends on**: Phase 24
+**Requirements**: DQ-02, DQ-03, DQ-04, DQ-05
 **Success Criteria** (what must be TRUE):
 
-  1. A portfolio surface presents selected proud-of past work, sourced from the existing projects Notion pipeline, in the current aesthetic.
-  2. The homepage "selected work" section links into the portfolio.
+  1. The restyled site meets the existing perf budget: PSI mobile (authoritative) at parity-or-better versus current production, and the LCP gate holds.
+  2. The full vitest suite passes, including the SEO regression gate — sitemap, robots, blog feed, per-page metadata, breadcrumb JSON-LD — proven intact through the restyle.
+  3. A human visual QA pass over every route (`/`, `/writing`, `/blog/[slug]`, `/building`, `/building/[slug]`, `/contact`, `/prometheus`) signs off the mono system in both light and dark, recorded as a GO/NO-GO verdict.
+  4. On GO, montysinger.com serves the mono site via an explicit alias swap, verified post-promotion with no alias drift.
 
-**Plans**: 2 plans
+**Plans**: TBD
 
-**Wave 1** *(parallel — no shared files)*
-
-- [x] 17.3-01-PLAN.md — /portfolio page route (getFeaturedProjects, ISR 1800, year-grouped Card grid, empty-state) + sitemap /portfolio entry + portfolio tests + sitemap test update
-- [x] 17.3-02-PLAN.md — section-work.tsx link update (/projects → /portfolio, D-01) + section-work.test.tsx (SC-2 assertions)
-
-### Phase 17.4: Photo-Forward Homepage Restyle (INSERTED)
-
-**Goal**: The homepage is rebuilt to the locked photo-forward editorial spec in `.planning/sketches/010-structured-bands-carousel/` (index.html + README) — Hanken Grotesk 800 display type, Vermilion `#e5411f` accent, a marker-block hero with a 44%-width portrait column and pinned section-link marquee, alternating light/dark bands with hard corners and auto-inverting rail boxes, scroll-triggered slide-in photos, a Monty Monthly writing carousel, a sticky Subscribe mini-nav, an "as seen in" credibility strip, and a rich multi-column footer. This restyle SUPERSEDES the text-forward 17.1 skin while preserving the who → what → engage IA and velvet-rope engagement model. Motion stays scroll/ambient-only (no cursor dependence, `prefers-reduced-motion` honored) on the cheap IntersectionObserver + CSS + native scroll-snap stack — no WebGL/Lenis. Full locked direction lives in project memory `v3-homepage-photo-forward-lock` and `17.4-CONTEXT.md`.
-**Depends on**: Phase 17.3
-**Requirements**: No formal REQ IDs — governed by `17.4-CONTEXT.md` (D-01..D-13), consistent with the 17.1/17.3 CONTEXT-governed pattern.
-**Success Criteria** (what must be TRUE):
-
-  1. The homepage renders the sketch-010 structure: marker-block hero (Vermilion "Create Order" block + "from Chaos" ink, 44% portrait, black status tag, pinned section marquee) followed by alternating light/dark bands — credibility strip → Building → Work → Things I Love → Writing carousel → footer — with hard corners and rail boxes throughout.
-  2. Display type is Hanken Grotesk 800 and the accent is Vermilion `#e5411f` (token-only re-theme; near-white paper + near-black ink base retained). No cobalt accent remains on the home path.
-  3. The Writing section is a horizontal Monty Monthly carousel (issue cards + subscribe card, scroll-snap + arrows/dots) linking out to Substack with no on-site email capture; sticky Subscribe mini-nav appears past the hero; footer carries "Available for select work".
-  4. Motion is scroll-triggered/ambient only with no cursor dependence, `prefers-reduced-motion` honored (static layout holds with motion off), and no WebGL/Lenis on the home render path; existing LCP/PSI perf gates are respected.
-  5. Velvet-rope IA is preserved: no contact page, no contact CTA button, Monty Monthly is the primary woven "way in".
-
-**Plans**: 9 plans (5 waves)
-
-**Wave 1** *(foundation)*
-
-- [x] 17.4-01-PLAN.md — globals.css Vermilion tokens (D-01) + Hanken 800 font (D-02) + sketch-010 CSS system: band-dark inversion, rail box, photo/slide/shadow motion, reduced-motion guards (D-03/D-04/D-05/D-07/D-08)
-
-**Wave 2** *(parallel primitives + islands; depend on 01)*
-
-- [x] 17.4-02-PLAN.md — Static primitives: RailBox (D-05), Photo placeholder (D-07), CredibilityStrip (D-11)
-- [x] 17.4-03-PLAN.md — Motion islands: ScrollReveals IntersectionObserver toggler + PhotoMarquee (D-07/D-08)
-- [x] 17.4-04-PLAN.md — Control islands: MontyMonthlyCarousel arrows+dots+scroll-sync (D-09) + sticky Subscribe mini-nav (D-10/D-13)
-
-**Wave 3** *(parallel reskins; depend on Wave 2)*
-
-- [x] 17.4-05-PLAN.md — Marker-block hero: portrait + status tag + pinned ticker (D-06/D-08/D-13)
-- [x] 17.4-06-PLAN.md — Section reskin A: Building (dark, rail 01, slide-in photo) + Work (light, rail 02, 2x2 grid) + tests; preserves /portfolio + rel invariants (D-03/D-05/D-07/D-13)
-- [x] 17.4-07-PLAN.md — Section reskin B: Loves (dark, PhotoMarquee) + Writing carousel + Footer (avail tag + columns) (D-03/D-05/D-09/D-12/D-13)
-
-**Wave 4** *(assembly; depends on Wave 3)*
-
-- [x] 17.4-08-PLAN.md — Orchestrator: sketch-010 band order + anchor ids + mount StickyNav/ScrollReveals; page.tsx stays static; rewrite explorative-homepage test (D-03/D-08/D-10/D-13)
-
-**Wave 5** *(gate; depends on 08)* [autonomous: false]
-
-- [x] 17.4-09-PLAN.md — Automated build/type/test + cobalt/Hanken/no-WebGL greps + human visual verify at localhost:3000 vs sketch 010 incl. reduced-motion proof (D-01..D-13)
-
-### Phase 18: v3.0 QA, Perf Gate & Alias Swap
-
-**Goal**: v3 passes the production-readiness gate and mobile-perf budget, earns a GO verdict, and the production alias is promoted to v3 and verified.
-**Depends on**: Phase 17.4
-**Requirements**: DQ-02, DQ-03, DQ-04
-**Success Criteria** (what must be TRUE):
-
-  1. `vercel build --prod` passes cleanly before any swap.
-  2. PSI mobile (authoritative) meets parity-or-better versus current production (~95 per PROJECT.md). Homepage is a static Server Component (no WebGL on home path per R-1); D-04 LCP sub-checks satisfied-by-absence.
-  3. A QA GO/NO-GO verdict is recorded; on GO the production alias is promoted to v3 (no `--prebuilt --prod`; alias drift checked).
-  4. Post-promotion verification confirms montysinger.com serves the v3 site at parity.
-
-**Plans**: 7 plans
-Plans:
-
-**Wave 1**
-
-- [x] 18-01-PLAN.md — vercel build --prod gate at HEAD of v3 (DQ-02)
-
-**Wave 2** *(parallel; both depend on 18-01)*
-
-- [x] 18-02-PLAN.md — v3 Vercel preview deploy + Lighthouse desktop median-of-3 on /, /about, /writing, /uses, /portfolio (D-02)
-- [x] 18-05-PLAN.md — D-14 dual-tree secret scan + D-10 theme/FOUC decision; runs parallel with 18-02 (D-06, D-10, DQ-04)
-
-**Wave 3** *(parallel; both depend on 18-02)*
-
-- [x] 18-03-PLAN.md — PSI mobile gate (≥ current prod ~95 per R-2) + R-1 code inspection confirming no WebGL on / render path (DQ-03)
-- [ ] 18-04-PLAN.md — Route health + redirect checks + R-4 /portfolio content gate + Phase-16 deferred checklist (D-05, DQ-03)
-
-**Wave 4** *(depends on Wave 3 completion)*
-
-- [ ] 18-06-PLAN.md — compile 18-GO-NO-GO.md + human GO/NO-GO sign-off (DQ-04) [autonomous: false]
-
-**Wave 5** *(depends on 18-06 signed GO)*
-
-- [ ] 18-07-PLAN.md — alias flip hand-off to Monty + post-promote parity verification + /gsd-complete-milestone v3.0 (DQ-04) [autonomous: false]
+**Sequencing note**: Carries forward the unfinished remainder of v3.0's Phase 18 (QA, perf gate, alias swap) — that QA was never run against a design that was about to be replaced. Delivery pattern is unchanged: long-lived branch → Vercel preview → promote by explicit alias swap. **Never `--prebuilt --prod`** (known project gotcha: alias drift after `vercel deploy --prod`).
 
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 14 -> 15 -> 16 -> 17 -> 18
+Phases execute in numeric order: 20 -> 21 -> 22 -> 23 -> 24 -> 25
+
+| Phase | Milestone | Plans | Status | Completed |
+|-------|-----------|-------|--------|-----------|
+| 20. Mono Token Foundation | v4.0 | 0/? | Not started | - |
+| 21. Mono Homepage Rebuild | v4.0 | 0/? | Not started | - |
+| 22. Things I Love in Mono | v4.0 | 0/? | Not started | - |
+| 23. Site Sweep & Mono OG | v4.0 | 0/? | Not started | - |
+| 24. True Inversion Dark Mode | v4.0 | 0/? | Not started | - |
+| 25. v4.0 QA, Perf Gate & Alias Swap | v4.0 | 0/? | Not started | - |
+
+## Completed Phases (v1.0 - v3.0)
 
 | Phase | Milestone | Plans | Status | Completed |
 |-------|-----------|-------|--------|-----------|
@@ -307,24 +154,15 @@ Phases execute in numeric order: 14 -> 15 -> 16 -> 17 -> 18
 | 11. Archive Pages | v2.0 | 5/5 | Complete | 2026-05-21 |
 | 12. Sub-page Restyle Sweep | v2.0 | 7/7 | Complete | 2026-05-21 |
 | 13. v2.0 QA & GO/NO-GO | v2.0 | 6/6 | Complete | 2026-05-21 |
-| 14. Branch & Crimson Poster Foundation | v3.0 | 4/4 | Complete   | 2026-06-19 |
-| 15. WebGL Explorative Homepage | v3.0 | 5/5 | Complete    | 2026-06-19 |
-| 16. Interior Pages on Notion Data | v3.0 | 9/9 | Complete    | 2026-06-20 |
-| 17. Infrastructure Preservation & SEO Extension | v3.0 | 1/1 | Complete   | 2026-07-02 |
-| 17.1. Homepage Rebuild | v3.0 | 4/4 | Complete    | 2026-07-02 |
-| 17.2. Site Information Architecture | v3.0 | 4/4 | Complete    | 2026-07-02 |
-| 17.3. Portfolio | v3.0 | 2/2 | Complete    | 2026-07-02 |
-| 17.4. Photo-Forward Homepage Restyle | v3.0 | 9/9 | Complete   | 2026-07-05 |
-| 18. v3.0 QA, Perf Gate & Alias Swap | v3.0 | 4/7 | In Progress|  |
+| 14. Branch & Crimson Poster Foundation | v3.0 | 4/4 | Complete | 2026-06-19 |
+| 15. WebGL Explorative Homepage | v3.0 | 5/5 | Complete | 2026-06-19 |
+| 16. Interior Pages on Notion Data | v3.0 | 9/9 | Complete | 2026-06-20 |
+| 17. Infrastructure Preservation & SEO Extension | v3.0 | 1/1 | Complete | 2026-07-02 |
+| 17.1. Homepage Rebuild | v3.0 | 4/4 | Complete | 2026-07-02 |
+| 17.2. Site Information Architecture | v3.0 | 4/4 | Complete | 2026-07-02 |
+| 17.3. Portfolio | v3.0 | 2/2 | Complete | 2026-07-02 |
+| 17.4. Photo-Forward Homepage Restyle | v3.0 | 9/9 | Complete | 2026-07-05 |
+| 18. v3.0 QA, Perf Gate & Alias Swap | v3.0 | 4/7 | Closed (remainder folded into Phase 25) | 2026-07-20 |
+| 19. Project Cards & Covers Redesign | v3.0 | 3/3 | Complete | 2026-07-06 |
 
-### Phase 19: Project Cards & Covers Redesign: typographic title-card covers, card titles/deks, offset-shadow grid treatment, reading time on /writing, on-brand OG images
-
-**Goal:** Every project/essay card face is a designed surface: typographic title-cards (Hanken 800 + vermilion, deterministic paper/ink alternation) replace cropped-logo covers and broken placeholders, interior grids carry the brutalist offset-shadow treatment, /writing shows reading time and deks, and all three OG images match the vermilion identity.
-**Requirements**: SC-1 (title-card system), SC-2 (card titles/deks everywhere), SC-3 (offset-shadow grids), SC-4 (reading time + deks on /writing), SC-5 (on-brand OG images)
-**Depends on:** Phase 18
-**Plans:** 3/3 plans complete
-
-Plans:
-- [x] 19-01-PLAN.md - TitleCard component + CardCover error fallback + Card integration + card-grid/shadowed CSS (wave 1)
-- [x] 19-03-PLAN.md - OG image rebuild: fonts + root/blog/projects title-card OG routes (wave 1, parallel)
-- [x] 19-02-PLAN.md - Homepage Work grid, /writing reading time/deks, /projects always-title-card + offset-shadow grids (wave 2)
+Full milestone detail: [milestones/v1.0-ROADMAP.md](./milestones/v1.0-ROADMAP.md) · [milestones/v2.0-ROADMAP.md](./milestones/v2.0-ROADMAP.md)
