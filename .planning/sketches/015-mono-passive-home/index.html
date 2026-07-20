@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sketch 015 — Mono Passive Home</title>
+
+<!-- Matches the shipped next/font stack: Hanken Grotesk + JetBrains Mono -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;600;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="../themes/mono.css">
+
+<style>
+/* ═══ Shared shell ═══════════════════════════════════════════════════════ */
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  padding-top: 42px; /* fixed variant bar */
+}
+a { color: inherit; }
+
+/* Mono label — the workhorse of every variant. Replaces what accent used to do. */
+.lbl {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+/* Slow fade-up: the ONLY motion the v4 lock allows */
+.fade { opacity: 0; transform: translateY(14px);
+        transition: opacity var(--fade-dur) var(--fade-ease),
+                    transform var(--fade-dur) var(--fade-ease); }
+.fade.in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .fade { opacity: 1; transform: none; }
+}
+
+/* ═══ Variant bar + toolbar (chrome, not design) ═════════════════════════ */
+#variant-nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 9998;
+  background: #111; border-bottom: 1px solid #333;
+  padding: 7px 12px; display: flex; gap: 6px; align-items: center;
+  font-family: ui-monospace, monospace; font-size: 11px; flex-wrap: wrap;
+}
+#variant-nav .tag { color: #777; margin-right: 8px; letter-spacing: .1em; }
+.variant-tab {
+  background: transparent; color: #999; border: 1px solid #444;
+  padding: 4px 10px; cursor: pointer; font: inherit; letter-spacing: .04em;
+}
+.variant-tab:hover { color: #fff; border-color: #888; }
+.variant-tab.active { background: #fff; color: #000; border-color: #fff; }
+
+#sketch-tools {
+  position: fixed; bottom: 12px; right: 12px; z-index: 9999;
+  font-family: ui-monospace, monospace; font-size: 11px;
+  background: rgba(0,0,0,0.78); color: #fff; padding: 8px 10px;
+  opacity: 0.35; transition: opacity 0.2s; display: flex; gap: 8px; align-items: center;
+}
+#sketch-tools select, #sketch-tools button {
+  background: #222; color: #fff; border: 1px solid #555; font: inherit;
+  padding: 3px 7px; cursor: pointer;
+}
+.variant { display: none; }
+.variant.active { display: block; }
+
+/* Viewport clamp from the toolbar */
+.vp { margin: 0 auto; transition: max-width .2s; }
+
+/* ═══ VARIANT A — Swiss editorial index ══════════════════════════════════ */
+.a-wrap { max-width: 1180px; margin: 0 auto; padding: 0 40px; }
+.a-hero { padding: var(--space-48) 0 var(--space-32); }
+.a-hero h1 {
+  font-size: var(--text-4xl); font-weight: 800; line-height: var(--leading-tight);
+  letter-spacing: -0.03em; margin: 0 0 var(--space-8); max-width: 14ch;
+}
+.a-hero .sub {
+  font-size: var(--text-lg); font-weight: 300; line-height: var(--leading-body);
+  color: var(--color-text-dim); max-width: 46ch; margin: 0;
+}
+.a-meta {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-8);
+  border-top: var(--rule); padding-top: var(--space-4); margin-top: var(--space-16);
+}
+.a-meta div span { display: block; }
+.a-meta .v { font-size: var(--text-sm); margin-top: 4px; }
+
+/* Numbered index rows — the spine of this variant */
+.a-row {
+  display: grid; grid-template-columns: 64px 1fr 200px 90px;
+  gap: var(--space-6); align-items: baseline;
+  padding: var(--space-8) 0; border-top: var(--rule);
+  text-decoration: none; position: relative;
+}
+.a-row:last-of-type { border-bottom: var(--rule); }
+.a-row .num { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--color-text-muted); letter-spacing: .1em; }
+.a-row .ttl { font-size: var(--text-2xl); font-weight: 600; letter-spacing: -0.02em; }
+.a-row .dsc { font-size: var(--text-sm); color: var(--color-text-dim); line-height: 1.5; }
+.a-row .yr  { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--color-text-muted); text-align: right; }
+/* Hover = inversion, not color */
+.a-row::before {
+  content: ""; position: absolute; inset: 0 -20px; background: var(--color-invert);
+  z-index: -1; opacity: 0; transition: opacity .15s;
+}
+.a-row:hover::before { opacity: 1; }
+.a-row:hover, .a-row:hover .num, .a-row:hover .dsc, .a-row:hover .yr { color: var(--color-text-inverse); }
+.a-sec { padding: var(--space-32) 0 0; }
+.a-sec > .lbl { display: block; margin-bottom: var(--space-8); }
+
+/* ═══ VARIANT B — Terminal readout ═══════════════════════════════════════ */
+.b-wrap {
+  max-width: 860px; margin: 0 auto; padding: var(--space-32) 40px var(--space-24);
+  font-family: var(--font-mono); font-size: var(--text-sm); line-height: 1.9;
+}
+.b-name { font-size: var(--text-2xl); font-weight: 500; letter-spacing: -0.01em; margin: 0 0 var(--space-8); }
+.b-line { display: grid; grid-template-columns: 130px 1fr; gap: var(--space-4); }
+.b-line .k { color: var(--color-text-muted); }
+.b-line .v a { text-decoration: none; border-bottom: 1px solid var(--color-border-firm); }
+.b-line .v a:hover { background: var(--color-invert); color: var(--color-text-inverse); border-color: transparent; }
+.b-hr { border: 0; border-top: var(--rule); margin: var(--space-12) 0; }
+.b-block { margin: var(--space-12) 0; }
+.b-block .hd { color: var(--color-text-muted); margin-bottom: var(--space-3); }
+.b-item {
+  display: grid; grid-template-columns: 1fr 130px 70px; gap: var(--space-4);
+  padding: 3px 6px; margin-left: -6px; text-decoration: none;
+}
+.b-item:hover { background: var(--color-invert); color: var(--color-text-inverse); }
+.b-item .d { color: var(--color-text-muted); }
+.b-item:hover .d { color: var(--color-text-inverse-dim); }
+/* Static cursor, deliberately NOT blinking: the v4 lock strips ambient motion,
+   and a perpetual blink is the same attention-grab as the old pulsing dot. */
+.b-cursor::after { content: "_"; margin-left: 2px; }
+
+/* ═══ VARIANT C — Oversized type, near-empty ═════════════════════════════ */
+.c-wrap { max-width: 1400px; margin: 0 auto; padding: 0 48px; }
+.c-hero { min-height: 88vh; display: flex; flex-direction: column; justify-content: center; }
+.c-hero h1 {
+  font-size: clamp(3rem, 11vw, var(--text-6xl)); font-weight: 800;
+  line-height: 0.9; letter-spacing: -0.045em; margin: 0; max-width: 12ch;
+}
+.c-scrollhint { margin-top: var(--space-24); }
+.c-stmt {
+  min-height: 78vh; display: flex; align-items: center;
+  border-top: var(--rule);
+}
+.c-stmt p {
+  font-size: clamp(1.75rem, 4.6vw, var(--text-4xl)); font-weight: 300;
+  line-height: 1.18; letter-spacing: -0.025em; margin: 0; max-width: 22ch;
+}
+.c-stmt p a { text-decoration: none; box-shadow: inset 0 -2px 0 var(--color-text); }
+.c-stmt p a:hover { background: var(--color-invert); color: var(--color-text-inverse); box-shadow: none; }
+.c-stmt .lbl { position: sticky; top: 80px; }
+.c-stmt-grid { display: grid; grid-template-columns: 120px 1fr; gap: var(--space-12); width: 100%; padding: var(--space-24) 0; }
+.c-end { border-top: var(--rule); padding: var(--space-16) 0 var(--space-24); display: flex; gap: var(--space-8); flex-wrap: wrap; }
+.c-end a { font-size: var(--text-sm); text-decoration: none; border-bottom: 1px solid var(--color-border-firm); padding-bottom: 2px; }
+.c-end a:hover { background: var(--color-invert); color: var(--color-text-inverse); border-color: transparent; }
+
+/* ═══ VARIANT D — Dense archive listing ══════════════════════════════════ */
+.d-wrap { max-width: 1000px; margin: 0 auto; padding: var(--space-16) 32px var(--space-24); }
+.d-head { display: flex; justify-content: space-between; align-items: baseline; border-bottom: var(--rule-hard); padding-bottom: var(--space-3); flex-wrap: wrap; gap: var(--space-4); }
+.d-head h1 { font-size: var(--text-xl); font-weight: 600; margin: 0; letter-spacing: -0.01em; }
+.d-note { font-size: var(--text-sm); color: var(--color-text-dim); max-width: 52ch; line-height: var(--leading-body); margin: var(--space-6) 0 var(--space-12); }
+.d-group { margin-top: var(--space-12); }
+.d-group > .lbl { display: block; padding-bottom: 6px; border-bottom: var(--rule); }
+.d-item {
+  display: grid; grid-template-columns: 1fr 190px 96px 20px; gap: var(--space-4);
+  align-items: baseline; padding: 9px 8px; margin: 0 -8px;
+  border-bottom: var(--rule); text-decoration: none; font-size: var(--text-sm);
+}
+.d-item:hover { background: var(--color-invert); color: var(--color-text-inverse); border-color: transparent; }
+.d-item .n { font-weight: 600; font-size: var(--text-base); }
+.d-item .m { color: var(--color-text-muted); font-family: var(--font-mono); font-size: var(--text-xs); }
+.d-item:hover .m { color: var(--color-text-inverse-dim); }
+.d-item .ar { text-align: right; opacity: 0; transition: opacity .12s; }
+.d-item:hover .ar { opacity: 1; }
+.d-count { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--color-text-muted); }
+
+/* ═══ Shared footer ══════════════════════════════════════════════════════ */
+.ft { border-top: var(--rule); margin-top: var(--space-24); padding: var(--space-12) 0 var(--space-16);
+      display: flex; justify-content: space-between; gap: var(--space-8); flex-wrap: wrap; }
+.ft a { text-decoration: none; }
+.ft a:hover { box-shadow: inset 0 -1px 0 var(--color-text); }
+.ft .cols { display: flex; gap: var(--space-12); flex-wrap: wrap; }
+.ft .col { display: flex; flex-direction: column; gap: 6px; font-size: var(--text-sm); }
+
+@media (max-width: 760px) {
+  .a-wrap, .c-wrap, .b-wrap, .d-wrap { padding-left: 20px; padding-right: 20px; }
+  .a-row { grid-template-columns: 40px 1fr; }
+  .a-row .dsc, .a-row .yr { grid-column: 2; text-align: left; }
+  .a-meta { grid-template-columns: 1fr; }
+  .b-line { grid-template-columns: 96px 1fr; }
+  .b-item, .d-item { grid-template-columns: 1fr 80px; }
+  .b-item .d, .d-item .ar { display: none; }
+  .c-stmt-grid { grid-template-columns: 1fr; gap: var(--space-6); }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ Variant switcher ═══ -->
+<div id="variant-nav">
+  <span class="tag">015 · MONO PASSIVE HOME</span>
+  <button class="variant-tab active" onclick="showVariant('a', this)">A: Swiss index</button>
+  <button class="variant-tab" onclick="showVariant('b', this)">B: Terminal readout</button>
+  <button class="variant-tab" onclick="showVariant('c', this)">C: Oversized type</button>
+  <button class="variant-tab" onclick="showVariant('d', this)">D: Dense archive</button>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     VARIANT A — Swiss editorial index
+     Rigid grid, numbered rows, mono labels, big whitespace. Gallery wall label.
+     ════════════════════════════════════════════════════════════════════════ -->
+<div id="variant-a" class="variant active">
+ <div class="vp">
+  <div class="a-wrap">
+
+    <header class="a-hero">
+      <span class="lbl fade">Monty Singer</span>
+      <h1 class="fade" style="margin-top:var(--space-6)">I build things and write about it.</h1>
+      <p class="sub fade">Right now that mostly means Prometheus, an AI integrations and
+        education company. Everything else here is the residue: past projects, monthly
+        essays, and a running list of things I like.</p>
+
+      <div class="a-meta fade">
+        <div><span class="lbl">Currently</span><span class="v">Building Prometheus</span></div>
+        <div><span class="lbl">Writes</span><span class="v">Monty Monthly</span></div>
+        <div><span class="lbl">Elsewhere</span><span class="v"><a href="#">X</a> · <a href="#">LinkedIn</a> · <a href="#">Email</a></span></div>
+      </div>
+    </header>
+
+    <section class="a-sec">
+      <span class="lbl fade">01 — Building</span>
+      <a class="a-row fade" href="#">
+        <span class="num">001</span>
+        <span class="ttl">Prometheus</span>
+        <span class="dsc">AI integrations and education. Practical leverage, not hype.</span>
+        <span class="yr">Current</span>
+      </a>
+      <a class="a-row fade" href="#">
+        <span class="num">002</span>
+        <span class="ttl">CULTIVATE</span>
+        <span class="dsc">Mushroom-growing venture that started in a dorm room.</span>
+        <span class="yr">Archived</span>
+      </a>
+      <a class="a-row fade" href="#">
+        <span class="num">003</span>
+        <span class="ttl">This site</span>
+        <span class="dsc">Notion-backed, built by hand, quietly over-engineered.</span>
+        <span class="yr">Ongoing</span>
+      </a>
+    </section>
+
+    <section class="a-sec">
+      <span class="lbl fade">02 — Writing</span>
+      <a class="a-row fade" href="#">
+        <span class="num">004</span>
+        <span class="ttl">Monty Monthly</span>
+        <span class="dsc">What building actually looks like, once a month.</span>
+        <span class="yr">Substack</span>
+      </a>
+      <a class="a-row fade" href="#">
+        <span class="num">005</span>
+        <span class="ttl">Essays</span>
+        <span class="dsc">Longer pieces. Stablecoins, scripture, whatever has hold of me.</span>
+        <span class="yr">Archive</span>
+      </a>
+    </section>
+
+    <section class="a-sec">
+      <span class="lbl fade">03 — Things I Love</span>
+      <a class="a-row fade" href="#">
+        <span class="num">006</span>
+        <span class="ttl">The list</span>
+        <span class="dsc">Books, films, records, hobbies. Updated when something earns it.</span>
+        <span class="yr">Live</span>
+      </a>
+    </section>
+
+    <footer class="ft">
+      <span class="lbl">Monty Singer &copy; 2026</span>
+      <div class="cols">
+        <div class="col"><span class="lbl">Navigate</span><a href="#">Building</a><a href="#">Writing</a><a href="#">Things I Love</a></div>
+        <div class="col"><span class="lbl">Elsewhere</span><a href="#">Prometheus</a><a href="#">Substack</a><a href="#">Contact</a></div>
+      </div>
+    </footer>
+
+  </div>
+ </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     VARIANT B — Terminal / system readout
+     Mono throughout, key/value lines, bracket labels. Machine printing facts.
+     ════════════════════════════════════════════════════════════════════════ -->
+<div id="variant-b" class="variant">
+ <div class="vp">
+  <div class="b-wrap">
+
+    <h1 class="b-name fade">monty singer</h1>
+
+    <div class="fade">
+      <div class="b-line"><span class="k">status</span><span class="v">building prometheus</span></div>
+      <div class="b-line"><span class="k">company</span><span class="v"><a href="#">prometheus.today</a> — ai integrations + education</span></div>
+      <div class="b-line"><span class="k">writes</span><span class="v"><a href="#">monty monthly</a>, roughly monthly</span></div>
+      <div class="b-line"><span class="k">before</span><span class="v">cultivate (mushrooms, archived)</span></div>
+      <div class="b-line"><span class="k">contact</span><span class="v"><a href="#">email</a> / <a href="#">x</a> / <a href="#">linkedin</a></span></div>
+    </div>
+
+    <hr class="b-hr">
+
+    <div class="b-block fade">
+      <div class="hd">[ building ]</div>
+      <a class="b-item" href="#"><span>prometheus</span><span class="d">ai integrations</span><span class="d">current</span></a>
+      <a class="b-item" href="#"><span>cultivate</span><span class="d">mushroom venture</span><span class="d">archived</span></a>
+      <a class="b-item" href="#"><span>montysinger.com</span><span class="d">this thing</span><span class="d">ongoing</span></a>
+    </div>
+
+    <div class="b-block fade">
+      <div class="hd">[ writing ]</div>
+      <a class="b-item" href="#"><span>monty monthly</span><span class="d">newsletter</span><span class="d">substack</span></a>
+      <a class="b-item" href="#"><span>essays</span><span class="d">long form</span><span class="d">archive</span></a>
+    </div>
+
+    <div class="b-block fade">
+      <div class="hd">[ things i love ]</div>
+      <a class="b-item" href="#"><span>books / films / records</span><span class="d">running list</span><span class="d">live</span></a>
+    </div>
+
+    <hr class="b-hr">
+
+    <div class="fade" style="color:var(--color-text-muted)">
+      no tracking pixels, no popups, no cookie banner.<br>
+      <span class="b-cursor">read whatever looks interesting</span>
+    </div>
+
+  </div>
+ </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     VARIANT C — Oversized type, near-empty page
+     One enormous sentence per screen. Confidence through restraint.
+     ════════════════════════════════════════════════════════════════════════ -->
+<div id="variant-c" class="variant">
+ <div class="vp">
+  <div class="c-wrap">
+
+    <header class="c-hero">
+      <span class="lbl fade">Monty Singer</span>
+      <h1 class="fade" style="margin-top:var(--space-6)">I build things.</h1>
+      <span class="lbl c-scrollhint fade">Scroll</span>
+    </header>
+
+    <section class="c-stmt">
+      <div class="c-stmt-grid">
+        <span class="lbl fade">Building</span>
+        <p class="fade">Mostly <a href="#">Prometheus</a> right now: AI integrations
+          and education for people who want the leverage, not the hype.</p>
+      </div>
+    </section>
+
+    <section class="c-stmt">
+      <div class="c-stmt-grid">
+        <span class="lbl fade">Writing</span>
+        <p class="fade">Once a month I write about what building actually looks like.
+          It is called <a href="#">Monty Monthly</a>.</p>
+      </div>
+    </section>
+
+    <section class="c-stmt">
+      <div class="c-stmt-grid">
+        <span class="lbl fade">Before</span>
+        <p class="fade">Before this there was <a href="#">CULTIVATE</a>, a mushroom
+          venture that began in a dorm room and taught me more than it earned.</p>
+      </div>
+    </section>
+
+    <section class="c-stmt">
+      <div class="c-stmt-grid">
+        <span class="lbl fade">Also</span>
+        <p class="fade">I keep <a href="#">a list of things I love</a>. Books, films,
+          records. It is the least useful page here and my favourite.</p>
+      </div>
+    </section>
+
+    <footer class="c-end fade">
+      <a href="#">Building</a><a href="#">Writing</a><a href="#">Things I Love</a>
+      <a href="#">Prometheus</a><a href="#">Contact</a>
+    </footer>
+
+  </div>
+ </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     VARIANT D — Dense archive listing
+     No hero. Page opens straight into the index. Everything visible at once.
+     ════════════════════════════════════════════════════════════════════════ -->
+<div id="variant-d" class="variant">
+ <div class="vp">
+  <div class="d-wrap">
+
+    <div class="d-head fade">
+      <h1>Monty Singer</h1>
+      <span class="lbl">Building Prometheus</span>
+    </div>
+
+    <p class="d-note fade">I build things and write about it. Everything I have made or
+      published is listed below. Nothing here is trying to sell you anything.</p>
+
+    <section class="d-group fade">
+      <span class="lbl">Building <span class="d-count">(3)</span></span>
+      <a class="d-item" href="#"><span class="n">Prometheus</span><span class="m">ai integrations</span><span class="m">current</span><span class="ar">&#8599;</span></a>
+      <a class="d-item" href="#"><span class="n">CULTIVATE</span><span class="m">mushroom venture</span><span class="m">archived</span><span class="ar">&#8599;</span></a>
+      <a class="d-item" href="#"><span class="n">montysinger.com</span><span class="m">this site</span><span class="m">ongoing</span><span class="ar">&#8599;</span></a>
+    </section>
+
+    <section class="d-group fade">
+      <span class="lbl">Writing <span class="d-count">(placeholder count)</span></span>
+      <a class="d-item" href="#"><span class="n">Monty Monthly</span><span class="m">newsletter</span><span class="m">substack</span><span class="ar">&#8599;</span></a>
+      <a class="d-item" href="#"><span class="n">Digital Dollar Diplomacy</span><span class="m">essay</span><span class="m">stablecoins</span><span class="ar">&#8599;</span></a>
+      <a class="d-item" href="#"><span class="n">Faith in Tension</span><span class="m">essay</span><span class="m">scripture</span><span class="ar">&#8599;</span></a>
+      <a class="d-item" href="#"><span class="n">Samson: Israel in a Body</span><span class="m">essay</span><span class="m">scripture</span><span class="ar">&#8599;</span></a>
+    </section>
+
+    <section class="d-group fade">
+      <span class="lbl">Things I Love <span class="d-count">(placeholder count)</span></span>
+      <a class="d-item" href="#"><span class="n">Books</span><span class="m">running list</span><span class="m">live</span><span class="ar">&#8599;</span></a>
+      <a class="d-item" href="#"><span class="n">Films</span><span class="m">running list</span><span class="m">live</span><span class="ar">&#8599;</span></a>
+      <a class="d-item" href="#"><span class="n">Records</span><span class="m">running list</span><span class="m">live</span><span class="ar">&#8599;</span></a>
+    </section>
+
+    <section class="d-group fade">
+      <span class="lbl">Elsewhere</span>
+      <a class="d-item" href="#"><span class="n">Email</span><span class="m">contact</span><span class="m">&nbsp;</span><span class="ar">&#8599;</span></a>
+      <a class="d-item" href="#"><span class="n">X</span><span class="m">@themontysinger</span><span class="m">&nbsp;</span><span class="ar">&#8599;</span></a>
+      <a class="d-item" href="#"><span class="n">LinkedIn</span><span class="m">profile</span><span class="m">&nbsp;</span><span class="ar">&#8599;</span></a>
+    </section>
+
+    <footer class="ft"><span class="lbl">Monty Singer &copy; 2026</span></footer>
+
+  </div>
+ </div>
+</div>
+
+<!-- ═══ Sketch toolbar ═══ -->
+<div id="sketch-tools"
+     onmouseenter="this.style.opacity='1'" onmouseleave="this.style.opacity='0.35'">
+  <select onchange="document.querySelector('link[href*=themes]').href='../themes/'+this.value+'.css'">
+    <option value="mono">mono</option>
+    <option value="default">default</option>
+    <option value="ink-cobalt">ink-cobalt</option>
+    <option value="ember">ember</option>
+    <option value="halogen">halogen</option>
+    <option value="nocturne">nocturne</option>
+    <option value="crimson-line">crimson-line</option>
+  </select>
+  <button onclick="setVp('375px')">375</button>
+  <button onclick="setVp('768px')">768</button>
+  <button onclick="setVp('none')">full</button>
+</div>
+
+<script>
+function showVariant(id, btn) {
+  document.querySelectorAll('.variant').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.variant-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('variant-' + id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo(0, 0);
+  revealAll();
+}
+
+function setVp(w) {
+  document.querySelectorAll('.vp').forEach(v => v.style.maxWidth = (w === 'none' ? '' : w));
+}
+
+// Slow fade-up on scroll — the only motion the v4 direction keeps.
+var io = new IntersectionObserver(function (entries) {
+  entries.forEach(function (e) {
+    if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+  });
+}, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
+
+function revealAll() {
+  document.querySelectorAll('.variant.active .fade:not(.in)').forEach(function (el) {
+    io.observe(el);
+  });
+}
+revealAll();
+</script>
+
+</body>
+</html>

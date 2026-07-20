@@ -7,7 +7,22 @@ typography, electric accents. This is a presentation-layer rewrite only: the Not
 SEO infra, analytics, image proxy, RSS, and Notion-render components all stay. Built on a `v3`
 branch, previewed on Vercel, promoted to production via alias swap when it reaches parity + QA.
 
-## CURRENT Homepage Direction (2026-07-04) — sketches 007–011 · SUPERSEDES the dark-kinetic direction above
+## CURRENT Homepage Direction (2026-07-20) — sketch 015 · SUPERSEDES the photo-forward direction below
+Trigger: "make it cooler, more passive and laid-back: this is cool, but I'm not in photos smiling,
+this is just a bit about me," plus "redo the palette so there's no orange and clay, mostly black and
+white or high-contrast." The v3 photo-forward homepage (007–011, built as phase 17.4) is superseded.
+- **Palette:** pure mono. `#ffffff` ground, `#000000` ink, `rgba(0,0,0,0.14)` hairlines. **Zero accent** —
+  Vermilion `#e5411f`, cream `#f4ecdd`, and warm paper `#faf9f7` are all out. Contrast comes from
+  inversion (black block on white) and type weight, never hue. Theme: `themes/mono.css`.
+- **Hero:** no photos. Type only. The 44% portrait carousel is cut; photos survive deeper in the page.
+- **Motion:** marquee, pulsing status dot, ken-burns, slide-ins, and the light/dark band slam all cut.
+  Only a slow opacity fade-up on scroll remains.
+- **Core action:** read and browse. Subscribe demoted to a quiet footer line, no sticky CTA.
+- **Survives from v3:** Hanken Grotesk 800 display, hard corners (radius 0), the no-gradients rule.
+- **Open:** which structural register (Swiss index / terminal / oversized type / dense archive) wins —
+  that is what sketch 015 is for. Also: OG images still hardcode `#e5411f` and need a mono redo.
+
+## Homepage Direction (2026-07-04) — sketches 007–011 · SUPERSEDED 2026-07-20 by the mono direction above
 A restrained, **photo-forward editorial** homepage (not the dark WebGL scroll-story). Driven by
 "homepage feels too text-based and plain — add photos." Landed via 007→011, consolidated in
 **sketch 010 (★ locked, full-page spec)**:
@@ -47,7 +62,8 @@ A restrained, **photo-forward editorial** homepage (not the dark WebGL scroll-st
 | 008 | alive-photo-home | How alive can it feel via bigger photos + non-mouse motion? | **3 · kinetic ambient** | home, photography, motion, scroll, ambient |
 | 009 | alive-photo-home-r2 | Color + type switchers, slide-in photos, writing rework | folded into 010 | home, motion, color, type, slide-in |
 | 010 | structured-bands-carousel | Can it read structured + professional (bands, hard boxes, serious type, carousel)? | **★ LOCKED — full-page spec** | home, editorial, bands, hard-corners, hanken, vermilion, carousel |
-| 011 | hero-accent-treatments | How much should the accent drive the hero, in what form? | **C · marker block** | home, hero, accent, marker-block, vermilion |
+| 011 | hero-accent-treatments | How much should the accent drive the hero, in what form? | **C · marker block** (superseded by 015) | home, hero, accent, marker-block, vermilion |
+| 015 | mono-passive-home | Pure black/white, type-only, motionless — which structural register reads "cool and passive" rather than promotional? | _in review_ | home, palette, mono, typography, v4 |
 
 ## Locked Decisions (from 001)
 - **Direction:** dark canvas, brutalist uppercase grotesk type, autonomous (non-cursor-reactive) motion.

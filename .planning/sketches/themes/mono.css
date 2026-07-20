@@ -1,0 +1,75 @@
+/* ── mono.css ────────────────────────────────────────────────────────────────
+   v4 direction (2026-07-20): pure black + white, zero accent.
+   Supersedes ink-cobalt.css / ember.css / halogen.css (all carried a hue).
+
+   Rule: contrast comes from INVERSION (black block on white) and TYPE WEIGHT,
+   never from hue. There is no --color-accent in this theme, on purpose.
+   Hard corners only (radius 0). No gradients. No shadows with color.
+   ────────────────────────────────────────────────────────────────────────── */
+
+:root {
+  /* Colors — mono only */
+  --color-bg:          #ffffff;
+  --color-surface:     #ffffff;
+  --color-invert:      #000000;   /* black block ground */
+  --color-border:      rgba(0, 0, 0, 0.14);
+  --color-border-firm: rgba(0, 0, 0, 0.32);
+  --color-text:        #000000;
+  --color-text-dim:    rgba(0, 0, 0, 0.66);
+  --color-text-muted:  rgba(0, 0, 0, 0.46);
+
+  /* On black ground */
+  --color-text-inverse:      #ffffff;
+  --color-text-inverse-dim:  rgba(255, 255, 255, 0.66);
+  --color-border-inverse:    rgba(255, 255, 255, 0.20);
+
+  /* Typography — matches the shipped stack (next/font: Hanken + JetBrains Mono) */
+  --font-sans: 'Hanken Grotesk', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', monospace;
+
+  --text-xs:   0.6875rem;   /* 11px — mono labels, index numbers */
+  --text-sm:   0.8125rem;   /* 13px */
+  --text-base: 1rem;
+  --text-lg:   1.125rem;
+  --text-xl:   1.375rem;
+  --text-2xl:  1.875rem;
+  --text-3xl:  2.75rem;
+  --text-4xl:  4rem;
+  --text-5xl:  6rem;
+  --text-6xl:  9rem;        /* oversized-type variant */
+
+  --tracking-label: 0.14em; /* mono labels are always tracked out */
+  --leading-tight:  0.95;
+  --leading-body:   1.6;
+
+  /* Spacing — generous, this is a quiet page */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-24: 96px;
+  --space-32: 128px;
+  --space-48: 192px;
+
+  /* Shapes — hard corners everywhere (carried over from v3) */
+  --radius-sm: 0;
+  --radius-md: 0;
+  --radius-lg: 0;
+
+  /* Rules — hairlines do the structural work that color used to */
+  --rule:      1px solid var(--color-border);
+  --rule-firm: 1px solid var(--color-border-firm);
+  --rule-hard: 2px solid var(--color-text);
+
+  /* Motion — only a slow opacity fade survives (v4 lock) */
+  --fade-dur:  0.7s;
+  --fade-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --fade-dur: 0.01s; }
+}
