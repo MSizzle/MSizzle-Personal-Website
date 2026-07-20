@@ -1,17 +1,16 @@
 ---
 gsd_state_version: 1.0
-milestone: v3.0
-milestone_name: Dark Brutalist Rebuild
-status: milestone_complete
-stopped_at: Milestone complete (Phase 19 was final phase)
-last_updated: 2026-07-06T09:46:30.982Z
-last_activity: 2026-07-07 -- SHIPPED the Things-I-Love pinboard live on montysinger.com (homepage band 03): notion-loves loader + client Pinboard + Movie type. Monty created + shared the "Things I Love" Notion DB (id 39632e75-4858-80b0-91dd-d707b7d0a7f0), set NOTION_LOVES_DB_ID on Vercel prod, curated 7 items (2 Movie, 1 Book, 3 Thing, 1 YouTube). Deployed via explicit `vercel deploy --prod` (GitHub auto-deploy from main did NOT fire this push); alias promoted to new deployment, no drift, cover proxy 200. Suite 157 pass / 0 fail.
+milestone: v4.0
+milestone_name: Mono Restyle
+status: planning
+last_updated: "2026-07-20T13:50:42.313Z"
+last_activity: 2026-07-20
 progress:
-  total_phases: 10
-  completed_phases: 8
-  total_plans: 48
-  completed_plans: 87
-  percent: 80
+  total_phases: 0
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
+  percent: 0
 ---
 
 # Project State
@@ -25,14 +24,10 @@ See: .planning/PROJECT.md (updated 2026-06-18)
 
 ## Current Position
 
-Phase: 19
-Plan: Not started
-Status: Milestone complete
-Last activity: 2026-07-13 - Monty Monthly excerpts switched to feed subtitle (260713-fast)
-
-Direction: locked photo-forward restyle from sketch 010 (`.planning/sketches/010-structured-bands-carousel/`) — Hanken Grotesk 800 + Vermilion `#e5411f` marker hero, alternating light/dark bands, hard corners, rail boxes, slide-in photos, Monty Monthly carousel, sticky Subscribe nav, credibility strip, rich footer. Supersedes the 17.1 text-forward skin; preserves who→what→engage velvet-rope IA. Motion scroll/ambient-only (IO + CSS + scroll-snap), no WebGL/Lenis. See memory `v3-homepage-photo-forward-lock` + `17.4-CONTEXT.md`. Phase 18 (QA/perf/alias) parked until this lands.
-
-Phase 18 ship gate: RESOLVED. v3.0 was promoted to production in a prior session (montysinger.com serving v3, GO doc DQ-04 verified live 2026-07-05). Re-verified 2026-07-06 at HEAD `2028fae`: prod HTTP 200 with current markers (incl. prometheus.today), correct redirects (/about, /portfolio -> 308; /building 200), prod build exit-0 (37 pages), client-bundle secret scan clean, vitest 141 pass / 0 fail. The 18-GO-NO-GO.md still lists pre-260706 routes (/portfolio, /about as live) but production is correct; the doc is a historical snapshot, not authoritative over live state.
+Phase: Not started (defining requirements)
+Plan: —
+Status: Defining requirements
+Last activity: 2026-07-20 — Milestone v4.0 started
 
 ## v3.0 Phase Status
 
