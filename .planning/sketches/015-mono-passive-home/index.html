@@ -189,9 +189,10 @@ a { color: inherit; }
 
 /* Writing block, terminal register. Deliberately the only mono-type block on
    the page, so it reads as a different surface: a log, not a pitch. */
+/* No box: the terminal register is carried by the mono type and the header
+   rule alone. A 2px frame read as a widget bolted onto the page. */
 .e-term {
   font-family: var(--font-mono); font-size: var(--text-sm); line-height: 1.85;
-  border: var(--rule-hard); padding: var(--space-8);
 }
 .e-term .hd {
   color: var(--color-text-muted); font-size: var(--text-xs);
@@ -211,11 +212,22 @@ a { color: inherit; }
 .e-term .more:hover { color: var(--color-text); box-shadow: inset 0 -1px 0 var(--color-text); }
 
 /* Pinboard, mono translation */
+/* Organized by type: one column per category, cards scattered WITHIN their
+   column. Keeps the pinboard's hand-pinned feel but makes the board scannable. */
 .e-board {
-  position: relative; height: 520px; margin-top: var(--space-8);
-  border: var(--rule); overflow: hidden;
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  margin-top: var(--space-8); border-top: var(--rule-hard);
 }
-.e-field { position: absolute; inset: 16px; }
+.e-zone { position: relative; min-height: 430px; border-right: var(--rule); }
+.e-zone:last-child { border-right: 0; }
+.e-zone-lbl {
+  position: absolute; top: 12px; left: 14px; z-index: 2;
+  font-family: var(--font-mono); font-size: var(--text-xs);
+  letter-spacing: var(--tracking-label); text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+.e-zone-lbl b { color: var(--color-text); font-weight: 500; }
+.e-zone-field { position: absolute; inset: 42px 14px 14px; }
 .e-card {
   position: absolute; width: 168px; background: var(--color-surface);
   border: 2px solid var(--color-text); box-shadow: 8px 8px 0 var(--color-text);
@@ -270,8 +282,11 @@ a { color: inherit; }
 @media (max-width: 760px) {
   .e-post { grid-template-columns: 84px 1fr; }
   .e-post .rd { display: none; }
-  .e-board { height: 460px; }
-  .e-card { width: 140px; }
+  .e-board { grid-template-columns: repeat(2, 1fr); }
+  .e-zone { min-height: 380px; }
+  .e-zone:nth-child(2) { border-right: 0; }
+  .e-zone:nth-child(-n+2) { border-bottom: var(--rule); }
+  .e-card { width: 132px; }
 }
 
 /* ═══ Shared footer ══════════════════════════════════════════════════════ */
@@ -625,9 +640,11 @@ a { color: inherit; }
         <span class="e-status" id="e-status"></span>
       </div>
 
-      <div class="e-board fade"><div class="e-field" id="e-field"></div></div>
+      <!-- One column per Notion Type. Zones are built by JS from the card data. -->
+      <div class="e-board fade" id="e-board"></div>
       <p class="lbl fade" style="margin-top:var(--space-3)">
-        Placeholder titles, not Monty's actual list. Real board is Notion-backed and every card links out.
+        Placeholder titles, not Monty's actual list. Real board is Notion-backed, grouped by the
+        Type select, and every card links out.
       </p>
     </section>
 
@@ -704,13 +721,13 @@ revealAll();
     { t: 'Placeholder hobby two',  c: 'Hobby',  why: 'Badly, but happily.' }
   ];
 
-  var field   = document.getElementById('e-field');
+  var board   = document.getElementById('e-board');
   var status  = document.getElementById('e-status');
   var bDraw   = document.getElementById('e-draw');
   var bShuf   = document.getElementById('e-shuffle');
   var bStop   = document.getElementById('e-stop');
   var bBack   = document.getElementById('e-back');
-  if (!field) return;
+  if (!board) return;
 
   var cards = [], riffle = null, drawnEl = null, seed = 7;
 
@@ -718,21 +735,38 @@ revealAll();
   // board is reproducible between reloads while still looking scattered.
   function rnd() { seed = (seed * 1103515245 + 12345) % 2147483648; return seed / 2147483648; }
 
-  LOVES.forEach(function (item) {
-    var el = document.createElement('div');
-    el.className = 'e-card';
-    el.setAttribute('data-cat', item.c);
-    el.innerHTML =
-      '<div class="flip">' +
-        '<div class="face">' +
-          '<div class="media">' + item.c.toUpperCase() + '</div>' +
-          '<div class="meta"><div class="t">' + item.t + '</div><div class="c">' + item.c + '</div></div>' +
-        '</div>' +
-        '<div class="back">' + item.why + '</div>' +
-      '</div>';
-    field.appendChild(el);
-    cards.push(el);
-    makeDraggable(el);
+  // Column order mirrors the Notion Type select order (loveCategories prop).
+  var TYPES = ['Book', 'Film', 'Record', 'Hobby'];
+
+  TYPES.forEach(function (type) {
+    var items = LOVES.filter(function (i) { return i.c === type; });
+
+    var zone = document.createElement('div');
+    zone.className = 'e-zone';
+    zone.innerHTML = '<div class="e-zone-lbl"><b>' + type + '</b> (' + items.length + ')</div>';
+
+    var zf = document.createElement('div');
+    zf.className = 'e-zone-field';
+    zone.appendChild(zf);
+    board.appendChild(zone);
+
+    items.forEach(function (item) {
+      var el = document.createElement('div');
+      el.className = 'e-card';
+      el.setAttribute('data-cat', item.c);
+      el.innerHTML =
+        '<div class="flip">' +
+          '<div class="face">' +
+            '<div class="media">' + item.c.toUpperCase() + '</div>' +
+            '<div class="meta"><div class="t">' + item.t + '</div><div class="c">' + item.c + '</div></div>' +
+          '</div>' +
+          '<div class="back">' + item.why + '</div>' +
+        '</div>';
+      el._zone = zf;
+      zf.appendChild(el);
+      cards.push(el);
+      makeDraggable(el);
+    });
   });
 
   function place(el, x, y, r) {
@@ -740,11 +774,13 @@ revealAll();
     el._x = x; el._y = y; el._r = r;
   }
 
+  // Scatter each card inside ITS OWN type column, not across the whole board.
   function scatter() {
-    var w = field.clientWidth, h = field.clientHeight;
     cards.forEach(function (el) {
+      var z = el._zone;
+      var w = z.clientWidth, h = z.clientHeight;
       var cw = el.offsetWidth || 168, ch = el.offsetHeight || 190;
-      place(el, rnd() * Math.max(1, w - cw), rnd() * Math.max(1, h - ch), (rnd() * 16) - 8);
+      place(el, rnd() * Math.max(1, w - cw), rnd() * Math.max(1, h - ch), (rnd() * 12) - 6);
       el.classList.remove('dim', 'drawn', 'flipped');
     });
   }

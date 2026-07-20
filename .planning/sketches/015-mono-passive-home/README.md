@@ -62,13 +62,28 @@ E resolves that as three registers doing three jobs on one page:
 | 02 Writing | Terminal (B) | The only mono-type surface on the page, so the blog reads as a **log** rather than a pitch: `~/writing`, dates left, read time right. |
 | 03 Things I Love | Pinboard (012/013) | Kept intact. Scatter, drag, Shuffle, and Draw-a-card riffle-then-flip. |
 
-**The mono translation of the pinboard is the thing to judge.** The 012/013 board leaned on
-Vermilion: the card back was Vermilion and the drop shadow was Vermilion-adjacent. With no
-accent, the drawn card now flips to a **solid black back**, and category is encoded by fill
-weight in the card's media area rather than by hue: Book = solid black, Film = light grey,
-Record = 45-degree hatch, Hobby = empty white. That substitution is the main open risk in E.
-If four fill treatments read as noise rather than as categories, the fallback is to drop the
-media block entirely and let the cards be pure type.
+**The mono translation of the pinboard.** The 012/013 board leaned on Vermilion: the card back
+was Vermilion and the drop shadow was Vermilion-adjacent. With no accent, the drawn card now
+flips to a **solid black back**, and category is encoded by fill weight in the card's media
+area rather than by hue: Book = solid black, Film = light grey, Record = 45-degree hatch,
+Hobby = empty white.
+
+### Revision 2 (2026-07-20, Monty)
+
+Three changes after viewing E:
+
+1. **Writing box removed.** The 2px frame around the terminal block read as a widget bolted
+   onto the page. The terminal register is now carried by the mono type and the header rule
+   alone, sitting directly on the paper like every other band.
+2. **Media kept.** The fill-weight treatments stay. This closes the open question above: the
+   four fills read as categories, not noise, so the pure-type fallback is off the table.
+3. **Pinboard organized by type.** Cards no longer scatter across one open board. The board is
+   now **one column per Notion Type** (Book / Film / Record / Hobby), each with a mono header
+   and a count, and cards scatter *within* their own column. Keeps the hand-pinned feel while
+   making the board scannable. Columns collapse 4-up to 2-up under 760px.
+
+Drag, Shuffle, and Draw-a-card all still work across the grouped board; a draw riffles through
+every column and the drawn card flips in place.
 
 Two small deliberate calls inside E:
 - The riffle un-dims the first card immediately. Waiting for the first interval tick left the

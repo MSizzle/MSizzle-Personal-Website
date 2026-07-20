@@ -25,8 +25,12 @@ white or high-contrast." The v3 photo-forward homepage (007–011, built as phas
   keeps the 012/013 pinboard** (scatter, drag, Shuffle, Draw-a-card riffle-and-flip).
 - **Pinboard without an accent:** the drawn card flips to a solid **black** back (was Vermilion),
   and category is encoded by fill weight, not hue: Book solid black / Film light grey / Record
-  45-degree hatch / Hobby empty. Main open risk in E — if the four fills read as noise, drop the
-  media block and let the cards be pure type.
+  45-degree hatch / Hobby empty. Approved 2026-07-20 — the fills read as categories, so the
+  pure-type fallback is dropped.
+- **Pinboard is grouped, not scattered:** one column per Notion Type with a mono header and count,
+  cards scatter within their own column. 4-up desktop, 2-up under 760px.
+- **Writing block has no frame.** The terminal register is carried by mono type plus a header rule;
+  a 2px box read as a widget bolted onto the page.
 - **Open:** OG images still hardcode `#e5411f` and need a mono redo. Real Things I Love titles and
   real post dates replace the placeholders at build time.
 
