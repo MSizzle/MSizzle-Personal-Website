@@ -2,9 +2,10 @@
 gsd_state_version: 1.0
 milestone: v4.0
 milestone_name: Mono Restyle
-status: roadmapped
-last_updated: "2026-07-20T00:00:00.000Z"
-last_activity: 2026-07-20
+status: Roadmapped, not yet planned
+stopped_at: Phase 20 context gathered
+last_updated: "2026-07-20T14:46:25.053Z"
+last_activity: 2026-07-20 — v4.0 roadmap created (Phases 20-25, 27 requirements mapped)
 progress:
   total_phases: 6
   completed_phases: 0
@@ -63,20 +64,26 @@ Next action: `/gsd-plan-phase 20` to decompose the mono token foundation.
 - **Tokens land first (Phase 20).** The palette is entirely token-driven in `src/app/globals.css`
   (lines 8-32), so the retheme is cheap and most of the 17 `accent`-referencing files under `src/`
   follow for free. Everything else in the milestone builds on the mono system existing.
+
 - **Known hardcoded survivals are scheduled explicitly**, because a token edit will not catch them:
   `globals.css:618` (`#e5411f`), `globals.css:122` (`--hero-bg` cream `#f4ecdd`),
   `globals.css:673` (`.emoji-badge--cream`), `globals.css:1293` (`.pb-frame--cream`) — all Phase 20;
   the three `opengraph-image.tsx` routes (root, `blog/[slug]`, `building/[slug]`) — Phase 23.
+
 - **The branch + preview (DQ-01) lives in Phase 20**, not a separate ops phase — same pattern as
   v3.0's Phase 14.
+
 - **Homepage and pinboard are separate phases (21, 22).** TL-01 is a *preservation* requirement:
   `src/components/home/pinboard.tsx` (749 lines) must keep its behaviour exactly, palette only.
   Splitting it out keeps the homepage rebuild from accidentally rewriting it.
+
 - **Dark mode is its own phase (24) and comes late.** It is genuinely new scope — `next-themes` is
   NOT a current dependency and there is no theme toggle anywhere in `src/`. It is sequenced after
   the mono system exists because inversion needs something to invert.
+
 - **Ship phase (25) carries v3.0 Phase 18's remainder.** That QA was never run against a design
   about to be replaced, so DQ-01..DQ-05 re-run it against v4.0.
+
 - **Granularity: standard (6 phases).** Derived from the natural order — tokens → homepage →
   pinboard → sweep → dark mode → ship.
 
@@ -85,6 +92,7 @@ Next action: `/gsd-plan-phase 20` to decompose the mono token foundation.
 - **DM-02 is the hardest requirement in the milestone.** The site uses inversion (black block on
   white) as its entire emphasis/hover language, so on a dark ground a "black block" hover has
   nothing to invert against. Phase 24 must resolve this by design, not defer it.
+
 - **Sketch 015's own stated main risk:** does mono read as *cooler* or as *unfinished*? Vermilion
   was doing real structural work; watch whether hairlines and mono labels carry that load.
 
@@ -109,6 +117,7 @@ those tests. Do not attribute them to v4.0 work.
 - GO/NO-GO doc is the authoritative QA artifact (v1.0 retro lesson)
 - Site copy rules: no em dashes, no location, "Georgetown University" only, sole professional
   identity is Founder of Prometheus
+
 - Surviving from v3 design: Hanken Grotesk 800 display, hard corners (radius 0), no-gradients rule
 - Current nav: Prometheus (external) / Building / Writing / Contact; `/about` deleted, `/uses`
   unlinked; Contact is the `/contact` route
@@ -144,9 +153,9 @@ Deferred from v4.0 requirements (Future Requirements):
 
 ## Session Continuity
 
-Last session: 2026-07-20
-Stopped at: v4.0 roadmap created (Phases 20-25)
-Resume file: None
+Last session: 2026-07-20T14:46:25.042Z
+Stopped at: Phase 20 context gathered
+Resume file: .planning/phases/20-mono-token-foundation/20-CONTEXT.md
 
 ---
 
