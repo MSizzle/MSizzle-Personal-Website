@@ -2,8 +2,8 @@
 sketch: 015
 name: mono-passive-home
 question: "What does a pure black-and-white, type-only, motionless homepage feel like, and which structural register reads as 'cool and passive' rather than 'promotional'?"
-winner: null
-tags: [homepage, palette, typography, mono, v4]
+winner: "E"
+tags: [homepage, palette, typography, mono, v4, pinboard, terminal]
 ---
 
 # Sketch 015: Mono Passive Home
@@ -45,6 +45,36 @@ open .planning/sketches/015-mono-passive-home/index.html
   white, almost nothing else. Confidence through restraint at magazine-cover scale.
 - **D: Dense archive listing** — no hero at all. The page opens straight into a compact,
   scannable index of everything, like a filesystem or a library catalogue.
+- **E: Synthesis ★ WINNER** — Monty picked A, then asked for two changes: keep Things I Love,
+  and make the writing list a terminal-format blog. So E is A's Swiss shell throughout, with
+  the writing section switched to B's terminal register and the 012/013 pinboard carried over.
+
+## Chosen Direction (E)
+
+Monty's call, 2026-07-20: **"I like A. I want to keep the my favorite things thing. I also
+think the writings should be like just a blog terminal format."**
+
+E resolves that as three registers doing three jobs on one page:
+
+| Band | Register | Why |
+|------|----------|-----|
+| Hero + 01 Building | Swiss editorial (A) | Sets the calm, gallery-label tone. Numbered rows, hover inverts to a black block. |
+| 02 Writing | Terminal (B) | The only mono-type surface on the page, so the blog reads as a **log** rather than a pitch: `~/writing`, dates left, read time right. |
+| 03 Things I Love | Pinboard (012/013) | Kept intact. Scatter, drag, Shuffle, and Draw-a-card riffle-then-flip. |
+
+**The mono translation of the pinboard is the thing to judge.** The 012/013 board leaned on
+Vermilion: the card back was Vermilion and the drop shadow was Vermilion-adjacent. With no
+accent, the drawn card now flips to a **solid black back**, and category is encoded by fill
+weight in the card's media area rather than by hue: Book = solid black, Film = light grey,
+Record = 45-degree hatch, Hobby = empty white. That substitution is the main open risk in E.
+If four fill treatments read as noise rather than as categories, the fallback is to drop the
+media block entirely and let the cards be pure type.
+
+Two small deliberate calls inside E:
+- The riffle un-dims the first card immediately. Waiting for the first interval tick left the
+  whole board blank for 110ms, which read as a flash rather than a shuffle.
+- Card scatter uses a seeded pseudo-random function, not `Math.random()`, so the board looks
+  scattered but lands identically on every reload. Easier to judge a layout that holds still.
 
 ## What to Look For
 

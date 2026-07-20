@@ -19,8 +19,16 @@ white or high-contrast." The v3 photo-forward homepage (007–011, built as phas
   Only a slow opacity fade-up on scroll remains.
 - **Core action:** read and browse. Subscribe demoted to a quiet footer line, no sticky CTA.
 - **Survives from v3:** Hanken Grotesk 800 display, hard corners (radius 0), the no-gradients rule.
-- **Open:** which structural register (Swiss index / terminal / oversized type / dense archive) wins —
-  that is what sketch 015 is for. Also: OG images still hardcode `#e5411f` and need a mono redo.
+- **Register: LOCKED to sketch 015 variant E.** Swiss editorial shell (numbered index rows, mono
+  labels, hover-inverts-to-black) for the hero and Building; **terminal format for the writing
+  list** (`~/writing`, dates left, read time right) so the blog reads as a log; **Things I Love
+  keeps the 012/013 pinboard** (scatter, drag, Shuffle, Draw-a-card riffle-and-flip).
+- **Pinboard without an accent:** the drawn card flips to a solid **black** back (was Vermilion),
+  and category is encoded by fill weight, not hue: Book solid black / Film light grey / Record
+  45-degree hatch / Hobby empty. Main open risk in E — if the four fills read as noise, drop the
+  media block and let the cards be pure type.
+- **Open:** OG images still hardcode `#e5411f` and need a mono redo. Real Things I Love titles and
+  real post dates replace the placeholders at build time.
 
 ## Homepage Direction (2026-07-04) — sketches 007–011 · SUPERSEDED 2026-07-20 by the mono direction above
 A restrained, **photo-forward editorial** homepage (not the dark WebGL scroll-story). Driven by
@@ -63,7 +71,7 @@ A restrained, **photo-forward editorial** homepage (not the dark WebGL scroll-st
 | 009 | alive-photo-home-r2 | Color + type switchers, slide-in photos, writing rework | folded into 010 | home, motion, color, type, slide-in |
 | 010 | structured-bands-carousel | Can it read structured + professional (bands, hard boxes, serious type, carousel)? | **★ LOCKED — full-page spec** | home, editorial, bands, hard-corners, hanken, vermilion, carousel |
 | 011 | hero-accent-treatments | How much should the accent drive the hero, in what form? | **C · marker block** (superseded by 015) | home, hero, accent, marker-block, vermilion |
-| 015 | mono-passive-home | Pure black/white, type-only, motionless — which structural register reads "cool and passive" rather than promotional? | _in review_ | home, palette, mono, typography, v4 |
+| 015 | mono-passive-home | Pure black/white, type-only, motionless — which structural register reads "cool and passive" rather than promotional? | **★ E · Synthesis** (Swiss shell + terminal writing + mono pinboard) | home, palette, mono, typography, v4, pinboard, terminal |
 
 ## Locked Decisions (from 001)
 - **Direction:** dark canvas, brutalist uppercase grotesk type, autonomous (non-cursor-reactive) motion.

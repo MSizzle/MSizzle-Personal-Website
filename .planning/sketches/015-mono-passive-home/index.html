@@ -182,6 +182,98 @@ a { color: inherit; }
 .d-item:hover .ar { opacity: 1; }
 .d-count { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--color-text-muted); }
 
+/* ═══ VARIANT E — Synthesis ══════════════════════════════════════════════
+   A's Swiss shell + B's terminal register scoped to the writing list +
+   the 012/013 pinboard translated to mono (black card back, was Vermilion).
+   ════════════════════════════════════════════════════════════════════════ */
+
+/* Writing block, terminal register. Deliberately the only mono-type block on
+   the page, so it reads as a different surface: a log, not a pitch. */
+.e-term {
+  font-family: var(--font-mono); font-size: var(--text-sm); line-height: 1.85;
+  border: var(--rule-hard); padding: var(--space-8);
+}
+.e-term .hd {
+  color: var(--color-text-muted); font-size: var(--text-xs);
+  letter-spacing: var(--tracking-label); text-transform: uppercase;
+  padding-bottom: var(--space-3); margin-bottom: var(--space-4);
+  border-bottom: var(--rule);
+}
+.e-post {
+  display: grid; grid-template-columns: 104px 1fr 92px; gap: var(--space-4);
+  align-items: baseline; padding: 5px 8px; margin: 0 -8px; text-decoration: none;
+}
+.e-post:hover { background: var(--color-invert); color: var(--color-text-inverse); }
+.e-post .dt { color: var(--color-text-muted); }
+.e-post:hover .dt, .e-post:hover .rd { color: var(--color-text-inverse-dim); }
+.e-post .rd { color: var(--color-text-muted); text-align: right; }
+.e-term .more { display: inline-block; margin-top: var(--space-4); color: var(--color-text-muted); text-decoration: none; }
+.e-term .more:hover { color: var(--color-text); box-shadow: inset 0 -1px 0 var(--color-text); }
+
+/* Pinboard, mono translation */
+.e-board {
+  position: relative; height: 520px; margin-top: var(--space-8);
+  border: var(--rule); overflow: hidden;
+}
+.e-field { position: absolute; inset: 16px; }
+.e-card {
+  position: absolute; width: 168px; background: var(--color-surface);
+  border: 2px solid var(--color-text); box-shadow: 8px 8px 0 var(--color-text);
+  cursor: grab; user-select: none;
+  transition: transform .55s var(--fade-ease), box-shadow .15s;
+}
+.e-card:active { cursor: grabbing; }
+.e-card:hover { box-shadow: 12px 12px 0 var(--color-text); z-index: 50; }
+.e-card .media {
+  height: 104px; border-bottom: 2px solid var(--color-text);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-mono); font-size: var(--text-xs);
+  letter-spacing: var(--tracking-label); color: var(--color-text-muted);
+}
+/* Category expressed by fill weight, since there is no accent to encode it */
+.e-card[data-cat="Book"]   .media { background: #000; color: #fff; }
+.e-card[data-cat="Film"]   .media { background: #e8e8e8; }
+.e-card[data-cat="Record"] .media { background: repeating-linear-gradient(45deg,#000 0 2px,#fff 2px 6px); color: transparent; }
+.e-card[data-cat="Hobby"]  .media { background: #fff; }
+.e-card .meta { padding: 9px 10px 11px; }
+.e-card .t { font-size: var(--text-sm); font-weight: 600; line-height: 1.25; }
+.e-card .c {
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: var(--tracking-label);
+  text-transform: uppercase; color: var(--color-text-muted); margin-top: 5px;
+}
+.e-tools { display: flex; gap: var(--space-3); align-items: center; margin-top: var(--space-6); flex-wrap: wrap; }
+.e-btn {
+  font-family: var(--font-mono); font-size: var(--text-xs);
+  letter-spacing: var(--tracking-label); text-transform: uppercase;
+  background: var(--color-surface); color: var(--color-text);
+  border: 2px solid var(--color-text); padding: 8px 14px; cursor: pointer;
+}
+.e-btn:hover { background: var(--color-invert); color: var(--color-text-inverse); }
+.e-status { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--color-text-muted); }
+
+/* Drawn card flips to a black back — the role Vermilion used to play */
+.e-card.drawn { z-index: 100; box-shadow: 14px 14px 0 var(--color-text); }
+.e-card .flip { position: relative; transform-style: preserve-3d; transition: transform .5s var(--fade-ease); }
+.e-card.flipped .flip { transform: rotateY(180deg); }
+.e-card .face, .e-card .back { backface-visibility: hidden; }
+.e-card .back {
+  position: absolute; inset: 0; transform: rotateY(180deg);
+  background: var(--color-invert); color: var(--color-text-inverse);
+  padding: 14px; font-size: var(--text-sm); line-height: 1.5;
+  display: flex; align-items: center;
+}
+.e-card.dim { opacity: .22; }
+@media (prefers-reduced-motion: reduce) {
+  .e-card, .e-card .flip { transition-duration: .001ms !important; }
+}
+
+@media (max-width: 760px) {
+  .e-post { grid-template-columns: 84px 1fr; }
+  .e-post .rd { display: none; }
+  .e-board { height: 460px; }
+  .e-card { width: 140px; }
+}
+
 /* ═══ Shared footer ══════════════════════════════════════════════════════ */
 .ft { border-top: var(--rule); margin-top: var(--space-24); padding: var(--space-12) 0 var(--space-16);
       display: flex; justify-content: space-between; gap: var(--space-8); flex-wrap: wrap; }
@@ -211,6 +303,7 @@ a { color: inherit; }
   <button class="variant-tab" onclick="showVariant('b', this)">B: Terminal readout</button>
   <button class="variant-tab" onclick="showVariant('c', this)">C: Oversized type</button>
   <button class="variant-tab" onclick="showVariant('d', this)">D: Dense archive</button>
+  <button class="variant-tab" onclick="showVariant('e', this)">E: Synthesis ★ A + terminal writing + pinboard</button>
 </div>
 
 <!-- ════════════════════════════════════════════════════════════════════════
@@ -450,6 +543,106 @@ a { color: inherit; }
  </div>
 </div>
 
+<!-- ════════════════════════════════════════════════════════════════════════
+     VARIANT E — Synthesis (Monty's pick, 2026-07-20)
+     A's Swiss editorial shell throughout. Writing switches to B's terminal
+     register so the blog reads as a log. Things I Love keeps the 012/013
+     pinboard mechanic (scatter, drag, shuffle, draw-and-flip), translated to
+     mono: the card back is black where it used to be Vermilion.
+     ════════════════════════════════════════════════════════════════════════ -->
+<div id="variant-e" class="variant">
+ <div class="vp">
+  <div class="a-wrap">
+
+    <header class="a-hero">
+      <span class="lbl fade">Monty Singer</span>
+      <h1 class="fade" style="margin-top:var(--space-6)">I build things and write about it.</h1>
+      <p class="sub fade">Right now that mostly means Prometheus, an AI integrations and
+        education company. Everything else here is the residue: past projects, monthly
+        essays, and a running list of things I like.</p>
+
+      <div class="a-meta fade">
+        <div><span class="lbl">Currently</span><span class="v">Building Prometheus</span></div>
+        <div><span class="lbl">Writes</span><span class="v">Monty Monthly</span></div>
+        <div><span class="lbl">Elsewhere</span><span class="v"><a href="#">X</a> · <a href="#">LinkedIn</a> · <a href="#">Email</a></span></div>
+      </div>
+    </header>
+
+    <!-- 01 Building — A's numbered index rows, unchanged -->
+    <section class="a-sec">
+      <span class="lbl fade">01 — Building</span>
+      <a class="a-row fade" href="#">
+        <span class="num">001</span>
+        <span class="ttl">Prometheus</span>
+        <span class="dsc">AI integrations and education. Practical leverage, not hype.</span>
+        <span class="yr">Current</span>
+      </a>
+      <a class="a-row fade" href="#">
+        <span class="num">002</span>
+        <span class="ttl">CULTIVATE</span>
+        <span class="dsc">Mushroom-growing venture that started in a dorm room.</span>
+        <span class="yr">Archived</span>
+      </a>
+      <a class="a-row fade" href="#">
+        <span class="num">003</span>
+        <span class="ttl">This site</span>
+        <span class="dsc">Notion-backed, built by hand, quietly over-engineered.</span>
+        <span class="yr">Ongoing</span>
+      </a>
+    </section>
+
+    <!-- 02 Writing — terminal register, the one mono-type surface on the page -->
+    <section class="a-sec">
+      <span class="lbl fade">02 — Writing</span>
+      <div class="e-term fade">
+        <div class="hd">~/writing &nbsp;·&nbsp; posts, newest first</div>
+
+        <a class="e-post" href="#"><span class="dt">2026-07</span><span>Monty Monthly no. 12</span><span class="rd">6 min</span></a>
+        <a class="e-post" href="#"><span class="dt">2026-06</span><span>Monty Monthly no. 11</span><span class="rd">5 min</span></a>
+        <a class="e-post" href="#"><span class="dt">2026-05</span><span>Digital Dollar Diplomacy</span><span class="rd">18 min</span></a>
+        <a class="e-post" href="#"><span class="dt">2026-04</span><span>Faith in Tension</span><span class="rd">22 min</span></a>
+        <a class="e-post" href="#"><span class="dt">2026-03</span><span>Samson: Israel in a Body</span><span class="rd">14 min</span></a>
+
+        <a class="more" href="#">all posts &#8594;</a>
+      </div>
+      <p class="lbl fade" style="margin-top:var(--space-4)">
+        Dates and read times are placeholders. Real list comes from Notion + the Substack feed.
+      </p>
+    </section>
+
+    <!-- 03 Things I Love — pinboard kept, translated to mono -->
+    <section class="a-sec">
+      <span class="lbl fade">03 — Things I Love</span>
+      <p class="sub fade" style="font-size:var(--text-base);margin:var(--space-4) 0 0;max-width:52ch">
+        Things I love outside of work. Drag them around, or let the board pick for you.
+      </p>
+
+      <div class="e-tools fade">
+        <button class="e-btn" id="e-draw">Draw a card</button>
+        <button class="e-btn" id="e-shuffle">Shuffle</button>
+        <button class="e-btn" id="e-stop" hidden>Stop</button>
+        <button class="e-btn" id="e-back" hidden>Back to board</button>
+        <span class="e-status" id="e-status"></span>
+      </div>
+
+      <div class="e-board fade"><div class="e-field" id="e-field"></div></div>
+      <p class="lbl fade" style="margin-top:var(--space-3)">
+        Placeholder titles, not Monty's actual list. Real board is Notion-backed and every card links out.
+      </p>
+    </section>
+
+    <footer class="ft">
+      <span class="lbl">Monty Singer &copy; 2026</span>
+      <div class="cols">
+        <div class="col"><span class="lbl">Navigate</span><a href="#">Building</a><a href="#">Writing</a><a href="#">Things I Love</a></div>
+        <div class="col"><span class="lbl">Elsewhere</span><a href="#">Prometheus</a><a href="#">Substack</a><a href="#">Contact</a></div>
+      </div>
+    </footer>
+
+  </div>
+ </div>
+</div>
+
 <!-- ═══ Sketch toolbar ═══ -->
 <div id="sketch-tools"
      onmouseenter="this.style.opacity='1'" onmouseleave="this.style.opacity='0.35'">
@@ -475,6 +668,7 @@ function showVariant(id, btn) {
   btn.classList.add('active');
   window.scrollTo(0, 0);
   revealAll();
+  if (id === 'e' && window.eScatter) window.eScatter();
 }
 
 function setVp(w) {
@@ -494,6 +688,134 @@ function revealAll() {
   });
 }
 revealAll();
+
+/* ═══ Variant E pinboard — scatter / drag / shuffle / draw + flip ═════════
+   Mono translation of sketches 012 + 013. The drawn card flips to a BLACK
+   back; that surface used to be Vermilion. Placeholder titles throughout. */
+(function () {
+  var LOVES = [
+    { t: 'Placeholder book one',   c: 'Book',   why: 'Why this one matters. Real copy comes from Notion.' },
+    { t: 'Placeholder film one',   c: 'Film',   why: 'A line about why I keep coming back to it.' },
+    { t: 'Placeholder record',     c: 'Record', why: 'What it sounds like when the work is going well.' },
+    { t: 'Placeholder hobby',      c: 'Hobby',  why: 'The thing I do when I am not at a screen.' },
+    { t: 'Placeholder book two',   c: 'Book',   why: 'Changed how I think about building things.' },
+    { t: 'Placeholder film two',   c: 'Film',   why: 'Watched it more times than I will admit.' },
+    { t: 'Placeholder record two', c: 'Record', why: 'On whenever I am writing.' },
+    { t: 'Placeholder hobby two',  c: 'Hobby',  why: 'Badly, but happily.' }
+  ];
+
+  var field   = document.getElementById('e-field');
+  var status  = document.getElementById('e-status');
+  var bDraw   = document.getElementById('e-draw');
+  var bShuf   = document.getElementById('e-shuffle');
+  var bStop   = document.getElementById('e-stop');
+  var bBack   = document.getElementById('e-back');
+  if (!field) return;
+
+  var cards = [], riffle = null, drawnEl = null, seed = 7;
+
+  // Deterministic pseudo-random: Date.now()/Math.random() are avoided so the
+  // board is reproducible between reloads while still looking scattered.
+  function rnd() { seed = (seed * 1103515245 + 12345) % 2147483648; return seed / 2147483648; }
+
+  LOVES.forEach(function (item) {
+    var el = document.createElement('div');
+    el.className = 'e-card';
+    el.setAttribute('data-cat', item.c);
+    el.innerHTML =
+      '<div class="flip">' +
+        '<div class="face">' +
+          '<div class="media">' + item.c.toUpperCase() + '</div>' +
+          '<div class="meta"><div class="t">' + item.t + '</div><div class="c">' + item.c + '</div></div>' +
+        '</div>' +
+        '<div class="back">' + item.why + '</div>' +
+      '</div>';
+    field.appendChild(el);
+    cards.push(el);
+    makeDraggable(el);
+  });
+
+  function place(el, x, y, r) {
+    el.style.transform = 'translate(' + x + 'px,' + y + 'px) rotate(' + r + 'deg)';
+    el._x = x; el._y = y; el._r = r;
+  }
+
+  function scatter() {
+    var w = field.clientWidth, h = field.clientHeight;
+    cards.forEach(function (el) {
+      var cw = el.offsetWidth || 168, ch = el.offsetHeight || 190;
+      place(el, rnd() * Math.max(1, w - cw), rnd() * Math.max(1, h - ch), (rnd() * 16) - 8);
+      el.classList.remove('dim', 'drawn', 'flipped');
+    });
+  }
+
+  function makeDraggable(el) {
+    var sx, sy, ox, oy, dragging = false;
+    el.addEventListener('pointerdown', function (ev) {
+      if (riffle) return;
+      dragging = true; el.setPointerCapture(ev.pointerId);
+      el.style.transition = 'none'; el.style.zIndex = 60;
+      sx = ev.clientX; sy = ev.clientY; ox = el._x || 0; oy = el._y || 0;
+    });
+    el.addEventListener('pointermove', function (ev) {
+      if (!dragging) return;
+      place(el, ox + (ev.clientX - sx), oy + (ev.clientY - sy), el._r || 0);
+    });
+    el.addEventListener('pointerup', function () {
+      dragging = false; el.style.transition = ''; el.style.zIndex = '';
+    });
+  }
+
+  function setButtons(state) {
+    bDraw.hidden = state !== 'board';
+    bShuf.hidden = state !== 'board';
+    bStop.hidden = state !== 'drawing';
+    bBack.hidden = state !== 'revealed';
+  }
+
+  function startDraw() {
+    setButtons('drawing');
+    status.textContent = 'riffling...';
+    cards.forEach(function (el) { el.classList.add('dim'); el.classList.remove('drawn', 'flipped'); });
+    // Un-dim the first card immediately: waiting for the first interval tick
+    // left the whole board blank for 110ms, which read as a flash.
+    cards[0].classList.remove('dim');
+    var i = 1;
+    riffle = setInterval(function () {
+      cards.forEach(function (el) { el.classList.add('dim'); });
+      cards[i % cards.length].classList.remove('dim');
+      i++;
+    }, 110);
+  }
+
+  function stopDraw() {
+    clearInterval(riffle); riffle = null;
+    drawnEl = cards.filter(function (el) { return !el.classList.contains('dim'); })[0] || cards[0];
+    cards.forEach(function (el) { el.classList.add('dim'); });
+    drawnEl.classList.remove('dim');
+    drawnEl.classList.add('drawn', 'flipped');
+    status.textContent = 'drew: ' + drawnEl.querySelector('.t').textContent;
+    setButtons('revealed');
+  }
+
+  function backToBoard() {
+    cards.forEach(function (el) { el.classList.remove('dim', 'drawn', 'flipped'); });
+    status.textContent = '';
+    setButtons('board');
+  }
+
+  bDraw.addEventListener('click', startDraw);
+  bStop.addEventListener('click', stopDraw);
+  bBack.addEventListener('click', backToBoard);
+  bShuf.addEventListener('click', function () { backToBoard(); scatter(); });
+
+  setButtons('board');
+  // Variant E starts hidden, so the field measures 0 at load and every card would
+  // stack at the origin. showVariant() re-runs this once the tab is actually shown.
+  window.eScatter = function () { if (!riffle) scatter(); };
+  window.eScatter();
+  window.addEventListener('resize', window.eScatter);
+})();
 </script>
 
 </body>
