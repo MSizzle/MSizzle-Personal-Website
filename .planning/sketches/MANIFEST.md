@@ -27,8 +27,12 @@ white or high-contrast." The v3 photo-forward homepage (007–011, built as phas
   and category is encoded by fill weight, not hue: Book solid black / Film light grey / Record
   45-degree hatch / Hobby empty. Approved 2026-07-20 — the fills read as categories, so the
   pure-type fallback is dropped.
-- **Pinboard is grouped, not scattered:** one column per Notion Type with a mono header and count,
-  cards scatter within their own column. 4-up desktop, 2-up under 760px.
+- **Pinboard keeps the SHIPPED behaviour** (`src/components/home/pinboard.tsx`): one loose scatter
+  field on three start lines, drag, click-to-slide-a-note-up, per-type card kinds (book/film cover,
+  YouTube thumb, Thing note card, Place polaroid), and the existing **Organize by topic** button
+  that gathers the scatter into topic rows in Notion select order. Mobile degrades to a stack.
+  Only the palette changes: colored `SWATCHES` go greyscale, `.pb-frame--cream` loses its cream,
+  and the note panel goes Vermilion to black.
 - **Writing block has no frame.** The terminal register is carried by mono type plus a header rule;
   a 2px box read as a widget bolted onto the page.
 - **Open:** OG images still hardcode `#e5411f` and need a mono redo. Real Things I Love titles and

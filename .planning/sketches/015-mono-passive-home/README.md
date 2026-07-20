@@ -77,13 +77,31 @@ Three changes after viewing E:
    alone, sitting directly on the paper like every other band.
 2. **Media kept.** The fill-weight treatments stay. This closes the open question above: the
    four fills read as categories, not noise, so the pure-type fallback is off the table.
-3. **Pinboard organized by type.** Cards no longer scatter across one open board. The board is
-   now **one column per Notion Type** (Book / Film / Record / Hobby), each with a mono header
-   and a count, and cards scatter *within* their own column. Keeps the hand-pinned feel while
-   making the board scannable. Columns collapse 4-up to 2-up under 760px.
+3. **Pinboard organized by type.** First attempt was wrong: it replaced the board with a
+   permanent four-column grid. Corrected in revision 3.
 
-Drag, Shuffle, and Draw-a-card all still work across the grouped board; a draw riffles through
-every column and the drawn card flips in place.
+### Revision 3 (2026-07-20, Monty: "the pinboard should be very similar to the current website's")
+
+Revision 2 invented a new board instead of matching what ships. Rebuilt against
+`src/components/home/pinboard.tsx` so the sketch now mirrors production:
+
+- **One loose scatter field**, cards started across **three horizontal lines** with seeded
+  wobble (the shipped `layoutFor` behaviour), not a column grid.
+- **Click a card and a note slides UP over it** — the shipped reveal, with a close button and
+  an `Open ↗` link. Replaces the card-flip I had invented. This note panel is the surface that
+  used to be Vermilion; it is black now.
+- **Per-type card kinds**, as shipped: Book/Movie render as covers with the title over the
+  artwork, YouTube as a thumbnail with a play badge, Thing as a note card, Place as a polaroid
+  with a caption. Types match the real Notion select (Book, Movie, YouTube, Thing, Place).
+- **Organize by topic is a button, not a layout.** The shipped board already has one; it gathers
+  the scatter into tidy topic rows in Notion select-option order with a heading per row. That is
+  what "organize by type" meant. Toggles back to scatter.
+- **Under 760px** it degrades to a tappable stack and the toolbar hides, as shipped.
+
+**Palette-only deltas from production**, which are the real decisions to carry into the build:
+the shipped `SWATCHES` array is colored (`#8f9e86`, `#7c93a6`, `#b9805f`…) and becomes greyscale;
+`.pb-frame--cream` loses its cream fill; the note panel goes from Vermilion to black. Card kinds
+are told apart by shape and border weight rather than by hue.
 
 Two small deliberate calls inside E:
 - The riffle un-dims the first card immediately. Waiting for the first interval tick left the
