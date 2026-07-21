@@ -4,6 +4,7 @@ import { ExplorativeHomepage } from "@/components/home/explorative-homepage";
 import { getFeaturedProjects, type Project } from "@/lib/notion-projects";
 import { getLovesData, type LoveItem } from "@/lib/notion-loves";
 import { fetchMontyMonthlyIssues, type MontyMonthlyIssue } from "@/lib/rss/substack";
+import { getPublishedPosts, type BlogPost } from "@/lib/notion";
 
 /**
  * Homepage — ISR Server Component for the personal-brand narrative arc.
@@ -24,6 +25,7 @@ export default async function Home() {
   let montyIssues: MontyMonthlyIssue[] = [];
   let loves: LoveItem[] = [];
   let loveCategories: string[] = [];
+  let posts: BlogPost[] = [];
   try {
     projects = await getFeaturedProjects();
   } catch {}
@@ -35,6 +37,9 @@ export default async function Home() {
     loves = lovesData.items;
     loveCategories = lovesData.categoryOrder;
   } catch {}
+  try {
+    posts = await getPublishedPosts();
+  } catch {}
 
   return (
     <>
@@ -44,6 +49,7 @@ export default async function Home() {
         montyIssues={montyIssues}
         loves={loves}
         loveCategories={loveCategories}
+        posts={posts}
       />
     </>
   );
