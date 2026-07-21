@@ -91,7 +91,7 @@ Plans:
 
 **Wave 5** *(blocked on Waves 1-4 completion)*
 
-- [ ] 21-05-PLAN.md — Orchestrator + page.tsx wiring, retired-component deletions, test rewrites (HP-02/03/04/05)
+- [x] 21-05-PLAN.md — Orchestrator + page.tsx wiring, retired-component deletions, test rewrites (HP-02/03/04/05)
 
 **Wave 6** *(blocked on Wave 5 completion)*
 
@@ -173,7 +173,7 @@ Phases execute in numeric order: 20 -> 21 -> 22 -> 23 -> 24 -> 25
 | Phase | Milestone | Plans | Status | Completed |
 |-------|-----------|-------|--------|-----------|
 | 20. Mono Token Foundation | v4.0 | 5/5 | Complete   | 2026-07-21 |
-| 21. Mono Homepage Rebuild | v4.0 | 4/6 | In Progress|  |
+| 21. Mono Homepage Rebuild | v4.0 | 5/6 | In Progress|  |
 | 22. Things I Love in Mono | v4.0 | 0/? | Not started | - |
 | 23. Site Sweep & Mono OG | v4.0 | 0/? | Not started | - |
 | 24. True Inversion Dark Mode | v4.0 | 0/? | Not started | - |
