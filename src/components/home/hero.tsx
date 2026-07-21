@@ -9,7 +9,7 @@
 
 export function Hero() {
   return (
-    <section className="wrap py-16 md:py-32">
+    <section className="wrap pt-24 pb-16 md:pt-52 md:pb-32">
       <div className="reveal font-mono text-xs uppercase tracking-[0.12em] text-text-muted">
         Monty Singer
       </div>
@@ -24,7 +24,7 @@ export function Hero() {
         projects, monthly essays, and a running list of things I like.
       </p>
 
-      <div className="reveal grid grid-cols-1 md:grid-cols-3 gap-8 border-t border-border pt-4 mt-16">
+      <div className="reveal grid grid-cols-1 md:grid-cols-3 gap-8 border-t border-border pt-6 mt-24 md:mt-32">
         <div>
           <div className="text-xs font-mono uppercase tracking-[0.12em] text-text-muted">
             Currently

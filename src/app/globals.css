@@ -43,11 +43,22 @@ html {
   scroll-behavior: auto; /* Lenis handles smooth scroll */
 }
 
+/* The viewport is a hard edge. `overflow-x: hidden` on body alone still lets
+   mobile browsers pan and rubber-band the page sideways, because the scroll
+   container is the root element; it has to be set on `html` too. The
+   `overscroll-behavior-x` pair also kills horizontal swipe-to-navigate, which
+   the draggable Things I Love pinboard would otherwise trigger mid-drag. */
+html {
+  overflow-x: hidden;
+  overscroll-behavior-x: none;
+}
+
 body {
   font-family: var(--font-sans), system-ui, sans-serif;
   font-size: 1rem;
   line-height: 1.45;
   overflow-x: hidden;
+  overscroll-behavior-x: none;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -202,10 +213,14 @@ h1.sig .hl {
 .band + .band {
   border-top: 1px solid var(--color-border);
 }
+/* Horizontal gutter only. MUST stay `padding-inline`, never the `padding`
+   shorthand: `.wrap` is co-classed onto section elements that set their own
+   vertical rhythm (`.a-sec`, Tailwind `py-*`), and the shorthand silently
+   zeroed every one of them, collapsing the whole page to 0 vertical space. */
 .wrap {
   max-width: 1180px;
   margin: 0 auto;
-  padding: 0 clamp(22px, 6vw, 88px);
+  padding-inline: clamp(22px, 6vw, 88px);
 }
 
 /* Blob atmosphere removed — no gradients / soft glows site-wide (brutalist). */
@@ -438,7 +453,11 @@ p.body {
 /* ── Sticky mini-nav (D-10) — appears past hero fold (z-index:9000).
    Restyled to match the editorial header (one nav style site-wide):
    paper field, ink wordmark, sentence-case muted links. Solid, no blur. ── */
+/* Desktop only. Mobile already has its own fixed header bar (nav/navigation.tsx),
+   so sliding a second bar down over a 375px viewport just stacks chrome on top
+   of chrome. */
 .stickynav {
+  display: none;
   position: fixed;
   top: 0;
   left: 0;
@@ -463,6 +482,9 @@ p.body {
   gap: 20px;
 }
 @media (min-width: 768px) {
+  .stickynav {
+    display: block;
+  }
   .stickynav .inner {
     padding: 0 160px;
   }
@@ -637,8 +659,15 @@ li:last-child > .nav-cell {
    status on a hairline top-rule, with full-row hover/focus inversion as the
    site's only hover language. Plan 21-03 reuses the identical invert
    mechanism for Writing terminal rows (.e-post). */
+/* Band rhythm. `--space-32` was never defined anywhere, so this used to read
+   as its 128px fallback; now it is an explicit, fluid value. Generous by
+   intent: the mono system has no color or ornament, so open space is the
+   only thing separating one band from the next. */
 .a-sec {
-  padding: var(--space-32, 128px) 0 0;
+  padding-top: clamp(96px, 13vw, 192px);
+}
+.a-sec > h2 {
+  margin-bottom: clamp(32px, 4vw, 56px);
 }
 .a-row {
   display: grid;
@@ -845,12 +874,8 @@ body.no-motion .reveal {
 /* ── Structural container (D-03) ── */
 /* Used by all beat section components as the centering/padding wrapper.
    Full-bleed elements (marquee, photo rows) live OUTSIDE .wrap in their
-   parent band section. */
-.wrap {
-  max-width: 1180px;
-  margin: 0 auto;
-  padding: 0 clamp(22px, 6vw, 88px);
-}
+   parent band section. Canonical definition lives above (~line 205); this
+   duplicate was overriding `.a-sec`'s vertical rhythm and has been removed. */
 
 /* ── Footer selective line (D-12) ── */
 .selective {
