@@ -11,11 +11,11 @@ v3.0's requirements are archived at `.planning/milestones/v3.0-REQUIREMENTS.md`.
 ## v4.0 Requirements
 
 ### Mono Design System (MO)
-- [ ] **MO-01**: Every surface renders on a pure white ground (`#ffffff`) with true black ink (`#000000`) and `rgba(0,0,0,0.14)` hairline borders — no warm paper, no cream, no tinted greys.
+- [x] **MO-01**: Every surface renders on a pure white ground (`#ffffff`) with true black ink (`#000000`) and `rgba(0,0,0,0.14)` hairline borders — no warm paper, no cream, no tinted greys.
 - [x] **MO-02**: No accent color exists anywhere in the token layer. Vermilion (`#e5411f`, `#c8381a`, `#a52d13`), cream `#f4ecdd`, and warm paper `#faf9f7` are removed from `globals.css`, including the hardcoded uses outside the token block.
 - [x] **MO-03**: Emphasis and interaction states are expressed by inversion (black block on white) and type weight, never by hue — including every hover state that previously used the accent.
 - [ ] **MO-04**: Notion inline text colors authored inside posts (amber, orange, blue, gray) render as ink/dim/muted greys, so writing in Notion cannot reintroduce a hue.
-- [ ] **MO-05**: Hanken Grotesk 800 display type, hard corners (radius 0), and the no-gradients rule are preserved from v3.
+- [x] **MO-05**: Hanken Grotesk 800 display type, hard corners (radius 0), and the no-gradients rule are preserved from v3.
 
 ### Homepage (HP)
 - [ ] **HP-01**: The homepage hero is type-only — the rotating portrait carousel (stage pitch, fireside chat, mushroom blocks) is gone, and no photograph appears above the fold.
@@ -45,7 +45,7 @@ v3.0's requirements are archived at `.planning/milestones/v3.0-REQUIREMENTS.md`.
 - [ ] **DM-03**: The theme choice persists across navigation and reloads with no flash of the wrong ground on first paint.
 
 ### Delivery & Quality (DQ)
-- [ ] **DQ-01**: The restyle is developed on a branch and reviewable on a Vercel preview URL before it replaces production.
+- [x] **DQ-01**: The restyle is developed on a branch and reviewable on a Vercel preview URL before it replaces production.
 - [ ] **DQ-02**: The site passes its existing perf budget (LCP / PSI mobile gates) after the restyle.
 - [ ] **DQ-03**: The vitest suite passes, including the SEO regression gate (sitemap, robots, feed, metadata, JSON-LD) proven intact through the restyle.
 - [ ] **DQ-04**: Production is promoted by explicit alias swap with no alias drift (never `--prebuilt --prod`).
@@ -71,11 +71,11 @@ All 27 v4.0 requirements map to exactly one phase. No orphans, no duplicates.
 
 | Requirement | Phase | Phase Name | Status |
 |-------------|-------|------------|--------|
-| MO-01 | Phase 20 | Mono Token Foundation | Pending |
-| MO-02 | Phase 20 | Mono Token Foundation | Pending |
-| MO-03 | Phase 20 | Mono Token Foundation | Pending |
+| MO-01 | Phase 20 | Mono Token Foundation | Complete |
+| MO-02 | Phase 20 | Mono Token Foundation | Complete |
+| MO-03 | Phase 20 | Mono Token Foundation | Complete |
 | MO-04 | Phase 23 | Site Sweep & Mono OG | Pending |
-| MO-05 | Phase 20 | Mono Token Foundation | Pending |
+| MO-05 | Phase 20 | Mono Token Foundation | Complete |
 | HP-01 | Phase 21 | Mono Homepage Rebuild | Pending |
 | HP-02 | Phase 21 | Mono Homepage Rebuild | Pending |
 | HP-03 | Phase 21 | Mono Homepage Rebuild | Pending |
@@ -93,7 +93,7 @@ All 27 v4.0 requirements map to exactly one phase. No orphans, no duplicates.
 | DM-01 | Phase 24 | True Inversion Dark Mode | Pending |
 | DM-02 | Phase 24 | True Inversion Dark Mode | Pending |
 | DM-03 | Phase 24 | True Inversion Dark Mode | Pending |
-| DQ-01 | Phase 20 | Mono Token Foundation | Pending |
+| DQ-01 | Phase 20 | Mono Token Foundation | Complete |
 | DQ-02 | Phase 25 | v4.0 QA, Perf Gate & Alias Swap | Pending |
 | DQ-03 | Phase 25 | v4.0 QA, Perf Gate & Alias Swap | Pending |
 | DQ-04 | Phase 25 | v4.0 QA, Perf Gate & Alias Swap | Pending |

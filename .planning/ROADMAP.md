@@ -13,7 +13,7 @@
 
 **Milestone Goal:** Strip the site to pure black and white with zero accent, and rebuild the homepage as a quiet editorial index that reads "here's a bit about me" rather than a founder pitch. Design is locked by `.planning/sketches/015-mono-passive-home/` variant E — this milestone ports it, it does not explore it.
 
-- [ ] **Phase 20: Mono Token Foundation** - Retheme `globals.css` to pure black/white with zero accent, kill every hardcoded survival, establish inversion as the emphasis language, on a branch with a live Vercel preview
+- [x] **Phase 20: Mono Token Foundation** - Retheme `globals.css` to pure black/white with zero accent, kill every hardcoded survival, establish inversion as the emphasis language, on a branch with a live Vercel preview (completed 2026-07-21)
 - [ ] **Phase 21: Mono Homepage Rebuild** - Rebuild the homepage to sketch 015 variant E: type-only hero, Swiss numbered Building index, terminal writing log, one continuous ground, motion stripped to a single slow fade
 - [ ] **Phase 22: Things I Love in Mono** - Recolor the pinboard to greyscale with a black note panel while preserving its shipped behaviour exactly, and prove reduced-motion across every surviving animation
 - [ ] **Phase 23: Site Sweep & Mono OG** - Carry mono to every interior route, neutralize Notion inline text colors, retire non-content photography, and regenerate all three OG images without `#e5411f`
@@ -50,7 +50,7 @@ Plans:
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
-- [ ] 20-05-PLAN.md — full D-03 audit, build/vitest check, v4-mono push, DQ-01 preview sign-off
+- [x] 20-05-PLAN.md — full D-03 audit, build/vitest check, v4-mono push, DQ-01 preview sign-off
 
 **UI hint**: yes
 
@@ -146,7 +146,7 @@ Phases execute in numeric order: 20 -> 21 -> 22 -> 23 -> 24 -> 25
 
 | Phase | Milestone | Plans | Status | Completed |
 |-------|-----------|-------|--------|-----------|
-| 20. Mono Token Foundation | v4.0 | 4/5 | In Progress|  |
+| 20. Mono Token Foundation | v4.0 | 5/5 | Complete   | 2026-07-21 |
 | 21. Mono Homepage Rebuild | v4.0 | 0/? | Not started | - |
 | 22. Things I Love in Mono | v4.0 | 0/? | Not started | - |
 | 23. Site Sweep & Mono OG | v4.0 | 0/? | Not started | - |

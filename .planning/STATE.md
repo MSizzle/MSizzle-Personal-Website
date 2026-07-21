@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v4.0
 milestone_name: Mono Restyle
 status: executing
-stopped_at: Completed 20-04-PLAN.md
-last_updated: "2026-07-21T03:28:27.381Z"
+stopped_at: Completed 20-05-PLAN.md (Phase 20 closed, Monty approved)
+last_updated: "2026-07-21T05:19:48.494Z"
 last_activity: 2026-07-21
 progress:
   total_phases: 6
-  completed_phases: 0
+  completed_phases: 1
   total_plans: 5
-  completed_plans: 4
-  percent: 0
+  completed_plans: 5
+  percent: 17
 ---
 
 # Project State
@@ -21,22 +21,22 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-20)
 
 **Core value:** A personal site that feels alive and memorable, *and* legible — not another template blog.
-**Current focus:** Phase 20 — mono-token-foundation
+**Current focus:** Phase 21 — mono-homepage-rebuild
 
 ## Current Position
 
-Phase: 20 (mono-token-foundation) — EXECUTING
-Plan: 4 of 5
-Status: Ready to execute
+Phase: 20 (mono-token-foundation) — COMPLETE (Monty approved 2026-07-21)
+Plan: 5 of 5
+Status: Phase 20 closed; ready for Phase 21 planning
 Last activity: 2026-07-21
 
-Progress: [████████░░] 80%
+Progress: [██████████] 100%
 
 ## v4.0 Phase Status
 
 | Phase | Status | Started | Completed |
 |-------|--------|---------|-----------|
-| 20 — Mono Token Foundation | not_started | — | — |
+| 20 — Mono Token Foundation | complete | 2026-07-21 | 2026-07-21 |
 | 21 — Mono Homepage Rebuild | not_started | — | — |
 | 22 — Things I Love in Mono | not_started | — | — |
 | 23 — Site Sweep & Mono OG | not_started | — | — |
@@ -87,6 +87,27 @@ Next action: `/gsd-plan-phase 20` to decompose the mono token foundation.
 - **Granularity: standard (6 phases).** Derived from the natural order — tokens → homepage →
   pinboard → sweep → dark mode → ship.
 
+- **Phase 20 closed 2026-07-21 with Monty's DQ-01/D-15 approval.** The `v4-mono` branch preview
+  renders the pure mono token system while `montysinger.com` still serves v3 unchanged, verified
+  in the same session. `v4-mono` is pushed to origin and is the base branch for Phases 21-25.
+
+- **Phase 20's full-repo D-03 audit (20-05) found 9 additional MO-01 hue survivals** beyond the
+  named vermilion/cream hex list — `.band-dark` local token overrides, `.photo`/`.photo.dark`
+  placeholder fills, `.hero-ticker`, `.hero-band--ink`, `.band-dark .mm-card`, and three pinboard
+  media/text sites — all using different near-black/off-white byte values than
+  `e5411f`/`c8381a`/`a52d13`/`f4ecdd`/`faf9f7`. Fixed to pure mono tokens in commit `a414faa`. Any
+  future accent/color audit should sweep for *any* non-pure hex/rgba, not just a fixed named list.
+
+- **SCOPE BOUNDARY for Phase 21 (recorded per Monty's request):** the `v4-mono` preview's page
+  LAYOUT (hero photo carousel, marquee, pulsing status dot, alternating band structure) still
+  matches v3 exactly — this is expected, not a Phase 20 defect. Phase 20 was scoped to the color
+  token system only and was explicitly forbidden from touching `src/components/home/`. Sketch 015
+  variant E is a layout direction (type-only hero, Swiss numbered Building index, terminal writing
+  log, one continuous ground, motion stripped to one slow fade) that Phase 21 has not yet built.
+  Monty's first reaction to the preview ("this is not the E version I had previously approved")
+  was accurate about the layout and is not a Phase 20 regression — his approval was for the
+  color-token deliverable Phase 20 actually promised (MO-01/02/03/05, DQ-01).
+
 ### Open Risks
 
 - **DM-02 is the hardest requirement in the milestone.** The site uses inversion (black block on
@@ -98,9 +119,18 @@ Next action: `/gsd-plan-phase 20` to decompose the mono token foundation.
 
 ### Known Pre-Existing Test Failures (NOT v4.0 regressions)
 
-Three vitest failures on the homepage predate this milestone: `section-building` HD-04 and
-`explorative-homepage` TD-03/HD-05. The Phase 21 homepage rebuild will likely delete or rewrite
-those tests. Do not attribute them to v4.0 work.
+**Corrected 2026-07-21 (20-05):** this section previously claimed three vitest failures
+(`section-building` HD-04, `explorative-homepage` TD-03/HD-05). Those do not exist in the current
+suite. The only actual pre-existing failure is
+`src/__tests__/pages/projects.test.tsx:188` ("renders a title-card face instead of a cover image
+when project.image is non-null (Phase 19)"), verified failing on `main` before Phase 20 began.
+Confirmed unchanged across every Phase 20 plan (20-01 through 20-05): `npx vitest run` = 182
+passed, 16 todo, 1 failed (this one). Do not attribute it to v4.0 work.
+
+**Note for whoever plans Phase 21:** `ROADMAP.md`'s Phase 21 sequencing note (line 76) still
+repeats the old three-failure claim this section just corrected. That line was intentionally left
+untouched by 20-05 (only Phase 20's own plan-progress row was updated) and should be fixed when
+Phase 21 is planned.
 
 ### v1.0-v3.0 Carryforward (still active context)
 
@@ -153,8 +183,8 @@ Deferred from v4.0 requirements (Future Requirements):
 
 ## Session Continuity
 
-Last session: 2026-07-21T03:28:27.375Z
-Stopped at: Completed 20-04-PLAN.md
+Last session: 2026-07-21T05:19:48.488Z
+Stopped at: Completed 20-05-PLAN.md (Phase 20 closed, Monty approved)
 Resume file: None
 
 ---
