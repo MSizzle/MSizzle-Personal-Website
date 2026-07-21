@@ -73,7 +73,7 @@ Plans:
 **Plans**: TBD
 **UI hint**: yes
 
-**Sequencing note**: Touches `src/components/home/` — `hero.tsx`, `explorative-homepage.tsx`, `section-building.tsx`, `section-work.tsx`, `section-newsletter.tsx`, `section-loves.tsx`, `photo.tsx`, `photo-marquee.tsx`, `scroll-reveals.tsx`, `sticky-nav.tsx`, `monty-monthly-carousel.tsx`, `rail-box.tsx`. **Do not touch `pinboard.tsx`** — TL-01 is a preservation requirement handled in Phase 22. Three vitest failures on the homepage (`section-building` HD-04, `explorative-homepage` TD-03/HD-05) **predate this milestone**; this rebuild is expected to delete or rewrite those tests rather than fix them, and they must not be logged as regressions introduced here.
+**Sequencing note**: Touches `src/components/home/` — `hero.tsx`, `explorative-homepage.tsx`, `section-building.tsx`, `section-work.tsx`, `section-newsletter.tsx`, `section-loves.tsx`, `photo.tsx`, `photo-marquee.tsx`, `scroll-reveals.tsx`, `sticky-nav.tsx`, `monty-monthly-carousel.tsx`, `rail-box.tsx`. **Do not touch `pinboard.tsx`** — TL-01 is a preservation requirement handled in Phase 22. The three homepage vitest failures previously listed here (`section-building` HD-04, `explorative-homepage` TD-03/HD-05) **no longer exist in the suite** — verified during Phase 20 execution (2026-07-21). The only pre-existing failure is `src/__tests__/pages/projects.test.tsx:188` ("renders a title-card face instead of a cover image when project.image is non-null"), confirmed failing on `main` before Phase 20 began; it belongs to the projects page, not the homepage, and must not be logged as a regression introduced here.
 
 ### Phase 22: Things I Love in Mono
 
