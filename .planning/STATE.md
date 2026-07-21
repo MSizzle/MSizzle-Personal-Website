@@ -3,8 +3,8 @@ gsd_state_version: 1.0
 milestone: v4.0
 milestone_name: Mono Restyle
 status: verifying
-stopped_at: Completed 21-06-PLAN.md - Phase 21 (mono-homepage-rebuild) complete
-last_updated: "2026-07-21T08:17:03.328Z"
+stopped_at: Phase 21 executed + Monty design revisions applied; verification still human_needed
+last_updated: "2026-07-21T15:30:00.000Z"
 last_activity: 2026-07-21
 progress:
   total_phases: 6
@@ -21,13 +21,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-20)
 
 **Core value:** A personal site that feels alive and memorable, *and* legible — not another template blog.
-**Current focus:** Phase 22 — things-i-love-in-mono (Phase 21 complete)
+**Current focus:** Close out Phase 21 verification (3 human UAT items), then Phase 22
 
 ## Current Position
 
 Phase: 21 (mono-homepage-rebuild) — COMPLETE
 Plan: 6 of 6 (all 6 plans executed and summarized)
-Status: Phase complete — ready for verification
+Status: All 6 plans executed. Verifier returned `human_needed` — 3 perception items
+remain open in `21-HUMAN-UAT.md`. Phase is NOT closed until those are judged.
 Last activity: 2026-07-21
 
 Progress: [███░░░░░░░] 33% (2/6 v4.0 phases complete)
@@ -55,7 +56,8 @@ this is just a bit about me") and the Vermilion/clay palette was rejected outrig
 pure black/white with **zero accent**, type-only hero, motion stripped to a single slow fade,
 terminal-format writing list, Things I Love pinboard kept but recolored.
 
-Next action: `/gsd-plan-phase 22` to decompose Things I Love in Mono.
+Next action: `/gsd-verify-work 21` — close the 3 human UAT items (fade timing, 375px
+collapse, mono-intent read). Phase 22 planning is blocked behind that.
 
 ## Accumulated Context
 
@@ -197,12 +199,60 @@ Carried from the v2.0 close on 2026-05-21 (tech debt, non-blocking):
 Deferred from v4.0 requirements (Future Requirements):
 
 - Real photography direction for the pinboard cards (currently Notion page covers + YouTube thumbs)
-- A real reading-time value from Notion for the terminal writing block, not a computed estimate
+
+- **Post-execution design revisions (2026-07-21, same session as execution).** Monty reviewed the
+  built page in a browser and directed several changes; all are committed and pushed on `v4-mono`
+  (`c73d34a`, `e0762dd`, `33cf7fe`, `72c455c`, `4ac3ca7`). Real bugs found and fixed, each verified
+  by measurement in a live browser rather than by inspection:
+  - **`.wrap` used the `padding` shorthand**, zeroing top/bottom padding on every element
+    co-classed with it. The hero's `py-32` and `.a-sec`'s 128px both computed to **0px** — the whole
+    page had no vertical rhythm. It was also declared twice, the later copy overriding `.a-sec`.
+    Now `padding-inline`, single definition. `--space-32` was never defined anywhere; replaced with
+    explicit fluid values. **Any future co-classed utility must not use the padding shorthand.**
+  - **Row hover-invert never worked.** `.a-row::before`/`.e-post::before` used `z-index: -1` but the
+    rows established no stacking context, so the black fill painted behind the opaque
+    `.min-h-screen` background. Fixed with `isolation: isolate`.
+  - **Pinboard cards crossed into the footer** (measured 5 of 24, up to 40px). Cause was a
+    same-session fix: moving `.pinboard-field` below the toolbar shrank it 88px while `layoutFor`
+    still positioned against full board height. Board now sizes as toolbar + field + tilt slack
+    (`TOOLS_H`/`TILT_SLACK` in `pinboard.tsx` must stay in sync with `--pb-tools-h`/`--pb-tilt-slack`
+    in `globals.css`). Re-measured 0 of 24.
+  - **Mobile could pan sideways**: `overflow-x: hidden` was on `body` but not `html` (the root is the
+    scroll container). Set on both, plus `overscroll-behavior-x: none`.
+  - Layout/copy: static `EditorialHeader` suppressed on `/` only so the first screen is type alone
+    (StickyNav still slides down past the hero); StickyNav is now desktop-only; Building index capped
+    at 3 rows with an "all projects" link; Writing rows 35px→67px; 256px between Writing and Loves.
+    New H1 "Blessed are those who create order from chaos." and new subtitle.
+  - **Hero brand marks in drop-boxes.** "Building Prometheus" / "Monty Monthly" sit in hard-cornered
+    boxes; hover or `:focus-within` releases the mark, which links out. Reduced-motion disables the
+    reveal outright. Assets: `public/logos/prometheus-orb.svg` (vector; the old 71px
+    `logos/prometheus.png` is cropped on its right edge) and `public/logos/monty-monthly.png`
+    (vendored from the Substack feed, not hotlinked).
+
+- **COLOR CARVE-OUT (approved by Monty 2026-07-21):** the two hero brand marks render in real brand
+  colors — a deliberate exception to the v4 zero-accent lock. The Prometheus orb is the only hue on
+  the homepage. Recorded in ROADMAP.md under Phase 23 so the "neutralize every hue" sweep does not
+  strip them. Logos are not photography, so Phase 23 criterion 4 does not apply either.
+
+- **Reading time is now real, and the suite is fully green.** Blog posts use actual Notion page
+  blocks via `getReadingTimes()` (bounded to the 5 posts the log can show); Monty Monthly issues use
+  the full body in the feed's `content:encoded`. Both fall back to the old description estimate on
+  failure. Live values 5/4/4/2/5 min (was a uniform "1 min"). Separately, the long-standing
+  `projects.test.tsx:188` failure was **not** a bad test — Phase 19 decided projects never use cover
+  images as card faces, but `/building/page.tsx` still passed `coverSrc`. Removing it turned
+  `/building` card faces into typographic title-cards as intended. `npx vitest run` = **198 passed,
+  0 failed**; `npx next build` exit 0.
+
+- **Turbopack HMR was unreliable all session.** Edits to client components and inline styles
+  repeatedly failed to reach the browser, once surfacing as a hydration mismatch (server 836px vs
+  stale client 720px). `rm -rf .next/dev && npm run dev` was needed ~4 times. If a change appears not
+  to apply, restart the dev server before debugging the code.
 
 ## Session Continuity
 
-Last session: 2026-07-21T08:17:03.318Z
-Stopped at: Completed 21-06-PLAN.md - Phase 21 (mono-homepage-rebuild) complete
+Last session: 2026-07-21T15:30:00.000Z
+Stopped at: Phase 21 executed + post-execution design revisions applied and pushed.
+Verification still `human_needed` — 3 items open in `21-HUMAN-UAT.md`.
 Resume file: None
 
 ---
