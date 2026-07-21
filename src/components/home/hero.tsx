@@ -1,114 +1,65 @@
-/* ── Hero: Sketch-010 marker-block hero (D-06, D-08, D-13) ──────────────────
-   Server Component: static render only, no client directives or GL imports.
-   Renders the Vermilion marker headline, ~44% portrait column, status tag,
-   and a full-bleed black section-link marquee pinned to the base of the
-   hero viewport. Engagement is a single woven Monty Monthly way-in (D-13).
-   All motion (blob drift, portrait breathe/ken-burns, marquee slide) is
-   ambient CSS, killed under prefers-reduced-motion in Plan-01 globals.css (D-08).
+/* ── Hero: type-only Swiss hero (HP-01, MS-01) ───────────────────────────
+   Server Component: static render only, no client directives, no image
+   import. Renders a mono eyebrow, H1, subtitle, and a 3-cell meta row.
+   No photo, no marker-block highlight, no pulsing status dot, no link
+   marquee — those are deleted outright, not paused or reduced-motion-gated.
 
-   Consumed by the orchestrator (Plan 08) as the first light band.
+   Consumed by the orchestrator (explorative-homepage.tsx) as the first band.
    ────────────────────────────────────────────────────────────────────────── */
-
-import { Photo } from "./photo";
 
 export function Hero() {
   return (
-    <section className="band hero-band min-h-[80dvh] flex flex-col">
-      {/* Content: flex-1 so hero grid fills viewport above the ticker */}
-      <div className="wrap flex-1 flex flex-col">
-        <div className="hero">
-          {/* Copy column */}
-          <div className="col-copy">
-            <div className="eyebrow">Founder of Prometheus</div>
-
-            {/* Marker-block headline: "Create Order" in solid Vermilion, "from Chaos" in ink */}
-            <h1 className="sig">
-              <span className="hl">
-                <span className="hw">Create Order</span>
-              </span>
-              <span className="hl">from Chaos</span>
-            </h1>
-
-            <p className="subtitle">
-              I like building businesses. This site has my past projects, my
-              essays, and my friends newsletter.
-            </p>
-
-            {/* Single way-in (D-13): woven prose link, no CTA button, no contact link */}
-            <p className="wayin">
-              Once a month I write about what building actually looks like.
-              <br />
-              <a className="mt-2 inline-block" href="#writing">
-                Join Monty Monthly &#x2192;
-              </a>
-            </p>
-
-            {/* Black status tag with pulsing Vermilion dot */}
-            <div className="statustag">
-              <span className="dot" />
-              Currently: building Prometheus
-            </div>
-          </div>
-
-          {/* Photo column: crossfading portrait carousel (D-07). Slides stack and
-              fade every ~6s via CSS only; the whole frame breathes ambiently.
-              Reduced-motion settles to the first slide (globals.css guard). */}
-          <div className="col-photo">
-            <div className="pcarousel">
-              <Photo
-                className="pslide"
-                src="/home/monty-mushrooms.jpg"
-                alt="Monty Singer holding mushroom-grow blocks from an early dorm-room project"
-                caption="Where it started"
-                priority
-                objectPosition="68% 32%"
-              />
-              <Photo
-                className="pslide"
-                src="/home/monty-stage.jpg"
-                alt="Monty Singer presenting the CULTIVATE pitch on stage"
-                caption="On stage"
-                objectPosition="38% 60%"
-              />
-              <Photo
-                className="pslide"
-                src="/home/monty-patricof.jpg"
-                alt="Monty Singer interviewing investor Alan Patricof in a fireside chat"
-                caption="In conversation"
-                objectPosition="28% 40%"
-              />
-            </div>
-          </div>
-        </div>
+    <section className="wrap py-16 md:py-32">
+      <div className="reveal font-mono text-xs uppercase tracking-[0.12em] text-text-muted">
+        Monty Singer
       </div>
 
-      {/* Pinned hero marquee strip: black, full-bleed, section-link anchors.
-          Two identical groups so the CSS slide loop is seamless (translateX -50%).
-          Labels: Prometheus (external) · Building · Writing · Things I Love · Contact. */}
-      <div className="hero-ticker">
-        <div className="track">
-          {/* Group 1 */}
-          <a className="tick-link" href="https://prometheus.today" target="_blank" rel="noopener noreferrer">Prometheus</a>
-          <span className="tick-sep">·</span>
-          <a className="tick-link" href="#building">Building</a>
-          <span className="tick-sep">·</span>
-          <a className="tick-link" href="#writing">Writing</a>
-          <span className="tick-sep">·</span>
-          <a className="tick-link" href="#loves">Things I Love</a>
-          <span className="tick-sep">·</span>
-          <a className="tick-link" href="/contact">Contact</a>
-          <span className="tick-sep">·</span>
-          {/* Group 2: exact duplicate for seamless animation loop */}
-          <a className="tick-link" href="https://prometheus.today" target="_blank" rel="noopener noreferrer">Prometheus</a>
-          <span className="tick-sep">·</span>
-          <a className="tick-link" href="#building">Building</a>
-          <span className="tick-sep">·</span>
-          <a className="tick-link" href="#writing">Writing</a>
-          <span className="tick-sep">·</span>
-          <a className="tick-link" href="#loves">Things I Love</a>
-          <span className="tick-sep">·</span>
-          <a className="tick-link" href="/contact">Contact</a>
-          <span className="tick-sep">·</span>
+      <h1 className="reveal font-display text-2xl md:text-3xl font-extrabold leading-[0.95] tracking-[-0.03em] max-w-[14ch] mt-6">
+        I build things and write about it.
+      </h1>
+
+      <p className="reveal font-sans font-light text-base leading-[1.6] text-text-dim max-w-[46ch] mt-6">
+        Right now that mostly means Prometheus, an AI integrations and
+        education company. Everything else here is the residue: past
+        projects, monthly essays, and a running list of things I like.
+      </p>
+
+      <div className="reveal grid grid-cols-1 md:grid-cols-3 gap-8 border-t border-border pt-4 mt-16">
+        <div>
+          <div className="text-xs font-mono uppercase tracking-[0.12em] text-text-muted">
+            Currently
+          </div>
+          <div className="text-sm mt-2">Building Prometheus</div>
+        </div>
+        <div>
+          <div className="text-xs font-mono uppercase tracking-[0.12em] text-text-muted">
+            Writes
+          </div>
+          <div className="text-sm mt-2">Monty Monthly</div>
+        </div>
+        <div>
+          <div className="text-xs font-mono uppercase tracking-[0.12em] text-text-muted">
+            Elsewhere
+          </div>
+          <div className="text-sm mt-2">
+            <a
+              href="https://x.com/themontysinger"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              X
+            </a>
+            {" · "}
+            <a
+              href="https://linkedin.com/in/monty-singer"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              LinkedIn
+            </a>
+            {" · "}
+            <a href="mailto:monty@prometheus.today">Email</a>
+          </div>
         </div>
       </div>
     </section>
