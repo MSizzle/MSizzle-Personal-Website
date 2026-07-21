@@ -543,18 +543,6 @@ p.body {
 li:last-child > .nav-cell {
   border-right: 1px solid var(--color-text);
 }
-.stickynav .cta {
-  background: var(--color-invert);
-  color: #fff;
-  padding: 9px 16px;
-  font-size: 11.5px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  text-decoration: none;
-  display: inline-block;
-}
-
 /* ── Credibility strip (D-11 — placeholder logos, keep-or-cut deferred) ── */
 .proof {
   padding: 30px 0;
@@ -825,8 +813,9 @@ li:last-child > .nav-cell {
 /* ── MOTION SYSTEM — scroll-triggered reveals + ambient animations (D-07) ── */
 .reveal {
   opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
+  transform: translateY(14px);
+  transition: opacity 0.7s cubic-bezier(0.22, 0.61, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 0.61, 0.36, 1);
   transition-delay: var(--d, 0s);
 }
 .reveal.in {
@@ -836,30 +825,20 @@ li:last-child > .nav-cell {
 
 /* ── REDUCED-MOTION GUARDS (D-08) ─────────────────────────────────────────
    Both a body.no-motion escape hatch (JS-togglable) and a media query.
-   Either path: reveal/slide are immediately visible, settled shadow is
-   applied statically. Static layout is always intact. (The ambient
-   keyframe-kill list that used to live here — kenburns/breathe/blob/pslide/
-   marquee .track/hero-ticker .track — was deleted in Plan 21-04 along with
-   the keyframes themselves: nothing left to guard.) */
-body.no-motion .reveal,
-body.no-motion .slide {
+   Either path: the one surviving .reveal fade is immediately visible,
+   static layout is always intact. (Every other class these blocks used to
+   list — kenburns/breathe/blob/pslide/marquee .track/hero-ticker .track/
+   .slide/.shadowed — has no live consumer left in src/ as of Plan 21-06:
+   nothing left to guard but .reveal itself.) */
+body.no-motion .reveal {
   opacity: 1 !important;
   transform: none !important;
 }
-body.no-motion .shadowed .photo,
-body.no-motion .shadowed .title-card {
-  box-shadow: 16px 16px 0 var(--color-text);
-}
 
 @media (prefers-reduced-motion: reduce) {
-  .reveal,
-  .slide {
+  .reveal {
     opacity: 1 !important;
     transform: none !important;
-  }
-  .shadowed .photo,
-  .shadowed .title-card {
-    box-shadow: 16px 16px 0 var(--color-text);
   }
 }
 
