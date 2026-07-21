@@ -216,10 +216,6 @@ h1.sig .hl {
   background: var(--color-bg);
   position: relative;
 }
-/* Hero band is warm cream (.band.hero-band > .band, so it wins the cascade). */
-.band.hero-band {
-  background: var(--hero-bg);
-}
 .band + .band {
   border-top: 1px solid var(--color-border);
 }
@@ -248,131 +244,7 @@ h1.sig .hl {
   flex-shrink: 0;
 }
 
-/* ── Marker / highlight block (D-06) ──
-   Generic .marker + specific h1.sig .hw: black background hugging glyphs.
-   Used for the "Create Order" hero headline treatment. */
-.marker,
-h1.sig .hw {
-  display: inline-block;
-  background: var(--color-invert);
-  color: #fff;
-  padding: 0.05em 0.16em;
-  line-height: 0.9;
-  margin-left: -0.1em;
-}
-
 /* Blob atmosphere removed — no gradients / soft glows site-wide (brutalist). */
-
-/* ── Hero section layout (D-06) ── */
-.hero {
-  display: grid;
-  grid-template-columns: 1fr minmax(420px, 60%);
-  gap: clamp(28px, 4.5vw, 56px);
-  align-items: center;
-  flex: 1;
-  padding: clamp(6px, 1vh, 12px) 0 clamp(10px, 1.6vh, 18px);
-}
-.hero .eyebrow {
-  margin-bottom: clamp(12px, 2.2vh, 22px);
-}
-.hero .col-copy {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: clamp(20px, 4vh, 50px) 0;
-  position: relative;
-  z-index: 1;
-}
-.hero .col-photo {
-  position: relative;
-  display: flex;
-  z-index: 1;
-}
-/* ── Crossfading portrait carousel (D-07/D-08) ──
-   Wider column (60%) keeps the tall frame's height while giving the photo more
-   width — a square (1/1) box on the wider column lands at roughly the prior 5/6
-   height but noticeably wider, suiting the ~3:2 source photos. Slides stack
-   absolutely and crossfade via CSS only (no JS), so it stays a Server Component
-   and the reduced-motion guard below settles it to the first slide. */
-.hero .col-photo .pcarousel {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 1.2 / 1;
-}
-.hero .col-photo .pcarousel .photo {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-}
-.pslide {
-  opacity: 0;
-  animation: pfade 21s ease-in-out infinite;
-}
-.pslide:first-child {
-  opacity: 1;
-}
-.pslide:nth-child(2) {
-  animation-delay: 7s;
-}
-.pslide:nth-child(3) {
-  animation-delay: 14s;
-}
-/* Hero portraits sit as a stack (one behind the next) and swap fast — no
-   ken-burns zoom here (the .img kenburns default is disabled in the hero so the
-   photos never scale up). */
-.hero .col-photo .pslide .img {
-  animation: none;
-  transform: none;
-}
-/* Distinct solid placeholder tints so the ~6s crossfade reads before real imagery. */
-.pslide:nth-child(2) .img {
-  background: rgba(0,0,0,0.08);
-}
-.pslide:nth-child(3) .img {
-  background: rgba(0,0,0,0.08);
-}
-/* Stacked crossfade on a 21s loop (3 photos → ~7s each): each portrait spawns in
-   over ~1.9s (smooth, eased), holds ~5s, then eases out over ~1.5s to reveal the
-   next photo waiting behind it. The fade-out/fade-in windows overlap so there is
-   never a blank frame. No zoom, no drastic dissolve — smooth and unhurried. */
-@keyframes pfade {
-  0% {
-    opacity: 0;
-  }
-  9% {
-    opacity: 1;
-  }
-  33% {
-    opacity: 1;
-  }
-  40% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 0;
-  }
-}
-.subtitle {
-  color: var(--color-text-dim);
-  max-width: 46ch;
-  font-size: clamp(1.05rem, 1.6vw, 1.35rem);
-  line-height: 1.5;
-  margin-bottom: clamp(26px, 4vh, 40px);
-}
-.wayin {
-  font-size: 12.5px;
-  text-transform: uppercase;
-  letter-spacing: 0.16em;
-  font-weight: 600;
-  color: var(--color-text-muted);
-}
-.wayin a {
-  color: var(--color-text);
-  text-decoration: none;
-  border-bottom: 2px solid var(--color-text);
-  padding-bottom: 3px;
-}
 
 /* ── Photo system (D-07) ──────────────────────────────────────────────────
    Placeholder blocks for photography: diagonal-stripe fill for light shots,
@@ -442,37 +314,10 @@ section.beat {
   opacity: 0.9;
 }
 
-/* ── Status tag (hero) ── */
-.statustag {
-  display: inline-flex;
-  align-items: center;
-  gap: 9px;
-  background: var(--color-text);
-  color: var(--color-bg);
-  padding: 10px 15px;
-  font-size: 11.5px;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  margin-top: 26px;
-  width: max-content;
-}
-.statustag .dot {
-  width: 8px;
-  height: 8px;
-  background: var(--color-invert);
-  border-radius: 50%;
-  animation: pulse 2s ease-in-out infinite;
-}
-
 /* ── Ambient keyframes ── */
 @keyframes drift {
   from { transform: translate(0, 0) scale(1); }
   to   { transform: translate(4vw, 4vh) scale(1.2); }
-}
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50%       { opacity: 0.35; }
 }
 /* slide keyframe (marquee tracks — same as existing @keyframes scroll) */
 @keyframes slide {
@@ -486,46 +331,6 @@ section.beat {
 @keyframes breathe {
   0%, 100% { transform: scale(1); }
   50%       { transform: scale(1.03); }
-}
-
-/* ── Hero marquee strip (full-bleed black, pinned to base of hero) ── */
-.hero-ticker {
-  background: var(--color-invert);
-  color: var(--color-text-inverse);
-  padding: clamp(10px, 1.4vw, 16px) 0;
-  overflow: hidden;
-}
-.hero-ticker .track {
-  display: flex;
-  width: max-content;
-  animation: slide 30s linear infinite;
-  align-items: center;
-}
-.hero-ticker:hover .track {
-  animation-play-state: paused;
-}
-.hero-ticker .tick-link {
-  color: var(--color-text-inverse);
-  opacity: 0.5;
-  text-decoration: none;
-}
-.hero-ticker .tick-link:hover {
-  opacity: 1;
-}
-.hero-ticker .tick-link {
-  padding: 0 clamp(16px, 2.5vw, 30px);
-  font-family: var(--font-display);
-  font-weight: var(--sig-weight);
-  font-size: clamp(1.3rem, 3vw, 2.2rem);
-  letter-spacing: -0.01em;
-  white-space: nowrap;
-}
-.hero-ticker .tick-sep {
-  color: var(--color-text-inverse);
-  opacity: 0.5;
-  flex-shrink: 0;
-  font-family: var(--font-display);
-  font-size: clamp(1rem, 2.4vw, 1.8rem);
 }
 
 /* ── Section headings and body copy ── */
