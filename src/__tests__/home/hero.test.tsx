@@ -10,14 +10,16 @@ describe("Hero", () => {
     render(React.createElement(Hero));
     const headings = screen.getAllByRole("heading", { level: 1 });
     expect(headings.length).toBe(1);
-    expect(headings[0].textContent).toBe("I build things and write about it.");
+    expect(headings[0].textContent).toBe(
+      "Blessed are those who create order from chaos."
+    );
   });
 
   it("renders the subtitle with the exact copy", () => {
     render(React.createElement(Hero));
     expect(
       screen.getByText(
-        "Right now that mostly means Prometheus, an AI integrations and education company. Everything else here is the residue: past projects, monthly essays, and a running list of things I like."
+        "Founder of Prometheus, an applied AI company. I love technology, biology, and self-improvement. If you like these as well, we’ll get along."
       )
     ).toBeDefined();
   });
@@ -34,6 +36,37 @@ describe("Hero", () => {
     expect(screen.getByText("Writes")).toBeDefined();
     expect(screen.getByText("Monty Monthly")).toBeDefined();
     expect(screen.getByText("Elsewhere")).toBeDefined();
+  });
+
+  it("wraps each brand mark in a drop-box whose logo links out to the site", () => {
+    const { container } = render(React.createElement(Hero));
+
+    const drops = container.querySelectorAll(".drop");
+    expect(drops).toHaveLength(2);
+
+    const [prometheus, monthly] = [...drops];
+
+    // The label sits in the box; the mark is the link released on hover.
+    expect(prometheus.querySelector(".drop-label")?.textContent).toBe(
+      "Building Prometheus"
+    );
+    expect(monthly.querySelector(".drop-label")?.textContent).toBe(
+      "Monty Monthly"
+    );
+
+    const promLink = prometheus.querySelector("a.drop-logo");
+    expect(promLink?.getAttribute("href")).toBe("https://prometheus.today");
+    expect(promLink?.getAttribute("target")).toBe("_blank");
+    expect(promLink?.getAttribute("rel")).toBe("noopener noreferrer");
+    expect(promLink?.querySelector("img")).not.toBeNull();
+
+    const mmLink = monthly.querySelector("a.drop-logo");
+    expect(mmLink?.getAttribute("href")).toBe(
+      "https://montymonthly.substack.com"
+    );
+    expect(mmLink?.getAttribute("target")).toBe("_blank");
+    expect(mmLink?.getAttribute("rel")).toBe("noopener noreferrer");
+    expect(mmLink?.querySelector("img")).not.toBeNull();
   });
 
   it("renders the three Elsewhere links resolving to the exact hrefs with safe rel/target", () => {

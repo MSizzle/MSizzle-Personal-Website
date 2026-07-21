@@ -752,6 +752,68 @@ li:last-child > .nav-cell {
   outline-offset: 2px;
 }
 
+/* ── Hero drop-boxes ──
+   The two meta-row entries ("Building Prometheus", "Monty Monthly") sit in a
+   hard-cornered box. On hover or keyboard focus the box releases its brand
+   mark, which drops down out from under the label; clicking the mark opens
+   the site. The marks are the one place on the page that carries real brand
+   color — a deliberate exception to the mono lock. */
+.drop {
+  display: inline-block;
+  max-width: 100%;
+}
+.drop-label {
+  display: inline-block;
+  border: 1px solid var(--color-text);
+  background: var(--color-bg);
+  padding: 7px 12px;
+  font-size: var(--text-sm);
+  /* Above the bay so the mark reads as emerging from behind the box. */
+  position: relative;
+  z-index: 2;
+}
+.drop-bay {
+  /* Clips the mark until the box opens. */
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 420ms var(--ease-out, ease);
+}
+.drop:hover .drop-bay,
+.drop:focus-within .drop-bay {
+  max-height: 220px;
+}
+.drop-logo {
+  display: block;
+  padding-top: 14px;
+  transform: translateY(-14px);
+  opacity: 0;
+  transition:
+    transform 420ms var(--ease-out, ease),
+    opacity 300ms ease;
+}
+.drop:hover .drop-logo,
+.drop:focus-within .drop-logo {
+  transform: translateY(0);
+  opacity: 1;
+}
+.drop-logo img {
+  display: block;
+  /* Roughly half the meta column, matching the sizing Monty set for the
+     always-visible marks this drop-box replaced. */
+  width: 160px;
+  max-width: 100%;
+  height: auto;
+}
+@media (prefers-reduced-motion: reduce) {
+  .drop-bay,
+  .drop-logo {
+    transition: none;
+  }
+  .drop-logo {
+    transform: none;
+  }
+}
+
 /* ── PHASE 21: HOMEPAGE REBUILD — terminal Writing log (HP-03) ──
    .e-term is the Writing band's terminal-format wrapper; .e-post is its row
    unit (date / title / read-time), reusing the identical full-row
