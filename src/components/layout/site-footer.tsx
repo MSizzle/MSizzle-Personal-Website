@@ -33,8 +33,8 @@ export function SiteFooter() {
       id="contact"
       className="border-t border-[var(--color-border-strong)] bg-[var(--color-bg)] text-[var(--color-text)]"
     >
-      {/* Vermilion accent rule — solid offset shape, no gradient */}
-      <div className="h-2 bg-[var(--accent)]" aria-hidden="true" />
+      {/* Invert offset rule — solid offset shape, no gradient */}
+      <div className="h-2 bg-[var(--color-invert)]" aria-hidden="true" />
 
       <div className="grid grid-cols-1 gap-10 px-7 py-14 md:grid-cols-[1.4fr_1fr_1fr] md:gap-8 md:px-40 md:py-20">
         {/* Identity */}
@@ -62,7 +62,7 @@ export function SiteFooter() {
               <li key={l.href}>
                 <Link
                   href={l.href}
-                  className="font-display text-[15px] font-bold transition-colors hover:text-[var(--accent)]"
+                  className="font-display text-[15px] font-bold transition-colors hover:underline hover:underline-offset-4"
                 >
                   {l.label}
                 </Link>
@@ -84,7 +84,7 @@ export function SiteFooter() {
                   {...(l.external
                     ? { target: "_blank", rel: "noopener noreferrer" }
                     : {})}
-                  className="font-display text-[15px] font-bold transition-colors hover:text-[var(--accent)]"
+                  className="font-display text-[15px] font-bold transition-colors hover:underline hover:underline-offset-4"
                 >
                   {l.label}
                 </a>
