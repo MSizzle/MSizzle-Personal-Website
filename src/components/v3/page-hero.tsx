@@ -3,7 +3,7 @@
      .page-hero { padding: clamp(90px,16vh,180px) 0 }
      .crumb { mono xs uppercase muted mb-26px }
      h1 { display 700 uppercase leading-[0.86] tracking-[-0.03em] clamp(2.8rem,11vw,8rem); sig }
-     h1 .out { -webkit-text-stroke:2px accent; transparent; no shadow }
+     h1 .out { -webkit-text-stroke:2px invert; transparent; no shadow }
      .sub { mt-24px max-w-54ch text-dim text-lg }
 */
 import type { ReactNode } from "react";

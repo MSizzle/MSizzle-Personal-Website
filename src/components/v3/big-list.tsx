@@ -1,9 +1,9 @@
 /* ── v3 BigList ──
    site.css lines 154-167:
      .big-list a { flex justify-between; border-top; clamp(2rem,9.5vw,8rem); sig + shadow }
-     .big-list a.out { -webkit-text-stroke:2px accent; transparent fill }
+     .big-list a.out { -webkit-text-stroke:2px invert; transparent fill }
      .big-list a .tag { mono xs muted; hidden <760px }
-     hover → color:accent, text-shadow:none
+     hover → color:invert, text-shadow:none
 */
 import Link from "next/link";
 import type { ReactNode } from "react";
@@ -40,10 +40,10 @@ export function BigList({ items }: Props) {
             "text-[clamp(2rem,9.5vw,8rem)] leading-[1.02] tracking-[-0.03em]",
             // sig treatment: filled by default, outline variant
             item.outline ? "sig-out" : "sig",
-            // hover: accent color, no shadow
+            // hover: invert color, no shadow
             "transition-[color,text-shadow] duration-150",
-            "hover:text-accent hover:[text-shadow:none]",
-            item.outline && "hover:[-webkit-text-stroke-color:var(--accent)]"
+            "hover:text-invert hover:[text-shadow:none]",
+            item.outline && "hover:[-webkit-text-stroke-color:var(--color-invert)]"
           )}
         >
           <span>{item.label}</span>
@@ -52,7 +52,7 @@ export function BigList({ items }: Props) {
               className={cn(
                 "font-mono font-normal text-xs tracking-[0.12em] text-text-muted whitespace-nowrap",
                 "transition-[color] duration-150",
-                "group-hover:text-accent",
+                "group-hover:text-invert",
                 // hidden below 760px (md = 768px, close enough; use max-md for <768)
                 "hidden md:inline"
               )}
