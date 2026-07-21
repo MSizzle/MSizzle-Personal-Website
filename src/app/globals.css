@@ -2,7 +2,7 @@
 
 @theme inline {
   /* Mono palette — v4 single fixed theme (no dark mode)
-     pure white ground · pure black ink · zero accent.
+     pure white ground · pure black ink · no hue anywhere.
      Retires Ink & Vermilion (2026-07-21); contrast comes from inversion
      (a solid black block on white) and type weight, never hue (D-01). */
   --color-bg:             #ffffff;             /* White — main background */
@@ -172,7 +172,7 @@ h1.sig .hl {
 }
 
 .prose code {
-  background: rgba(23,23,23,0.10);
+  background: rgba(0,0,0,0.10);
   padding: 0.125rem 0.25rem;
   border-radius: 0.125rem;
   font-weight: 400;
@@ -202,12 +202,12 @@ h1.sig .hl {
    beats the later single-class .band rule; dark sections always carry both. */
 .band.band-dark,
 .band-dark {
-  --color-text:         #f5f3ee;
-  --color-text-dim:     rgba(245, 243, 238, 0.76);
-  --color-text-muted:   rgba(245, 243, 238, 0.54);
+  --color-text:         #ffffff;
+  --color-text-dim:     rgba(255, 255, 255, 0.66);
+  --color-text-muted:   rgba(255, 255, 255, 0.50);
   --color-border:       rgba(255, 255, 255, 0.15);
   --color-border-strong: rgba(255, 255, 255, 0.32);
-  background: #141416;
+  background: #000000;
   color: var(--color-text);
 }
 
@@ -249,7 +249,7 @@ h1.sig .hl {
 }
 
 /* ── Marker / highlight block (D-06) ──
-   Generic .marker + specific h1.sig .hw: accent background hugging glyphs.
+   Generic .marker + specific h1.sig .hw: black background hugging glyphs.
    Used for the "Create Order" hero headline treatment. */
 .marker,
 h1.sig .hw {
@@ -376,22 +376,22 @@ h1.sig .hw {
 
 /* ── Photo system (D-07) ──────────────────────────────────────────────────
    Placeholder blocks for photography: diagonal-stripe fill for light shots,
-   accent-tinted dark fill for dark shots. Real photos are a later swap. */
+   neutral-tinted dark fill for dark shots. Real photos are a later swap. */
 .photo {
   position: relative;
   overflow: hidden;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
-  background: #e6e8ee;
+  background: rgba(0, 0, 0, 0.08);
 }
 .photo .img {
   position: absolute;
   inset: 0;
   will-change: transform;
-  background: #e3e5ec; /* solid neutral placeholder — no gradient */
+  background: rgba(0, 0, 0, 0.08); /* solid neutral placeholder — no gradient */
 }
 .photo.dark .img {
-  background: #212734; /* solid dark placeholder — no gradient */
+  background: var(--color-invert); /* solid dark placeholder — no gradient */
 }
 .photo .icon {
   position: absolute;
@@ -403,7 +403,7 @@ h1.sig .hw {
   z-index: 2;
 }
 .photo.dark .icon {
-  color: #fff;
+  color: var(--color-text-inverse);
   opacity: 0.7;
 }
 /* ── Structured section layout ── */
@@ -490,8 +490,8 @@ section.beat {
 
 /* ── Hero marquee strip (full-bleed black, pinned to base of hero) ── */
 .hero-ticker {
-  background: #141416;
-  color: #f5f3ee;
+  background: var(--color-invert);
+  color: var(--color-text-inverse);
   padding: clamp(10px, 1.4vw, 16px) 0;
   overflow: hidden;
 }
@@ -505,7 +505,7 @@ section.beat {
   animation-play-state: paused;
 }
 .hero-ticker .tick-link {
-  color: #f5f3ee;
+  color: var(--color-text-inverse);
   opacity: 0.5;
   text-decoration: none;
 }
@@ -668,16 +668,16 @@ p.body {
 .emoji-badge--invert { background: var(--color-invert); }
 .emoji-badge--gray   { background: rgba(0,0,0,0.08); }
 
-/* ── Vermilion / ink full-bleed subpage hero band (D-01 restyle) ───────────
+/* ── Full-bleed subpage hero band (D-01 restyle) ────────────────────────────
    Replaces the pale white-card-on-paper hero with a high-contrast solid band.
    Headline is white Hanken 800 with a hard ink offset-shadow (brutalist DNA). */
 .hero-band {
   position: relative;
   background: var(--color-invert);
-  color: #fff;
+  color: var(--color-text-inverse);
 }
 .hero-band--ink {
-  background: #141416;
+  background: var(--color-invert);
 }
 .hero-band-crumb {
   font-family: var(--font-mono);
@@ -722,7 +722,7 @@ p.body {
   transition: box-shadow 0.18s var(--ease-out), background-color 0.18s var(--ease-out);
 }
 
-/* Vermilion hover: shadow warms to accent on pointer over (D-19 grid treatment). */
+/* Mono hover: shadow warms to black on pointer over (D-19 grid treatment). */
 .card-grid > a:hover {
   box-shadow: 8px 8px 0 var(--color-text);
 }
@@ -771,7 +771,7 @@ p.body {
   grid-template-rows: auto 1fr;
 }
 .band-dark .mm-card {
-  background: #1b1b1e;
+  background: var(--color-invert);
 }
 .mm-card .cover {
   aspect-ratio: 16 / 8;
@@ -965,10 +965,10 @@ p.body {
   text-decoration: none;
   white-space: nowrap;
 }
-/* Vermilion fill drops from the top edge on hover — a solid pseudo-element
+/* Black fill drops from the top edge on hover — a solid pseudo-element
    wipe (no gradient, per site rule). The label rides above it and flips to
-   paper. Because the fill is --accent and the label is --color-bg, it reads
-   correctly on light and dark bars alike. */
+   white. Because the fill is --color-invert and the label is --color-bg, it
+   reads correctly on light and dark bars alike. */
 .nav-cell::before {
   content: "";
   position: absolute;
@@ -1239,7 +1239,7 @@ footer.site {
 
 /* ── Things-I-love pinboard (sketch 012) ─────────────────────────────────────
    Draggable overlapping cards on the light "loves" band. Brutalist offset
-   solids (no gradients), hard corners, vermilion accent. Interaction is wired
+   solids (no gradients), hard corners, pure black/white. Interaction is wired
    in Pinboard's effect; this only styles the faces + drag/hover/reveal states.
    Full-bleed-ish: lives outside .wrap so the scatter can spread. */
 .pinboard {
@@ -1281,7 +1281,7 @@ footer.site {
   outline: 2px solid var(--color-invert);
   outline-offset: 2px;
 }
-.pb-card.is-dragging .pb-frame { box-shadow: 16px 18px 0 rgba(23, 23, 23, 0.32); }
+.pb-card.is-dragging .pb-frame { box-shadow: 16px 18px 0 rgba(0, 0, 0, 0.32); }
 .pb-frame--cream { background: #ffffff; }
 
 /* media / thumbnail area */
@@ -1307,13 +1307,13 @@ footer.site {
   position: absolute; left: 14px; right: 14px; bottom: 34px;
   font-size: 16px; font-weight: 800; line-height: 1.05; color: var(--color-text-inverse);
 }
-.pb-book-author { position: absolute; left: 14px; right: 14px; bottom: 14px; font-size: 11px; color: rgba(247, 245, 240, 0.82); }
+.pb-book-author { position: absolute; left: 14px; right: 14px; bottom: 14px; font-size: 11px; color: rgba(255, 255, 255, 0.82); }
 .pb-foot { display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; border-top: 2px solid var(--color-text); }
 .pb-k { font-size: 9px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-text-muted); }
 
 /* youtube */
 .pb-card--youtube .pb-frame { width: 260px; }
-.pb-media--yt { width: 100%; height: 146px; background: #231f1e; }
+.pb-media--yt { width: 100%; height: 146px; background: var(--color-invert); }
 .pb-play { position: absolute; inset: 0; display: grid; place-items: center; }
 .pb-play > span { width: 52px; height: 36px; background: var(--color-invert); border: 2px solid var(--color-text); display: grid; place-items: center; }
 .pb-play > span::after {
@@ -1330,7 +1330,7 @@ footer.site {
    aspect ratio instead. Capped so a very tall photo can't dominate the board;
    the swatch fallback keeps a shape before/without an image. */
 .pb-card--thing .pb-frame { width: 200px; }
-.pb-media--thing { width: 100%; min-height: 120px; background: #efece6; }
+.pb-media--thing { width: 100%; min-height: 120px; background: rgba(0, 0, 0, 0.08); }
 .pb-card--thing .pb-img {
   height: auto;
   max-height: 300px;
