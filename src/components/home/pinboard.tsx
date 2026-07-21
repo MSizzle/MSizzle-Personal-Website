@@ -45,6 +45,15 @@ const BOARD_MAX_H = 720; // hard cap: the board never grows past this (fixed are
 const MOBILE_LIMIT = 5; // cards shown before "See more" on the mobile stack
 const ROWS = 3; // cards start spread across three horizontal lines
 const THREE_LINE_MIN_H = 660; // board floor so the three start lines get real vertical gaps
+// The toolbar strip the card field sits below (`--pb-tools-h` in globals.css).
+// `boardHeightFor` describes the FIELD height that layoutFor/scatter place
+// cards into, so the board element itself must be this much taller or the
+// bottom row of cards spills out past the board and onto the footer.
+const TOOLS_H = 88;
+// Rotation slack: cards are placed by their unrotated box but rendered with up
+// to ~11deg of tilt, which pushes a corner past the clamp. Reserved at the
+// bottom so a tilted card in the last row still lands inside the board.
+const TILT_SLACK = 28;
 
 /** Deterministic 0..1 pseudo-random from an index + salt (SSR-stable). */
 function seeded(i: number, salt: number): number {
@@ -244,7 +253,9 @@ export function Pinboard({
 }) {
   const boardRef = useRef<HTMLDivElement>(null);
 
-  const boardHeight = boardHeightFor(items.length);
+  // Board = toolbar strip + field + tilt slack. `boardHeightFor` is the field
+  // height alone (what cards are laid out against).
+  const boardHeight = boardHeightFor(items.length) + TOOLS_H + TILT_SLACK;
 
   // Stable string key so the effect re-wires only when the actual order changes.
   const categoryKey = categoryOrder.join("");
@@ -427,7 +438,7 @@ export function Pinboard({
       const clearTopics = () => {
         topicLabels.forEach((l) => l.remove());
         topicLabels = [];
-        board.style.height = `${boardHeightFor(cards.length)}px`;
+        board.style.height = `${boardHeightFor(cards.length) + TOOLS_H + TILT_SLACK}px`;
       };
 
       // Re-scatter every card across the field. Rather than a pure-random

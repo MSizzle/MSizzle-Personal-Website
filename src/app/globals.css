@@ -758,7 +758,7 @@ li:last-child > .nav-cell {
    hover/focus-invert mechanism as .a-row above. */
 .e-term {
   font-family: var(--font-mono);
-  font-size: var(--text-sm);
+  font-size: var(--text-base, 1rem);
   line-height: 1.85;
 }
 .e-term .hd {
@@ -775,10 +775,16 @@ li:last-child > .nav-cell {
   grid-template-columns: 104px 1fr 92px;
   gap: 16px;
   align-items: baseline;
-  padding: 5px 8px;
+  /* Roomy rows: the log is only five entries, so it needs vertical presence to
+     hold its own as a band rather than reading as a footnote. */
+  padding: 18px 8px;
   margin: 0 -8px;
   text-decoration: none;
   position: relative;
+  border-bottom: 1px solid var(--color-border);
+}
+.e-post:last-of-type {
+  border-bottom: 0;
 }
 /* Same stacking-context requirement as `.a-row` above. */
 .e-post {
@@ -944,8 +950,12 @@ footer.site {
   touch-action: none;
   user-select: none;
   /* Height of the toolbar strip the card field must stay clear of: the 41px
-     button row plus breathing room. Consumed by `.pinboard-field` below. */
+     button row plus breathing room. Consumed by `.pinboard-field` below.
+     MUST stay in sync with TOOLS_H / TILT_SLACK in pinboard.tsx, which size
+     the board element around this field. */
   --pb-tools-h: 88px;
+  /* Bottom reserve so a tilted card in the last row cannot cross the footer. */
+  --pb-tilt-slack: 28px;
 }
 /* z-index:1 makes the field its own stacking context, one atomic layer below
    the toolbar (.pb-tools, z-index:20). Every card lives inside the field, so no
@@ -957,7 +967,7 @@ footer.site {
    the tiles. */
 .pinboard-field {
   position: absolute;
-  inset: var(--pb-tools-h) 40px 0;
+  inset: var(--pb-tools-h) 40px var(--pb-tilt-slack);
   z-index: 1;
 }
 

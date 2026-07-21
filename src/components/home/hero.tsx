@@ -40,9 +40,9 @@ export function Hero() {
           <Image
             src="/logos/prometheus-mark.png"
             alt="Prometheus"
-            width={28}
-            height={28}
-            className="mt-3 h-7 w-7"
+            width={180}
+            height={180}
+            className="mt-5 h-auto w-1/2 max-w-[160px]"
           />
         </div>
         <div>
@@ -53,9 +53,9 @@ export function Hero() {
           <Image
             src="/logos/monty-monthly.png"
             alt="Monty Monthly"
-            width={28}
-            height={28}
-            className="mt-3 h-7 w-7"
+            width={180}
+            height={180}
+            className="mt-5 h-auto w-1/2 max-w-[160px]"
           />
         </div>
         <div>
