@@ -1,95 +1,137 @@
 import React from "react";
-import { describe, it, expect, vi, afterEach } from "vitest";
+import { describe, it, expect, afterEach } from "vitest";
 import { render, screen, cleanup } from "@testing-library/react";
-
-// Mock RailBox: render num and label as data attributes for assertion
-vi.mock("@/components/home/rail-box", () => ({
-  RailBox: function RailBoxMock({ num, label }: { num: string; label: string }) {
-    return React.createElement(
-      "div",
-      { "data-testid": "rail-box", "data-num": num, "data-label": label },
-      React.createElement("div", { "data-testid": "rail-num" }, num),
-      React.createElement("div", { "data-testid": "rail-label" }, label)
-    );
-  },
-}));
-
-// Mock Photo: render a div with data-testid for photo container assertion
-vi.mock("@/components/home/photo", () => ({
-  Photo: function PhotoMock({
-    dark,
-    aspectRatio,
-    caption,
-  }: {
-    dark?: boolean;
-    aspectRatio?: string;
-    caption?: string;
-  }) {
-    return React.createElement("div", {
-      "data-testid": "photo",
-      "data-dark": dark ? "true" : "false",
-      "data-aspect": aspectRatio,
-      "data-caption": caption,
-    });
-  },
-}));
+import { SectionBuilding } from "@/components/home/section-building";
+import type { Project } from "@/lib/notion-projects";
 
 afterEach(() => {
   cleanup();
 });
 
-describe("SectionBuilding (17.4-06)", () => {
-  it("renders RailBox with num 01 and label Building", async () => {
-    const { SectionBuilding } = await import("@/components/home/section-building");
-    render(React.createElement(SectionBuilding));
+function makeProject(overrides: Partial<Project> = {}): Project {
+  return {
+    id: "id-1",
+    slug: "some-project",
+    title: "Some Project",
+    description: "A project description.",
+    cover: null,
+    image: null,
+    emoji: null,
+    externalUrl: "",
+    tags: [],
+    featured: true,
+    published: true,
+    lastEdited: "2026-03-15T00:00:00.000Z",
+    ...overrides,
+  };
+}
 
-    const railBox = screen.getByTestId("rail-box");
-    expect(railBox).toBeDefined();
-    expect(railBox.getAttribute("data-num")).toBe("01");
-    expect(railBox.getAttribute("data-label")).toBe("Building");
+describe("SectionBuilding (21-02 Swiss numbered index)", () => {
+  it("with no projects prop, renders exactly one row: the hardcoded Prometheus row", () => {
+    render(<SectionBuilding />);
+
+    const rows = screen.getAllByRole("link");
+    expect(rows).toHaveLength(1);
+
+    expect(screen.getByText("001")).toBeDefined();
+    expect(screen.getByText("Prometheus")).toBeDefined();
+    expect(
+      screen.getByText(
+        "AI integrations and education. Practical leverage, not hype."
+      )
+    ).toBeDefined();
+    expect(screen.getByText("Current")).toBeDefined();
+
+    const link = rows[0];
+    expect(link.getAttribute("href")).toBe("https://prometheus.today");
+    expect(link.getAttribute("target")).toBe("_blank");
+    expect(link.getAttribute("rel")).toBe("noopener noreferrer");
   });
 
-  it("renders the rail index 01", async () => {
-    const { SectionBuilding } = await import("@/components/home/section-building");
-    render(React.createElement(SectionBuilding));
-    expect(screen.getByTestId("rail-num").textContent).toBe("01");
+  it("with a projects array of length N, renders N+1 rows: row 001 Prometheus then 002..00(N+1) from projects", () => {
+    const projects: Project[] = [
+      makeProject({
+        id: "p1",
+        slug: "project-one",
+        title: "Project One",
+        description: "First project description.",
+        tags: ["AI"],
+        lastEdited: "2025-06-01T00:00:00.000Z",
+      }),
+      makeProject({
+        id: "p2",
+        slug: "project-two",
+        title: "Project Two",
+        description: "Second project description.",
+        tags: [],
+        lastEdited: "2024-11-20T00:00:00.000Z",
+      }),
+    ];
+
+    render(<SectionBuilding projects={projects} />);
+
+    const rows = screen.getAllByRole("link");
+    expect(rows).toHaveLength(3);
+
+    // Every numeral is exactly 3 digits, zero-padded.
+    expect(screen.getByText("001")).toBeDefined();
+    expect(screen.getByText("002")).toBeDefined();
+    expect(screen.getByText("003")).toBeDefined();
+
+    // Row 001 is always Prometheus, first.
+    expect(rows[0].getAttribute("href")).toBe("https://prometheus.today");
+
+    // Row 002: project with a tag uses tags[0] as status.
+    expect(screen.getByText("Project One")).toBeDefined();
+    expect(screen.getByText("First project description.")).toBeDefined();
+    expect(rows[1].getAttribute("href")).toBe("/building/project-one");
+    expect(screen.getByText("AI")).toBeDefined();
+
+    // Row 003: project without a tag falls back to the UTC year of lastEdited.
+    expect(screen.getByText("Project Two")).toBeDefined();
+    expect(screen.getByText("Second project description.")).toBeDefined();
+    expect(rows[2].getAttribute("href")).toBe("/building/project-two");
+    expect(screen.getByText("2024")).toBeDefined();
+
+    // Notion-derived rows are not external — no target/rel.
+    expect(rows[1].getAttribute("target")).toBeNull();
+    expect(rows[2].getAttribute("target")).toBeNull();
   });
 
-  it("renders the rail label Building", async () => {
-    const { SectionBuilding } = await import("@/components/home/section-building");
-    render(React.createElement(SectionBuilding));
-    expect(screen.getByTestId("rail-label").textContent).toBe("Building");
+  it("every numeral matches /^\\d{3}$/, never '1.' or '01'", () => {
+    const projects: Project[] = [makeProject({ id: "p1", slug: "p1" })];
+    render(<SectionBuilding projects={projects} />);
+
+    const nums = document.querySelectorAll(".a-row .num");
+    expect(nums).toHaveLength(2);
+    nums.forEach((el) => {
+      expect(el.textContent).toMatch(/^\d{3}$/);
+    });
   });
 
-  it("renders a slide-in photo container with from-left class", async () => {
-    const { SectionBuilding } = await import("@/components/home/section-building");
-    const { container } = render(React.createElement(SectionBuilding));
-
-    // The photo is wrapped in a div with classes "shadowed slide from-left"
-    const slideContainer = container.querySelector(".shadowed.slide.from-left");
-    expect(slideContainer).toBeDefined();
-    expect(slideContainer).not.toBeNull();
+  it("does not render a 'This site' row", () => {
+    render(<SectionBuilding projects={[makeProject()]} />);
+    expect(screen.queryByText(/This site/i)).toBeNull();
   });
 
-  it("renders the Prometheus screenshot photo (no dark treatment)", async () => {
-    const { SectionBuilding } = await import("@/components/home/section-building");
-    render(React.createElement(SectionBuilding));
+  it("does not import or render RailBox, Photo, or the retired photo/motion classes", () => {
+    const { container } = render(<SectionBuilding projects={[makeProject()]} />);
 
-    // The shipped SectionBuilding renders a screenshot of the Prometheus site and
-    // passes no `dark` prop to Photo (the screenshot is not tinted for the dark band).
-    const photo = screen.getByTestId("photo");
-    expect(photo).toBeDefined();
-    expect(photo.getAttribute("data-dark")).toBe("false");
+    expect(container.querySelector('[data-testid="rail-box"]')).toBeNull();
+    expect(container.querySelector('[data-testid="photo"]')).toBeNull();
+    expect(container.querySelector(".shadowed")).toBeNull();
+    expect(container.querySelector(".slide")).toBeNull();
+    expect(container.querySelector(".beat-grid")).toBeNull();
+    expect(container.querySelector(".prometheus-shot")).toBeNull();
   });
 
-  it("does not render BigList Building/Writing/Doing", async () => {
-    const { SectionBuilding } = await import("@/components/home/section-building");
-    render(React.createElement(SectionBuilding));
-
-    // The old structure asserted BigList with labels Building/Writing/Doing.
-    // The new structure uses RailBox; no big-list should be present.
-    expect(screen.queryByTestId("big-list")).toBeNull();
-    // "Doing" was an old BigList item that no longer exists in the reskinned component
-    expect(screen.queryByText(/^Doing$/i)).toBeNull();
+  it("wraps every row in .a-row, reachable via :focus-visible as a plain <a href>", () => {
+    const { container } = render(<SectionBuilding projects={[makeProject()]} />);
+    const rows = container.querySelectorAll("a.a-row");
+    expect(rows).toHaveLength(2);
+    rows.forEach((row) => {
+      expect(row.tagName).toBe("A");
+      expect(row.getAttribute("href")).toBeTruthy();
+    });
   });
 });
