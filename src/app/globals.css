@@ -991,6 +991,86 @@ li:last-child > .nav-cell {
   outline-color: currentColor;
   outline-offset: 2px;
 }
+
+/* ── PHASE 21: HOMEPAGE REBUILD — terminal Writing log (HP-03) ──
+   .e-term is the Writing band's terminal-format wrapper; .e-post is its row
+   unit (date / title / read-time), reusing the identical full-row
+   hover/focus-invert mechanism as .a-row above. */
+.e-term {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  line-height: 1.85;
+}
+.e-term .hd {
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding-bottom: 12px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid var(--color-border);
+}
+.e-post {
+  display: grid;
+  grid-template-columns: 104px 1fr 92px;
+  gap: 16px;
+  align-items: baseline;
+  padding: 5px 8px;
+  margin: 0 -8px;
+  text-decoration: none;
+  position: relative;
+}
+.e-post::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--color-invert);
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 150ms ease;
+}
+@media (hover: hover) {
+  .e-post:hover::before {
+    opacity: 1;
+  }
+}
+.e-post:hover,
+.e-post:focus-visible {
+  color: var(--color-text-inverse);
+}
+.e-post:focus-visible::before {
+  opacity: 1;
+}
+.e-post .dt {
+  color: var(--color-text-muted);
+}
+.e-post:hover .dt,
+.e-post:focus-visible .dt,
+.e-post:hover .rd,
+.e-post:focus-visible .rd {
+  color: var(--color-text-inverse-dim);
+}
+.e-post .rd {
+  color: var(--color-text-muted);
+  text-align: right;
+}
+/* Scoped override of D-10's global outline, identical rationale to
+   .a-row:focus-visible above — keeps the ring visible once the row inverts
+   to a solid black block. */
+.e-post:focus-visible {
+  outline-color: currentColor;
+  outline-offset: 2px;
+}
+.e-term .more {
+  display: inline-block;
+  margin-top: 16px;
+  color: var(--color-text-muted);
+  text-decoration: none;
+}
+.e-term .more:hover {
+  color: var(--color-text);
+  box-shadow: inset 0 -1px 0 var(--color-text);
+}
 @media (max-width: 760px) {
   .a-row {
     grid-template-columns: 40px 1fr;
@@ -1000,6 +1080,10 @@ li:last-child > .nav-cell {
     grid-column: 2;
     text-align: left;
   }
+  .e-post {
+    grid-template-columns: 84px 1fr;
+  }
+  .e-post .rd { display: none; }
 }
 
 /* ── MOTION SYSTEM — scroll-triggered reveals + ambient animations (D-07) ── */
