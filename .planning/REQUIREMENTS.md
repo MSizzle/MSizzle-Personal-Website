@@ -20,7 +20,7 @@ v3.0's requirements are archived at `.planning/milestones/v3.0-REQUIREMENTS.md`.
 ### Homepage (HP)
 - [x] **HP-01**: The homepage hero is type-only — the rotating portrait carousel (stage pitch, fireside chat, mushroom blocks) is gone, and no photograph appears above the fold.
 - [x] **HP-02**: Building renders as a Swiss editorial numbered index (`001`, `002`, `003`) whose rows invert to a solid black block on hover.
-- [ ] **HP-03**: The writing list renders in terminal format (`~/writing`, dates left, read time right) with no frame around it, so the blog reads as a log rather than a pitch.
+- [x] **HP-03**: The writing list renders in terminal format (`~/writing`, dates left, read time right) with no frame around it, so the blog reads as a log rather than a pitch.
 - [ ] **HP-04**: The homepage reads as one continuous ground — the alternating light/dark band rhythm is gone.
 - [ ] **HP-05**: A visitor can browse work and essays without meeting a subscribe CTA above the footer; Monty Monthly is a quiet footer-level line, not a sticky nav button.
 
