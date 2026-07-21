@@ -1,4 +1,3 @@
-import { RailBox } from "@/components/home/rail-box";
 import { PhotoMarquee } from "@/components/home/photo-marquee";
 import { Pinboard } from "@/components/home/pinboard";
 import type { LoveItem } from "@/lib/notion-loves";
@@ -27,14 +26,10 @@ export function SectionLoves({
   return (
     <>
       <div className="wrap">
-        <div className="beat-grid">
-          <div className="reveal">
-            <RailBox num="03" label="Things I love" />
-          </div>
-          <div>
-            <h2 className="reveal">Things I love outside of work.</h2>
-          </div>
-        </div>
+        <h2 className="reveal font-mono text-xs uppercase tracking-[0.12em] text-text-muted">
+          03 · Things I Love
+        </h2>
+        <p className="reveal text-text-dim">Things I love outside of work.</p>
       </div>
 
       {items.length > 0 ? (
