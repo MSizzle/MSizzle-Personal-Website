@@ -75,7 +75,7 @@ Plans:
 Plans:
 **Wave 1**
 
-- [ ] 21-01-PLAN.md — Hero rebuild (type-only Swiss hero, HP-01/MS-01) + Things I Love band header restyle
+- [x] 21-01-PLAN.md — Hero rebuild (type-only Swiss hero, HP-01/MS-01) + Things I Love band header restyle
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
@@ -173,7 +173,7 @@ Phases execute in numeric order: 20 -> 21 -> 22 -> 23 -> 24 -> 25
 | Phase | Milestone | Plans | Status | Completed |
 |-------|-----------|-------|--------|-----------|
 | 20. Mono Token Foundation | v4.0 | 5/5 | Complete   | 2026-07-21 |
-| 21. Mono Homepage Rebuild | v4.0 | 0/6 | Not started | - |
+| 21. Mono Homepage Rebuild | v4.0 | 1/6 | In Progress|  |
 | 22. Things I Love in Mono | v4.0 | 0/? | Not started | - |
 | 23. Site Sweep & Mono OG | v4.0 | 0/? | Not started | - |
 | 24. True Inversion Dark Mode | v4.0 | 0/? | Not started | - |

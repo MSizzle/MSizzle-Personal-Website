@@ -18,14 +18,14 @@ v3.0's requirements are archived at `.planning/milestones/v3.0-REQUIREMENTS.md`.
 - [x] **MO-05**: Hanken Grotesk 800 display type, hard corners (radius 0), and the no-gradients rule are preserved from v3.
 
 ### Homepage (HP)
-- [ ] **HP-01**: The homepage hero is type-only — the rotating portrait carousel (stage pitch, fireside chat, mushroom blocks) is gone, and no photograph appears above the fold.
+- [x] **HP-01**: The homepage hero is type-only — the rotating portrait carousel (stage pitch, fireside chat, mushroom blocks) is gone, and no photograph appears above the fold.
 - [ ] **HP-02**: Building renders as a Swiss editorial numbered index (`001`, `002`, `003`) whose rows invert to a solid black block on hover.
 - [ ] **HP-03**: The writing list renders in terminal format (`~/writing`, dates left, read time right) with no frame around it, so the blog reads as a log rather than a pitch.
 - [ ] **HP-04**: The homepage reads as one continuous ground — the alternating light/dark band rhythm is gone.
 - [ ] **HP-05**: A visitor can browse work and essays without meeting a subscribe CTA above the footer; Monty Monthly is a quiet footer-level line, not a sticky nav button.
 
 ### Motion Subtraction (MS)
-- [ ] **MS-01**: The hero link marquee, the pulsing status dot, photo ken-burns, and slide-in-from-side reveals are all removed.
+- [x] **MS-01**: The hero link marquee, the pulsing status dot, photo ken-burns, and slide-in-from-side reveals are all removed.
 - [ ] **MS-02**: The only surviving scroll motion is a slow opacity fade-up.
 - [ ] **MS-03**: `prefers-reduced-motion` is honored across every remaining animation, including the pinboard.
 
