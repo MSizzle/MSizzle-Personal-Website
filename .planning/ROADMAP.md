@@ -35,7 +35,14 @@
   4. Hanken Grotesk 800 display type, radius-0 hard corners, and the no-gradients rule are intact after the retheme.
   5. A visitor with the preview URL sees the mono system on a Vercel deployment while montysinger.com still serves the v3 design unchanged.
 
-**Plans**: TBD
+**Plans**: 5 plans (3 waves)
+
+Plans:
+- [ ] 20-01-PLAN.md — v4-mono branch setup + mono @theme token block, D-04 hardcoded-hex fixes, D-10 focus-ring unification
+- [ ] 20-02-PLAN.md — globals.css Tier 1/2/3 accent-to-mono call-site conversion (~35 sites)
+- [ ] 20-03-PLAN.md — src/components/v3/ shared-layer accent-to-mono conversion (9 files)
+- [ ] 20-04-PLAN.md — site-footer, timeline, and interior-route accent-to-mono conversion (6 files)
+- [ ] 20-05-PLAN.md — full D-03 audit, build/vitest check, v4-mono push, DQ-01 preview sign-off
 **UI hint**: yes
 
 **Sequencing note**: The palette is entirely token-driven in `src/app/globals.css` (lines 8-32), so this phase is cheap and unblocks everything. The 17 files under `src/` that reference `accent` mostly follow the tokens for free; only the four hardcoded survivals above need explicit edits. The three `opengraph-image.tsx` routes also hardcode `#e5411f` but are handled in Phase 23 alongside the rest of the sweep.
@@ -130,7 +137,7 @@ Phases execute in numeric order: 20 -> 21 -> 22 -> 23 -> 24 -> 25
 
 | Phase | Milestone | Plans | Status | Completed |
 |-------|-----------|-------|--------|-----------|
-| 20. Mono Token Foundation | v4.0 | 0/? | Not started | - |
+| 20. Mono Token Foundation | v4.0 | 0/5 | Planned | - |
 | 21. Mono Homepage Rebuild | v4.0 | 0/? | Not started | - |
 | 22. Things I Love in Mono | v4.0 | 0/? | Not started | - |
 | 23. Site Sweep & Mono OG | v4.0 | 0/? | Not started | - |
