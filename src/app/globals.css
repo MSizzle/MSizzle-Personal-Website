@@ -75,7 +75,7 @@ a {
 }
 
 .sig-out {
-  -webkit-text-stroke: 2px var(--accent);
+  -webkit-text-stroke: 2px var(--color-invert);
   color: transparent;
   text-shadow: none;
 }
@@ -154,13 +154,13 @@ h1.sig .hl {
 }
 
 .prose a {
-  color: var(--accent);
+  color: var(--color-text);
   text-decoration: underline;
   text-underline-offset: 3px;
 }
 
 .prose blockquote {
-  border-left: 2px solid var(--accent);
+  border-left: 2px solid var(--color-border-strong);
   padding-left: 22px;
   margin: 1.6em 0;
   color: var(--color-text);
@@ -370,11 +370,8 @@ h1.sig .hw {
 .wayin a {
   color: var(--color-text);
   text-decoration: none;
-  border-bottom: 2px solid var(--accent);
+  border-bottom: 2px solid var(--color-text);
   padding-bottom: 3px;
-}
-.wayin a:hover {
-  color: var(--accent);
 }
 
 /* ── Photo system (D-07) ──────────────────────────────────────────────────
@@ -401,7 +398,7 @@ h1.sig .hw {
   top: 13px;
   left: 15px;
   font-size: 15px;
-  color: var(--accent);
+  color: var(--color-text);
   opacity: 0.55;
   z-index: 2;
 }
@@ -432,7 +429,7 @@ section.beat {
   font-family: var(--font-display);
   font-weight: var(--sig-weight);
   font-size: 2.6rem;
-  color: var(--accent);
+  color: var(--color-text-inverse);
   line-height: 1;
 }
 .rail-box .lbl {
@@ -514,7 +511,6 @@ section.beat {
 }
 .hero-ticker .tick-link:hover {
   opacity: 1;
-  color: var(--accent);
 }
 .hero-ticker .tick-link {
   padding: 0 clamp(16px, 2.5vw, 30px);
@@ -525,7 +521,7 @@ section.beat {
   white-space: nowrap;
 }
 .hero-ticker .tick-sep {
-  color: var(--accent);
+  color: var(--color-text-inverse);
   opacity: 0.5;
   flex-shrink: 0;
   font-family: var(--font-display);
@@ -550,11 +546,8 @@ p.body {
 }
 .inline {
   color: var(--color-text);
-  border-bottom: 2px solid var(--accent);
+  border-bottom: 2px solid var(--color-text);
   text-decoration: none;
-}
-.inline:hover {
-  color: var(--accent);
 }
 
 /* Prometheus headline link: reads as part of the heading; hover reveals a
@@ -792,7 +785,7 @@ p.body {
   letter-spacing: 0.16em;
   text-transform: uppercase;
   font-weight: 600;
-  color: var(--accent);
+  color: var(--color-text-dim);
 }
 .mm-title {
   font-family: var(--font-display);
@@ -816,7 +809,7 @@ p.body {
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--color-text);
-  border-bottom: 2px solid var(--accent);
+  border-bottom: 2px solid var(--color-text);
   padding-bottom: 3px;
   text-decoration: none;
 }
@@ -849,7 +842,7 @@ p.body {
   margin-top: 24px;
   align-self: flex-start;
   background: #fff;
-  color: var(--accent);
+  color: var(--color-text);
   font-weight: 600;
   font-size: 13px;
   letter-spacing: 0.08em;
@@ -1100,7 +1093,8 @@ li:last-child > .nav-cell {
   transition: color 0.18s;
 }
 .foot-col a:hover {
-  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 .foot-col .colophon {
   font-size: 13.5px;
@@ -1213,7 +1207,7 @@ body.no-motion .shadowed .title-card {
   margin-bottom: 44px;
 }
 .selective b {
-  color: var(--accent);
+  color: var(--color-text);
 }
 
 /* ── Footer copyright / colophon mark (D-12) ── */
