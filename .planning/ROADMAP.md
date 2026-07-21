@@ -87,7 +87,7 @@ Plans:
 
 **Wave 4** *(blocked on Wave 3 completion)*
 
-- [ ] 21-04-PLAN.md — Photo primitive + PhotoMarquee motion teardown (MS-01 finish)
+- [x] 21-04-PLAN.md — Photo primitive + PhotoMarquee motion teardown (MS-01 finish)
 
 **Wave 5** *(blocked on Waves 1-4 completion)*
 
@@ -173,7 +173,7 @@ Phases execute in numeric order: 20 -> 21 -> 22 -> 23 -> 24 -> 25
 | Phase | Milestone | Plans | Status | Completed |
 |-------|-----------|-------|--------|-----------|
 | 20. Mono Token Foundation | v4.0 | 5/5 | Complete   | 2026-07-21 |
-| 21. Mono Homepage Rebuild | v4.0 | 3/6 | In Progress|  |
+| 21. Mono Homepage Rebuild | v4.0 | 4/6 | In Progress|  |
 | 22. Things I Love in Mono | v4.0 | 0/? | Not started | - |
 | 23. Site Sweep & Mono OG | v4.0 | 0/? | Not started | - |
 | 24. True Inversion Dark Mode | v4.0 | 0/? | Not started | - |
