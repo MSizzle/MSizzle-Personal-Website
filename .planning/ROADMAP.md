@@ -79,7 +79,7 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 21-02-PLAN.md — Building index: .a-row CSS family + section-building.tsx Swiss numbered rows (HP-02)
+- [x] 21-02-PLAN.md — Building index: .a-row CSS family + section-building.tsx Swiss numbered rows (HP-02)
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
@@ -173,7 +173,7 @@ Phases execute in numeric order: 20 -> 21 -> 22 -> 23 -> 24 -> 25
 | Phase | Milestone | Plans | Status | Completed |
 |-------|-----------|-------|--------|-----------|
 | 20. Mono Token Foundation | v4.0 | 5/5 | Complete   | 2026-07-21 |
-| 21. Mono Homepage Rebuild | v4.0 | 1/6 | In Progress|  |
+| 21. Mono Homepage Rebuild | v4.0 | 2/6 | In Progress|  |
 | 22. Things I Love in Mono | v4.0 | 0/? | Not started | - |
 | 23. Site Sweep & Mono OG | v4.0 | 0/? | Not started | - |
 | 24. True Inversion Dark Mode | v4.0 | 0/? | Not started | - |
