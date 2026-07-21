@@ -174,7 +174,7 @@ export default async function WritingPage() {
       {carouselIssues.length > 0 && (
         <>
           <section className="px-6 md:px-40 pb-16">
-            <h3 className="font-mono text-sm uppercase tracking-[0.12em] text-accent mb-[18px]">
+            <h3 className="font-mono text-sm uppercase tracking-[0.12em] text-text-dim mb-[18px]">
               Monty Monthly
             </h3>
             <NewsletterCarousel issues={carouselIssues} />
