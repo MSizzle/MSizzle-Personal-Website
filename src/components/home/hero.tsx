@@ -47,10 +47,10 @@ export function Hero() {
                 aria-label="Prometheus"
               >
                 <Image
-                  src="/logos/prometheus-mark.png"
+                  src="/logos/prometheus-orb.svg"
                   alt="Prometheus"
-                  width={180}
-                  height={180}
+                  width={240}
+                  height={240}
                 />
               </a>
             </div>

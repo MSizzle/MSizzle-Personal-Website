@@ -97,10 +97,9 @@ describe("Hero", () => {
     // Monty-approved exception and render in their real colors.
     // next/image rewrites src through /_next/image?url=<encoded>, so match on
     // the encoded logo path rather than the raw one.
-    const allowed = [
-      "logos%2Fprometheus-mark.png",
-      "logos%2Fmonty-monthly.png",
-    ];
+    // next/image passes SVGs through unoptimized, so its src stays literal
+    // while the PNG is rewritten through /_next/image?url=<encoded>.
+    const allowed = ["/logos/prometheus-orb.svg", "logos%2Fmonty-monthly.png"];
     expect(imgs).toHaveLength(2);
     imgs.forEach((img) => {
       const src = img.getAttribute("src") ?? "";

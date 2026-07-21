@@ -92,18 +92,16 @@ export default async function BuildingPage() {
                       TitleCard face (Card precedence: coverSrc -> badge -> title). */}
                   <div className="card-grid">
                     {yearProjects.map((project, i) => (
+                      /* No coverSrc: per the Phase 19 decision projects never use
+                         cover images as card faces, they get a typographic
+                         title-card (or emoji badge) instead. This page was still
+                         passing one, which is what kept projects.test.tsx red. */
                       <Card
                         key={project.id}
                         href={`/building/${project.slug}`}
                         title={project.title}
                         blurb={project.description}
                         kicker={project.tags?.[0] ?? "Project"}
-                        coverSrc={
-                          project.cover
-                            ? `/api/notion-cover?pageId=${project.id}`
-                            : undefined
-                        }
-                        coverAlt={project.cover ? project.title : undefined}
                         badgeEmoji={project.emoji ?? undefined}
                         badgeField={BADGE_FIELDS[i % BADGE_FIELDS.length]}
                         titleCardField={i % 2 === 0 ? "paper" : "ink"}

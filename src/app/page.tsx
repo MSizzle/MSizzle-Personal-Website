@@ -4,7 +4,7 @@ import { ExplorativeHomepage } from "@/components/home/explorative-homepage";
 import { getFeaturedProjects, type Project } from "@/lib/notion-projects";
 import { getLovesData, type LoveItem } from "@/lib/notion-loves";
 import { fetchMontyMonthlyIssues, type MontyMonthlyIssue } from "@/lib/rss/substack";
-import { getPublishedPosts, type BlogPost } from "@/lib/notion";
+import { getPublishedPosts, getReadingTimes, type BlogPost } from "@/lib/notion";
 
 /**
  * Homepage — ISR Server Component for the personal-brand narrative arc.
@@ -41,6 +41,14 @@ export default async function Home() {
     posts = await getPublishedPosts();
   } catch {}
 
+  // Real reading times for the posts the Writing log can actually show. The log
+  // renders five rows merged from posts + issues, so the top five posts bound
+  // what could appear; fetching only those keeps this to five Notion requests.
+  let readingTimes: Record<string, number> = {};
+  try {
+    readingTimes = await getReadingTimes(posts.slice(0, 5));
+  } catch {}
+
   return (
     <>
       <JsonLd data={buildPersonSchema()} />
@@ -50,6 +58,7 @@ export default async function Home() {
         loves={loves}
         loveCategories={loveCategories}
         posts={posts}
+        readingTimes={readingTimes}
       />
     </>
   );

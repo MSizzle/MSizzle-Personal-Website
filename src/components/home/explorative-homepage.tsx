@@ -37,6 +37,8 @@ type Props = {
   loves?: LoveItem[];
   /** Type-select option order from Notion; drives Organize-by-topic bands. */
   loveCategories?: string[];
+  /** Exact post reading times by post id; falls back to an estimate when absent. */
+  readingTimes?: Record<string, number>;
 };
 
 export function ExplorativeHomepage({
@@ -45,6 +47,7 @@ export function ExplorativeHomepage({
   posts = [],
   loves = [],
   loveCategories = [],
+  readingTimes = {},
 }: Props) {
   return (
     <div className="min-h-screen bg-bg">
@@ -56,7 +59,11 @@ export function ExplorativeHomepage({
 
       <SectionBuilding projects={projects} />
 
-      <SectionWriting posts={posts} montyIssues={montyIssues} />
+      <SectionWriting
+        posts={posts}
+        montyIssues={montyIssues}
+        readingTimes={readingTimes}
+      />
 
       {/* Extra top room: the Writing log ends in small mono type and the
           pinboard opens with dense tiles, so the two need a wider gap than

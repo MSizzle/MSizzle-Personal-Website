@@ -130,6 +130,14 @@ Plans:
   3. A post authored in Notion using amber, orange, blue, or gray inline text renders as ink/dim/muted greys on the site.
   4. Photography appears only where it is content — Things I Love cards and Notion project covers; the hero portraits, the wide Prometheus screenshot, and the photo-marquee fallback are gone.
 
+**Carve-out (approved by Monty, 2026-07-21):** the two hero brand marks —
+`public/logos/prometheus-orb.svg` and `public/logos/monty-monthly.png`, released
+by the hero drop-boxes in `hero.tsx` — render in their real brand colors and are
+an intentional exception to the mono lock. The Prometheus orb is the only hue on
+the homepage and that is deliberate. Do NOT neutralize, greyscale, or strip them
+during this sweep; criterion 1's "no accent survivals" does not cover them.
+Logos are also not photography, so criterion 4 does not apply either.
+
 **Plans**: TBD
 **UI hint**: yes
 

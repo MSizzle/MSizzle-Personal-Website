@@ -31,16 +31,23 @@ function formatYYYYMM(dateStr: string): string {
 export function SectionWriting({
   posts = [],
   montyIssues = [],
+  readingTimes = {},
 }: {
   posts?: BlogPost[];
   montyIssues?: MontyMonthlyIssue[];
+  /**
+   * Exact reading times by post id, computed from real page blocks upstream.
+   * Absent entries fall back to the description estimate, which is only ever
+   * a rough floor -- a description is one line, so it rounds to "1 min".
+   */
+  readingTimes?: Record<string, number>;
 }) {
   const postRows: Row[] = posts
     .filter((post) => post.date)
     .map((post) => ({
       date: post.date,
       title: post.title,
-      readTime: estimateReadingTime(post.description),
+      readTime: readingTimes[post.id] ?? estimateReadingTime(post.description),
       href: `/blog/${post.slug}`,
       external: false,
     }));
@@ -48,7 +55,8 @@ export function SectionWriting({
   const issueRows: Row[] = montyIssues.map((issue) => ({
     date: issue.pubDate,
     title: issue.title,
-    readTime: estimateReadingTime(issue.description),
+    // Computed from the issue's full body in content:encoded, not its subtitle.
+    readTime: issue.readingTime ?? estimateReadingTime(issue.description),
     href: issue.link,
     external: true,
   }));

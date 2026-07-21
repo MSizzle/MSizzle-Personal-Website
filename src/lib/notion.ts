@@ -4,6 +4,7 @@ import type {
   BlockObjectResponse,
 } from "@notionhq/client/build/src/api-endpoints";
 import pLimit from "p-limit";
+import { calculateReadingTime } from "@/utils/reading-time";
 
 // --- Client & rate limiter ---
 
@@ -213,6 +214,33 @@ export async function getPostExcerpt(pageId: string): Promise<string> {
     }
   }
   return text.slice(0, 400);
+}
+
+/**
+ * Exact reading times for a handful of posts, keyed by post id.
+ *
+ * The listing pages estimate reading time from a post's description, which is
+ * a one-line summary and so rounds almost everything to "1 min". This fetches
+ * the real page blocks instead. It costs one Notion request per post, so call
+ * it only for the small set actually rendered (the homepage log shows five).
+ * Individual failures fall out of the map rather than rejecting, letting the
+ * caller fall back to its estimate for that post.
+ */
+export async function getReadingTimes(
+  posts: { id: string }[]
+): Promise<Record<string, number>> {
+  const entries = await Promise.all(
+    posts.map(async (post) => {
+      try {
+        const blocks = await getBlocks(post.id);
+        return [post.id, calculateReadingTime(blocks)] as const;
+      } catch {
+        return null;
+      }
+    })
+  );
+
+  return Object.fromEntries(entries.filter((e) => e !== null));
 }
 
 // --- Image URL refresh ---

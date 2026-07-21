@@ -34,8 +34,35 @@ describe('fetchMontyMonthlyIssues', () => {
       pubDate: '2026-03-01',
       description: '',
       thumbnail: 'https://img/1.jpg',
+      // No content:encoded in this fixture, so reading time floors at 1.
+      readingTime: 1,
     })
     expect(items[1].thumbnail).toBeNull()
+  })
+
+  it('computes reading time from the full body, not the one-line subtitle', async () => {
+    const Parser = (await import('rss-parser')).default as unknown as ReturnType<typeof vi.fn>
+    // 600 body words => 3 minutes at 200wpm. The subtitle is deliberately short:
+    // estimating from it would floor at 1 min, which is the bug this guards.
+    const body = `<p>${Array.from({ length: 600 }, () => 'word').join(' ')}</p>`
+    Parser.mockImplementation(function () {
+      return {
+        parseURL: async () => ({
+          items: [
+            {
+              title: 'Long issue',
+              link: 'https://sub/long',
+              pubDate: '2026-05-01',
+              description: 'Short subtitle.',
+              'content:encoded': body,
+            },
+          ],
+        }),
+      }
+    })
+    const { fetchMontyMonthlyIssues } = await import('@/lib/rss/substack')
+    const items = await fetchMontyMonthlyIssues()
+    expect(items[0].readingTime).toBe(3)
   })
 
   it('uses the feed <description> subtitle as description, decoded', async () => {

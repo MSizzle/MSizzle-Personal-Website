@@ -31,6 +31,7 @@ function issue(overrides: Partial<MontyMonthlyIssue>): MontyMonthlyIssue {
     pubDate: "Wed, 02 Jul 2026 12:00:00 GMT",
     description: "A newsletter issue description with several words.",
     thumbnail: null,
+    readingTime: 1,
     ...overrides,
   };
 }
@@ -116,6 +117,57 @@ describe("SectionWriting", () => {
     render(React.createElement(SectionWriting, { posts }));
     // 250 words / 200 = 1.25 -> ceil -> 2
     expect(screen.getByText("2 min")).toBeDefined();
+  });
+
+  it("prefers the real per-post reading time over the description estimate", () => {
+    const posts: BlogPost[] = [
+      post({
+        id: "post-1",
+        slug: "p1",
+        title: "Real post",
+        // A one-line description estimates to 1 min; the real body is 9.
+        description: "Short summary.",
+        date: "2026-07-15T00:00:00.000Z",
+      }),
+    ];
+    render(
+      React.createElement(SectionWriting, {
+        posts,
+        readingTimes: { "post-1": 9 },
+      })
+    );
+    expect(screen.getByText("9 min")).toBeDefined();
+    expect(screen.queryByText("1 min")).toBeNull();
+  });
+
+  it("falls back to the estimate when a post has no measured reading time", () => {
+    const longDescription = Array(250).fill("word").join(" ");
+    const posts: BlogPost[] = [
+      post({
+        id: "missing",
+        slug: "p1",
+        title: "Unmeasured post",
+        description: longDescription,
+        date: "2026-07-15T00:00:00.000Z",
+      }),
+    ];
+    render(
+      React.createElement(SectionWriting, { posts, readingTimes: {} })
+    );
+    expect(screen.getByText("2 min")).toBeDefined();
+  });
+
+  it("uses each issue's own reading time from the feed body", () => {
+    const issues = [
+      issue({
+        title: "Long issue",
+        description: "Short subtitle.",
+        pubDate: "Wed, 02 Jul 2026 12:00:00 GMT",
+        readingTime: 7,
+      }),
+    ];
+    render(React.createElement(SectionWriting, { montyIssues: issues }));
+    expect(screen.getByText("7 min")).toBeDefined();
   });
 
   it("links blog post rows to /blog/{slug} with no target/rel", () => {
