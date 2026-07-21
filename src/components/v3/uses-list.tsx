@@ -27,7 +27,7 @@ export function UsesList({ groups }: Props) {
     <div className="flex flex-col gap-12">
       {groups.map((group) => (
         <div key={group.heading}>
-          <h3 className="font-mono text-sm uppercase tracking-[0.12em] text-accent mb-[18px]">
+          <h3 className="font-mono text-sm uppercase tracking-[0.12em] text-text-dim mb-[18px]">
             {group.heading}
           </h3>
           <dl className="grid grid-cols-[200px_1fr] gap-x-6 gap-y-[14px] max-[600px]:grid-cols-1">
