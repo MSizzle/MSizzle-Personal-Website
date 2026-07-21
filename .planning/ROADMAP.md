@@ -70,7 +70,33 @@ Plans:
   5. A visitor can reach work and essays without passing a subscribe CTA; Monty Monthly appears only as a quiet footer-level line, with no sticky nav button.
   6. The only motion left on the page is a slow opacity fade-up on scroll: the hero link marquee, pulsing status dot, photo ken-burns, and slide-in-from-side reveals no longer occur.
 
-**Plans**: TBD
+**Plans**: 6 plans (6 waves)
+
+Plans:
+**Wave 1**
+
+- [ ] 21-01-PLAN.md — Hero rebuild (type-only Swiss hero, HP-01/MS-01) + Things I Love band header restyle
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [ ] 21-02-PLAN.md — Building index: .a-row CSS family + section-building.tsx Swiss numbered rows (HP-02)
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
+- [ ] 21-03-PLAN.md — Writing terminal list: .e-term CSS family + new section-writing.tsx (HP-03)
+
+**Wave 4** *(blocked on Wave 3 completion)*
+
+- [ ] 21-04-PLAN.md — Photo primitive + PhotoMarquee motion teardown (MS-01 finish)
+
+**Wave 5** *(blocked on Waves 1-4 completion)*
+
+- [ ] 21-05-PLAN.md — Orchestrator + page.tsx wiring, retired-component deletions, test rewrites (HP-02/03/04/05)
+
+**Wave 6** *(blocked on Wave 5 completion)*
+
+- [ ] 21-06-PLAN.md — Motion system retune (MS-02) + human sign-off checkpoint
+
 **UI hint**: yes
 
 **Sequencing note**: Touches `src/components/home/` — `hero.tsx`, `explorative-homepage.tsx`, `section-building.tsx`, `section-work.tsx`, `section-newsletter.tsx`, `section-loves.tsx`, `photo.tsx`, `photo-marquee.tsx`, `scroll-reveals.tsx`, `sticky-nav.tsx`, `monty-monthly-carousel.tsx`, `rail-box.tsx`. **Do not touch `pinboard.tsx`** — TL-01 is a preservation requirement handled in Phase 22. The three homepage vitest failures previously listed here (`section-building` HD-04, `explorative-homepage` TD-03/HD-05) **no longer exist in the suite** — verified during Phase 20 execution (2026-07-21). The only pre-existing failure is `src/__tests__/pages/projects.test.tsx:188` ("renders a title-card face instead of a cover image when project.image is non-null"), confirmed failing on `main` before Phase 20 began; it belongs to the projects page, not the homepage, and must not be logged as a regression introduced here.
@@ -147,7 +173,7 @@ Phases execute in numeric order: 20 -> 21 -> 22 -> 23 -> 24 -> 25
 | Phase | Milestone | Plans | Status | Completed |
 |-------|-----------|-------|--------|-----------|
 | 20. Mono Token Foundation | v4.0 | 5/5 | Complete   | 2026-07-21 |
-| 21. Mono Homepage Rebuild | v4.0 | 0/? | Not started | - |
+| 21. Mono Homepage Rebuild | v4.0 | 0/6 | Not started | - |
 | 22. Things I Love in Mono | v4.0 | 0/? | Not started | - |
 | 23. Site Sweep & Mono OG | v4.0 | 0/? | Not started | - |
 | 24. True Inversion Dark Mode | v4.0 | 0/? | Not started | - |

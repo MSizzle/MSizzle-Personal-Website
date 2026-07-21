@@ -2,9 +2,9 @@
 gsd_state_version: 1.0
 milestone: v4.0
 milestone_name: Mono Restyle
-status: executing
-stopped_at: Completed 20-05-PLAN.md (Phase 20 closed, Monty approved)
-last_updated: "2026-07-21T05:19:48.494Z"
+status: planning
+stopped_at: Phase 21 UI-SPEC approved
+last_updated: "2026-07-21T05:58:37.487Z"
 last_activity: 2026-07-21
 progress:
   total_phases: 6
@@ -183,9 +183,9 @@ Deferred from v4.0 requirements (Future Requirements):
 
 ## Session Continuity
 
-Last session: 2026-07-21T05:19:48.488Z
-Stopped at: Completed 20-05-PLAN.md (Phase 20 closed, Monty approved)
-Resume file: None
+Last session: 2026-07-21T05:58:37.479Z
+Stopped at: Phase 21 UI-SPEC approved
+Resume file: .planning/phases/21-mono-homepage-rebuild/21-UI-SPEC.md
 
 ---
 
