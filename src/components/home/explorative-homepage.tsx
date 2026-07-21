@@ -21,7 +21,7 @@ import type { LoveItem } from "@/lib/notion-loves";
  *
  * Islands mounted here:
  *   StickyNav: fixed island, z-9000.
- *   ScrollReveals: headless IO island toggling .in on .reveal/.slide/.shadowed.
+ *   ScrollReveals: headless IO island toggling .in on .reveal.
  *
  * page.tsx fetches the Notion/RSS data (Featured projects, published posts,
  * Monty Monthly issues, Things I Love items) and passes it down; this

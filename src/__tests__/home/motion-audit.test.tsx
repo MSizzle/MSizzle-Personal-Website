@@ -34,7 +34,7 @@ describe("motion-audit (MS-01/MS-02 mechanical gate)", () => {
         dispatchEvent: () => false,
       }));
 
-    // @ts-expect-error -- minimal test-only stub, not a full IO implementation
+    // minimal test-only stub, not a full IntersectionObserver implementation
     window.IntersectionObserver =
       window.IntersectionObserver ||
       class {
