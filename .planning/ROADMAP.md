@@ -38,11 +38,20 @@
 **Plans**: 5 plans (3 waves)
 
 Plans:
+**Wave 1**
+
 - [ ] 20-01-PLAN.md — v4-mono branch setup + mono @theme token block, D-04 hardcoded-hex fixes, D-10 focus-ring unification
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
 - [ ] 20-02-PLAN.md — globals.css Tier 1/2/3 accent-to-mono call-site conversion (~35 sites)
 - [ ] 20-03-PLAN.md — src/components/v3/ shared-layer accent-to-mono conversion (9 files)
 - [ ] 20-04-PLAN.md — site-footer, timeline, and interior-route accent-to-mono conversion (6 files)
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
 - [ ] 20-05-PLAN.md — full D-03 audit, build/vitest check, v4-mono push, DQ-01 preview sign-off
+
 **UI hint**: yes
 
 **Sequencing note**: The palette is entirely token-driven in `src/app/globals.css` (lines 8-32), so this phase is cheap and unblocks everything. The 17 files under `src/` that reference `accent` mostly follow the tokens for free; only the four hardcoded survivals above need explicit edits. The three `opengraph-image.tsx` routes also hardcode `#e5411f` but are handled in Phase 23 alongside the rest of the sweep.
