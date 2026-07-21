@@ -194,23 +194,6 @@ h1.sig .hl {
   --radius-md:  0;   /* D-04: hard corners everywhere */
 }
 
-/* ── DARK BAND MECHANISM (D-03 linchpin) ──────────────────────────────────
-   .band-dark locally re-declares --color-* tokens so all token-class
-   children (text-text, bg-bg, border-border) auto-invert without
-   per-component color hardcoding. This is the key structural primitive.
-   Selector is .band.band-dark (specificity 0,0,2,0) so its dark background
-   beats the later single-class .band rule; dark sections always carry both. */
-.band.band-dark,
-.band-dark {
-  --color-text:         #ffffff;
-  --color-text-dim:     rgba(255, 255, 255, 0.66);
-  --color-text-muted:   rgba(255, 255, 255, 0.50);
-  --color-border:       rgba(255, 255, 255, 0.15);
-  --color-border-strong: rgba(255, 255, 255, 0.32);
-  background: #000000;
-  color: var(--color-text);
-}
-
 /* ── Light band base + content wrapper ── */
 .band {
   background: var(--color-bg);
@@ -223,25 +206,6 @@ h1.sig .hl {
   max-width: 1180px;
   margin: 0 auto;
   padding: 0 clamp(22px, 6vw, 88px);
-}
-
-/* ── Eyebrow label ── */
-.eyebrow {
-  font-size: 13px;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-  font-weight: 600;
-  color: var(--color-text);
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-.eyebrow::before {
-  content: "";
-  width: 34px;
-  height: 1.5px;
-  background: var(--color-invert);
-  flex-shrink: 0;
 }
 
 /* Blob atmosphere removed — no gradients / soft glows site-wide (brutalist). */
@@ -278,42 +242,6 @@ h1.sig .hl {
   color: var(--color-text-inverse);
   opacity: 0.7;
 }
-/* ── Structured section layout ── */
-section.beat {
-  padding: var(--band-pad) 0;
-}
-.beat-grid {
-  display: grid;
-  grid-template-columns: 180px 1fr;
-  gap: clamp(24px, 4vw, 56px);
-}
-
-/* ── Rail box (D-05) — auto-inverting high-contrast index+label ──────────
-   background:var(--color-text); color:var(--color-bg) → renders as
-   dark-on-light in light bands; auto-flips to light-on-dark in .band-dark. */
-.rail-box {
-  background: var(--color-text);
-  color: var(--color-bg);
-  padding: 18px 20px;
-  display: inline-block;
-}
-.rail-box .num {
-  font-family: var(--font-display);
-  font-weight: var(--sig-weight);
-  font-size: 2.6rem;
-  color: var(--color-text-inverse);
-  line-height: 1;
-}
-.rail-box .lbl {
-  font-size: 12px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  font-weight: 600;
-  color: var(--color-bg);
-  margin-top: 12px;
-  opacity: 0.9;
-}
-
 /* ── Ambient keyframes ── */
 @keyframes drift {
   from { transform: translate(0, 0) scale(1); }
@@ -321,14 +249,6 @@ section.beat {
 }
 
 /* ── Section headings and body copy ── */
-.beat h2 {
-  font-family: var(--font-display);
-  font-weight: var(--sig-weight);
-  font-size: clamp(1.9rem, 3.8vw, 2.9rem);
-  line-height: 1.08;
-  letter-spacing: -0.015em;
-  max-width: 20ch;
-}
 p.body {
   margin-top: 18px;
   max-width: 54ch;
@@ -354,20 +274,6 @@ p.body {
 .prometheus-link:hover {
   text-decoration: underline;
   text-underline-offset: 3px;
-}
-
-/* Prometheus site screenshot (Building band): wide cropped band on desktop,
-   fuller / more readable frame on narrow screens (see .prometheus-shot usage). */
-.prometheus-shot .photo {
-  aspect-ratio: 16 / 6.5;
-}
-
-/* ── Work grid (2-column photo grid) ── */
-.work-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: clamp(16px, 2vw, 26px);
-  margin-top: 44px;
 }
 
 /* ── Phase 19: typographic title-card + offset-shadow card grid ── */
@@ -527,162 +433,6 @@ p.body {
 .marquee .track {
   display: flex;
   width: max-content;
-}
-
-/* ── WRITING: Monty Monthly carousel (D-09) ──────────────────────────────
-   Horizontal scroll-snap track with arrows, dots, and subscribe card. */
-.mm-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  gap: 24px;
-  flex-wrap: wrap;
-}
-.mm-track {
-  display: flex;
-  gap: 22px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
-  margin-top: 40px;
-  padding-bottom: 10px;
-  scrollbar-width: none;
-}
-.mm-track::-webkit-scrollbar {
-  display: none;
-}
-.mm-card {
-  flex: 0 0 clamp(280px, 58%, 600px);
-  scroll-snap-align: center;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  overflow: hidden;
-  background: var(--color-bg);
-  display: grid;
-  grid-template-rows: auto 1fr;
-}
-.band-dark .mm-card {
-  background: var(--color-invert);
-}
-.mm-card .cover {
-  aspect-ratio: 16 / 8;
-  position: relative;
-}
-.mm-card .meta {
-  padding: 24px 26px 28px;
-}
-.mm-issue {
-  font-size: 12px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  font-weight: 600;
-  color: var(--color-text-dim);
-}
-.mm-title {
-  font-family: var(--font-display);
-  font-weight: var(--sig-weight);
-  font-size: clamp(1.3rem, 2.4vw, 1.9rem);
-  line-height: 1.12;
-  margin-top: 12px;
-}
-.mm-ex {
-  margin-top: 14px;
-  font-size: 15px;
-  line-height: 1.6;
-  color: var(--color-text-dim);
-  max-width: 46ch;
-}
-.mm-read {
-  margin-top: 20px;
-  display: inline-block;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--color-text);
-  border-bottom: 2px solid var(--color-text);
-  padding-bottom: 3px;
-  text-decoration: none;
-}
-/* Subscribe card (last snap item) — vermilion background */
-.mm-sub {
-  flex: 0 0 clamp(280px, 46%, 460px);
-  scroll-snap-align: center;
-  border-radius: var(--radius-md);
-  background: var(--color-invert);
-  color: #fff;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 40px 36px;
-}
-.mm-sub h3 {
-  font-family: var(--font-display);
-  font-weight: var(--sig-weight);
-  font-size: clamp(1.5rem, 2.6vw, 2.1rem);
-  line-height: 1.1;
-}
-.mm-sub p {
-  margin-top: 14px;
-  font-size: 15px;
-  line-height: 1.6;
-  opacity: 0.92;
-  max-width: 34ch;
-}
-.mm-sub .btn {
-  margin-top: 24px;
-  align-self: flex-start;
-  background: #fff;
-  color: var(--color-text);
-  font-weight: 600;
-  font-size: 13px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  border: none;
-  border-radius: 0;
-  padding: 14px 24px;
-  cursor: pointer;
-  text-decoration: none;
-  display: inline-block;
-}
-.mm-ctrls {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  margin-top: 26px;
-}
-.mm-btn {
-  width: 44px;
-  height: 44px;
-  border-radius: 0;
-  border: 1px solid var(--color-border-strong);
-  background: transparent;
-  color: var(--color-text);
-  cursor: pointer;
-  font-size: 18px;
-  transition: all 0.18s;
-}
-.mm-btn:hover {
-  background: var(--color-invert);
-  border-color: var(--color-invert);
-  color: #fff;
-}
-.mm-dots {
-  display: flex;
-  gap: 7px;
-  margin-left: 6px;
-}
-.mm-dots span {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--color-border-strong);
-  transition: all 0.2s;
-}
-.mm-dots span.on {
-  background: var(--color-invert);
-  width: 22px;
-  border-radius: 5px;
 }
 
 /* ── Sticky mini-nav (D-10) — appears past hero fold (z-index:9000).
@@ -1083,30 +833,6 @@ li:last-child > .nav-cell {
   opacity: 1;
   transform: none;
 }
-.slide {
-  opacity: 0;
-  transform: translateX(var(--sx, -72px));
-  transition: opacity 0.95s var(--ease-out), transform 0.95s var(--ease-out);
-}
-.slide.from-right {
-  --sx: 72px;
-}
-.slide.in {
-  opacity: 1;
-  transform: translateX(0);
-}
-/* Hard offset solid shape settles in when slide completes (D-07). Uses
-   --color-text so it auto-inverts: ink offset on light bands, paper offset
-   on dark bands — always a visible solid block, never a soft gradient. */
-.shadowed .photo,
-.shadowed .title-card {
-  box-shadow: 0 0 0 var(--color-text);
-  transition: box-shadow 0.9s var(--ease-out) 0.12s;
-}
-.shadowed.in .photo,
-.shadowed.in .title-card {
-  box-shadow: 16px 16px 0 var(--color-text);
-}
 
 /* ── REDUCED-MOTION GUARDS (D-08) ─────────────────────────────────────────
    Both a body.no-motion escape hatch (JS-togglable) and a media query.
@@ -1177,14 +903,8 @@ footer.site {
 
 /* ── Responsive overrides ── */
 @media (max-width: 860px) {
-  .hero         { grid-template-columns: 1fr; }
-  .beat-grid    { grid-template-columns: 1fr; gap: 20px; }
-  .work-grid    { grid-template-columns: 1fr; }
   .stickynav ul { display: none; }
   .foot-grid    { grid-template-columns: 1fr; gap: 26px; }
-  /* Show the Prometheus screenshot near-full (16/10 source) so its text stays
-     legible on phones instead of collapsing to a thin band. */
-  .prometheus-shot .photo { aspect-ratio: 16 / 10; }
 }
 
 /* ── Things-I-love pinboard (sketch 012) ─────────────────────────────────────
