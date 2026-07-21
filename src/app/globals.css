@@ -1,35 +1,26 @@
 @import "tailwindcss";
 
 @theme inline {
-  /* Ink & Vermilion palette — v3 single fixed theme (no dark mode)
-     near-white paper field · near-black ink · vermilion accent.
-     Replaces Pumpkin Amber (rejected 2026-07-03); accent upgraded
-     from cobalt to vermilion for photo-forward restyle (D-01, 2026-07-04). */
-  --color-bg:             #faf9f7;             /* Near-white paper — main background */
-  --color-bg-2:           #f0f1f3;             /* Subtle cool-gray — alternate section bands */
-  --color-surface:        #17171a;             /* Near-black — dark panels / cards / photo frames */
+  /* Mono palette — v4 single fixed theme (no dark mode)
+     pure white ground · pure black ink · zero accent.
+     Retires Ink & Vermilion (2026-07-21); contrast comes from inversion
+     (a solid black block on white) and type weight, never hue (D-01). */
+  --color-bg:             #ffffff;             /* White — main background */
+  --color-surface:        #ffffff;             /* White — cards / photo frames (dark-panel role moved to --color-invert, D-08) */
   --color-surface-2:      #ffffff;             /* White — light cards / inverse panels */
-  --color-border:         rgba(23,23,23,0.15);
-  --color-border-strong:  rgba(23,23,23,0.32);
+  --color-border:         rgba(0,0,0,0.14);
+  --color-border-strong:  rgba(0,0,0,0.32);
 
-  /* Ink — near-black on paper + near-white for text on dark surfaces */
-  --color-text:           #171717;             /* Near-black ink — display + body on paper */
-  --color-text-dim:       rgba(23,23,23,0.72);
-  --color-text-muted:     rgba(23,23,23,0.60); /* 0.60 for WCAG contrast (A11y 18-02) */
-  --color-text-inverse:   #f7f5f0;             /* Near-white — text on dark surfaces */
+  /* Ink — pure black on white + pure white for text on the invert block */
+  --color-text:           #000000;             /* Black ink — display + body on paper */
+  --color-text-dim:       rgba(0,0,0,0.66);
+  --color-text-muted:     rgba(0,0,0,0.60);    /* D-07: 0.60, not mono.css's 0.46 (fails WCAG AA) */
+  --color-text-inverse:   #ffffff;             /* White — text on the invert block */
 
-  /* Accent — vermilion, used for marker block, links, highlights */
-  --accent:               #e5411f;
-  --accent-hover:         #c8381a;
-  --accent-deep:          #a52d13;
-
-  /* --color-* aliases so Tailwind v4 emits accent utilities (text-accent,
-     bg-accent, border-accent, border-l-accent). The bare --accent token is not
-     in the --color-* namespace, so those utilities would otherwise generate
-     nothing (code review WR-01). */
-  --color-accent:         #e5411f;
-  --color-accent-hover:   #c8381a;
-  --color-accent-deep:    #a52d13;
+  /* Invert — the black-block ground that carries the site's emphasis language (D-05) */
+  --color-invert:            #000000;
+  --color-text-inverse-dim:  rgba(255,255,255,0.66);
+  --color-border-inverse:    rgba(255,255,255,0.20);
 
   /* v3 type scale (translated from prototype :root to @theme token names) */
   --text-xs:   0.72rem;
@@ -106,7 +97,7 @@ h1.sig .hl {
 /* Sig vars — declared outside @theme inline so they can reference tokens safely */
 :root {
   --sig:        var(--color-text);              /* near-black ink fill */
-  --sig-shadow: 0.055em 0.055em 0 var(--accent); /* hard vermilion lift (D-01) */
+  --sig-shadow: 0.055em 0.055em 0 var(--color-text); /* hard ink lift, not a fill (PATTERNS.md Part 3) */
 
   /* Back-compat aliases: pre-v3 token names still referenced by global
      surfaces (visit-survey popup, navigation, blog/*, about/timeline). The
@@ -118,8 +109,8 @@ h1.sig .hl {
   --text:   var(--color-text);
   --fg:     var(--color-text);
 
-  /* Warm cream behind the hero so the white headline card stands out (D-06). */
-  --hero-bg: #f4ecdd;
+  /* White behind the hero, pending Phase 21's hero removal (D-04 row 1). */
+  --hero-bg: #ffffff;
 }
 
 /* ── Marquee keyframe (used by Marquee component) ── */
