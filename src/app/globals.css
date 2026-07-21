@@ -1,35 +1,26 @@
 @import "tailwindcss";
 
 @theme inline {
-  /* Ink & Vermilion palette — v3 single fixed theme (no dark mode)
-     near-white paper field · near-black ink · vermilion accent.
-     Replaces Pumpkin Amber (rejected 2026-07-03); accent upgraded
-     from cobalt to vermilion for photo-forward restyle (D-01, 2026-07-04). */
-  --color-bg:             #faf9f7;             /* Near-white paper — main background */
-  --color-bg-2:           #f0f1f3;             /* Subtle cool-gray — alternate section bands */
-  --color-surface:        #17171a;             /* Near-black — dark panels / cards / photo frames */
+  /* Mono palette — v4 single fixed theme (no dark mode)
+     pure white ground · pure black ink · zero accent.
+     Retires Ink & Vermilion (2026-07-21); contrast comes from inversion
+     (a solid black block on white) and type weight, never hue (D-01). */
+  --color-bg:             #ffffff;             /* White — main background */
+  --color-surface:        #ffffff;             /* White — cards / photo frames (dark-panel role moved to --color-invert, D-08) */
   --color-surface-2:      #ffffff;             /* White — light cards / inverse panels */
-  --color-border:         rgba(23,23,23,0.15);
-  --color-border-strong:  rgba(23,23,23,0.32);
+  --color-border:         rgba(0,0,0,0.14);
+  --color-border-strong:  rgba(0,0,0,0.32);
 
-  /* Ink — near-black on paper + near-white for text on dark surfaces */
-  --color-text:           #171717;             /* Near-black ink — display + body on paper */
-  --color-text-dim:       rgba(23,23,23,0.72);
-  --color-text-muted:     rgba(23,23,23,0.60); /* 0.60 for WCAG contrast (A11y 18-02) */
-  --color-text-inverse:   #f7f5f0;             /* Near-white — text on dark surfaces */
+  /* Ink — pure black on white + pure white for text on the invert block */
+  --color-text:           #000000;             /* Black ink — display + body on paper */
+  --color-text-dim:       rgba(0,0,0,0.66);
+  --color-text-muted:     rgba(0,0,0,0.60);    /* D-07: 0.60, not mono.css's 0.46 (fails WCAG AA) */
+  --color-text-inverse:   #ffffff;             /* White — text on the invert block */
 
-  /* Accent — vermilion, used for marker block, links, highlights */
-  --accent:               #e5411f;
-  --accent-hover:         #c8381a;
-  --accent-deep:          #a52d13;
-
-  /* --color-* aliases so Tailwind v4 emits accent utilities (text-accent,
-     bg-accent, border-accent, border-l-accent). The bare --accent token is not
-     in the --color-* namespace, so those utilities would otherwise generate
-     nothing (code review WR-01). */
-  --color-accent:         #e5411f;
-  --color-accent-hover:   #c8381a;
-  --color-accent-deep:    #a52d13;
+  /* Invert — the black-block ground that carries the site's emphasis language (D-05) */
+  --color-invert:            #000000;
+  --color-text-inverse-dim:  rgba(255,255,255,0.66);
+  --color-border-inverse:    rgba(255,255,255,0.20);
 
   /* v3 type scale (translated from prototype :root to @theme token names) */
   --text-xs:   0.72rem;
@@ -65,6 +56,14 @@ a {
   color: inherit;
   text-decoration: none;
   text-underline-offset: 3px;
+}
+
+/* D-10: one unified focus ring, site-wide. Never the same visual state as a
+   hover inversion (an inverted black block + a black ring would be
+   indistinguishable), so this must never be suppressed or overridden. */
+:focus-visible {
+  outline: 2px solid var(--color-invert);
+  outline-offset: 2px;
 }
 
 /* ── Signature display treatment ──
@@ -106,7 +105,7 @@ h1.sig .hl {
 /* Sig vars — declared outside @theme inline so they can reference tokens safely */
 :root {
   --sig:        var(--color-text);              /* near-black ink fill */
-  --sig-shadow: 0.055em 0.055em 0 var(--accent); /* hard vermilion lift (D-01) */
+  --sig-shadow: 0.055em 0.055em 0 var(--color-text); /* hard ink lift, not a fill (PATTERNS.md Part 3) */
 
   /* Back-compat aliases: pre-v3 token names still referenced by global
      surfaces (visit-survey popup, navigation, blog/*, about/timeline). The
@@ -118,8 +117,8 @@ h1.sig .hl {
   --text:   var(--color-text);
   --fg:     var(--color-text);
 
-  /* Warm cream behind the hero so the white headline card stands out (D-06). */
-  --hero-bg: #f4ecdd;
+  /* White behind the hero, pending Phase 21's hero removal (D-04 row 1). */
+  --hero-bg: #ffffff;
 }
 
 /* ── Marquee keyframe (used by Marquee component) ── */
@@ -328,10 +327,10 @@ h1.sig .hw {
 }
 /* Distinct solid placeholder tints so the ~6s crossfade reads before real imagery. */
 .pslide:nth-child(2) .img {
-  background: #ecdfd0; /* solid warm */
+  background: rgba(0,0,0,0.08);
 }
 .pslide:nth-child(3) .img {
-  background: #dbe2ee; /* solid cool */
+  background: rgba(0,0,0,0.08);
 }
 /* Stacked crossfade on a 21s loop (3 photos → ~7s each): each portrait spawns in
    over ~1.9s (smooth, eased), holds ~5s, then eases out over ~1.5s to reveal the
@@ -558,16 +557,18 @@ p.body {
   color: var(--accent);
 }
 
-/* Prometheus headline link: reads as part of the heading, warms to the
-   vermilion accent as the cursor approaches / hovers. Links to prometheus.today. */
+/* Prometheus headline link: reads as part of the heading; hover reveals a
+   1px underline (Tier 2, D-09). Links to prometheus.today. Keyboard focus
+   is intentionally NOT handled here -- it falls through to the global
+   :focus-visible ring (D-10) instead of only getting a text change. */
 .prometheus-link {
   color: inherit;
   text-decoration: none;
   transition: color 0.18s ease;
 }
-.prometheus-link:hover,
-.prometheus-link:focus-visible {
-  color: var(--accent);
+.prometheus-link:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 /* Prometheus site screenshot (Building band): wide cropped band on desktop,
@@ -597,25 +598,25 @@ p.body {
   justify-content: space-between;
   gap: 14px;
   padding: clamp(16px, 2vw, 24px);
-  background: #faf9f7;
-  color: #171717;
+  background: #ffffff;
+  color: #000000;
   border: 1px solid var(--color-border);
   border-radius: 0;
 }
 
 /* Ink field variant: dark background, near-white text. */
 .title-card--ink {
-  background: #17171a;
-  color: #faf9f7;
+  background: var(--color-invert);
+  color: var(--color-text-inverse);
 }
 
-/* Mono kicker chip on vermilion accent -- DNA from .marker. */
+/* Mono kicker chip on the invert block -- DNA from .marker. */
 .title-card-kicker {
   font-family: var(--font-mono);
   font-size: 11px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  background: #e5411f;
+  background: var(--color-invert);
   color: #ffffff;
   padding: 5px 9px;
   align-self: flex-start;
@@ -669,10 +670,10 @@ p.body {
 .card-grid > a:hover .emoji-badge .glyph {
   transform: scale(1.09) rotate(-3deg);
 }
-.emoji-badge--ink       { background: #17171a; }
-.emoji-badge--cream     { background: #f4ecdd; }
-.emoji-badge--vermilion { background: var(--accent); }
-.emoji-badge--gray      { background: #dbe2ee; }
+.emoji-badge--ink    { background: var(--color-invert); }
+.emoji-badge--cream  { background: rgba(0,0,0,0.08); }
+.emoji-badge--invert { background: var(--color-invert); }
+.emoji-badge--gray   { background: rgba(0,0,0,0.08); }
 
 /* ── Vermilion / ink full-bleed subpage hero band (D-01 restyle) ───────────
    Replaces the pale white-card-on-paper hero with a high-contrast solid band.
@@ -701,7 +702,7 @@ p.body {
   letter-spacing: -0.03em;
   font-size: clamp(2.8rem, 11vw, 8rem);
   color: #fff;
-  text-shadow: 8px 8px 0 #17171a; /* hard ink offset on vermilion (brutalist) */
+  text-shadow: 8px 8px 0 var(--color-text); /* hard ink offset (brutalist) */
 }
 .hero-band-sub {
   margin-top: clamp(20px, 3vh, 28px);
@@ -1004,9 +1005,6 @@ p.body {
 .nav-cell:focus-visible > span {
   color: var(--color-bg);
 }
-.nav-cell:focus-visible {
-  outline: none;
-}
 /* Close the segmented strip with a divider on its right edge. */
 li:last-child > .nav-cell {
   border-right: 1px solid var(--color-text);
@@ -1282,18 +1280,18 @@ footer.site {
   background: var(--color-bg);
   box-shadow: 7px 7px 0 var(--color-text);
   transition: box-shadow 0.12s ease, outline-color 0.12s ease;
-  outline: 0 solid var(--accent);
+  outline: 0 solid var(--color-invert);
 }
 .pb-card:hover .pb-frame {
   box-shadow: 10px 10px 0 var(--color-text);
-  outline: 3px solid var(--accent);
-  outline-offset: 3px;
+  outline: 2px solid var(--color-invert);
+  outline-offset: 2px;
 }
 .pb-card.is-dragging .pb-frame { box-shadow: 16px 18px 0 rgba(23, 23, 23, 0.32); }
-.pb-frame--cream { background: #f4ecdd; }
+.pb-frame--cream { background: #ffffff; }
 
 /* media / thumbnail area */
-.pb-media { position: relative; display: block; overflow: hidden; background: #a49e93; }
+.pb-media { position: relative; display: block; overflow: hidden; background: rgba(0,0,0,0.08); }
 .pb-img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .pb-swatch { display: block; width: 100%; height: 100%; }
 .pb-tag {
@@ -1482,8 +1480,8 @@ body.no-motion .pb-frame { transition: none; }
 .pb-card.pb-dim .pb-frame { opacity: 0.32; filter: grayscale(0.25); }
 .pb-card.pb-peek .pb-frame {
   box-shadow: 11px 11px 0 var(--color-text);
-  outline: 3px solid var(--accent);
-  outline-offset: 3px;
+  outline: 2px solid var(--color-invert);
+  outline-offset: 2px;
 }
 .pb-card.pb-drawn { z-index: 500 !important; }
 .pb-card.pb-drawn .pb-frame { box-shadow: 12px 12px 0 var(--accent); }
