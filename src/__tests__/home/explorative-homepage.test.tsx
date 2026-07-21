@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, afterEach } from "vitest";
-import { render, cleanup } from "@testing-library/react";
+import { render, screen, cleanup } from "@testing-library/react";
 import React from "react";
 
 // Mock motion/react — no real animation in test env
@@ -26,15 +26,25 @@ vi.mock("@/components/home/scroll-reveals", () => ({
   },
 }));
 
-// Mock all section components — not under test here
+// Mock all section components — not under test here. Building/Writing mocks
+// render an element bearing their real self-wrapping id, mirroring how the
+// actual components self-wrap (Plans 21-02/21-03).
 vi.mock("@/components/home/section-building", () => ({
   SectionBuilding: function SectionBuildingMock() {
-    return React.createElement("span", null, "Building content");
+    return React.createElement(
+      "section",
+      { id: "building", "data-testid": "section-building" },
+      "Building content"
+    );
   },
 }));
-vi.mock("@/components/home/section-work", () => ({
-  SectionWork: function SectionWorkMock() {
-    return React.createElement("span", null, "Work content");
+vi.mock("@/components/home/section-writing", () => ({
+  SectionWriting: function SectionWritingMock() {
+    return React.createElement(
+      "section",
+      { id: "writing", "data-testid": "section-writing" },
+      "Writing content"
+    );
   },
 }));
 vi.mock("@/components/home/section-loves", () => ({
@@ -42,13 +52,8 @@ vi.mock("@/components/home/section-loves", () => ({
     return React.createElement("span", null, "Loves content");
   },
 }));
-vi.mock("@/components/home/section-newsletter", () => ({
-  SectionNewsletter: function SectionNewsletterMock() {
-    return React.createElement("span", null, "Newsletter content");
-  },
-}));
 
-describe("ExplorativeHomepage orchestrator (17.4 band structure)", () => {
+describe("ExplorativeHomepage orchestrator (21-05 rebuilt band structure)", () => {
   afterEach(() => {
     cleanup();
     vi.restoreAllMocks();
@@ -70,43 +75,43 @@ describe("ExplorativeHomepage orchestrator (17.4 band structure)", () => {
     expect(getByTestId("scroll-reveals")).toBeTruthy();
   });
 
-  it("band id=building is present on a dark band", async () => {
+  it("HP-04: zero band-dark classes anywhere in the rendered tree", async () => {
     const { ExplorativeHomepage } = await import(
       "@/components/home/explorative-homepage"
     );
     const { container } = render(React.createElement(ExplorativeHomepage));
-    const el = container.querySelector("#building");
-    expect(el).toBeTruthy();
-    expect(el?.className).toContain("band-dark");
+    expect(container.querySelectorAll('[class*="band-dark"]').length).toBe(0);
   });
 
-  it("band id=work is present on a light band (no band-dark)", async () => {
+  it("id=loves exists in the DOM (footer /#loves fragment link contract)", async () => {
     const { ExplorativeHomepage } = await import(
       "@/components/home/explorative-homepage"
     );
     const { container } = render(React.createElement(ExplorativeHomepage));
-    const el = container.querySelector("#work");
-    expect(el).toBeTruthy();
-    expect(el?.className).not.toContain("band-dark");
+    expect(container.querySelector("#loves")).toBeTruthy();
   });
 
-  it("band id=loves is present on a light band (no band-dark)", async () => {
+  it("id=building exists in the DOM", async () => {
     const { ExplorativeHomepage } = await import(
       "@/components/home/explorative-homepage"
     );
     const { container } = render(React.createElement(ExplorativeHomepage));
-    const el = container.querySelector("#loves");
-    expect(el).toBeTruthy();
-    expect(el?.className).not.toContain("band-dark");
+    expect(container.querySelector("#building")).toBeTruthy();
   });
 
-  it("band id=writing is present on a dark band", async () => {
+  it("id=writing exists in the DOM", async () => {
     const { ExplorativeHomepage } = await import(
       "@/components/home/explorative-homepage"
     );
     const { container } = render(React.createElement(ExplorativeHomepage));
-    const el = container.querySelector("#writing");
-    expect(el).toBeTruthy();
-    expect(el?.className).toContain("band-dark");
+    expect(container.querySelector("#writing")).toBeTruthy();
+  });
+
+  it("HP-05: no subscribe CTA anywhere in the rendered tree", async () => {
+    const { ExplorativeHomepage } = await import(
+      "@/components/home/explorative-homepage"
+    );
+    render(React.createElement(ExplorativeHomepage));
+    expect(screen.queryByText(/subscribe/i)).toBeNull();
   });
 });
