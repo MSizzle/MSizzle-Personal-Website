@@ -1,8 +1,8 @@
 ---
 phase: 21
 slug: mono-homepage-rebuild
-status: draft
-nyquist_compliant: false
+status: approved
+nyquist_compliant: true
 wave_0_complete: false
 created: 2026-07-21
 ---
@@ -99,11 +99,14 @@ Framework install: not needed — Vitest, Testing Library, and jsdom are already
 
 ## Validation Sign-Off
 
-- [ ] All tasks have `<automated>` verify or Wave 0 dependencies
-- [ ] Sampling continuity: no 3 consecutive tasks without automated verify
-- [ ] Wave 0 covers all ❌ MISSING references above
-- [ ] No watch-mode flags (`npx vitest run`, never bare `npx vitest`)
-- [ ] Feedback latency < 10s
-- [ ] `nyquist_compliant: true` set in frontmatter
+- [x] All tasks have `<automated>` verify or Wave 0 dependencies
+- [x] Sampling continuity: no 3 consecutive tasks without automated verify
+- [x] Wave 0 covers all ❌ MISSING references above — the planner embedded them task-level via `tdd="true"` alongside each component rebuild rather than as a separate wave; `gsd-plan-checker` confirmed all six are present and correctly ordered
+- [x] No watch-mode flags (`npx vitest run`, never bare `npx vitest`)
+- [x] Feedback latency < 10s (~6s measured full suite)
+- [x] `nyquist_compliant: true` set in frontmatter
 
-**Approval:** pending
+`wave_0_complete` stays `false` until the Wave-0 test files actually exist on disk — that is an
+execution-time flip, not a planning-time one.
+
+**Approval:** approved 2026-07-21 (gsd-plan-checker, Nyquist checks 8a-8e all green)

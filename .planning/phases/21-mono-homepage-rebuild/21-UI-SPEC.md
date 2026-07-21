@@ -46,13 +46,13 @@ safe to retire without touching interior routes.
 | File | Fate | Notes |
 |------|------|-------|
 | `src/app/page.tsx` | Modified | Keep async Notion/RSS fetches (`getFeaturedProjects`, `fetchMontyMonthlyIssues`, `getLovesData`); also fetch `getPublishedPosts` (or reuse existing writing-page pattern) for the terminal Writing band. All fetches stay defensive (`try/catch` → `[]`), matching existing convention. |
-| `src/components/home/explorative-homepage.tsx` | Rebuilt | New band order: Hero → `01 — Building` (Swiss index) → `02 — Writing` (terminal) → `03 — Things I Love` (pinboard, unchanged). Delete every `band-dark` class. Delete `<StickyNav />`'s reliance on any CTA (none currently wired — see sticky-nav.tsx row below). |
+| `src/components/home/explorative-homepage.tsx` | Rebuilt | New band order: Hero → `01 · Building` (Swiss index) → `02 · Writing` (terminal) → `03 · Things I Love` (pinboard, unchanged). Delete every `band-dark` class. Delete `<StickyNav />`'s reliance on any CTA (none currently wired — see sticky-nav.tsx row below). |
 | `src/components/home/hero.tsx` | Rebuilt | Type-only Swiss hero (see Hero contract below). No `Photo` import, no `.hero-ticker`, no `.statustag`. |
-| `src/components/home/section-building.tsx` | Rebuilt | Becomes the Swiss numbered-index row renderer for `01 — Building` (absorbs `section-work.tsx`'s data role — see Building Index contract). Filename kept for continuity; content fully replaced. |
+| `src/components/home/section-building.tsx` | Rebuilt | Becomes the Swiss numbered-index row renderer for `01 · Building` (absorbs `section-work.tsx`'s data role — see Building Index contract). Filename kept for continuity; content fully replaced. |
 | `src/components/home/section-work.tsx` | **Deleted** | Its Notion Featured Projects data-fetch role is absorbed into the rebuilt `section-building.tsx` row list. The 2×2 `TitleCard` work-grid and its `/building` "SELECTED" link affordance do not survive on the homepage (the row itself is the link; `/building` stays reachable via primary nav + footer, unchanged route). |
 | `src/components/home/section-newsletter.tsx` | **Deleted** | The mid-page CTA band is the thing HP-05 demotes. Monty Monthly's homepage presence becomes: (a) one informational line in the hero meta row ("Writes → Monty Monthly", no button), and (b) the existing footer "Monty Monthly" text link in `site-footer.tsx` (already shipped, unchanged). |
 | `src/components/home/monty-monthly-carousel.tsx` | **Deleted** | Sole consumer was `section-newsletter.tsx`. Not imported by `/writing` (that page uses the separate `@/components/v3/newsletter-carousel`, out of scope). |
-| `src/components/home/section-loves.tsx` | Modified | Keep the `Pinboard` render call and the Notion-empty `PhotoMarquee` fallback exactly as-is (pinboard is the Phase 22 fence). Replace the `RailBox` header with the plain mono `.lbl` section-label pattern (`03 — Things I Love`) to match the Building/Writing sections and HP-04's "no bold boxes" continuous-ground requirement. |
+| `src/components/home/section-loves.tsx` | Modified | Keep the `Pinboard` render call and the Notion-empty `PhotoMarquee` fallback exactly as-is (pinboard is the Phase 22 fence). Replace the `RailBox` header with the plain mono `.lbl` section-label pattern (`03 · Things I Love`) to match the Building/Writing sections and HP-04's "no bold boxes" continuous-ground requirement. |
 | `src/components/home/photo.tsx` | Modified | Remove the `breathe` prop and `.kenburns` class usage (MS-01). Component keeps plain `next/image`-fill rendering for its one remaining consumer. |
 | `src/components/home/photo-marquee.tsx` | Modified | Remove the sliding `.marquee .track` animation (MS-01/02) — renders as a static row. Component **stays** as the Notion-empty fallback inside `section-loves.tsx`; full retirement of the fallback concept is Phase 23 (SW-03), not this phase. |
 | `src/components/home/scroll-reveals.tsx` | Modified | Selector narrows from `.reveal, .slide, .shadowed` to `.reveal` only. Retune `IntersectionObserver` `threshold`/`rootMargin` to the sketch's values (see Motion Contract). |
@@ -100,7 +100,7 @@ D-05); this phase maps sketch roles onto the tokens that actually exist in the r
 
 | Token | rem | px (at 16px root) | Role in this phase |
 |-------|-----|---------------------|---------------------|
-| `--text-xs` | 0.72rem | 11.52px | Mono labels (`01 — Building`), row numerals (`001`), terminal dates/read-time, footer-style meta |
+| `--text-xs` | 0.72rem | 11.52px | Mono labels (`01 · Building`), row numerals (`001`), terminal dates/read-time, footer-style meta |
 | `--text-sm` | 0.85rem | 13.6px | Row descriptions (`.dsc`), terminal post titles, hero meta values |
 | `--text-base` | 1rem | 16px | Hero subtitle body copy |
 | `--text-lg` | 1.2rem | 19.2px | (unused this phase — reserved) |
@@ -180,9 +180,9 @@ rejected — this is the entire point of the v4 lock.
 | Hero H1 | `I build things and write about it.` (sketch's exact copy — real, not a placeholder) |
 | Hero subtitle | `Right now that mostly means Prometheus, an AI integrations and education company. Everything else here is the residue: past projects, monthly essays, and a running list of things I like.` (sketch's exact copy) |
 | Hero meta row | Three labeled values: `Currently` → `Building Prometheus`; `Writes` → `Monty Monthly`; `Elsewhere` → real links to X / LinkedIn / Email (pull real URLs from `site-footer.tsx`'s `ELSEWHERE` array rather than re-typing new ones) |
-| Building section label | `01 — Building` |
-| Writing section label | `02 — Writing` |
-| Things I Love section label | `03 — Things I Love` |
+| Building section label | `01 · Building` |
+| Writing section label | `02 · Writing` |
+| Things I Love section label | `03 · Things I Love` |
 | Terminal header | `~/writing` (literal, HP-03) |
 | Empty state — Building | Cannot be empty: row `001` is always the hardcoded Prometheus row; if Notion Featured Projects returns `[]`, the index simply has one row. No empty-state copy needed. |
 | Empty state — Writing | `Nothing here yet. Check back soon.` **[Implementer Discretion — default]**, styled in the terminal mono register under the `~/writing` header (matches the existing site tone: `/writing`'s own empty state is `"No essays yet. Check back soon."`, `/building`'s is `"No projects yet. Check back soon."` — this phase's copy is the same pattern, terminal-cased) |
@@ -191,9 +191,14 @@ rejected — this is the entire point of the v4 lock.
 | "More" link (terminal band) | `all posts →` (sketch's exact copy), links to `/writing` |
 
 **Copy rules carried forward (CLAUDE.md / MEMORY.md):** no em dashes anywhere in the
-new copy above (all rewritten with colon/comma/parens where the sketch itself needed
-one — checked, sketch's variant-E copy is already em-dash-free). No location. Sole
-professional identity: Founder of Prometheus.
+new copy above. **Corrected 2026-07-21 (plan-checker Blocker 1):** the three section
+labels originally shipped in this spec as `01 — Building` / `02 — Writing` /
+`03 — Things I Love`, which violated the rule. They now use the middot separator
+(`01 · Building`, `02 · Writing`, `03 · Things I Love`), matching the ` · ` convention
+already used for the hero's Elsewhere links and the spec's own sanctioned glyph
+vocabulary (`→`, `↗`, `·`, `_`). Anywhere else the sketch's copy needed a break, use a
+colon, comma, or parentheses. No location. Sole professional identity: Founder of
+Prometheus.
 
 ---
 
@@ -297,7 +302,7 @@ it read as a log rather than a pitch).
   rule is the entire "frame."**
 - **No box, no 2px border around the block.** Revision 2 explicitly removed the
   frame — it read as a widget bolted onto the page. The block sits directly on the
-  paper like every other section, exactly like `01 — Building`.
+  paper like every other section, exactly like `01 · Building`.
 - Each post row (`.e-post`): grid `104px 1fr 92px` (date / title / read-time), `gap-4`
   (16px), `align-items: baseline`, `padding: 5px 8px`, `margin: 0 -8px` (so the hover
   bleed matches the row's own negative-margin trick, keeping content visually
@@ -358,7 +363,7 @@ it read as a log rather than a pitch).
   `border-top: 1px solid var(--color-border)` hairline between adjacent `.band`
   elements (the existing `.band + .band` rule already does this — keep it), (2)
   generous whitespace (`py-24`–`py-32` desktop between major sections), (3) the
-  section-label mono tag (`01 — Building` / `02 — Writing` / `03 — Things I Love`)
+  section-label mono tag (`01 · Building` / `02 · Writing` / `03 · Things I Love`)
   as the sole visual "here's a new section" signal. No fill-color band boundary
   anywhere.
 - Hard corners (`radius: 0`) and the no-gradients rule hold throughout — nothing
@@ -505,8 +510,8 @@ accessibility work is entirely about **state visibility without color**.
    `<a>` spanning the row's full padded height (`py-8` / `padding: 5px 8px`
    respectively) — both exceed the 44px minimum once title-line-height is
    accounted for; verify at 375px per the Responsive Contract's test requirement.
-5. **Semantic structure.** Section labels (`01 — Building`, `02 — Writing`,
-   `03 — Things I Love`) should be real headings (`<h2>` or a labelled `<section
+5. **Semantic structure.** Section labels (`01 · Building`, `02 · Writing`,
+   `03 · Things I Love`) should be real headings (`<h2>` or a labelled `<section
    aria-label="...">`) even though they're styled as small mono tags — do not drop
    to a bare `<span>` with no heading semantics, since these are the page's only
    section landmarks post-rebuild (no `RailBox`, no dark-band visual break to lean
