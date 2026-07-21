@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v4.0
 milestone_name: Mono Restyle
-status: executing
-stopped_at: Completed 21-05-PLAN.md
-last_updated: "2026-07-21T08:08:27.936Z"
+status: verifying
+stopped_at: Completed 21-06-PLAN.md - Phase 21 (mono-homepage-rebuild) complete
+last_updated: "2026-07-21T08:17:03.328Z"
 last_activity: 2026-07-21
 progress:
   total_phases: 6
-  completed_phases: 1
+  completed_phases: 2
   total_plans: 11
-  completed_plans: 10
-  percent: 17
+  completed_plans: 11
+  percent: 33
 ---
 
 # Project State
@@ -21,23 +21,23 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-20)
 
 **Core value:** A personal site that feels alive and memorable, *and* legible — not another template blog.
-**Current focus:** Phase 21 — mono-homepage-rebuild
+**Current focus:** Phase 22 — things-i-love-in-mono (Phase 21 complete)
 
 ## Current Position
 
-Phase: 21 (mono-homepage-rebuild) — EXECUTING
-Plan: 6 of 6
-Status: Ready to execute
+Phase: 21 (mono-homepage-rebuild) — COMPLETE
+Plan: 6 of 6 (all 6 plans executed and summarized)
+Status: Phase complete — ready for verification
 Last activity: 2026-07-21
 
-Progress: [█████████░] 91%
+Progress: [███░░░░░░░] 33% (2/6 v4.0 phases complete)
 
 ## v4.0 Phase Status
 
 | Phase | Status | Started | Completed |
 |-------|--------|---------|-----------|
 | 20 — Mono Token Foundation | complete | 2026-07-21 | 2026-07-21 |
-| 21 — Mono Homepage Rebuild | not_started | — | — |
+| 21 — Mono Homepage Rebuild | complete | 2026-07-21 | 2026-07-21 |
 | 22 — Things I Love in Mono | not_started | — | — |
 | 23 — Site Sweep & Mono OG | not_started | — | — |
 | 24 — True Inversion Dark Mode | not_started | — | — |
@@ -55,7 +55,7 @@ this is just a bit about me") and the Vermilion/clay palette was rejected outrig
 pure black/white with **zero accent**, type-only hero, motion stripped to a single slow fade,
 terminal-format writing list, Things I Love pinboard kept but recolored.
 
-Next action: `/gsd-plan-phase 20` to decompose the mono token foundation.
+Next action: `/gsd-plan-phase 22` to decompose Things I Love in Mono.
 
 ## Accumulated Context
 
@@ -108,6 +108,23 @@ Next action: `/gsd-plan-phase 20` to decompose the mono token foundation.
   was accurate about the layout and is not a Phase 20 regression — his approval was for the
   color-token deliverable Phase 20 actually promised (MO-01/02/03/05, DQ-01).
 
+- **Phase 21 (mono-homepage-rebuild) closed 2026-07-21, 6/6 plans.** Homepage rebuilt to sketch 015
+  variant E: type-only hero, Swiss numbered Building index (`.a-row` family), terminal-format
+  Writing log (`.e-term`/`.e-post` family), one continuous `#ffffff` ground (every dark-band
+  component and the last subscribe-CTA surface deleted — HP-05), and motion stripped to a single
+  retuned `.reveal` opacity fade-up (700ms, 14px, `cubic-bezier(0.22, 0.61, 0.36, 1)`, threshold
+  0.05, rootMargin -8%) — every other ambient motion source (ken-burns, breathe, marquee slide,
+  pulsing status dot, band-dark slam) removed. `npx vitest run` = 191 passed, 16 todo, 1 failed
+  (the pre-existing `projects.test.tsx:188` failure, unrelated). `npx next build` clean.
+- **Plan 21-06's Task 2 human-verify checkpoint was auto-approved under AUTO_MODE, not by a real
+  browser walkthrough.** No Playwright/Puppeteer or other browser-automation tooling is installed
+  in this repo, so the three genuinely manual-only claims from `21-VALIDATION.md` — fade timing
+  reads as deliberate (not slow-loading), the Building/Writing/hero rows genuinely collapse (not
+  just fit) at 375px, and the finished page reads as an intentional mono system versus unstyled —
+  remain **unverified by a human eye**. Recommend closing this gap before or during Phase 25's QA
+  pass: open `/` on the `v4-mono` Vercel preview or `npm run dev`, walk all three checks, and
+  compare against `.planning/sketches/015-mono-passive-home/preview-a-swiss.png` / variant E.
+
 ### Open Risks
 
 - **DM-02 is the hardest requirement in the milestone.** The site uses inversion (black block on
@@ -115,7 +132,8 @@ Next action: `/gsd-plan-phase 20` to decompose the mono token foundation.
   nothing to invert against. Phase 24 must resolve this by design, not defer it.
 
 - **Sketch 015's own stated main risk:** does mono read as *cooler* or as *unfinished*? Vermilion
-  was doing real structural work; watch whether hairlines and mono labels carry that load.
+  was doing real structural work; watch whether hairlines and mono labels carry that load. **Still
+  unverified by a human eye as of Phase 21's close** — see the Plan 21-06 AUTO_MODE note above.
 
 ### Known Pre-Existing Test Failures (NOT v4.0 regressions)
 
@@ -183,8 +201,8 @@ Deferred from v4.0 requirements (Future Requirements):
 
 ## Session Continuity
 
-Last session: 2026-07-21T08:08:27.926Z
-Stopped at: Completed 21-05-PLAN.md
+Last session: 2026-07-21T08:17:03.318Z
+Stopped at: Completed 21-06-PLAN.md - Phase 21 (mono-homepage-rebuild) complete
 Resume file: None
 
 ---

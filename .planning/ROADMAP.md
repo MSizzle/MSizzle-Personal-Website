@@ -14,7 +14,7 @@
 **Milestone Goal:** Strip the site to pure black and white with zero accent, and rebuild the homepage as a quiet editorial index that reads "here's a bit about me" rather than a founder pitch. Design is locked by `.planning/sketches/015-mono-passive-home/` variant E — this milestone ports it, it does not explore it.
 
 - [x] **Phase 20: Mono Token Foundation** - Retheme `globals.css` to pure black/white with zero accent, kill every hardcoded survival, establish inversion as the emphasis language, on a branch with a live Vercel preview (completed 2026-07-21)
-- [ ] **Phase 21: Mono Homepage Rebuild** - Rebuild the homepage to sketch 015 variant E: type-only hero, Swiss numbered Building index, terminal writing log, one continuous ground, motion stripped to a single slow fade
+- [x] **Phase 21: Mono Homepage Rebuild** - Rebuild the homepage to sketch 015 variant E: type-only hero, Swiss numbered Building index, terminal writing log, one continuous ground, motion stripped to a single slow fade (completed 2026-07-21)
 - [ ] **Phase 22: Things I Love in Mono** - Recolor the pinboard to greyscale with a black note panel while preserving its shipped behaviour exactly, and prove reduced-motion across every surviving animation
 - [ ] **Phase 23: Site Sweep & Mono OG** - Carry mono to every interior route, neutralize Notion inline text colors, retire non-content photography, and regenerate all three OG images without `#e5411f`
 - [ ] **Phase 24: True Inversion Dark Mode** - Build light/dark theming from scratch (no `next-themes` today) so the whole site inverts cleanly and the inversion-based emphasis language still reads on a dark ground
@@ -95,7 +95,7 @@ Plans:
 
 **Wave 6** *(blocked on Wave 5 completion)*
 
-- [ ] 21-06-PLAN.md — Motion system retune (MS-02) + human sign-off checkpoint
+- [x] 21-06-PLAN.md — Motion system retune (MS-02) + human sign-off checkpoint
 
 **UI hint**: yes
 
@@ -173,7 +173,7 @@ Phases execute in numeric order: 20 -> 21 -> 22 -> 23 -> 24 -> 25
 | Phase | Milestone | Plans | Status | Completed |
 |-------|-----------|-------|--------|-----------|
 | 20. Mono Token Foundation | v4.0 | 5/5 | Complete   | 2026-07-21 |
-| 21. Mono Homepage Rebuild | v4.0 | 5/6 | In Progress|  |
+| 21. Mono Homepage Rebuild | v4.0 | 6/6 | Complete   | 2026-07-21 |
 | 22. Things I Love in Mono | v4.0 | 0/? | Not started | - |
 | 23. Site Sweep & Mono OG | v4.0 | 0/? | Not started | - |
 | 24. True Inversion Dark Mode | v4.0 | 0/? | Not started | - |
