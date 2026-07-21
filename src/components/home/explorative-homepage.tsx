@@ -58,7 +58,10 @@ export function ExplorativeHomepage({
 
       <SectionWriting posts={posts} montyIssues={montyIssues} />
 
-      <section className="band" id="loves">
+      {/* Extra top room: the Writing log ends in small mono type and the
+          pinboard opens with dense tiles, so the two need a wider gap than
+          the standard band rhythm to read as separate sections. */}
+      <section className="band pt-40 md:pt-64" id="loves">
         <SectionLoves items={loves} categoryOrder={loveCategories} />
       </section>
 

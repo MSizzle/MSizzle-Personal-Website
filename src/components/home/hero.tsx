@@ -1,11 +1,18 @@
 /* ── Hero: type-only Swiss hero (HP-01, MS-01) ───────────────────────────
-   Server Component: static render only, no client directives, no image
-   import. Renders a mono eyebrow, H1, subtitle, and a 3-cell meta row.
+   Server Component: static render only, no client directives. Renders a mono
+   eyebrow, H1, subtitle, and a 3-cell meta row.
    No photo, no marker-block highlight, no pulsing status dot, no link
    marquee — those are deleted outright, not paused or reduced-motion-gated.
 
+   The two brand marks in the meta row are a deliberate, Monty-approved
+   exception to the pure-mono lock: they render in their real brand colors.
+   HP-01's "no photograph in the hero" rule still holds — these are logos,
+   not photography.
+
    Consumed by the orchestrator (explorative-homepage.tsx) as the first band.
    ────────────────────────────────────────────────────────────────────────── */
+
+import Image from "next/image";
 
 export function Hero() {
   return (
@@ -30,12 +37,26 @@ export function Hero() {
             Currently
           </div>
           <div className="text-sm mt-2">Building Prometheus</div>
+          <Image
+            src="/logos/prometheus-mark.png"
+            alt="Prometheus"
+            width={28}
+            height={28}
+            className="mt-3 h-7 w-7"
+          />
         </div>
         <div>
           <div className="text-xs font-mono uppercase tracking-[0.12em] text-text-muted">
             Writes
           </div>
           <div className="text-sm mt-2">Monty Monthly</div>
+          <Image
+            src="/logos/monty-monthly.png"
+            alt="Monty Monthly"
+            width={28}
+            height={28}
+            className="mt-3 h-7 w-7"
+          />
         </div>
         <div>
           <div className="text-xs font-mono uppercase tracking-[0.12em] text-text-muted">

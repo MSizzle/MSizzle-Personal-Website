@@ -56,9 +56,30 @@ describe("Hero", () => {
     expect(email.getAttribute("target")).toBeNull();
   });
 
-  it("renders zero img/next-image nodes", () => {
+  it("renders no photography — only the two brand marks in the meta row", () => {
     const { container } = render(React.createElement(Hero));
-    expect(container.querySelectorAll("img").length).toBe(0);
+    const imgs = [...container.querySelectorAll("img")];
+
+    // HP-01 forbids a photograph in the hero. Brand logos are a deliberate,
+    // Monty-approved exception and render in their real colors.
+    // next/image rewrites src through /_next/image?url=<encoded>, so match on
+    // the encoded logo path rather than the raw one.
+    const allowed = [
+      "logos%2Fprometheus-mark.png",
+      "logos%2Fmonty-monthly.png",
+    ];
+    expect(imgs).toHaveLength(2);
+    imgs.forEach((img) => {
+      const src = img.getAttribute("src") ?? "";
+      expect(allowed.some((path) => src.includes(path))).toBe(true);
+    });
+
+    // No portrait/photo source may appear.
+    imgs.forEach((img) => {
+      expect(img.getAttribute("src")).not.toMatch(
+        /\/home\/|MSizzle-website-photos|\.jpe?g$/i
+      );
+    });
   });
 
   it("renders none of the deleted photo/motion classes", () => {

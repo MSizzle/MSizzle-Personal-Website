@@ -41,7 +41,7 @@ export function SectionBuilding({
       href: `/building/${project.slug}`,
       external: false,
     })),
-  ];
+  ].slice(0, 3);
 
   return (
     <section className="wrap a-sec" id="building">
@@ -63,6 +63,9 @@ export function SectionBuilding({
           <span className="status">{row.status}</span>
         </a>
       ))}
+      <a className="more reveal" href="/building">
+        all projects →
+      </a>
     </section>
   );
 }

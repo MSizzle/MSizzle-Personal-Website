@@ -30,7 +30,10 @@ describe("SectionBuilding (21-02 Swiss numbered index)", () => {
   it("with no projects prop, renders exactly one row: the hardcoded Prometheus row", () => {
     render(<SectionBuilding />);
 
-    const rows = screen.getAllByRole("link");
+    // Index rows only — the trailing "all projects" link is not a row.
+    const rows = screen.getAllByRole("link").filter((el) =>
+      el.classList.contains("a-row")
+    );
     expect(rows).toHaveLength(1);
 
     expect(screen.getByText("001")).toBeDefined();
@@ -70,7 +73,9 @@ describe("SectionBuilding (21-02 Swiss numbered index)", () => {
 
     render(<SectionBuilding projects={projects} />);
 
-    const rows = screen.getAllByRole("link");
+    const rows = screen.getAllByRole("link").filter((el) =>
+      el.classList.contains("a-row")
+    );
     expect(rows).toHaveLength(3);
 
     // Every numeral is exactly 3 digits, zero-padded.
@@ -107,6 +112,33 @@ describe("SectionBuilding (21-02 Swiss numbered index)", () => {
     nums.forEach((el) => {
       expect(el.textContent).toMatch(/^\d{3}$/);
     });
+  });
+
+  it("caps the index at three rows and offers a way through to the full list", () => {
+    const projects: Project[] = Array.from({ length: 8 }, (_, i) =>
+      makeProject({
+        id: `p${i}`,
+        slug: `project-${i}`,
+        title: `Project ${i}`,
+      })
+    );
+
+    render(<SectionBuilding projects={projects} />);
+
+    const rows = screen.getAllByRole("link").filter((el) =>
+      el.classList.contains("a-row")
+    );
+    expect(rows).toHaveLength(3);
+
+    // Prometheus plus the first two Notion projects; the rest are dropped.
+    expect(screen.getByText("Prometheus")).toBeDefined();
+    expect(screen.getByText("Project 0")).toBeDefined();
+    expect(screen.getByText("Project 1")).toBeDefined();
+    expect(screen.queryByText("Project 2")).toBeNull();
+    expect(screen.queryByText("004")).toBeNull();
+
+    const more = screen.getByText(/all projects/i);
+    expect(more.getAttribute("href")).toBe("/building");
   });
 
   it("does not render a 'This site' row", () => {
