@@ -107,6 +107,14 @@ None - no external service configuration required.
 - `var(--accent)`/`var(--color-accent)` still appears 36 times in `globals.css` (expected — Tier 1/2/3 call-site conversion is 20-02's job) and the ~17 `accent`-referencing component files under `src/` are entirely untouched (also 20-02's scope per D-02).
 - **Orchestrator action needed before 20-02 runs:** resolve the `v4-mono` branch question — either (a) create `v4-mono` from this worktree's commits and have subsequent plans commit there directly (per D-12/D-13's original intent), or (b) confirm the wave-based worktree-merge pattern is the intended substitute and document that supersession in `20-CONTEXT.md`. Left as an open item; not blocking this plan's own deliverable.
 
+## Self-Check: PASSED
+
+- FOUND: src/app/globals.css
+- FOUND: .planning/phases/20-mono-token-foundation/20-01-SUMMARY.md
+- FOUND: 239ea89 (Task 2 commit)
+- FOUND: fa6d2de (Task 3 commit)
+- FOUND: 6430bd9 (this SUMMARY commit)
+
 ---
 *Phase: 20-mono-token-foundation*
 *Completed: 2026-07-21*
