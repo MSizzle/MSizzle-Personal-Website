@@ -44,7 +44,7 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 20-02-PLAN.md — globals.css Tier 1/2/3 accent-to-mono call-site conversion (~35 sites)
+- [x] 20-02-PLAN.md — globals.css Tier 1/2/3 accent-to-mono call-site conversion (~35 sites)
 - [ ] 20-03-PLAN.md — src/components/v3/ shared-layer accent-to-mono conversion (9 files)
 - [ ] 20-04-PLAN.md — site-footer, timeline, and interior-route accent-to-mono conversion (6 files)
 
@@ -146,7 +146,7 @@ Phases execute in numeric order: 20 -> 21 -> 22 -> 23 -> 24 -> 25
 
 | Phase | Milestone | Plans | Status | Completed |
 |-------|-----------|-------|--------|-----------|
-| 20. Mono Token Foundation | v4.0 | 1/5 | In Progress|  |
+| 20. Mono Token Foundation | v4.0 | 2/5 | In Progress|  |
 | 21. Mono Homepage Rebuild | v4.0 | 0/? | Not started | - |
 | 22. Things I Love in Mono | v4.0 | 0/? | Not started | - |
 | 23. Site Sweep & Mono OG | v4.0 | 0/? | Not started | - |
