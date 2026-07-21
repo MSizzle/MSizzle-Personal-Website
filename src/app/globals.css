@@ -908,6 +908,100 @@ li:last-child > .nav-cell {
   max-width: 32ch;
 }
 
+/* ── PHASE 21: HOMEPAGE REBUILD — Swiss numbered index (HP-02) ──
+   .a-row is the Building band's row unit: numeral / title / description /
+   status on a hairline top-rule, with full-row hover/focus inversion as the
+   site's only hover language. Plan 21-03 reuses the identical invert
+   mechanism for Writing terminal rows (.e-post). */
+.a-sec {
+  padding: var(--space-32, 128px) 0 0;
+}
+.a-row {
+  display: grid;
+  grid-template-columns: 64px 1fr 200px 90px;
+  gap: 24px;
+  align-items: baseline;
+  padding: 32px 0;
+  border-top: 1px solid var(--color-border);
+  text-decoration: none;
+  position: relative;
+}
+.a-row:last-of-type {
+  border-bottom: 1px solid var(--color-border);
+}
+.a-row .num {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  letter-spacing: 0.12em;
+}
+.a-row .ttl {
+  font-size: var(--text-2xl);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+.a-row .dsc {
+  font-size: var(--text-sm);
+  color: var(--color-text-dim);
+  line-height: 1.5;
+}
+.a-row .status {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  text-align: right;
+}
+.a-row::before {
+  content: "";
+  position: absolute;
+  inset: 0 -20px;
+  background: var(--color-invert);
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 150ms ease;
+}
+@media (hover: hover) {
+  .a-row:hover::before {
+    opacity: 1;
+  }
+  .a-row:hover,
+  .a-row:hover .num,
+  .a-row:hover .dsc,
+  .a-row:hover .status {
+    color: var(--color-text-inverse);
+  }
+}
+.a-row:focus-visible::before {
+  opacity: 1;
+}
+.a-row:focus-visible,
+.a-row:focus-visible .num,
+.a-row:focus-visible .dsc,
+.a-row:focus-visible .status {
+  color: var(--color-text-inverse);
+}
+/* Scoped override of D-10's global outline (line 65): once the row inverts
+   to a solid black block, the hardcoded --color-invert ring would render
+   invisible black-on-black. currentColor tracks the row's own text color
+   (black at rest, white once inverted), so the ring stays visible in both
+   states. Scoped to .a-row only — Plan 21-03's .e-post gets its own
+   identical scoped override; D-10's global rule is untouched everywhere
+   else. */
+.a-row:focus-visible {
+  outline-color: currentColor;
+  outline-offset: 2px;
+}
+@media (max-width: 760px) {
+  .a-row {
+    grid-template-columns: 40px 1fr;
+  }
+  .a-row .dsc,
+  .a-row .status {
+    grid-column: 2;
+    text-align: left;
+  }
+}
+
 /* ── MOTION SYSTEM — scroll-triggered reveals + ambient animations (D-07) ── */
 .reveal {
   opacity: 0;
