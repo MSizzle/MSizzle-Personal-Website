@@ -319,19 +319,6 @@ section.beat {
   from { transform: translate(0, 0) scale(1); }
   to   { transform: translate(4vw, 4vh) scale(1.2); }
 }
-/* slide keyframe (marquee tracks — same as existing @keyframes scroll) */
-@keyframes slide {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
-}
-@keyframes kb {
-  from { transform: scale(1.03) translateY(0); }
-  to   { transform: scale(1.13) translateY(-2%); }
-}
-@keyframes breathe {
-  0%, 100% { transform: scale(1); }
-  50%       { transform: scale(1.03); }
-}
 
 /* ── Section headings and body copy ── */
 .beat h2 {
@@ -540,7 +527,6 @@ p.body {
 .marquee .track {
   display: flex;
   width: max-content;
-  animation: slide 30s linear infinite;
 }
 
 /* ── WRITING: Monty Monthly carousel (D-09) ──────────────────────────────
@@ -1121,29 +1107,18 @@ li:last-child > .nav-cell {
 .shadowed.in .title-card {
   box-shadow: 16px 16px 0 var(--color-text);
 }
-.kenburns {
-  animation: kb 22s ease-in-out infinite alternate;
-}
-.breathe {
-  animation: breathe 7s ease-in-out infinite;
-}
 
 /* ── REDUCED-MOTION GUARDS (D-08) ─────────────────────────────────────────
    Both a body.no-motion escape hatch (JS-togglable) and a media query.
-   Either path: reveal/slide are immediately visible, ambient keyframes stop,
-   settled shadow is applied statically. Static layout is always intact. */
+   Either path: reveal/slide are immediately visible, settled shadow is
+   applied statically. Static layout is always intact. (The ambient
+   keyframe-kill list that used to live here — kenburns/breathe/blob/pslide/
+   marquee .track/hero-ticker .track — was deleted in Plan 21-04 along with
+   the keyframes themselves: nothing left to guard.) */
 body.no-motion .reveal,
 body.no-motion .slide {
   opacity: 1 !important;
   transform: none !important;
-}
-body.no-motion .kenburns,
-body.no-motion .breathe,
-body.no-motion .blob,
-body.no-motion .pslide,
-body.no-motion .marquee .track,
-body.no-motion .hero-ticker .track {
-  animation: none !important;
 }
 body.no-motion .shadowed .photo,
 body.no-motion .shadowed .title-card {
@@ -1155,14 +1130,6 @@ body.no-motion .shadowed .title-card {
   .slide {
     opacity: 1 !important;
     transform: none !important;
-  }
-  .kenburns,
-  .breathe,
-  .blob,
-  .pslide,
-  .marquee .track,
-  .hero-ticker .track {
-    animation: none !important;
   }
   .shadowed .photo,
   .shadowed .title-card {
