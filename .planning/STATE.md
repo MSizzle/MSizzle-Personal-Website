@@ -2,10 +2,10 @@
 gsd_state_version: 1.0
 milestone: v4.0
 milestone_name: Mono Restyle
-status: verifying
-stopped_at: Phase 21 executed + Monty design revisions applied; verification still human_needed
-last_updated: "2026-07-21T15:30:00.000Z"
-last_activity: 2026-07-21
+status: in_progress
+stopped_at: Phase 21 closed (3 human UAT items passed); v4-mono merged to main
+last_updated: "2026-07-22T00:00:00.000Z"
+last_activity: 2026-07-22
 progress:
   total_phases: 6
   completed_phases: 2
@@ -21,15 +21,15 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-20)
 
 **Core value:** A personal site that feels alive and memorable, *and* legible — not another template blog.
-**Current focus:** Close out Phase 21 verification (3 human UAT items), then Phase 22
+**Current focus:** Phase 22 (Things I Love in Mono)
 
 ## Current Position
 
 Phase: 21 (mono-homepage-rebuild) — COMPLETE
 Plan: 6 of 6 (all 6 plans executed and summarized)
-Status: All 6 plans executed. Verifier returned `human_needed` — 3 perception items
-remain open in `21-HUMAN-UAT.md`. Phase is NOT closed until those are judged.
-Last activity: 2026-07-21
+Status: All 6 plans executed. All 3 human UAT items judged PASS by Monty on 2026-07-22
+against `npm run dev`. `21-HUMAN-UAT.md` is complete. Phase 21 is CLOSED.
+Last activity: 2026-07-22
 
 Progress: [███░░░░░░░] 33% (2/6 v4.0 phases complete)
 
@@ -56,8 +56,8 @@ this is just a bit about me") and the Vermilion/clay palette was rejected outrig
 pure black/white with **zero accent**, type-only hero, motion stripped to a single slow fade,
 terminal-format writing list, Things I Love pinboard kept but recolored.
 
-Next action: `/gsd-verify-work 21` — close the 3 human UAT items (fade timing, 375px
-collapse, mono-intent read). Phase 22 planning is blocked behind that.
+Next action: `/gsd-plan-phase 22` (Things I Love in Mono). Phase 21 verification is closed,
+so nothing blocks it.
 
 ## Accumulated Context
 
@@ -123,9 +123,9 @@ collapse, mono-intent read). Phase 22 planning is blocked behind that.
   in this repo, so the three genuinely manual-only claims from `21-VALIDATION.md` — fade timing
   reads as deliberate (not slow-loading), the Building/Writing/hero rows genuinely collapse (not
   just fit) at 375px, and the finished page reads as an intentional mono system versus unstyled —
-  remain **unverified by a human eye**. Recommend closing this gap before or during Phase 25's QA
-  pass: open `/` on the `v4-mono` Vercel preview or `npm run dev`, walk all three checks, and
-  compare against `.planning/sketches/015-mono-passive-home/preview-a-swiss.png` / variant E.
+  remained unverified by a human eye at execution time. **Gap closed 2026-07-22:** Monty walked all
+  three checks against `npm run dev` on localhost:3000 and judged each a pass. `21-HUMAN-UAT.md` is
+  now `status: complete`, 3/3 passed. No Phase 25 carryforward needed for these items.
 
 ### Open Risks
 
@@ -134,8 +134,9 @@ collapse, mono-intent read). Phase 22 planning is blocked behind that.
   nothing to invert against. Phase 24 must resolve this by design, not defer it.
 
 - **Sketch 015's own stated main risk:** does mono read as *cooler* or as *unfinished*? Vermilion
-  was doing real structural work; watch whether hairlines and mono labels carry that load. **Still
-  unverified by a human eye as of Phase 21's close** — see the Plan 21-06 AUTO_MODE note above.
+  was doing real structural work; watch whether hairlines and mono labels carry that load.
+  **Resolved 2026-07-22:** Monty judged the built homepage as reading intentional, not unfinished.
+  Re-check per-page as Phases 22-24 extend mono past the homepage.
 
 ### Known Pre-Existing Test Failures (NOT v4.0 regressions)
 
@@ -250,9 +251,10 @@ Deferred from v4.0 requirements (Future Requirements):
 
 ## Session Continuity
 
-Last session: 2026-07-21T15:30:00.000Z
-Stopped at: Phase 21 executed + post-execution design revisions applied and pushed.
-Verification still `human_needed` — 3 items open in `21-HUMAN-UAT.md`.
+Last session: 2026-07-22T00:00:00.000Z
+Stopped at: Phase 21 verification closed (3/3 human UAT passed) and `v4-mono` merged into `main`
+and pushed. Phases 22-25 (pinboard, site sweep + OG, dark mode, QA/perf/alias) are still open,
+so production now serves a mono homepage against not-yet-swept inner pages.
 Resume file: None
 
 ---
