@@ -29,7 +29,7 @@ Phase: 21 (mono-homepage-rebuild) — COMPLETE
 Plan: 6 of 6 (all 6 plans executed and summarized)
 Status: All 6 plans executed. All 3 human UAT items judged PASS by Monty on 2026-07-22
 against `npm run dev`. `21-HUMAN-UAT.md` is complete. Phase 21 is CLOSED.
-Last activity: 2026-07-22
+Last activity: 2026-07-22 - Completed quick task 260722-wov: Homepage nav reveal, writing split, contact hover, hero copy
 
 Progress: [███░░░░░░░] 33% (2/6 v4.0 phases complete)
 
@@ -119,6 +119,13 @@ so nothing blocks it.
   pulsing status dot, band-dark slam) removed. `npx vitest run` = 191 passed, 16 todo, 1 failed
   (the pre-existing `projects.test.tsx:188` failure, unrelated). `npx next build` clean.
 
+- **Quick task 260722-wov (2026-07-22) intentionally amends Phase 21's closed MS-02 requirement**
+  by reintroducing a second ambient motion source: the StickyNav wave-curl reveal (a `perspective`
+  + `rotateX` hinge-fold with a back-ease overshoot, gated by `prefers-reduced-motion` exactly like
+  the surviving `.reveal` fade). MS-02's own subject -- the homepage's single `.reveal`
+  opacity-fade-up -- remains completely unchanged; this is an addition of a second, separate,
+  Monty-approved motion source, not a reversal of the fade-up work itself.
+
 - **Plan 21-06's Task 2 human-verify checkpoint was auto-approved under AUTO_MODE, not by a real
   browser walkthrough.** No Playwright/Puppeteer or other browser-automation tooling is installed
   in this repo, so the three genuinely manual-only claims from `21-VALIDATION.md` — fade timing
@@ -184,6 +191,12 @@ Phase 21 is planned.
 ### Blockers/Concerns
 
 None blocking. Highest-risk item: DM-02 (inversion language on a dark ground) in Phase 24.
+
+### Quick Tasks Completed
+
+| # | Description | Date | Commit | Directory |
+|---|-------------|------|--------|-----------|
+| 260722-wov | Homepage nav reveal, writing split, contact hover, hero copy | 2026-07-22 | c4ba222 | [260722-wov-homepage-nav-reveal-writing-split-contac](./quick/260722-wov-homepage-nav-reveal-writing-split-contac/) |
 
 ## Deferred Items
 
