@@ -7,11 +7,13 @@ import { useEffect } from "react";
  *
  * Mount this component once in the page orchestrator (Plan 08). It renders
  * nothing into the DOM - its sole job is to wire one IntersectionObserver
- * that observes every `.reveal`, `.slide`, and `.shadowed` element and adds
- * `.in` when each one enters the viewport.
+ * that observes every `.reveal` element and adds `.in` when it enters the
+ * viewport. `.slide` and `.shadowed` were retired in Plan 21-06 (no live
+ * consumer left in src/) - this is now the phase's one surviving scroll
+ * motion, retuned to the sketch's exact timing.
  *
- * D-07: elements with .reveal/.slide/.shadowed gain `.in` on scroll, enabling
- *   the CSS transitions defined in globals.css (opacity/translateX + shadow settle).
+ * D-07: elements with .reveal gain `.in` on scroll, enabling the CSS
+ *   transition defined in globals.css (opacity/translateY fade-up).
  *
  * D-08: reduced-motion path - if `prefers-reduced-motion: reduce` is set, all
  *   targets receive `.in` immediately so the static layout is fully visible
@@ -19,7 +21,7 @@ import { useEffect } from "react";
  */
 export function ScrollReveals() {
   useEffect(() => {
-    const selector = ".reveal, .slide, .shadowed";
+    const selector = ".reveal";
 
     // Collect targets that are not already revealed
     const targets = Array.from(
@@ -43,7 +45,7 @@ export function ScrollReveals() {
           }
         });
       },
-      { threshold: 0, rootMargin: "0px 0px -38% 0px" }
+      { threshold: 0.05, rootMargin: "0px 0px -8% 0px" }
     );
 
     targets.forEach((el) => io.observe(el));

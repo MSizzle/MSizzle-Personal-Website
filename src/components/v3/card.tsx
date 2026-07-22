@@ -103,7 +103,7 @@ export function Card({
   const textBlock = showTitleBlock ? (
     <div className="p-[26px]">
       {kicker && (
-        <span className="font-mono text-xs text-accent block mb-[14px]">{kicker}</span>
+        <span className="font-mono text-xs text-text-dim block mb-[14px]">{kicker}</span>
       )}
       <h3 className="font-display font-medium text-lg uppercase mb-2">{title}</h3>
       {blurb && <p className="text-sm text-text-dim">{blurb}</p>}
@@ -126,7 +126,7 @@ export function Card({
 
   if (href) {
     return (
-      <Link href={href} className="block bg-bg hover:bg-bg-2 transition-colors">
+      <Link href={href} className="block bg-bg hover:bg-[rgba(0,0,0,0.04)] transition-colors">
         {coverSlot}
         {textBlock}
       </Link>
@@ -134,7 +134,7 @@ export function Card({
   }
 
   return (
-    <div className="bg-bg hover:bg-bg-2 transition-colors">
+    <div className="bg-bg hover:bg-[rgba(0,0,0,0.04)] transition-colors">
       {coverSlot}
       {textBlock}
     </div>

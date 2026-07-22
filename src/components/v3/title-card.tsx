@@ -1,9 +1,9 @@
 /**
  * TitleCard - Phase 19 typographic card face (SC-1).
  *
- * Renders a pure text-based card face: mono kicker chip on vermilion,
- * Hanken Grotesk 800 clamped title, optional dek, on a paper (#faf9f7) or
- * ink (#17171a) field. Hard corners, no gradients, no images.
+ * Renders a pure text-based card face: mono kicker chip on black,
+ * Hanken Grotesk 800 clamped title, optional dek, on a paper (#ffffff) or
+ * ink (#000000) field. Hard corners, no gradients, no images.
  *
  * Design DNA: inherits the hero "Create Order" block treatment at card scale.
  *
@@ -20,14 +20,14 @@ import { cn } from "@/utils/cn";
 type Props = {
   /** Card headline text (required). */
   title: ReactNode;
-  /** Mono kicker chip rendered on vermilion above the title. Optional. */
+  /** Mono kicker chip rendered on black above the title. Optional. */
   kicker?: string;
   /** One-line descriptor rendered below the title. Optional. */
   dek?: string;
   /**
    * Field color for the card face.
-   * "paper" (default) = #faf9f7 background, #171717 text.
-   * "ink" = #17171a background, #faf9f7 text.
+   * "paper" (default) = #ffffff background, #000000 text.
+   * "ink" = #000000 background, #ffffff text.
    * Must be driven deterministically by callers (e.g. by list index).
    */
   field?: "paper" | "ink";

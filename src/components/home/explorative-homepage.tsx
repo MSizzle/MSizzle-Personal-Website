@@ -2,45 +2,52 @@ import { Hero } from "./hero";
 import { StickyNav } from "./sticky-nav";
 import { ScrollReveals } from "./scroll-reveals";
 import { SectionBuilding } from "./section-building";
-import { SectionWork } from "./section-work";
+import { SectionWriting } from "./section-writing";
 import { SectionLoves } from "./section-loves";
-import { SectionNewsletter } from "./section-newsletter";
 import type { Project } from "@/lib/notion-projects";
 import type { MontyMonthlyIssue } from "@/lib/rss/substack";
+import type { BlogPost } from "@/lib/notion";
 import type { LoveItem } from "@/lib/notion-loves";
 
 /**
- * ExplorativeHomepage: sketch-010 band-sequence orchestrator (Server Component).
+ * ExplorativeHomepage: mono homepage orchestrator (Server Component).
  *
- * Band order per D-03:
- *   hero (light) -> Building (dark) -> Work (light)
- *   -> Writing / Monty Monthly (dark) -> Things I Love (light)
- * The site-wide SiteFooter (app/layout.tsx) closes the page.
+ * Band order (HP-04): Hero -> 01 Building -> 02 Writing -> 03 Things I Love,
+ * all on one continuous #ffffff ground -- no dark-ground class anywhere. Building
+ * and Writing each render their own <section> wrapper internally; only Things
+ * I Love needs an orchestrator-level wrapper (it doesn't self-wrap), and that
+ * wrapper is the sole element on the page that MUST carry id="loves" verbatim
+ * (site-wide footer's /#loves link depends on it).
  *
  * Islands mounted here:
- *   StickyNav (D-10): fixed island, z-9000, Subscribe CTA past hero fold.
- *   ScrollReveals (D-08): headless IO island toggling .in on .reveal/.slide/.shadowed.
+ *   StickyNav: fixed island, z-9000.
+ *   ScrollReveals: headless IO island toggling .in on .reveal.
  *
- * Motion is scroll-triggered + ambient only; no GL or heavy scroll stack (D-08).
- * page.tsx fetches the Notion data (Featured projects + latest essays) and passes
- * it down; this orchestrator stays a sync Server Component and forwards it to the
- * Work grid and Monty Monthly carousel. Both default to placeholders/fallback copy
- * when the data is absent, so the tree renders fine with no props (and in tests).
+ * page.tsx fetches the Notion/RSS data (Featured projects, published posts,
+ * Monty Monthly issues, Things I Love items) and passes it down; this
+ * orchestrator stays a sync Server Component and forwards it to each band.
+ * Every prop defaults to [] so the tree renders fine with no props (and in
+ * tests).
  */
 type Props = {
   projects?: Project[];
-  /** Latest Monty Monthly issues from the Substack RSS feed (carousel cards). */
+  /** Latest Monty Monthly issues from the Substack RSS feed. */
   montyIssues?: MontyMonthlyIssue[];
+  posts?: BlogPost[];
   loves?: LoveItem[];
   /** Type-select option order from Notion; drives Organize-by-topic bands. */
   loveCategories?: string[];
+  /** Exact post reading times by post id; falls back to an estimate when absent. */
+  readingTimes?: Record<string, number>;
 };
 
 export function ExplorativeHomepage({
   projects = [],
   montyIssues = [],
+  posts = [],
   loves = [],
   loveCategories = [],
+  readingTimes = {},
 }: Props) {
   return (
     <div className="min-h-screen bg-bg">
@@ -48,26 +55,20 @@ export function ExplorativeHomepage({
       <StickyNav />
       <ScrollReveals />
 
-      {/* Band 1: Hero (light) - Hero component owns its own section.band wrapper */}
       <Hero />
 
-      {/* Band 2: Building (dark) */}
-      <section className="band band-dark beat" id="building">
-        <SectionBuilding />
-      </section>
+      <SectionBuilding projects={projects} />
 
-      {/* Band 4: Work (light) */}
-      <section className="band beat" id="work">
-        <SectionWork projects={projects} />
-      </section>
+      <SectionWriting
+        posts={posts}
+        montyIssues={montyIssues}
+        readingTimes={readingTimes}
+      />
 
-      {/* Band 5: Writing / Monty Monthly (dark) */}
-      <section className="band band-dark beat" id="writing">
-        <SectionNewsletter issues={montyIssues} />
-      </section>
-
-      {/* Band 6: Things I Love (light) */}
-      <section className="band beat" id="loves">
+      {/* Extra top room: the Writing log ends in small mono type and the
+          pinboard opens with dense tiles, so the two need a wider gap than
+          the standard band rhythm to read as separate sections. */}
+      <section className="band pt-40 md:pt-64" id="loves">
         <SectionLoves items={loves} categoryOrder={loveCategories} />
       </section>
 

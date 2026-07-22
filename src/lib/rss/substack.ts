@@ -18,6 +18,8 @@ export type MontyMonthlyIssue = {
   /** Issue subtitle from the feed <description>, falling back to a body excerpt. */
   description: string
   thumbnail: string | null
+  /** Whole-minutes reading time computed from the full body in content:encoded. */
+  readingTime: number
 }
 
 const NAMED_ENTITIES: Record<string, string> = {
@@ -59,6 +61,21 @@ function extractSubtitle(item: CustomItem): string {
     .replace(/\s+/g, ' ')
     .trim()
   return text || extractDescription(item)
+}
+
+/**
+ * Reading time from the issue's full body, not its subtitle. The feed carries
+ * the whole post in content:encoded, so this is a real word count rather than
+ * an estimate off a one-line summary (which rounded every issue to "1 min").
+ */
+function extractReadingTime(item: CustomItem): number {
+  const html = item['content:encoded']
+  if (!html) return 1
+  const text = decodeHtmlEntities(html.replace(/<[^>]+>/g, ' '))
+    .replace(/\s+/g, ' ')
+    .trim()
+  const words = text.split(/\s+/).filter(Boolean).length
+  return Math.max(1, Math.ceil(words / 200))
 }
 
 /** Strip HTML from the issue body and return a short plain-text excerpt. */
@@ -108,6 +125,7 @@ export async function fetchMontyMonthlyIssues(limit: number = 10): Promise<Monty
       pubDate: (item as unknown as { pubDate?: string }).pubDate ?? '',
       description: extractSubtitle(item as unknown as CustomItem),
       thumbnail: extractThumbnail(item as unknown as CustomItem),
+      readingTime: extractReadingTime(item as unknown as CustomItem),
     }))
   } catch {
     return []

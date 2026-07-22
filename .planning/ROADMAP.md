@@ -13,8 +13,8 @@
 
 **Milestone Goal:** Strip the site to pure black and white with zero accent, and rebuild the homepage as a quiet editorial index that reads "here's a bit about me" rather than a founder pitch. Design is locked by `.planning/sketches/015-mono-passive-home/` variant E — this milestone ports it, it does not explore it.
 
-- [ ] **Phase 20: Mono Token Foundation** - Retheme `globals.css` to pure black/white with zero accent, kill every hardcoded survival, establish inversion as the emphasis language, on a branch with a live Vercel preview
-- [ ] **Phase 21: Mono Homepage Rebuild** - Rebuild the homepage to sketch 015 variant E: type-only hero, Swiss numbered Building index, terminal writing log, one continuous ground, motion stripped to a single slow fade
+- [x] **Phase 20: Mono Token Foundation** - Retheme `globals.css` to pure black/white with zero accent, kill every hardcoded survival, establish inversion as the emphasis language, on a branch with a live Vercel preview (completed 2026-07-21)
+- [x] **Phase 21: Mono Homepage Rebuild** - Rebuild the homepage to sketch 015 variant E: type-only hero, Swiss numbered Building index, terminal writing log, one continuous ground, motion stripped to a single slow fade (completed 2026-07-21)
 - [ ] **Phase 22: Things I Love in Mono** - Recolor the pinboard to greyscale with a black note panel while preserving its shipped behaviour exactly, and prove reduced-motion across every surviving animation
 - [ ] **Phase 23: Site Sweep & Mono OG** - Carry mono to every interior route, neutralize Notion inline text colors, retire non-content photography, and regenerate all three OG images without `#e5411f`
 - [ ] **Phase 24: True Inversion Dark Mode** - Build light/dark theming from scratch (no `next-themes` today) so the whole site inverts cleanly and the inversion-based emphasis language still reads on a dark ground
@@ -40,17 +40,17 @@
 Plans:
 **Wave 1**
 
-- [ ] 20-01-PLAN.md — v4-mono branch setup + mono @theme token block, D-04 hardcoded-hex fixes, D-10 focus-ring unification
+- [x] 20-01-PLAN.md — v4-mono branch setup + mono @theme token block, D-04 hardcoded-hex fixes, D-10 focus-ring unification
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 20-02-PLAN.md — globals.css Tier 1/2/3 accent-to-mono call-site conversion (~35 sites)
-- [ ] 20-03-PLAN.md — src/components/v3/ shared-layer accent-to-mono conversion (9 files)
-- [ ] 20-04-PLAN.md — site-footer, timeline, and interior-route accent-to-mono conversion (6 files)
+- [x] 20-02-PLAN.md — globals.css Tier 1/2/3 accent-to-mono call-site conversion (~35 sites)
+- [x] 20-03-PLAN.md — src/components/v3/ shared-layer accent-to-mono conversion (9 files)
+- [x] 20-04-PLAN.md — site-footer, timeline, and interior-route accent-to-mono conversion (6 files)
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
-- [ ] 20-05-PLAN.md — full D-03 audit, build/vitest check, v4-mono push, DQ-01 preview sign-off
+- [x] 20-05-PLAN.md — full D-03 audit, build/vitest check, v4-mono push, DQ-01 preview sign-off
 
 **UI hint**: yes
 
@@ -70,10 +70,36 @@ Plans:
   5. A visitor can reach work and essays without passing a subscribe CTA; Monty Monthly appears only as a quiet footer-level line, with no sticky nav button.
   6. The only motion left on the page is a slow opacity fade-up on scroll: the hero link marquee, pulsing status dot, photo ken-burns, and slide-in-from-side reveals no longer occur.
 
-**Plans**: TBD
+**Plans**: 6 plans (6 waves)
+
+Plans:
+**Wave 1**
+
+- [x] 21-01-PLAN.md — Hero rebuild (type-only Swiss hero, HP-01/MS-01) + Things I Love band header restyle
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [x] 21-02-PLAN.md — Building index: .a-row CSS family + section-building.tsx Swiss numbered rows (HP-02)
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
+- [x] 21-03-PLAN.md — Writing terminal list: .e-term CSS family + new section-writing.tsx (HP-03)
+
+**Wave 4** *(blocked on Wave 3 completion)*
+
+- [x] 21-04-PLAN.md — Photo primitive + PhotoMarquee motion teardown (MS-01 finish)
+
+**Wave 5** *(blocked on Waves 1-4 completion)*
+
+- [x] 21-05-PLAN.md — Orchestrator + page.tsx wiring, retired-component deletions, test rewrites (HP-02/03/04/05)
+
+**Wave 6** *(blocked on Wave 5 completion)*
+
+- [x] 21-06-PLAN.md — Motion system retune (MS-02) + human sign-off checkpoint
+
 **UI hint**: yes
 
-**Sequencing note**: Touches `src/components/home/` — `hero.tsx`, `explorative-homepage.tsx`, `section-building.tsx`, `section-work.tsx`, `section-newsletter.tsx`, `section-loves.tsx`, `photo.tsx`, `photo-marquee.tsx`, `scroll-reveals.tsx`, `sticky-nav.tsx`, `monty-monthly-carousel.tsx`, `rail-box.tsx`. **Do not touch `pinboard.tsx`** — TL-01 is a preservation requirement handled in Phase 22. Three vitest failures on the homepage (`section-building` HD-04, `explorative-homepage` TD-03/HD-05) **predate this milestone**; this rebuild is expected to delete or rewrite those tests rather than fix them, and they must not be logged as regressions introduced here.
+**Sequencing note**: Touches `src/components/home/` — `hero.tsx`, `explorative-homepage.tsx`, `section-building.tsx`, `section-work.tsx`, `section-newsletter.tsx`, `section-loves.tsx`, `photo.tsx`, `photo-marquee.tsx`, `scroll-reveals.tsx`, `sticky-nav.tsx`, `monty-monthly-carousel.tsx`, `rail-box.tsx`. **Do not touch `pinboard.tsx`** — TL-01 is a preservation requirement handled in Phase 22. The three homepage vitest failures previously listed here (`section-building` HD-04, `explorative-homepage` TD-03/HD-05) **no longer exist in the suite** — verified during Phase 20 execution (2026-07-21). The only pre-existing failure is `src/__tests__/pages/projects.test.tsx:188` ("renders a title-card face instead of a cover image when project.image is non-null"), confirmed failing on `main` before Phase 20 began; it belongs to the projects page, not the homepage, and must not be logged as a regression introduced here.
 
 ### Phase 22: Things I Love in Mono
 
@@ -103,6 +129,14 @@ Plans:
   2. Sharing any of the three OG-image routes (root, `blog/[slug]`, `building/[slug]`) produces a black-and-white preview card; `#e5411f` no longer appears in any `opengraph-image.tsx`.
   3. A post authored in Notion using amber, orange, blue, or gray inline text renders as ink/dim/muted greys on the site.
   4. Photography appears only where it is content — Things I Love cards and Notion project covers; the hero portraits, the wide Prometheus screenshot, and the photo-marquee fallback are gone.
+
+**Carve-out (approved by Monty, 2026-07-21):** the two hero brand marks —
+`public/logos/prometheus-orb.svg` and `public/logos/monty-monthly.png`, released
+by the hero drop-boxes in `hero.tsx` — render in their real brand colors and are
+an intentional exception to the mono lock. The Prometheus orb is the only hue on
+the homepage and that is deliberate. Do NOT neutralize, greyscale, or strip them
+during this sweep; criterion 1's "no accent survivals" does not cover them.
+Logos are also not photography, so criterion 4 does not apply either.
 
 **Plans**: TBD
 **UI hint**: yes
@@ -146,8 +180,8 @@ Phases execute in numeric order: 20 -> 21 -> 22 -> 23 -> 24 -> 25
 
 | Phase | Milestone | Plans | Status | Completed |
 |-------|-----------|-------|--------|-----------|
-| 20. Mono Token Foundation | v4.0 | 0/5 | Planned | - |
-| 21. Mono Homepage Rebuild | v4.0 | 0/? | Not started | - |
+| 20. Mono Token Foundation | v4.0 | 5/5 | Complete   | 2026-07-21 |
+| 21. Mono Homepage Rebuild | v4.0 | 6/6 | Complete   | 2026-07-21 |
 | 22. Things I Love in Mono | v4.0 | 0/? | Not started | - |
 | 23. Site Sweep & Mono OG | v4.0 | 0/? | Not started | - |
 | 24. True Inversion Dark Mode | v4.0 | 0/? | Not started | - |

@@ -23,11 +23,14 @@ const ICON_MAP: Record<TimelineEvent['icon'], LucideIcon> = {
   location: MapPin,
 }
 
+// Currently unimported/unused — no importer anywhere in src/. Icon-dot colors
+// repointed to real mono tokens so the file stays grep-clean and would render
+// sensibly if ever wired up again.
 const ICON_COLOR: Record<TimelineEvent['icon'], string> = {
-  education: 'bg-[var(--accent)]',
-  work: 'bg-[var(--accent-warm)]',
-  project: 'bg-[var(--gold)]',
-  award: 'bg-[var(--accent)]',
+  education: 'bg-[var(--color-invert)]',
+  work: 'bg-[var(--color-text-dim)]',
+  project: 'bg-[var(--color-border-strong)]',
+  award: 'bg-[var(--color-invert)]',
   location: 'bg-[var(--fg-muted)]',
 }
 
@@ -65,7 +68,7 @@ export function Timeline({ events }: TimelineProps) {
                 <div className="text-xs font-semibold uppercase tracking-wider text-[var(--fg-muted)]">
                   {event.date}
                 </div>
-                <h3 className="mt-0.5 text-base font-semibold group-hover:text-[var(--accent)]">
+                <h3 className="mt-0.5 text-base font-semibold group-hover:text-[var(--color-invert)]">
                   {event.title}
                 </h3>
                 <p className="text-sm text-[var(--fg-muted)]">{event.subtitle}</p>
@@ -120,7 +123,7 @@ export function Timeline({ events }: TimelineProps) {
                 href={selected.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-4 inline-flex items-center text-sm font-semibold text-[var(--accent)] hover:underline"
+                className="mt-4 inline-flex items-center text-sm font-semibold text-[var(--color-invert)] hover:underline"
               >
                 Learn more &rarr;
               </a>

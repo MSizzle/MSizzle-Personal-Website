@@ -27,7 +27,7 @@ export function NewsletterCarousel({ issues }: Props) {
           <>
             {/* Issue cover from the Substack feed; falls back to the "MM" glyph
                 when an issue has no image. */}
-            <div className="relative aspect-[3/2] bg-surface border-b-2 border-accent flex items-center justify-center overflow-hidden">
+            <div className="relative aspect-[3/2] bg-[rgba(0,0,0,0.08)] border-b-2 border-invert flex items-center justify-center overflow-hidden">
               {issue.thumbnail ? (
                 <Image
                   src={issue.thumbnail}
@@ -51,7 +51,7 @@ export function NewsletterCarousel({ issues }: Props) {
         );
 
         const cardClasses =
-          "flex-[0_0_300px] [scroll-snap-align:start] border border-border bg-bg-2 block";
+          "flex-[0_0_300px] [scroll-snap-align:start] border border-border bg-bg block";
 
         return issue.href ? (
           <Link key={issue.title} href={issue.href} className={cardClasses}>

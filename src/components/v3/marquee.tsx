@@ -3,7 +3,7 @@
      .marquee { overflow:hidden; border-y; white-space:nowrap; py-4 }
      .track { display:inline-block; animation:scroll 30s linear infinite }
      span { font-display 700 uppercase 2xl px-[26px] text-text-muted }
-     span.hot { -webkit-text-stroke:1.5px accent; color:transparent }
+     span.hot { -webkit-text-stroke:1.5px invert; color:transparent }
    @keyframes scroll defined in globals.css (Plan 01): to { transform:translateX(-50%) }
    DS-05: useReducedMotion → static track, no animation, content still readable
 */
@@ -47,7 +47,7 @@ export function Marquee({ items }: Props) {
               "font-display font-bold uppercase text-2xl px-[26px]",
               item.hot
                 ? // outline-stroke "hot" variant: no Tailwind utility exists for -webkit-text-stroke
-                  "[color:transparent] [-webkit-text-stroke:1.5px_var(--accent)]"
+                  "[color:transparent] [-webkit-text-stroke:1.5px_var(--color-invert)]"
                 : "text-text-muted"
             )}
             aria-hidden={i >= items.length ? "true" : undefined}

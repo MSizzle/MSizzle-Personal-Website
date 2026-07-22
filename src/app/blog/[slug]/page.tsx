@@ -87,13 +87,13 @@ export default async function BlogPostPage({ params }: PageProps) {
           <span>{readingTime} min read</span>
           {post.date && (
             <>
-              <span className="text-[var(--accent)]">.</span>
+              <span className="text-[var(--color-text-muted)]">.</span>
               <span>{formatMonthYear(post.date)}</span>
             </>
           )}
           {post.tags?.[0] && (
             <>
-              <span className="text-[var(--accent)]">.</span>
+              <span className="text-[var(--color-text-muted)]">.</span>
               <span>{post.tags[0]}</span>
             </>
           )}

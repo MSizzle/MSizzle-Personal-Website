@@ -88,7 +88,7 @@ export default async function ProjectPage({ params }: PageProps) {
             rel="noopener noreferrer"
             data-umami-event="project-external-link"
             data-umami-event-title={project.title}
-            className="inline-block mt-4 px-0 text-[var(--accent)] underline hover:text-[var(--accent-hover)]"
+            className="inline-block mt-4 px-0 text-text underline"
           >
             View Project ↗
           </a>

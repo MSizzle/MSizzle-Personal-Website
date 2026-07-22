@@ -1,70 +1,71 @@
-import { RailBox } from "@/components/home/rail-box";
-import { Photo } from "@/components/home/photo";
+import type { Project } from "@/lib/notion-projects";
 
 /**
- * SectionBuilding: Prometheus-forward narrative beat (D-03/D-05/D-07).
- * Returns beat CONTENT only (div.wrap > div.beat-grid).
- * The orchestrator (Plan 08) supplies the outer .band.dark section + id="building".
+ * SectionBuilding: Swiss numbered index for the Building band (HP-02).
+ * Row 001 is always the hardcoded Prometheus row. Rows 002+ map one-to-one
+ * from the `projects` prop (real, already-fetched Notion Featured Projects,
+ * forwarded by the orchestrator in Plan 21-05) — this absorbs
+ * section-work.tsx's Notion data role so that component can be deleted.
  * Server Component only; no client directive.
- * D-03: token classes only auto-invert when the dark band is applied.
- * D-05: RailBox index 01, label Building.
- * D-07: wide slide-in dark photo (from-left, aspect 16/6.5).
- * D-13: no em dashes; any Prometheus external link keeps rel="noopener noreferrer".
+ * Full-row hover/focus inversion is the site's only hover language (HP-02),
+ * implemented via the .a-row CSS family in globals.css.
  */
-export function SectionBuilding() {
+type Row = {
+  title: string;
+  description: string;
+  status: string;
+  href: string;
+  external: boolean;
+};
+
+export function SectionBuilding({
+  projects = [],
+}: {
+  projects?: Project[];
+}) {
+  const rows: Row[] = [
+    {
+      title: "Prometheus",
+      description:
+        "AI integrations and education. Practical leverage, not hype.",
+      status: "Current",
+      href: "https://prometheus.today",
+      external: true,
+    },
+    ...projects.map((project) => ({
+      title: project.title,
+      description: project.description,
+      status:
+        project.tags?.[0] ||
+        String(new Date(project.lastEdited).getUTCFullYear()),
+      href: `/building/${project.slug}`,
+      external: false,
+    })),
+  ].slice(0, 3);
+
   return (
-    <div className="wrap">
-      <div className="beat-grid">
-        {/* Left rail */}
-        <div className="reveal">
-          <RailBox num="01" label="Building" />
-        </div>
-
-        {/* Right column: headline, body with woven inline link, wide slide-in photo */}
-        <div>
-          <h2 className="reveal">
-            <a
-              className="prometheus-link"
-              href="https://prometheus.today"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Prometheus
-            </a>
-            : AI integrations and education.
-          </h2>
-
-          <p className="body reveal">
-            Biggest current focus: If you want real, practical leverage from AI
-            and not just the hype, that is what I{" "}
-            <a className="inline" href="#writing">
-              write about each month
-            </a>
-            .
-          </p>
-
-          {/* Wide slide-in shot of the Prometheus site, itself a link out to
-              prometheus.today. Drop-shadow settles as .in is added by ScrollReveals. */}
-          <div className="shadowed slide from-left prometheus-shot" style={{ marginTop: 44 }}>
-            <a
-              href="https://prometheus.today"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Visit the Prometheus website"
-              style={{ display: "block" }}
-            >
-              {/* Aspect ratio is set via .prometheus-shot in globals.css so the shot
-                  crops to a wide band on desktop but shows fuller / more readable on
-                  mobile. No inline aspectRatio here (CSS owns it). */}
-              <Photo
-                src="/home/prometheus.jpg"
-                alt="The Prometheus homepage: an AI integration and automation consultancy"
-                objectPosition="center 38%"
-              />
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
+    <section className="wrap a-sec" id="building">
+      <h2 className="reveal font-mono text-xs uppercase tracking-[0.12em] text-text-muted">
+        01 · Building
+      </h2>
+      {rows.map((row, i) => (
+        <a
+          key={row.href}
+          className="a-row reveal"
+          href={row.href}
+          {...(row.external
+            ? { target: "_blank", rel: "noopener noreferrer" }
+            : {})}
+        >
+          <span className="num">{String(i + 1).padStart(3, "0")}</span>
+          <span className="ttl">{row.title}</span>
+          <span className="dsc">{row.description}</span>
+          <span className="status">{row.status}</span>
+        </a>
+      ))}
+      <a className="more reveal" href="/building">
+        all projects →
+      </a>
+    </section>
   );
 }

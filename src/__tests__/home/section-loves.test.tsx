@@ -11,10 +11,6 @@ vi.mock("@/components/home/pinboard", () => ({
 vi.mock("@/components/home/photo-marquee", () => ({
   PhotoMarquee: () => React.createElement("div", { "data-testid": "marquee" }),
 }));
-vi.mock("@/components/home/rail-box", () => ({
-  RailBox: ({ num, label }: { num: string; label: string }) =>
-    React.createElement("div", { "data-testid": "rail", "data-num": num }, label),
-}));
 
 import { SectionLoves } from "@/components/home/section-loves";
 
@@ -38,9 +34,9 @@ const oneItem: LoveItem[] = [
 afterEach(() => cleanup());
 
 describe("SectionLoves", () => {
-  it("always renders the RailBox 03 + heading", () => {
+  it("always renders the plain mono '03 · Things I Love' label + heading", () => {
     render(React.createElement(SectionLoves));
-    expect(screen.getByTestId("rail").getAttribute("data-num")).toBe("03");
+    expect(screen.getByText("03 · Things I Love")).toBeDefined();
     expect(screen.getByText(/Things I love outside of work/i)).toBeDefined();
   });
 

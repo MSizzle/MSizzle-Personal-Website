@@ -64,8 +64,11 @@ export function Navigation() {
         </nav>
       </header>
 
-      {/* Desktop header — globalized EditorialHeader (self-gates via `hidden md:flex`). */}
-      <EditorialHeader active={activeLabel} />
+      {/* Desktop header — globalized EditorialHeader (self-gates via `hidden md:flex`).
+          Suppressed on the homepage: there the first screen is meant to be type
+          only, and StickyNav slides the same link set down once you scroll past
+          the hero. Every other route keeps the static header. */}
+      {pathname !== '/' && <EditorialHeader active={activeLabel} />}
 
       {/* Mobile drawer — opens on hamburger tap; content-height with tap-outside-to-close backdrop */}
       {open && (

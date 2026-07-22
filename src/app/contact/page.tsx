@@ -68,7 +68,7 @@ const LINKS = [
  *      tab; Email is a mailto:.
  *   3. <RuleStrong />
  *
- * Server component. Brand rules: Vermilion accent, no gradients, no em dashes.
+ * Server component. Brand rules: pure black/white, no hue anywhere, no gradients, no em dashes.
  */
 export default function ContactPage() {
   return (

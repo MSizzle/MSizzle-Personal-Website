@@ -33,8 +33,8 @@ export function VideoCard({ title, channel, href, thumbnail, target, rel }: Prop
       rel={rel}
       className="group block border border-border hover:-translate-y-1 transition-transform"
     >
-      {/* Thumb: fills with accent on hover; play-triangle inverts on hover (fallback when no thumbnail) */}
-      <div className="aspect-video bg-surface border-b border-border relative flex items-center justify-center group-hover:bg-accent transition-colors overflow-hidden">
+      {/* Thumb: neutral placeholder fill until it inverts to black on hover; play-triangle inverts on hover (fallback when no thumbnail) */}
+      <div className="aspect-video bg-[rgba(0,0,0,0.08)] border-b border-border relative flex items-center justify-center group-hover:bg-invert transition-colors overflow-hidden">
         {thumbnail ? (
           <Image
             src={thumbnail}
@@ -49,10 +49,10 @@ export function VideoCard({ title, channel, href, thumbnail, target, rel }: Prop
           /* Play triangle: border-trick CSS triangle, inverts on hover */
           <span
             className="
-              border-l-[24px] border-l-accent
+              border-l-[24px] border-l-invert
               border-y-[15px] border-y-transparent
               ml-[6px]
-              group-hover:border-l-bg
+              group-hover:border-l-[color:var(--color-text-inverse)]
               transition-[border-left-color]
             "
             aria-hidden="true"
