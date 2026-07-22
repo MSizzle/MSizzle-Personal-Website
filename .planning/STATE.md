@@ -2,9 +2,9 @@
 gsd_state_version: 1.0
 milestone: v4.0
 milestone_name: Mono Restyle
-status: in_progress
-stopped_at: Phase 21 closed (3 human UAT items passed); v4-mono merged to main
-last_updated: "2026-07-22T00:00:00.000Z"
+status: All 6 plans executed. All 3 human UAT items judged PASS by Monty on 2026-07-22
+stopped_at: Phase 22 context gathered
+last_updated: "2026-07-22T03:45:48.674Z"
 last_activity: 2026-07-22
 progress:
   total_phases: 6
@@ -118,6 +118,7 @@ so nothing blocks it.
   0.05, rootMargin -8%) — every other ambient motion source (ken-burns, breathe, marquee slide,
   pulsing status dot, band-dark slam) removed. `npx vitest run` = 191 passed, 16 todo, 1 failed
   (the pre-existing `projects.test.tsx:188` failure, unrelated). `npx next build` clean.
+
 - **Plan 21-06's Task 2 human-verify checkpoint was auto-approved under AUTO_MODE, not by a real
   browser walkthrough.** No Playwright/Puppeteer or other browser-automation tooling is installed
   in this repo, so the three genuinely manual-only claims from `21-VALIDATION.md` — fade timing
@@ -205,25 +206,31 @@ Deferred from v4.0 requirements (Future Requirements):
   built page in a browser and directed several changes; all are committed and pushed on `v4-mono`
   (`c73d34a`, `e0762dd`, `33cf7fe`, `72c455c`, `4ac3ca7`). Real bugs found and fixed, each verified
   by measurement in a live browser rather than by inspection:
+
   - **`.wrap` used the `padding` shorthand**, zeroing top/bottom padding on every element
     co-classed with it. The hero's `py-32` and `.a-sec`'s 128px both computed to **0px** — the whole
     page had no vertical rhythm. It was also declared twice, the later copy overriding `.a-sec`.
     Now `padding-inline`, single definition. `--space-32` was never defined anywhere; replaced with
     explicit fluid values. **Any future co-classed utility must not use the padding shorthand.**
+
   - **Row hover-invert never worked.** `.a-row::before`/`.e-post::before` used `z-index: -1` but the
     rows established no stacking context, so the black fill painted behind the opaque
     `.min-h-screen` background. Fixed with `isolation: isolate`.
+
   - **Pinboard cards crossed into the footer** (measured 5 of 24, up to 40px). Cause was a
     same-session fix: moving `.pinboard-field` below the toolbar shrank it 88px while `layoutFor`
     still positioned against full board height. Board now sizes as toolbar + field + tilt slack
     (`TOOLS_H`/`TILT_SLACK` in `pinboard.tsx` must stay in sync with `--pb-tools-h`/`--pb-tilt-slack`
     in `globals.css`). Re-measured 0 of 24.
+
   - **Mobile could pan sideways**: `overflow-x: hidden` was on `body` but not `html` (the root is the
     scroll container). Set on both, plus `overscroll-behavior-x: none`.
+
   - Layout/copy: static `EditorialHeader` suppressed on `/` only so the first screen is type alone
     (StickyNav still slides down past the hero); StickyNav is now desktop-only; Building index capped
     at 3 rows with an "all projects" link; Writing rows 35px→67px; 256px between Writing and Loves.
     New H1 "Blessed are those who create order from chaos." and new subtitle.
+
   - **Hero brand marks in drop-boxes.** "Building Prometheus" / "Monty Monthly" sit in hard-cornered
     boxes; hover or `:focus-within` releases the mark, which links out. Reduced-motion disables the
     reveal outright. Assets: `public/logos/prometheus-orb.svg` (vector; the old 71px
@@ -251,11 +258,11 @@ Deferred from v4.0 requirements (Future Requirements):
 
 ## Session Continuity
 
-Last session: 2026-07-22T00:00:00.000Z
-Stopped at: Phase 21 verification closed (3/3 human UAT passed) and `v4-mono` merged into `main`
+Last session: 2026-07-22T03:45:48.662Z
+Stopped at: Phase 22 context gathered
 and pushed. Phases 22-25 (pinboard, site sweep + OG, dark mode, QA/perf/alias) are still open,
 so production now serves a mono homepage against not-yet-swept inner pages.
-Resume file: None
+Resume file: .planning/phases/22-things-i-love-in-mono/22-CONTEXT.md
 
 ---
 
