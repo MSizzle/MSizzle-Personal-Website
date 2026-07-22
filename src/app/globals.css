@@ -450,9 +450,18 @@ p.body {
   width: max-content;
 }
 
-/* ── Sticky mini-nav (D-10) — appears past hero fold (z-index:9000).
+/* ── Sticky mini-nav (D-10) — appears on first scroll (z-index:9000).
    Restyled to match the editorial header (one nav style site-wide):
-   paper field, ink wordmark, sentence-case muted links. Solid, no blur. ── */
+   paper field, ink wordmark, sentence-case muted links. Solid, no blur.
+
+   Quick task 260722-wov (item 1): wave-curl reveal. A 3D hinge fold
+   (perspective + rotateX) with a back-ease that overshoots slightly past
+   0deg before settling -- this overshoot IS the "wave" character, no
+   additional per-cell stagger needed. This is an intentional amendment to
+   Phase 21's closed MS-02 requirement ("the only surviving scroll motion is
+   a slow opacity fade-up"): the nav curl is now a second, deliberate motion
+   source, approved by Monty. The homepage's own `.reveal` opacity-fade
+   system (MS-02's own subject) is untouched. ── */
 /* Desktop only. Mobile already has its own fixed header bar (nav/navigation.tsx),
    so sliding a second bar down over a 375px viewport just stacks chrome on top
    of chrome. */
@@ -465,12 +474,22 @@ p.body {
   z-index: 9000;
   background: var(--color-bg); /* solid — no translucency/blur */
   color: var(--color-text);
-  transform: translateY(-100%);
-  transition: transform 0.35s var(--ease-out);
+  transform-origin: top;
+  transform: perspective(700px) rotateX(-90deg);
+  transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
   border-bottom: 1px solid var(--color-text);
 }
 .stickynav.show {
-  transform: none;
+  transform: perspective(700px) rotateX(0deg);
+}
+@media (prefers-reduced-motion: reduce) {
+  .stickynav {
+    transition: none;
+    transform: translateY(-100%);
+  }
+  .stickynav.show {
+    transform: none;
+  }
 }
 .stickynav .inner {
   /* Full-bleed gutters match EditorialHeader; no vertical padding so the nav

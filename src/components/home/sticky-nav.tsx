@@ -17,9 +17,11 @@ const LINKS = [
 /**
  * StickyNav - D-10, D-13
  *
- * Scroll-triggered sticky mini-nav that slides down from the top once the user
- * has scrolled past ~82% of the initial viewport height. Carries the brand mark
- * and the primary nav links (Prometheus / Building / Writing / Contact). No CTA.
+ * Scroll-triggered sticky mini-nav that curls into view (wave-curl reveal,
+ * quick task 260722-wov item 1) on the very first scroll tick -- a small,
+ * fixed 24px threshold, not the old ~82%-of-viewport gate. Carries the brand
+ * mark and the primary nav links (Prometheus / Building / Writing / Contact).
+ * No CTA.
  *
  * Z-index: relies on Plan 01's `.stickynav` CSS rule (z-index: 9000) to sit
  * above the existing z-50 mobile header (nav/navigation.tsx).
@@ -31,7 +33,7 @@ export function StickyNav() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setShow(window.scrollY > window.innerHeight * 0.82);
+      setShow(window.scrollY > 24);
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
