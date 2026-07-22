@@ -5,7 +5,6 @@ import { SectionBuilding } from "./section-building";
 import { SectionWriting } from "./section-writing";
 import { SectionLoves } from "./section-loves";
 import type { Project } from "@/lib/notion-projects";
-import type { MontyMonthlyIssue } from "@/lib/rss/substack";
 import type { BlogPost } from "@/lib/notion";
 import type { LoveItem } from "@/lib/notion-loves";
 
@@ -31,8 +30,6 @@ import type { LoveItem } from "@/lib/notion-loves";
  */
 type Props = {
   projects?: Project[];
-  /** Latest Monty Monthly issues from the Substack RSS feed. */
-  montyIssues?: MontyMonthlyIssue[];
   posts?: BlogPost[];
   loves?: LoveItem[];
   /** Type-select option order from Notion; drives Organize-by-topic bands. */
@@ -43,7 +40,6 @@ type Props = {
 
 export function ExplorativeHomepage({
   projects = [],
-  montyIssues = [],
   posts = [],
   loves = [],
   loveCategories = [],
@@ -59,11 +55,7 @@ export function ExplorativeHomepage({
 
       <SectionBuilding projects={projects} />
 
-      <SectionWriting
-        posts={posts}
-        montyIssues={montyIssues}
-        readingTimes={readingTimes}
-      />
+      <SectionWriting posts={posts} readingTimes={readingTimes} />
 
       {/* Extra top room: the Writing log ends in small mono type and the
           pinboard opens with dense tiles, so the two need a wider gap than
