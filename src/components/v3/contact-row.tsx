@@ -54,7 +54,12 @@ export function ContactRow({ numeral, title, href, handle, action, external = fa
 
       {/* Title + handle (.ti / .ex) */}
       <div>
-        <div className="font-display font-medium uppercase tracking-[-0.01em] flex items-center gap-[14px] text-2xl">
+        <div
+          className={cn(
+            "font-display font-medium uppercase tracking-[-0.01em] flex items-center gap-[14px] text-2xl",
+            "group-hover:text-bg"
+          )}
+        >
           {title}
           {/* Reveal arrow (.ar) */}
           <span
