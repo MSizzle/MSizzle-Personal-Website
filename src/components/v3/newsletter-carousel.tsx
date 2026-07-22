@@ -43,15 +43,15 @@ export function NewsletterCarousel({ issues }: Props) {
               )}
             </div>
             {/* Card body */}
-            <div className="p-[18px]">
-              <h3 className="font-display font-medium text-base mb-2">{issue.title}</h3>
+            <div className="p-[28px]">
+              <h3 className="font-display font-medium text-xl mb-2">{issue.title}</h3>
               <p className="font-mono text-xs text-text-muted">{issue.date}</p>
             </div>
           </>
         );
 
         const cardClasses =
-          "flex-[0_0_300px] [scroll-snap-align:start] border border-border bg-bg block";
+          "flex-[0_0_420px] [scroll-snap-align:start] border border-border bg-bg block";
 
         return issue.href ? (
           <Link key={issue.title} href={issue.href} className={cardClasses}>
