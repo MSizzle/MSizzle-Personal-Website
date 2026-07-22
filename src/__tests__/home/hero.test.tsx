@@ -15,13 +15,39 @@ describe("Hero", () => {
     );
   });
 
-  it("renders the subtitle with the exact copy", () => {
+  it("renders each subtitle sentence as its own line", () => {
     render(React.createElement(Hero));
     expect(
-      screen.getByText(
-        "Founder of Prometheus, an applied AI company. I love technology, biology, and self-improvement. If you like these as well, we’ll get along."
-      )
+      screen.getByText("Founder of Prometheus, an applied AI company.")
     ).toBeDefined();
+    expect(
+      screen.getByText("I love technology, biology, and self-improvement.")
+    ).toBeDefined();
+    expect(
+      screen.getByText((_, node) => {
+        if (!node || node.tagName.toLowerCase() !== "span") return false;
+        return (node.textContent ?? "").startsWith(
+          "If you like these as well,"
+        );
+      })
+    ).toBeDefined();
+  });
+
+  it("scopes the contact link to only 'we'll get along.'", () => {
+    render(React.createElement(Hero));
+    const link = screen.getByRole("link", { name: "we’ll get along." });
+    expect(link.getAttribute("href")).toBe("/contact");
+    expect(link.getAttribute("target")).toBeNull();
+  });
+
+  it("keeps the lead-in phrase outside the contact link", () => {
+    render(React.createElement(Hero));
+    expect(
+      screen.getByText(/If you like these as well,/)
+    ).toBeDefined();
+    const link = screen.getByRole("link", { name: "we’ll get along." });
+    expect(link.textContent).not.toContain("If you like these as well");
+    expect(link.textContent).toBe("we’ll get along.");
   });
 
   it("renders a mono eyebrow with 'Monty Singer'", () => {

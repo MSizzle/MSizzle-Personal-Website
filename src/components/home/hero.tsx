@@ -13,6 +13,7 @@
    ────────────────────────────────────────────────────────────────────────── */
 
 import Image from "next/image";
+import Link from "next/link";
 
 export function Hero() {
   return (
@@ -26,9 +27,18 @@ export function Hero() {
       </h1>
 
       <p className="reveal font-sans font-light text-base leading-[1.6] text-text-dim max-w-[46ch] mt-6">
-        Founder of Prometheus, an applied AI company. I love technology,
-        biology, and self-improvement. If you like these as well, we&rsquo;ll
-        get along.
+        <span className="block">
+          Founder of Prometheus, an applied AI company.
+        </span>
+        <span className="block">
+          I love technology, biology, and self-improvement.
+        </span>
+        <span className="block">
+          If you like these as well,{" "}
+          <Link href="/contact" className="prometheus-link">
+            we&rsquo;ll get along.
+          </Link>
+        </span>
       </p>
 
       <div className="reveal grid grid-cols-1 md:grid-cols-3 gap-8 border-t border-border pt-6 mt-24 md:mt-32">
