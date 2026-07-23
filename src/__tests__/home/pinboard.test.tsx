@@ -1,6 +1,6 @@
 import React from "react";
 import { describe, it, expect, afterEach } from "vitest";
-import { render, screen, cleanup } from "@testing-library/react";
+import { render, screen, cleanup, fireEvent } from "@testing-library/react";
 import { Pinboard } from "@/components/home/pinboard";
 import type { LoveItem } from "@/lib/notion-loves";
 
@@ -61,6 +61,20 @@ describe("Pinboard (sketch 012)", () => {
     const { container } = render(<Pinboard items={ITEMS} />);
     const img = container.querySelector('img[src="/api/notion-cover?pageId=p1"]');
     expect(img).not.toBeNull();
+  });
+
+  it("Place cover img reserves its frame slot, decodes async, and fades in on load (260723-g2q Task 2)", () => {
+    const { container } = render(<Pinboard items={ITEMS} />);
+    const img = container.querySelector(
+      'img[src^="/api/notion-cover?pageId=p1"]'
+    ) as HTMLImageElement;
+    expect(img).not.toBeNull();
+    expect(img.getAttribute("width")).toBe("210");
+    expect(img.getAttribute("height")).toBe("150");
+    expect(img.getAttribute("decoding")).toBe("async");
+    expect(getComputedStyle(img).opacity).toBe("0");
+    fireEvent.load(img);
+    expect(getComputedStyle(img).opacity).toBe("1");
   });
 
   it("renders a fallback swatch for an item with no cover", () => {

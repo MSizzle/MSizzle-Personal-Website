@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, type CSSProperties } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import type { LoveItem } from "@/lib/notion-loves";
 
 /**
@@ -118,6 +118,18 @@ function layoutFor(i: number, n: number): Pos {
 /** Muted, on-brand fallback swatches for items with no page cover. */
 const SWATCHES = ["#8f9e86", "#7c93a6", "#b9805f", "#c9a14e", "#a49e93", "#8a6f82"];
 
+// Mirrors globals.css's .pb-media--* slot sizes exactly (quick task
+// 260723-g2q, FIX 1). Thing's height is CSS's min-height floor; actual
+// rendered height is intrinsic/auto per the existing object-fit: contain
+// design and is NOT enforced by this attribute.
+const FRAME_SIZES: Record<LoveItem["type"], { w: number; h: number }> = {
+  Place: { w: 210, h: 150 },
+  Book: { w: 150, h: 210 },
+  Movie: { w: 150, h: 210 },
+  Thing: { w: 200, h: 120 },
+  YouTube: { w: 260, h: 146 },
+};
+
 function coverSrc(item: LoveItem): string | null {
   // A Watch card whose URL points at a video gets the YouTube thumbnail. When
   // the URL is a channel (no parseable video id), fall through to the Notion
@@ -141,12 +153,25 @@ function CardFace({ item }: { item: LoveItem }) {
   const tag = tagFor(item.type);
   const idx = SWATCHES.length ? Math.abs(hashId(item.id)) % SWATCHES.length : 0;
   const swatch = SWATCHES[idx];
+  const [loaded, setLoaded] = useState(false);
+  const dims = FRAME_SIZES[item.type];
 
   const media =
     src != null ? (
       // Plain img on purpose: external YouTube host + same-origin proxy, decorative,
       // below the fold. eslint-disable-next-line @next/next/no-img-element
-      <img className="pb-img" src={src} alt="" loading="lazy" draggable={false} />
+      <img
+        className="pb-img"
+        src={src}
+        alt=""
+        loading="lazy"
+        draggable={false}
+        decoding="async"
+        width={dims.w}
+        height={dims.h}
+        style={{ opacity: loaded ? 1 : 0, transition: "opacity 200ms ease" }}
+        onLoad={() => setLoaded(true)}
+      />
     ) : (
       <span className="pb-swatch" style={{ background: swatch }} aria-hidden="true" />
     );

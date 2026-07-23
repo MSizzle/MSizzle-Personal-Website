@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { NEUTRAL_BLUR_DATA_URL } from "@/lib/image-placeholder";
 
 type Issue = {
   title: string;
@@ -35,6 +36,8 @@ export function NewsletterCarousel({ issues }: Props) {
                   fill
                   sizes="300px"
                   className="object-cover"
+                  placeholder="blur"
+                  blurDataURL={NEUTRAL_BLUR_DATA_URL}
                 />
               ) : (
                 <span className="font-display font-bold text-2xl text-text-muted" aria-hidden="true">

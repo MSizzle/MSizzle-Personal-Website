@@ -17,6 +17,7 @@
 import { useState } from "react";
 import type { ReactNode } from "react";
 import Image from "next/image";
+import { NEUTRAL_BLUR_DATA_URL } from "@/lib/image-placeholder";
 
 type Props = {
   /** Absolute or relative URL for the cover image (e.g. /api/notion-cover?pageId=...). */
@@ -48,6 +49,8 @@ export function CardCover({ src, alt, sizes, fallback }: Props) {
         fill
         sizes={sizes ?? "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"}
         className="object-cover"
+        placeholder="blur"
+        blurDataURL={NEUTRAL_BLUR_DATA_URL}
         onError={() => setFailed(true)}
       />
     </div>
