@@ -49,6 +49,9 @@ export default async function ProjectPage({ params }: PageProps) {
       {/* Full-bleed cover image (D-02) — only when project.cover (Notion cover) exists */}
       {project.cover && (
         <div className="relative w-full h-[400px] md:h-[600px]">
+          {/* unoptimized (260723-g2q Task 4, see card-cover.tsx for the full
+              reasoning): /api/notion-cover already resizes/webp-encodes
+              server-side, so Next's optimizer would just do that work again. */}
           <Image
             src={`/api/notion-cover?pageId=${project.id}`}
             alt={`${project.title} cover`}
@@ -57,6 +60,7 @@ export default async function ProjectPage({ params }: PageProps) {
             fetchPriority="high"
             sizes="100vw"
             className="object-cover"
+            unoptimized
           />
         </div>
       )}

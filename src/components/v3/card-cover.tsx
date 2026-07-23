@@ -43,6 +43,10 @@ export function CardCover({ src, alt, sizes, fallback }: Props) {
 
   return (
     <div className="relative w-full aspect-[4/3] overflow-hidden">
+      {/* unoptimized (260723-g2q Task 4): /api/notion-cover already resizes,
+          rotates, and webp-encodes this image server-side via sharp; wrapping
+          it in next/image's own optimizer would re-fetch, re-decode, and
+          re-encode it a second time for no benefit. */}
       <Image
         src={src}
         alt={alt}
@@ -51,6 +55,7 @@ export function CardCover({ src, alt, sizes, fallback }: Props) {
         className="object-cover"
         placeholder="blur"
         blurDataURL={NEUTRAL_BLUR_DATA_URL}
+        unoptimized
         onError={() => setFailed(true)}
       />
     </div>

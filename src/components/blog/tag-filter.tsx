@@ -62,6 +62,10 @@ export function TagFilter({ posts, readingTimes, excerpts }: TagFilterProps) {
             >
               <div className="relative aspect-[16/9] w-full overflow-hidden bg-[var(--fg)]/5">
                 {post.cover ? (
+                  // unoptimized (260723-g2q Task 4, see card-cover.tsx for the
+                  // full reasoning): /api/notion-cover already resizes/webp-
+                  // encodes server-side, so Next's optimizer would just do
+                  // that work again.
                   <Image
                     src={`/api/notion-cover?pageId=${post.id}`}
                     alt={post.title}
@@ -69,6 +73,7 @@ export function TagFilter({ posts, readingTimes, excerpts }: TagFilterProps) {
                     sizes="(max-width: 640px) 100vw, 50vw"
                     priority={idx < ABOVE_THE_FOLD}
                     className="object-cover transition-transform duration-300 group-hover:scale-105"
+                    unoptimized
                   />
                 ) : post.emoji ? (
                   <div className="flex h-full items-center justify-center text-4xl">
