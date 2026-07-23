@@ -451,19 +451,11 @@ p.body {
 }
 
 /* ── Sticky mini-nav (D-10) — hidden on first spawn, appears on first scroll
-   (z-index:9000). Restyled to match the editorial header (one nav style
-   site-wide): paper field, ink wordmark, sentence-case muted links. Solid,
-   no blur.
-
-   Per-box slot-in reveal (supersedes the wave-curl 3D hinge fold from quick
-   task 260722-wov item 1). Instead of the whole bar folding down as one, each
-   segmented box drops into its slot in sequence: Contact (rightmost) lands
-   first, then each box to its left, and the wordmark last. The bar chrome
-   (bg + bottom rule) fades in fast so the boxes have a slot to land in. This
-   remains the intentional amendment to Phase 21's closed MS-02 requirement
-   ("the only surviving scroll motion is a slow opacity fade-up"): a second,
-   deliberate motion source approved by Monty. The homepage's own `.reveal`
-   opacity-fade system (MS-02's own subject) is untouched. ── */
+   (z-index:9000). Plain sticky bar: matches the editorial header (paper field,
+   ink wordmark, sentence-case muted links; solid, no blur). No per-box or
+   folding choreography — the whole bar simply slides down as one unit on scroll
+   and snaps away on scroll-back-up. Supersedes the wave-curl fold + per-box
+   slot-in (quick task 260722-wov item 1). ── */
 /* Desktop only. Mobile already has its own fixed header bar (nav/navigation.tsx),
    so sliding a second bar down over a 375px viewport just stacks chrome on top
    of chrome. */
@@ -477,51 +469,15 @@ p.body {
   background: var(--color-bg); /* solid — no translucency/blur */
   color: var(--color-text);
   border-bottom: 1px solid var(--color-text);
-  /* Bar chrome hidden on spawn; fades in on the show toggle. visibility keeps
-     the empty bar (and its boxes) out of the accessibility tree until scroll. */
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.2s ease, visibility 0s linear 0.2s;
+  transform: translateY(-100%);
+  transition: transform 0.28s ease;
 }
 .stickynav.show {
-  opacity: 1;
-  visibility: visible;
-  transition: opacity 0.2s ease, visibility 0s;
-}
-/* Each box (nav cell) + the wordmark start lifted out of their slot, then drop
-   in on show. Delays live on `.show` so the reveal staggers but a scroll-back-up
-   hide snaps away instantly. */
-.stickynav .mk,
-.stickynav ul li {
-  transform: translateY(-115%);
-  opacity: 0;
-  transition:
-    transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
-    opacity 0.35s ease;
-}
-.stickynav.show .mk,
-.stickynav.show ul li {
   transform: translateY(0);
-  opacity: 1;
 }
-/* Right-to-left sequence: Contact (last li) drops first, each box to its left
-   after, wordmark last. */
-.stickynav.show ul li:nth-last-child(1) { transition-delay: 0s; }
-.stickynav.show ul li:nth-last-child(2) { transition-delay: 0.07s; }
-.stickynav.show ul li:nth-last-child(3) { transition-delay: 0.14s; }
-.stickynav.show ul li:nth-last-child(4) { transition-delay: 0.21s; }
-.stickynav.show .mk { transition-delay: 0.28s; }
 @media (prefers-reduced-motion: reduce) {
   .stickynav {
-    transition: opacity 0.001s linear, visibility 0s;
-  }
-  .stickynav .mk,
-  .stickynav ul li,
-  .stickynav.show .mk,
-  .stickynav.show ul li {
     transition: none;
-    transform: none;
-    opacity: 1;
   }
 }
 .stickynav .inner {
