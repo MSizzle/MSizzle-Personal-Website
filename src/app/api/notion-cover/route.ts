@@ -9,6 +9,14 @@ const notion = new Client({ auth: process.env.NOTION_TOKEN });
 // 300-700KB originals. A caller can request a specific width via ?w= (e.g. a
 // retina 2x card slot); default 640 covers every current surface. Clamped so a
 // crafted URL can't ask us to render a huge image.
+//
+// Success responses carry a long-lived Cache-Control: each pageId(+w)/blockId
+// is effectively immutable per content, so s-maxage=31536000 lets Vercel's
+// edge serve repeat requests with zero function invocation (no Notion API
+// round trip, no sharp re-encode); max-age=300 keeps individual browsers
+// revalidating every 5 minutes. Accepted tradeoff: if Monty swaps a Notion
+// cover image, different edge POPs may keep serving the old bytes for up to a
+// year until naturally evicted or a new deploy busts the cache.
 const DEFAULT_WIDTH = 640;
 const MIN_WIDTH = 64;
 const MAX_WIDTH = 1280;
@@ -68,7 +76,7 @@ export async function GET(request: NextRequest) {
       status: 200,
       headers: {
         "Content-Type": contentType,
-        "Cache-Control": "public, max-age=2700, stale-while-revalidate=300",
+        "Cache-Control": "public, max-age=300, s-maxage=31536000, stale-while-revalidate=86400",
       },
     });
   } catch {
