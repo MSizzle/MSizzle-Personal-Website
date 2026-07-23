@@ -134,10 +134,20 @@ function coverSrc(item: LoveItem): string | null {
   // A Watch card whose URL points at a video gets the YouTube thumbnail. When
   // the URL is a channel (no parseable video id), fall through to the Notion
   // page cover so a manually-set screenshot still shows instead of a blank swatch.
+  // This thumbnail is external and fixed-size, deliberately excluded from the
+  // ?w= right-sizing below (260723-g2q Task 3).
   if (item.type === "YouTube" && item.youtubeId) {
     return `https://img.youtube.com/vi/${item.youtubeId}/hqdefault.jpg`;
   }
-  return item.cover ? `/api/notion-cover?pageId=${item.id}` : null;
+  if (!item.cover) return null;
+  // Request roughly 2x the displayed frame width for a crisp retina render,
+  // instead of always pulling the proxy's flat 640px default into a 150-210px
+  // slot. Reuses the same FRAME_SIZES map the fade-in/dimensions logic above
+  // uses, so the two stay in lockstep. These widths (300/300/400/420) stay
+  // well inside the proxy's existing MIN_WIDTH(64)/MAX_WIDTH(1280) server-side
+  // clamp, so no route change is needed here.
+  const retinaW = FRAME_SIZES[item.type].w * 2;
+  return `/api/notion-cover?pageId=${item.id}&w=${retinaW}`;
 }
 
 function tagFor(type: LoveItem["type"]): string {

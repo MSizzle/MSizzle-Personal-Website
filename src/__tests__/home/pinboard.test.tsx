@@ -58,9 +58,21 @@ describe("Pinboard (sketch 012)", () => {
   });
 
   it("renders the Notion cover proxy for a Place with a cover", () => {
+    // jsdom's CSS attribute-value selector matching does not reliably match
+    // literal "&" inside a quoted attribute value (verified empirically
+    // against this exact repo/jsdom version), so exact src comparison is done
+    // via getAttribute rather than a `[src="..."]` selector.
     const { container } = render(<Pinboard items={ITEMS} />);
-    const img = container.querySelector('img[src="/api/notion-cover?pageId=p1"]');
-    expect(img).not.toBeNull();
+    const imgs = Array.from(container.querySelectorAll("img"));
+    const img = imgs.find((el) => el.getAttribute("src") === "/api/notion-cover?pageId=p1&w=420");
+    expect(img).not.toBeUndefined();
+  });
+
+  it("requests a Movie-type cover at its 2x retina width (260723-g2q Task 3)", () => {
+    const { container } = render(<Pinboard items={ITEMS} />);
+    const imgs = Array.from(container.querySelectorAll("img"));
+    const img = imgs.find((el) => el.getAttribute("src") === "/api/notion-cover?pageId=m1&w=300");
+    expect(img).not.toBeUndefined();
   });
 
   it("Place cover img reserves its frame slot, decodes async, and fades in on load (260723-g2q Task 2)", () => {
