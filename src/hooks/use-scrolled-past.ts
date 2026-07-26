@@ -12,20 +12,33 @@ import { useEffect, useState } from "react";
  * always returns false, and the value only flips after the first "scroll"
  * event fires past `threshold`.
  */
-export function useScrolledPast(threshold: number): boolean {
+export function useScrolledPast(
+  threshold: number,
+  viewportFraction?: number,
+): boolean {
   const [scrolledPast, setScrolledPast] = useState(false);
 
   useEffect(() => {
+    // A viewportFraction reveals the bar only after that share of the first
+    // screen has scrolled away, so it arrives as a deliberate transition
+    // instead of popping in on the first trackpad nudge. Falls back to the
+    // fixed pixel threshold when no fraction is given.
+    const limit = () =>
+      viewportFraction ? window.innerHeight * viewportFraction : threshold;
+
     const handleScroll = () => {
-      setScrolledPast(window.scrollY > threshold);
+      setScrolledPast(window.scrollY > limit());
     };
 
+    handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", handleScroll, { passive: true });
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleScroll);
     };
-  }, [threshold]);
+  }, [threshold, viewportFraction]);
 
   return scrolledPast;
 }

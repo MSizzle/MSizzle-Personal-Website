@@ -32,7 +32,9 @@ const LINKS = [
  * is accessed only inside the hook's `useEffect` (never on the server).
  */
 export function StickyNav() {
-  const show = useScrolledPast(24);
+  // Reveals once most of the first screen has scrolled away, so the bar is a
+  // deliberate arrival rather than something that pops in on the first nudge.
+  const show = useScrolledPast(24, 0.8);
 
   return (
     <div className={`stickynav${show ? " show" : ""}`}>

@@ -119,11 +119,26 @@ describe("Navigation component (Plan 02 / D-13)", () => {
     expect(header?.classList.contains("show")).toBe(false);
   });
 
-  it("reveals the mobile header past the scroll threshold on the homepage", () => {
+  it("keeps the mobile header hidden after a small nudge on the homepage", () => {
     mockUsePathname.mockReturnValue("/");
     setScrollY(0);
     const { container } = render(<Navigation />);
     setScrollY(30);
+    act(() => {
+      window.dispatchEvent(new Event("scroll"));
+    });
+    const header = container.querySelector("header");
+    expect(header?.classList.contains("mobile-header-gate")).toBe(true);
+    expect(header?.classList.contains("show")).toBe(false);
+  });
+
+  // The reveal is viewport-relative (80% of the first screen) rather than a
+  // fixed 24px, so the bar does not pop in on the first trackpad nudge.
+  it("reveals the mobile header past the viewport-relative threshold on the homepage", () => {
+    mockUsePathname.mockReturnValue("/");
+    setScrollY(0);
+    const { container } = render(<Navigation />);
+    setScrollY(window.innerHeight * 0.8 + 10);
     act(() => {
       window.dispatchEvent(new Event("scroll"));
     });

@@ -62,7 +62,7 @@ export default async function BlogPostPage({ params }: PageProps) {
 
       {/* Full-bleed cover image (D-02) — only when post.cover exists */}
       {post.cover && (
-        <div className="relative w-full h-[400px] md:h-[600px]">
+        <div className="relative mx-6 mb-6 h-[400px] md:mx-40 md:mb-10 md:h-[600px]">
           {/* unoptimized (260723-g2q Task 4, see card-cover.tsx for the full
               reasoning): /api/notion-cover already resizes/webp-encodes
               server-side, so Next's optimizer would just do that work again. */}

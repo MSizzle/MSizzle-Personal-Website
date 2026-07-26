@@ -21,7 +21,8 @@ export function Navigation() {
   const [open, setOpen] = useState(false)
   const pathname = usePathname()
   const isHome = pathname === '/'
-  const scrolledPast = useScrolledPast(24)
+  // Same viewport-relative reveal as StickyNav so both bars arrive together.
+  const scrolledPast = useScrolledPast(24, 0.8)
 
   // Derive the active EditorialHeader label from pathname (quick task
   // 260706-tx6, reverses D-08). EditorialHeader is globally rendered here;
