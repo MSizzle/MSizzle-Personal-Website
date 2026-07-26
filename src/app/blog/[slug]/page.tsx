@@ -6,7 +6,7 @@ import { calculateReadingTime } from '@/utils/reading-time'
 import { NewsletterCta } from '@/components/blog/newsletter-cta'
 import { Breadcrumbs } from '@/components/seo/breadcrumbs'
 import { RelatedEssays } from '@/components/blog/related-essays'
-import { PageHero } from '@/components/v3/page-hero'
+import { PageHero, PageCrumb } from '@/components/v3/page-hero'
 import { RuleStrong } from '@/components/v3/rule-strong'
 import { buildBlogPostMetadata } from '@/lib/seo/blog-metadata'
 import { formatMonthYear } from '@/lib/dates'
@@ -60,9 +60,18 @@ export default async function BlogPostPage({ params }: PageProps) {
         ]}
       />
 
-      {/* Full-bleed cover image (D-02) — only when post.cover exists */}
+      {/* With a cover the crumb leads, then the cover, then the title sits
+          flush against the cover's bottom edge. Without one the crumb stays
+          inside PageHero and keeps the standing top padding. */}
       {post.cover && (
-        <div className="relative mx-6 mb-6 h-[400px] border border-[var(--color-border-strong)] md:mx-40 md:mb-10 md:h-[600px]">
+        <div className="px-6 pt-10 md:px-40 md:pt-16">
+          <PageCrumb>Home / Writing</PageCrumb>
+        </div>
+      )}
+
+      {/* Inset cover image (D-02) — only when post.cover exists */}
+      {post.cover && (
+        <div className="relative mx-6 h-[400px] border border-[var(--color-border-strong)] md:mx-40 md:h-[600px]">
           {/* unoptimized (260723-g2q Task 4, see card-cover.tsx for the full
               reasoning): /api/notion-cover already resizes/webp-encodes
               server-side, so Next's optimizer would just do that work again. */}
@@ -83,7 +92,8 @@ export default async function BlogPostPage({ params }: PageProps) {
       <div className="px-6 md:px-40">
         <PageHero
           title={post.title}
-          crumb="Home / Writing"
+          crumb={post.cover ? undefined : "Home / Writing"}
+          flush={Boolean(post.cover)}
         />
 
         {/* Meta row: reading time · publish date · optional first tag */}

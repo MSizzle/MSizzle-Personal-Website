@@ -17,19 +17,35 @@ type Props = {
   sub?: ReactNode;
   /** Outline stroke variant for the h1 (sig-out) instead of filled sig */
   outline?: boolean;
+  /**
+   * Drops the top padding entirely. Use when a cover image sits directly above
+   * the hero: the standing padding exists to give the title air below the nav,
+   * and under a cover it just opens a dead gap. Flush lets the cover meet the
+   * title box.
+   */
+  flush?: boolean;
 };
 
-export function PageHero({ title, crumb, sub, outline = false }: Props) {
+/**
+ * The breadcrumb line above a page title. Exported so pages that need to place
+ * the crumb somewhere other than inside PageHero (above a cover image, say)
+ * reuse the same type treatment instead of redeclaring it and drifting.
+ */
+export function PageCrumb({ children }: { children: ReactNode }) {
+  return (
+    <div className="font-mono text-xs uppercase tracking-[0.12em] text-text-muted mb-[26px]">
+      {children}
+    </div>
+  );
+}
+
+export function PageHero({ title, crumb, sub, outline = false, flush = false }: Props) {
   return (
     <div
       className="pb-12"
-      style={{ paddingTop: "clamp(90px,16vh,180px)" }}
+      style={{ paddingTop: flush ? "0px" : "clamp(90px,16vh,180px)" }}
     >
-      {crumb && (
-        <div className="font-mono text-xs uppercase tracking-[0.12em] text-text-muted mb-[26px]">
-          {crumb}
-        </div>
-      )}
+      {crumb && <PageCrumb>{crumb}</PageCrumb>}
 
       <h1
         className={cn(

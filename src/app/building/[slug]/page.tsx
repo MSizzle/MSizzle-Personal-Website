@@ -4,7 +4,7 @@ import { getPublishedProjects, getProjectBySlug } from "@/lib/notion-projects";
 import { getBlocks } from "@/lib/notion";
 import { NotionRenderer } from "@/components/notion/notion-renderer";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
-import { PageHero } from "@/components/v3/page-hero";
+import { PageHero, PageCrumb } from "@/components/v3/page-hero";
 import { buildProjectMetadata } from "@/lib/seo/project-metadata";
 import type { Metadata } from "next";
 import type { BlockObjectResponse } from "@notionhq/client/build/src/api-endpoints";
@@ -46,9 +46,18 @@ export default async function ProjectPage({ params }: PageProps) {
 
   return (
     <>
-      {/* Full-bleed cover image (D-02) — only when project.cover (Notion cover) exists */}
+      {/* With a cover the crumb leads, then the cover, then the title sits
+          flush against the cover's bottom edge. Without one the crumb stays
+          inside PageHero and keeps the standing top padding. */}
       {project.cover && (
-        <div className="relative mx-6 mb-6 h-[400px] border border-[var(--color-border-strong)] md:mx-40 md:mb-10 md:h-[600px]">
+        <div className="px-6 pt-10 md:px-40 md:pt-16">
+          <PageCrumb>Home / Building</PageCrumb>
+        </div>
+      )}
+
+      {/* Inset cover image (D-02) — only when project.cover (Notion cover) exists */}
+      {project.cover && (
+        <div className="relative mx-6 h-[400px] border border-[var(--color-border-strong)] md:mx-40 md:h-[600px]">
           {/* unoptimized (260723-g2q Task 4, see card-cover.tsx for the full
               reasoning): /api/notion-cover already resizes/webp-encodes
               server-side, so Next's optimizer would just do that work again. */}
@@ -78,8 +87,9 @@ export default async function ProjectPage({ params }: PageProps) {
       <div className="px-6 md:px-40">
         <PageHero
           title={project.title}
-          crumb="Home / Building"
+          crumb={project.cover ? undefined : "Home / Building"}
           sub={project.description ?? ""}
+          flush={Boolean(project.cover)}
         />
       </div>
 
