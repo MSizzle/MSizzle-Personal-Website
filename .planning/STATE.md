@@ -29,7 +29,7 @@ Phase: 21 (mono-homepage-rebuild) — COMPLETE
 Plan: 6 of 6 (all 6 plans executed and summarized)
 Status: All 6 plans executed. All 3 human UAT items judged PASS by Monty on 2026-07-22
 against `npm run dev`. `21-HUMAN-UAT.md` is complete. Phase 21 is CLOSED.
-Last activity: 2026-07-23 - Completed quick task 260723-g2q: Image pipeline fade-in placeholders, hard proxy caching, de-dupe optimization, right-size delivery
+Last activity: 2026-07-26 - Completed quick task 260726-fe6: Gate the mobile header reveal on scroll on the homepage
 
 Progress: [███░░░░░░░] 33% (2/6 v4.0 phases complete)
 
@@ -198,6 +198,7 @@ None blocking. Highest-risk item: DM-02 (inversion language on a dark ground) in
 |---|-------------|------|--------|-----------|
 | 260722-wov | Homepage nav reveal, writing split, contact hover, hero copy | 2026-07-22 | c4ba222 | [260722-wov-homepage-nav-reveal-writing-split-contac](./quick/260722-wov-homepage-nav-reveal-writing-split-contac/) |
 | 260723-g2q | Image pipeline: fade-in placeholders, hard proxy caching, de-dupe optimization, right-size delivery | 2026-07-23 | bb132f6 | [260723-g2q-image-pipeline-fade-in-placeholders-hard](./quick/260723-g2q-image-pipeline-fade-in-placeholders-hard/) |
+| 260726-fe6 | Gate the mobile header reveal on scroll on the homepage | 2026-07-26 | 2cfa430 | [260726-fe6-mobile-header-scroll-gate](./quick/260726-fe6-mobile-header-scroll-gate/) |
 
 ## Deferred Items
 
