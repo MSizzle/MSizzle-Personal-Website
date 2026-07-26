@@ -14,6 +14,10 @@ describe('OG Image Generation', () => {
       'src/app/opengraph-image.tsx',
       'src/app/blog/[slug]/opengraph-image.tsx',
       'src/app/building/[slug]/opengraph-image.tsx',
+      'src/app/writing/opengraph-image.tsx',
+      'src/app/building/opengraph-image.tsx',
+      'src/app/prometheus/opengraph-image.tsx',
+      'src/app/contact/opengraph-image.tsx',
     ]
     for (const f of files) {
       const src = readFileSync(join(process.cwd(), f), 'utf-8')
@@ -54,6 +58,46 @@ describe('OG Image Generation', () => {
     // Node runtime: no runtime export
     expect('runtime' in module).toBe(false)
     // Default export is an async function
+    expect(typeof module.default).toBe('function')
+  })
+
+  it('writing OG module exports correct shape and non-empty alt', async () => {
+    const module = await import('@/app/writing/opengraph-image')
+    expect(module.size).toEqual({ width: 1200, height: 630 })
+    expect(module.contentType).toBe('image/png')
+    expect(typeof module.alt).toBe('string')
+    expect(module.alt.length).toBeGreaterThan(0)
+    expect(module.alt).not.toMatch(/—|–|--/)
+    expect(typeof module.default).toBe('function')
+  })
+
+  it('building index OG module exports correct shape and non-empty alt', async () => {
+    const module = await import('@/app/building/opengraph-image')
+    expect(module.size).toEqual({ width: 1200, height: 630 })
+    expect(module.contentType).toBe('image/png')
+    expect(typeof module.alt).toBe('string')
+    expect(module.alt.length).toBeGreaterThan(0)
+    expect(module.alt).not.toMatch(/—|–|--/)
+    expect(typeof module.default).toBe('function')
+  })
+
+  it('prometheus OG module exports correct shape and non-empty alt', async () => {
+    const module = await import('@/app/prometheus/opengraph-image')
+    expect(module.size).toEqual({ width: 1200, height: 630 })
+    expect(module.contentType).toBe('image/png')
+    expect(typeof module.alt).toBe('string')
+    expect(module.alt.length).toBeGreaterThan(0)
+    expect(module.alt).not.toMatch(/—|–|--/)
+    expect(typeof module.default).toBe('function')
+  })
+
+  it('contact OG module exports correct shape and non-empty alt', async () => {
+    const module = await import('@/app/contact/opengraph-image')
+    expect(module.size).toEqual({ width: 1200, height: 630 })
+    expect(module.contentType).toBe('image/png')
+    expect(typeof module.alt).toBe('string')
+    expect(module.alt.length).toBeGreaterThan(0)
+    expect(module.alt).not.toMatch(/—|–|--/)
     expect(typeof module.default).toBe('function')
   })
 })
