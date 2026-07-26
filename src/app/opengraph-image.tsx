@@ -1,16 +1,12 @@
 // Phase 19 SC-5 title-card OG image.
 // No gradients (site-wide rule; the old OG gradient exception is void).
-// Fonts read via fs at module scope so the route statically prerenders at build time.
+// Fonts and mono tokens come from the shared og-shared module (quick task 260726-kjp).
 import { ImageResponse } from 'next/og'
-import { readFileSync } from 'node:fs'
-import { join } from 'node:path'
+import { OG_INK, OG_PAPER, OG_SIZE, OG_CONTENT_TYPE, ogFonts } from '@/lib/seo/og-shared'
 
 export const alt = 'Monty Singer, founder of Prometheus, builder, and writer'
-export const size = { width: 1200, height: 630 }
-export const contentType = 'image/png'
-
-const hankenFont = readFileSync(join(process.cwd(), 'src/app/og-fonts/hanken-grotesk-800.woff'))
-const monoFont = readFileSync(join(process.cwd(), 'src/app/og-fonts/jetbrains-mono-400.woff'))
+export const size = OG_SIZE
+export const contentType = OG_CONTENT_TYPE
 
 export default function Image() {
   return new ImageResponse(
@@ -23,7 +19,7 @@ export default function Image() {
           flexDirection: 'column',
           justifyContent: 'space-between',
           alignItems: 'flex-start',
-          background: '#faf9f7',
+          background: OG_PAPER,
           padding: 72,
         }}
       >
@@ -35,8 +31,8 @@ export default function Image() {
             fontSize: 24,
             letterSpacing: 4,
             textTransform: 'uppercase',
-            background: '#e5411f',
-            color: '#ffffff',
+            background: OG_INK,
+            color: OG_PAPER,
             padding: '10px 20px',
           }}
         >
@@ -47,15 +43,15 @@ export default function Image() {
         <div
           style={{
             display: 'flex',
-            background: '#ffffff',
-            color: '#171717',
+            background: OG_PAPER,
+            color: OG_INK,
             fontFamily: 'Hanken Grotesk',
             fontWeight: 800,
             fontSize: 108,
             lineHeight: 1,
             letterSpacing: -3,
             padding: '28px 44px',
-            boxShadow: '16px 16px 0 #171717',
+            boxShadow: `16px 16px 0 ${OG_INK}`,
           }}
         >
           Monty Singer
@@ -67,7 +63,7 @@ export default function Image() {
             display: 'flex',
             fontFamily: 'JetBrains Mono',
             fontSize: 26,
-            color: '#171717',
+            color: OG_INK,
             opacity: 0.75,
           }}
         >
@@ -77,10 +73,7 @@ export default function Image() {
     ),
     {
       ...size,
-      fonts: [
-        { name: 'Hanken Grotesk', data: hankenFont, weight: 800, style: 'normal' },
-        { name: 'JetBrains Mono', data: monoFont, weight: 400, style: 'normal' },
-      ],
+      fonts: ogFonts(),
     },
   )
 }

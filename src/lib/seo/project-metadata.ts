@@ -25,7 +25,6 @@ export function buildProjectMetadata(project: Project): Metadata {
       description,
       url,
       type: 'website',
-      ...(project.image ? { images: [{ url: project.image }] } : {}),
     },
     twitter: { card: 'summary_large_image', title, description },
   }
