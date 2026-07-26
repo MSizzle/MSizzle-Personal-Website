@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { EditorialHeader } from '@/components/home-v2/editorial-header'
+import { useScrolledPast } from '@/hooks/use-scrolled-past'
 
 // Mobile drawer — unified link set across all routes per quick task 260706-tx6
 // (reverses D-08). Home is reachable via the "Monty Singer" brand link in the
@@ -19,6 +20,8 @@ const MOBILE_LINKS = [
 export function Navigation() {
   const [open, setOpen] = useState(false)
   const pathname = usePathname()
+  const isHome = pathname === '/'
+  const scrolledPast = useScrolledPast(24)
 
   // Derive the active EditorialHeader label from pathname (quick task
   // 260706-tx6, reverses D-08). EditorialHeader is globally rendered here;
@@ -33,8 +36,16 @@ export function Navigation() {
 
   return (
     <>
-      {/* Mobile header — always render across all routes; "Monty Singer" brand link + hamburger */}
-      <header className="fixed inset-x-0 top-0 z-50 bg-[var(--bg)] md:hidden">
+      {/* Mobile header: always renders across all routes; "Monty Singer" brand link +
+          hamburger. On the homepage it additionally gates visibility on scroll via
+          useScrolledPast (quick task 260726-fe6): hidden offscreen at scrollY 0, slides
+          down past the same 24px threshold StickyNav uses. Every other route keeps
+          rendering it unconditionally exactly as before. */}
+      <header
+        className={`fixed inset-x-0 top-0 z-50 bg-[var(--bg)] md:hidden${
+          isHome ? ' mobile-header-gate' : ''
+        }${isHome && scrolledPast ? ' show' : ''}`}
+      >
         <nav className="flex h-16 items-center justify-between px-6">
           <Link
             href="/"

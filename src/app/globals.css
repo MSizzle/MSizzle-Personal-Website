@@ -519,6 +519,23 @@ p.body {
   display: flex;
 }
 
+/* .mobile-header-gate is applied only on the homepage by navigation.tsx (quick task
+   260726-fe6), so the 64px mobile bar starts fully offscreen and slides down once
+   scrollY passes the same 24px threshold StickyNav uses. Every non-homepage route
+   never gets this class and stays unconditionally visible exactly as before. */
+.mobile-header-gate {
+  transform: translateY(-100%);
+  transition: transform 0.28s ease;
+}
+.mobile-header-gate.show {
+  transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .mobile-header-gate {
+    transition: none;
+  }
+}
+
 /* ── Segmented nav cells (EditorialHeader + StickyNav) ──
    Broad, full-height selectable zones separated by vertical dividers. At rest
    they read as plain labels; on hover the cell inverts as a playful surprise —

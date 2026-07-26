@@ -8,12 +8,21 @@
  *  - /building → activeLabel === 'Building'
  *  - MOBILE_LINKS includes /building; Prometheus is an external link (not /prometheus)
  */
+import React, { act } from "react";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen, cleanup, fireEvent } from "@testing-library/react";
 
 beforeEach(() => {
   cleanup();
 });
+
+function setScrollY(value: number) {
+  Object.defineProperty(window, "scrollY", {
+    value,
+    writable: true,
+    configurable: true,
+  });
+}
 
 vi.mock("next/link", () => ({
   default: ({
@@ -99,5 +108,35 @@ describe("Navigation component (Plan 02 / D-13)", () => {
     expect(external).not.toBeNull();
     expect(external?.getAttribute("target")).toBe("_blank");
     expect(external?.getAttribute("rel")).toContain("noopener");
+  });
+
+  it("hides the mobile header at scrollY 0 on the homepage", () => {
+    mockUsePathname.mockReturnValue("/");
+    setScrollY(0);
+    const { container } = render(<Navigation />);
+    const header = container.querySelector("header");
+    expect(header?.classList.contains("mobile-header-gate")).toBe(true);
+    expect(header?.classList.contains("show")).toBe(false);
+  });
+
+  it("reveals the mobile header past the scroll threshold on the homepage", () => {
+    mockUsePathname.mockReturnValue("/");
+    setScrollY(0);
+    const { container } = render(<Navigation />);
+    setScrollY(30);
+    act(() => {
+      window.dispatchEvent(new Event("scroll"));
+    });
+    const header = container.querySelector("header");
+    expect(header?.classList.contains("mobile-header-gate")).toBe(true);
+    expect(header?.classList.contains("show")).toBe(true);
+  });
+
+  it("always shows the mobile header on non-homepage routes regardless of scroll", () => {
+    mockUsePathname.mockReturnValue("/building");
+    setScrollY(0);
+    const { container } = render(<Navigation />);
+    const header = container.querySelector("header");
+    expect(header?.classList.contains("mobile-header-gate")).toBe(false);
   });
 });
