@@ -1104,11 +1104,25 @@ footer.site {
 .pb-card--book .pb-frame,
 .pb-card--movie .pb-frame { width: 150px; }
 .pb-media--book { width: 100%; height: 210px; }
+/* Title/author previously floated as plain white text directly over the poster
+   image with no backing, invisible whenever a cover's bottom region was light
+   (8 of 24 cards: The Prestige, 12 Rules for Life, $100M Offers, How to Get
+   Filthy Rich in Rising Asia, Facebook Book, Fight Club, Midnight in Paris,
+   The Fish That Ate The Whale). A solid ink bar behind the text guarantees
+   legibility on ANY poster art and is not tied to any specific frame variant
+   (`pb-frame--cream` is unrelated -- it only applies to the "Thing" card type)
+   -- robust to whatever frame variants get added in the future (quick task
+   260726-kjp). */
+.pb-book-caption {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  background: var(--color-invert);
+  padding: 10px 14px 12px;
+  display: flex; flex-direction: column; gap: 2px;
+}
 .pb-book-title {
-  position: absolute; left: 14px; right: 14px; bottom: 34px;
   font-size: 16px; font-weight: 800; line-height: 1.05; color: var(--color-text-inverse);
 }
-.pb-book-author { position: absolute; left: 14px; right: 14px; bottom: 14px; font-size: 11px; color: rgba(255, 255, 255, 0.82); }
+.pb-book-author { font-size: 11px; color: var(--color-text-inverse-dim); }
 .pb-foot { display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; border-top: 2px solid var(--color-text); }
 .pb-k { font-size: 9px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-text-muted); }
 

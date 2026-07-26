@@ -211,8 +211,10 @@ function CardFace({ item }: { item: LoveItem }) {
         <div className="pb-media pb-media--book">
           {media}
           <span className="pb-tag">{tag}</span>
-          <span className="pb-book-title">{item.title}</span>
-          {item.subtitle ? <span className="pb-book-author">{item.subtitle}</span> : null}
+          <span className="pb-book-caption">
+            <span className="pb-book-title">{item.title}</span>
+            {item.subtitle ? <span className="pb-book-author">{item.subtitle}</span> : null}
+          </span>
         </div>
         <div className="pb-foot">
           <span className="pb-k">{item.type === "Movie" ? "Film" : "Book"}</span>

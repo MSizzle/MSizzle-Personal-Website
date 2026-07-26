@@ -51,6 +51,17 @@ describe("Pinboard (sketch 012)", () => {
     expect(movie!.textContent).toContain("Film");
   });
 
+  it("renders the Movie title/author inside a solid pb-book-caption backing bar (260726-kjp)", () => {
+    const { container } = render(<Pinboard items={ITEMS} />);
+    const movie = container.querySelector(".pb-card--movie");
+    expect(movie).not.toBeNull();
+    const caption = movie!.querySelector(".pb-book-caption");
+    expect(caption).not.toBeNull();
+    const title = caption!.querySelector(".pb-book-title");
+    expect(title).not.toBeNull();
+    expect(caption!.textContent).toContain("Fight Club");
+  });
+
   it("renders a YouTube thumbnail from the video id", () => {
     const { container } = render(<Pinboard items={ITEMS} />);
     const img = container.querySelector('img[src*="img.youtube.com/vi/dQw4w9WgXcQ"]');
