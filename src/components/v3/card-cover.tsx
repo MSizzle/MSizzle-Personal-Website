@@ -41,23 +41,30 @@ export function CardCover({ src, alt, sizes, fallback }: Props) {
     return <>{fallback}</>;
   }
 
+  // Matting: the photo is inset to the same 26px gutter the card's text block
+  // uses, so the cover reads as a framed plate rather than the one element that
+  // bleeds to the card border. No bottom padding here: the text block below
+  // already supplies its own 26px top padding. The fallback TitleCard path
+  // above stays full bleed, unchanged.
   return (
-    <div className="relative w-full aspect-[4/3] overflow-hidden">
-      {/* unoptimized (260723-g2q Task 4): /api/notion-cover already resizes,
-          rotates, and webp-encodes this image server-side via sharp; wrapping
-          it in next/image's own optimizer would re-fetch, re-decode, and
-          re-encode it a second time for no benefit. */}
-      <Image
-        src={src}
-        alt={alt}
-        fill
-        sizes={sizes ?? "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"}
-        className="object-cover"
-        placeholder="blur"
-        blurDataURL={NEUTRAL_BLUR_DATA_URL}
-        unoptimized
-        onError={() => setFailed(true)}
-      />
+    <div className="px-[26px] pt-[26px]">
+      <div className="relative w-full aspect-[4/3] overflow-hidden border border-[var(--color-border-strong)]">
+        {/* unoptimized (260723-g2q Task 4): /api/notion-cover already resizes,
+            rotates, and webp-encodes this image server-side via sharp; wrapping
+            it in next/image's own optimizer would re-fetch, re-decode, and
+            re-encode it a second time for no benefit. */}
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          sizes={sizes ?? "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"}
+          className="object-cover"
+          placeholder="blur"
+          blurDataURL={NEUTRAL_BLUR_DATA_URL}
+          unoptimized
+          onError={() => setFailed(true)}
+        />
+      </div>
     </div>
   );
 }
