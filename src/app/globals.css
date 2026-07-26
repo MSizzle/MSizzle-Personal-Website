@@ -794,6 +794,8 @@ li:last-child > .nav-cell {
 .drop {
   display: inline-block;
   max-width: 100%;
+  /* Anchor for the absolutely positioned bay below. */
+  position: relative;
 }
 .drop-label {
   display: inline-block;
@@ -810,6 +812,13 @@ li:last-child > .nav-cell {
   overflow: hidden;
   max-height: 0;
   transition: max-height 420ms var(--ease-out, ease);
+  /* Out of normal flow so opening a box drops the mark OVER the content below
+     instead of growing the hero and pushing the Building section down. Sits
+     under the label (z-index 2) but above the page content it now overlaps. */
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1;
 }
 .drop:hover .drop-bay,
 .drop:focus-within .drop-bay {
