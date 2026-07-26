@@ -472,7 +472,11 @@ p.body {
   transform: translateY(-100%);
   transition: transform 0.28s ease;
 }
-.stickynav.show {
+/* :focus-within lets keyboard-tabbing users reveal the bar before any scroll
+   happens, not only via the scroll-triggered .show class (WCAG 2.4.7, quick
+   task 260726-kjp). */
+.stickynav.show,
+.stickynav:focus-within {
   transform: translateY(0);
 }
 @media (prefers-reduced-motion: reduce) {
@@ -527,7 +531,11 @@ p.body {
   transform: translateY(-100%);
   transition: transform 0.28s ease;
 }
-.mobile-header-gate.show {
+/* :focus-within lets keyboard-tabbing users reveal the bar before any scroll
+   happens, not only via the scroll-triggered .show class (WCAG 2.4.7, quick
+   task 260726-kjp). */
+.mobile-header-gate.show,
+.mobile-header-gate:focus-within {
   transform: translateY(0);
 }
 @media (prefers-reduced-motion: reduce) {

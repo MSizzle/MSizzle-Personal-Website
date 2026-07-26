@@ -21,7 +21,7 @@ const nextConfig: NextConfig = {
       { source: '/links', destination: '/', permanent: true },
       { source: '/about', destination: '/', permanent: true },
       { source: '/newsletter', destination: '/writing', permanent: true },
-      { source: '/watching', destination: '/uses', permanent: true },
+      { source: '/watching', destination: '/#loves', permanent: true }, // '/uses' was deleted; the Things I Love section is the successor content (quick task 260726-kjp)
       { source: '/portfolio', destination: '/building', permanent: true },
       { source: '/projects', destination: '/building', permanent: true },
       { source: '/projects/:slug', destination: '/building/:slug', permanent: true },
