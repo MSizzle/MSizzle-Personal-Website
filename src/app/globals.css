@@ -812,13 +812,20 @@ li:last-child > .nav-cell {
   overflow: hidden;
   max-height: 0;
   transition: max-height 420ms var(--ease-out, ease);
-  /* Out of normal flow so opening a box drops the mark OVER the content below
-     instead of growing the hero and pushing the Building section down. Sits
-     under the label (z-index 2) but above the page content it now overlaps. */
-  position: absolute;
-  top: 100%;
-  left: 0;
-  z-index: 1;
+  /* Mobile keeps the bay in normal flow: the column is narrow, so an overlaying
+     mark eclipses the text beside and below it. Here the bay pushes the content
+     down instead, which reads cleaner at this width. */
+}
+@media (min-width: 768px) {
+  .drop-bay {
+    /* Desktop takes the bay out of flow so opening a box drops the mark OVER
+       the content below rather than growing the hero and pushing the Building
+       section down. Sits under the label (z-index 2) but above what it laps. */
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1;
+  }
 }
 .drop:hover .drop-bay,
 .drop:focus-within .drop-bay {

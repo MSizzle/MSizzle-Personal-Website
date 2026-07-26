@@ -528,11 +528,12 @@ function NotionImageBlock({ block }: { block: BlockWithChildren }) {
   const src = `/api/notion-image?blockId=${block.id}`;
   return (
     <figure className="my-6">
-      {/* Matted frame: the photo sits inside a paper field with a hairline edge
-          rather than bleeding the full width of the reading column. The height
-          cap plus object-contain also stops portrait and square images being
-          stretched into the hardcoded 3:2 box below. */}
-      <div className="border border-[var(--color-border-strong)] bg-[var(--color-bg)] p-4">
+      {/* Paper padding only, no edge: in-post images sit inside a white margin
+          rather than bleeding the full width of the reading column. The border
+          is reserved for page cover images. The height cap plus object-contain
+          also stops portrait and square images being stretched into the
+          hardcoded 3:2 box below. */}
+      <div className="bg-[var(--color-bg)] p-4">
         <Image
           src={src}
           alt={alt}

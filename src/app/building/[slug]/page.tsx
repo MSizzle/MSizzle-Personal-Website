@@ -48,7 +48,7 @@ export default async function ProjectPage({ params }: PageProps) {
     <>
       {/* Full-bleed cover image (D-02) — only when project.cover (Notion cover) exists */}
       {project.cover && (
-        <div className="relative mx-6 mb-6 h-[400px] md:mx-40 md:mb-10 md:h-[600px]">
+        <div className="relative mx-6 mb-6 h-[400px] border border-[var(--color-border-strong)] md:mx-40 md:mb-10 md:h-[600px]">
           {/* unoptimized (260723-g2q Task 4, see card-cover.tsx for the full
               reasoning): /api/notion-cover already resizes/webp-encodes
               server-side, so Next's optimizer would just do that work again. */}
