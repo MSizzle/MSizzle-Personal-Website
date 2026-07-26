@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useScrolledPast } from "@/hooks/use-scrolled-past";
 
 // Mirrors the global EditorialHeader link set (quick task 260706-tx6, reverses D-08):
 // Prometheus, Building, Writing, Contact. Contact is the /contact route (quick
@@ -26,22 +26,13 @@ const LINKS = [
  * Z-index: relies on Plan 01's `.stickynav` CSS rule (z-index: 9000) to sit
  * above the existing z-50 mobile header (nav/navigation.tsx).
  *
- * SSR: `window` is accessed only inside `useEffect` (never on the server).
+ * Scroll-gate: the threshold check now lives in the shared `useScrolledPast`
+ * hook (quick task 260726-fe6) instead of an inline listener, so this and the
+ * mobile header stay in sync on one threshold definition. SSR-safe: `window`
+ * is accessed only inside the hook's `useEffect` (never on the server).
  */
 export function StickyNav() {
-  const [show, setShow] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setShow(window.scrollY > 24);
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+  const show = useScrolledPast(24);
 
   return (
     <div className={`stickynav${show ? " show" : ""}`}>
