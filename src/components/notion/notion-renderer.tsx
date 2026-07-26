@@ -528,19 +528,26 @@ function NotionImageBlock({ block }: { block: BlockWithChildren }) {
   const src = `/api/notion-image?blockId=${block.id}`;
   return (
     <figure className="my-6">
-      <Image
-        src={src}
-        alt={alt}
-        width={1200}
-        height={800}
-        sizes="(max-width: 768px) 100vw, 66ch"
-        priority={isFirst}
-        loading={isFirst ? "eager" : "lazy"}
-        className="h-auto w-full rounded-lg"
-        unoptimized={false}
-      />
+      {/* Matted frame: the photo sits inside a paper field with a hairline edge
+          rather than bleeding the full width of the reading column. The height
+          cap plus object-contain also stops portrait and square images being
+          stretched into the hardcoded 3:2 box below. */}
+      <div className="border border-[var(--color-border-strong)] bg-[var(--color-bg)] p-4">
+        <Image
+          src={src}
+          alt={alt}
+          width={1200}
+          height={800}
+          sizes="(max-width: 768px) 100vw, 66ch"
+          priority={isFirst}
+          fetchPriority={isFirst ? "high" : undefined}
+          loading={isFirst ? "eager" : "lazy"}
+          className="mx-auto h-auto max-h-[480px] w-auto max-w-full object-contain"
+          unoptimized={false}
+        />
+      </div>
       {caption && (
-        <figcaption className="mt-2 text-center text-sm text-gray-500 dark:text-gray-400">
+        <figcaption className="mt-2 text-center text-sm text-[var(--color-text-muted)]">
           {caption}
         </figcaption>
       )}
