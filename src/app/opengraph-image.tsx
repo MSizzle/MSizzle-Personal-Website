@@ -71,7 +71,7 @@ export default function Image() {
             opacity: 0.75,
           }}
         >
-          Founder of Prometheus. Builder, writer, and perpetual tinkerer.
+          Founder of Prometheus. Builder, writer, and doer.
         </div>
       </div>
     ),

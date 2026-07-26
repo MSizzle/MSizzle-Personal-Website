@@ -27,7 +27,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 const SITE_DESCRIPTION =
-  "Monty Singer is the founder of Prometheus, an AI integrations and education company. Builder, writer, and perpetual tinkerer.";
+  "Monty Singer is the founder of Prometheus, an AI integrations and education company. Builder, writer, and doer.";
 const SITE_TITLE = "Monty Singer | Founder of Prometheus, Builder, Writer";
 
 export const metadata: Metadata = {

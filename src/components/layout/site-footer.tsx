@@ -43,7 +43,7 @@ export function SiteFooter() {
             Monty Singer
           </div>
           <p className="mt-3 max-w-[32ch] text-sm text-[var(--color-text-muted)]">
-            Founder of Prometheus. Builder, writer, tinkerer.
+            Founder of Prometheus. Builder, writer, doer.
           </p>
           <p className="mt-7 font-mono text-xs uppercase tracking-[0.08em] text-[var(--color-text-muted)]">
             {"© "}
