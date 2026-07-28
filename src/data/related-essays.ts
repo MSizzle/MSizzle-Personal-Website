@@ -16,9 +16,15 @@ export const RELATED_ESSAYS: Record<string, string[]> = {
   'staring-into-the-void': ['demystifying-merlin', 'choosing-faith'],
 
   // Technology / AI
-  'ai-is-nibbling-the-world': ['algorithmic-content', 'standing-on-sediment'],
-  'algorithmic-content': ['ai-is-nibbling-the-world', 'standing-on-sediment'],
-  'standing-on-sediment': ['ai-is-nibbling-the-world', 'algorithmic-content'],
+  // The live Notion slug is 'ai-nibbling'; this map said
+  // 'ai-is-nibbling-the-world', so the key never matched and the two entries
+  // referencing it silently resolved to nothing (fixed 260728-kcg).
+  'ai-nibbling': ['algorithmic-content', 'standing-on-sediment'],
+  'algorithmic-content': ['ai-nibbling', 'standing-on-sediment'],
+  'standing-on-sediment': ['ai-nibbling', 'algorithmic-content'],
+
+  // Culture / Observation
+  'vibe-check': ['algorithmic-content', 'defiant-optimism'],
 
   // Relationships / Personal
   'perfect-partner': ['discipline-and-dog-names'],
