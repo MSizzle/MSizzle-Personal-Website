@@ -8,6 +8,8 @@ import { MainOffset } from "@/components/main-offset";
 import { UmamiAnalytics } from "@/components/analytics/umami-analytics";
 import { VisitSurvey } from "@/components/visit-survey";
 import { SITE_URL } from "@/lib/seo/site";
+import { JsonLd } from "@/components/seo/json-ld";
+import { buildWebSiteSchema } from "@/lib/seo/schemas";
 import "./globals.css";
 
 // Hanken Grotesk: display + body font for photo-forward design (D-02).
@@ -70,6 +72,8 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-screen bg-bg text-text antialiased">
+        {/* Site-level entity markup, emitted once for every route (260728-kcg). */}
+        <JsonLd data={buildWebSiteSchema()} />
         <LenisProvider>
           <MotionProvider>
             <Navigation />
