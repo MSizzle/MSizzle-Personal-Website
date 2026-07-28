@@ -22,6 +22,15 @@ export type EssayGridPost = {
 // the todo's own "roughly two rows" wording (quick task 260722-wov, item 3).
 const INITIAL_VISIBLE = 6;
 
+// The collapsed grid renders EVERY post and hides the overflow with
+// `display: none` rather than slicing the array (quick task 260728-fri).
+// Slicing left 10 of 16 essays with zero inbound links anywhere in the served
+// HTML, so Google filed them under "Discovered - currently not indexed": a
+// sitemap entry alone doesn't earn crawl budget on a low-authority domain.
+// Googlebot parses and follows `display:none` anchors, so keeping them in the
+// DOM restores the internal links at no visual cost. Do NOT reintroduce a
+// .slice() here.
+
 function groupByYear(posts: EssayGridPost[]): Map<number, EssayGridPost[]> {
   const groups = new Map<number, EssayGridPost[]>();
   for (const post of posts) {
@@ -60,9 +69,18 @@ export function EssayGrid({ posts }: { posts: EssayGridPost[] }) {
     return (
       <div className="-mx-6 md:-mx-40">
         <div className="card-grid">
-          {posts.slice(0, INITIAL_VISIBLE).map((post, i) => (
-            <Card key={post.id} {...cardProps(post, i)} />
-          ))}
+          {posts.map((post, i) =>
+            i < INITIAL_VISIBLE ? (
+              <Card key={post.id} {...cardProps(post, i)} />
+            ) : (
+              // Present in the SSR payload for crawlers, `display: none` for
+              // humans -- so it claims no grid track, no layout space, and no
+              // tab stop until the user expands.
+              <div key={post.id} className="hidden">
+                <Card {...cardProps(post, i)} />
+              </div>
+            ),
+          )}
         </div>
         <button
           type="button"

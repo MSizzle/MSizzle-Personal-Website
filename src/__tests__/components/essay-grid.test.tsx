@@ -48,7 +48,7 @@ describe("EssayGrid", () => {
     expect(screen.queryByText("2025")).toBeNull();
   });
 
-  it("8 posts across two years render exactly 6 Cards initially plus a show-all button", () => {
+  it("8 posts across two years render 6 visible Cards plus a show-all button, with the overflow present but display:none", () => {
     const posts: EssayGridPost[] = Array.from({ length: 8 }, (_, i) =>
       makePost({
         slug: `p${i}`,
@@ -59,12 +59,28 @@ describe("EssayGrid", () => {
     );
     render(React.createElement(EssayGrid, { posts }));
 
-    // Only first 6 (newest, i.e. posts[0..5]) render.
+    // First 6 (newest, i.e. posts[0..5]) render visibly.
     for (let i = 0; i < 6; i++) {
       expect(screen.getByText(`Post ${i}`)).toBeDefined();
+      expect(screen.getByText(`Post ${i}`).closest(".hidden")).toBeNull();
     }
-    expect(screen.queryByText("Post 6")).toBeNull();
-    expect(screen.queryByText("Post 7")).toBeNull();
+
+    // The overflow stays in the DOM so crawlers still see the links -- slicing
+    // it away orphaned 10 of 16 essays in Google's index (quick task
+    // 260728-fri). It must be wrapped in a `hidden` (display:none) container so
+    // it takes no layout space and no tab stop until the user expands.
+    for (const i of [6, 7]) {
+      const overflow = screen.getByText(`Post ${i}`);
+      expect(overflow).toBeDefined();
+      expect(overflow.closest(".hidden")).not.toBeNull();
+    }
+
+    // All 8 hrefs are crawlable regardless of visibility.
+    for (let i = 0; i < 8; i++) {
+      expect(
+        document.querySelector(`a[href="/blog/p${i}"]`)
+      ).not.toBeNull();
+    }
 
     expect(screen.getByText("show all essays (8) →")).toBeDefined();
   });
