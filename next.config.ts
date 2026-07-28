@@ -22,6 +22,7 @@ const nextConfig: NextConfig = {
       { source: '/about', destination: '/', permanent: true },
       { source: '/newsletter', destination: '/writing', permanent: true },
       { source: '/watching', destination: '/#loves', permanent: true }, // '/uses' was deleted; the Things I Love section is the successor content (quick task 260726-kjp)
+      { source: '/uses', destination: '/#loves', permanent: true }, // /uses itself still 404'd and sat in Google's index as a Not-found (quick task 260728-fri)
       { source: '/portfolio', destination: '/building', permanent: true },
       { source: '/projects', destination: '/building', permanent: true },
       { source: '/projects/:slug', destination: '/building/:slug', permanent: true },
