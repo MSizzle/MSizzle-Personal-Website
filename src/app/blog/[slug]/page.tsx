@@ -8,7 +8,10 @@ import { Breadcrumbs } from '@/components/seo/breadcrumbs'
 import { RelatedEssays } from '@/components/blog/related-essays'
 import { PageHero, PageCrumb } from '@/components/v3/page-hero'
 import { RuleStrong } from '@/components/v3/rule-strong'
-import { buildBlogPostMetadata } from '@/lib/seo/blog-metadata'
+import { buildBlogPostMetadata, deriveDescriptionFromBlocks } from '@/lib/seo/blog-metadata'
+import { buildBlogPostingSchema } from '@/lib/seo/schemas'
+import { JsonLd } from '@/components/seo/json-ld'
+import { extractTextFromBlock } from '@/utils/notion-text'
 import { formatMonthYear } from '@/lib/dates'
 import type { Metadata } from 'next'
 import type { BlockObjectResponse } from '@notionhq/client/build/src/api-endpoints'
@@ -37,7 +40,13 @@ export async function generateMetadata({
   const { slug } = await params
   const post = await getPostBySlug(slug)
   if (!post) return { title: 'Post Not Found' }
-  return buildBlogPostMetadata(post)
+  // Blocks feed the content-derived description fallback. The page body fetches
+  // the same blocks for reading time; Next dedupes identical fetches within a
+  // request and ISR caps how often this runs, so it costs no extra Notion call.
+  // A failure here must not take down metadata generation -- degrade to the
+  // template description instead.
+  const blocks = await getBlocks(post.id).catch(() => [])
+  return buildBlogPostMetadata(post, blocks)
 }
 
 export default async function BlogPostPage({ params }: PageProps) {
@@ -49,8 +58,34 @@ export default async function BlogPostPage({ params }: PageProps) {
   const blocks = await getBlocks(post.id)
   const readingTime = calculateReadingTime(blocks)
 
+  // Same precedence the metadata uses, so the JSON-LD description and the
+  // <meta> description never disagree.
+  const description =
+    post.description || deriveDescriptionFromBlocks(blocks) ||
+    `An essay by Monty Singer: ${post.title}.`
+  const wordCount = blocks
+    .map(extractTextFromBlock)
+    .join(' ')
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean).length
+
   return (
     <>
+      {/* Article markup: headline, dates, author, cover image (260728-kcg).
+          Posts previously emitted only the breadcrumb below. */}
+      <JsonLd
+        data={buildBlogPostingSchema({
+          title: post.title,
+          slug: post.slug,
+          description,
+          date: post.date,
+          lastEdited: post.lastEdited,
+          coverPageId: post.cover ? post.id : null,
+          wordCount,
+        })}
+      />
+
       {/* Semantic breadcrumb nav + JSON-LD (sr-only); Writing points to /writing per D-14 */}
       <Breadcrumbs
         items={[
