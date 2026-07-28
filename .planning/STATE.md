@@ -200,6 +200,7 @@ None blocking. Highest-risk item: DM-02 (inversion language on a dark ground) in
 | 260723-g2q | Image pipeline: fade-in placeholders, hard proxy caching, de-dupe optimization, right-size delivery | 2026-07-23 | bb132f6 | [260723-g2q-image-pipeline-fade-in-placeholders-hard](./quick/260723-g2q-image-pipeline-fade-in-placeholders-hard/) |
 | 260726-fe6 | Gate the mobile header reveal on scroll on the homepage | 2026-07-26 | 2cfa430 | [260726-fe6-mobile-header-scroll-gate](./quick/260726-fe6-mobile-header-scroll-gate/) |
 | 260726-kjp | Fix broken-in-production cluster: OG images, invisible pinboard titles, dead redirect, keyboard focus on gated nav | 2026-07-26 | a213595 | [260726-kjp-fix-broken-production-cluster](./quick/260726-kjp-fix-broken-production-cluster/) |
+| 260728-fri | SEO P0 from the Search Console coverage export: un-orphan 10 essays, redirect /uses, unblock the Notion image proxies in robots.txt | 2026-07-28 | a9d18c8 | [260728-fri-seo-p0-server-render-all-essay-links-add](./quick/260728-fri-seo-p0-server-render-all-essay-links-add/) |
 
 ## Deferred Items
 
