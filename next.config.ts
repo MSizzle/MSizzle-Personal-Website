@@ -26,6 +26,10 @@ const nextConfig: NextConfig = {
       { source: '/portfolio', destination: '/building', permanent: true },
       { source: '/projects', destination: '/building', permanent: true },
       { source: '/projects/:slug', destination: '/building/:slug', permanent: true },
+      // The on-site /prometheus page was a ~190-word stub of prometheus.today.
+      // Rather than maintain a thin duplicate competing with the real site,
+      // send the path (and its accumulated links) straight there (260728-kcg).
+      { source: '/prometheus', destination: 'https://prometheus.today', permanent: true },
     ]
   },
   images: {

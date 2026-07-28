@@ -13,11 +13,13 @@ import Link from "next/link";
  * Copy rules (CLAUDE.md): no em dashes, no location. Identity: Founder of Prometheus.
  * External anchors carry rel="noopener noreferrer".
  */
-const EXPLORE = [
+const EXPLORE: { label: string; href: string; external?: boolean }[] = [
   { label: "Building", href: "/building" },
   { label: "Writing", href: "/writing" },
   { label: "Things I Love", href: "/#loves" },
-  { label: "Prometheus", href: "/prometheus" },
+  // The /prometheus stub was deleted in favour of the real site (quick task
+  // 260728-kcg); this was the last internal link pointing at it.
+  { label: "Prometheus", href: "https://prometheus.today", external: true },
 ];
 
 const ELSEWHERE: { label: string; href: string; external: boolean }[] = [
@@ -60,12 +62,23 @@ export function SiteFooter() {
           <ul className="space-y-1">
             {EXPLORE.map((l) => (
               <li key={l.href}>
-                <Link
-                  href={l.href}
-                  className="font-display text-[15px] font-bold transition-colors hover:underline hover:underline-offset-4"
-                >
-                  {l.label}
-                </Link>
+                {l.external ? (
+                  <a
+                    href={l.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-display text-[15px] font-bold transition-colors hover:underline hover:underline-offset-4"
+                  >
+                    {l.label}
+                  </a>
+                ) : (
+                  <Link
+                    href={l.href}
+                    className="font-display text-[15px] font-bold transition-colors hover:underline hover:underline-offset-4"
+                  >
+                    {l.label}
+                  </Link>
+                )}
               </li>
             ))}
           </ul>
