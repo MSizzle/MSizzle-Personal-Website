@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { BlogPost } from "@/lib/notion";
 import { estimateReadingTime } from "@/utils/reading-time";
 
@@ -61,16 +62,16 @@ export function SectionWriting({
           <p>Nothing here yet. Check back soon.</p>
         ) : (
           rows.map((row) => (
-            <a key={row.href} className="e-post" href={row.href}>
+            <Link key={row.href} className="e-post" href={row.href}>
               <span className="dt">{formatYYYYMM(row.date)}</span>
               <span>{row.title}</span>
               <span className="rd">{row.readTime} min</span>
-            </a>
+            </Link>
           ))
         )}
-        <a className="more" href="/writing">
+        <Link className="more" href="/writing">
           all posts →
-        </a>
+        </Link>
       </div>
     </section>
   );

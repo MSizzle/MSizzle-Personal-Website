@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { Project } from "@/lib/notion-projects";
 
 /**
@@ -48,24 +49,35 @@ export function SectionBuilding({
       <h2 className="reveal font-mono text-xs uppercase tracking-[0.12em] text-text-muted">
         01 · Building
       </h2>
-      {rows.map((row, i) => (
-        <a
-          key={row.href}
-          className="a-row reveal"
-          href={row.href}
-          {...(row.external
-            ? { target: "_blank", rel: "noopener noreferrer" }
-            : {})}
-        >
-          <span className="num">{String(i + 1).padStart(3, "0")}</span>
-          <span className="ttl">{row.title}</span>
-          <span className="dsc">{row.description}</span>
-          <span className="status">{row.status}</span>
-        </a>
-      ))}
-      <a className="more reveal" href="/building">
+      {rows.map((row, i) => {
+        const children = (
+          <>
+            <span className="num">{String(i + 1).padStart(3, "0")}</span>
+            <span className="ttl">{row.title}</span>
+            <span className="dsc">{row.description}</span>
+            <span className="status">{row.status}</span>
+          </>
+        );
+
+        return row.external ? (
+          <a
+            key={row.href}
+            className="a-row reveal"
+            href={row.href}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {children}
+          </a>
+        ) : (
+          <Link key={row.href} className="a-row reveal" href={row.href}>
+            {children}
+          </Link>
+        );
+      })}
+      <Link className="more reveal" href="/building">
         all projects →
-      </a>
+      </Link>
     </section>
   );
 }

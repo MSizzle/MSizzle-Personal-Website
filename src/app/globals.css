@@ -41,6 +41,12 @@
 
 html {
   scroll-behavior: auto; /* Lenis handles smooth scroll */
+  /* Counterpart to the sticky header (quick task 260916-lqq): keeps in-page
+     anchors from landing underneath the bar. Lenis is constructed without
+     `anchors`, so anchor jumps stay native and honour scroll-padding — as
+     does the App Router's scrollIntoView. 16px is breathing room so an
+     anchored heading doesn't kiss the bar's bottom edge. */
+  scroll-padding-top: calc(var(--header-h) + 16px);
 }
 
 /* The viewport is a hard edge. `overflow-x: hidden` on body alone still lets
@@ -126,8 +132,8 @@ h1.sig .hl {
   --sig-shadow: 0.055em 0.055em 0 var(--color-text); /* hard ink lift, not a fill (PATTERNS.md Part 3) */
 
   /* SiteHeader height (quick task 260916-lqq). .site-header's own height, the
-     mobile drawer's top offset, and html's scroll-padding-top all read this
-     one value, so the three cannot drift apart. */
+     mobile drawer's top offset, and html's anchor scroll offset (below) all
+     read this one value, so the three cannot drift apart. */
   --header-h: 64px;
 
   /* Back-compat aliases: pre-v3 token names still referenced by global
