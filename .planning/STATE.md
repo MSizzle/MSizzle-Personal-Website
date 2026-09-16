@@ -4,8 +4,8 @@ milestone: v4.0
 milestone_name: Mono Restyle
 status: All 6 plans executed. All 3 human UAT items judged PASS by Monty on 2026-07-22
 stopped_at: Phase 22 context gathered
-last_updated: "2026-07-22T03:45:48.674Z"
-last_activity: 2026-07-22
+last_updated: "2026-09-16T20:10:00.000Z"
+last_activity: 2026-09-16
 progress:
   total_phases: 6
   completed_phases: 2
@@ -202,6 +202,7 @@ None blocking. Highest-risk item: DM-02 (inversion language on a dark ground) in
 | 260726-kjp | Fix broken-in-production cluster: OG images, invisible pinboard titles, dead redirect, keyboard focus on gated nav | 2026-07-26 | a213595 | [260726-kjp-fix-broken-production-cluster](./quick/260726-kjp-fix-broken-production-cluster/) |
 | 260728-fri | SEO P0 from the Search Console coverage export: un-orphan 10 essays, redirect /uses, unblock the Notion image proxies in robots.txt | 2026-07-28 | a9d18c8 | [260728-fri-seo-p0-server-render-all-essay-links-add](./quick/260728-fri-seo-p0-server-render-all-essay-links-add/) |
 | 260728-kcg | SEO P1: content-derived meta descriptions, BlogPosting/WebSite JSON-LD, repaired related essays, canonical unification; deleted the /prometheus stub in favour of a 301 to prometheus.today | 2026-07-28 | 6a39444 | [260728-kcg-p1-seo-batch-plus-remove-prometheus-rout](./quick/260728-kcg-p1-seo-batch-plus-remove-prometheus-rout/) |
+| 260916-lqq | Unify four divergent nav behaviours into one sticky SiteHeader on every route; single link source; next/link on homepage rows; scroll-padding-top; fixed a conditional useContext and a stale-closure effect | 2026-09-16 | 85bcf21 | [260916-lqq-unify-site-navigation-into-one-sticky-he](./quick/260916-lqq-unify-site-navigation-into-one-sticky-he/) |
 
 ## Deferred Items
 
