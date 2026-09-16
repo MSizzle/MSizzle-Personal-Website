@@ -1,44 +1,51 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 /**
- * useScrolledPast - shared scroll-threshold hook (quick task 260726-fe6).
+ * useScrolledPast - shared scroll-threshold hook with hysteresis (quick task
+ * 260916-lqq, simplified from the 260726-fe6 version).
  *
- * Extracted from StickyNav's original inline scroll listener so StickyNav and
- * the mobile header (Navigation) share one threshold definition instead of
- * duplicating the magic number 24. `window` is only ever touched inside
- * useEffect, so server-side rendering is unaffected: the initial render
- * always returns false, and the value only flips after the first "scroll"
- * event fires past `threshold`.
+ * Drives the SiteHeader's background/border swap on an always-visible bar
+ * (not a reveal — the header no longer hides offscreen at any scroll
+ * position). `enterAt` is the scrollY the bar must pass to go solid; `exitAt`
+ * (default: same as enterAt) is the scrollY it must drop back below to go
+ * transparent again. Using a lower exitAt than enterAt gives the transition
+ * hysteresis, so Lenis's lagging scroll position (lerp: 0.1) cannot flicker
+ * the class by repeatedly crossing a single hard line.
+ *
+ * `window` is only ever touched inside useEffect, so server-side rendering is
+ * unaffected: the initial render always returns false, and the value only
+ * flips after the first "scroll" event fires.
  */
 export function useScrolledPast(
-  threshold: number,
-  viewportFraction?: number,
+  enterAt: number,
+  exitAt: number = enterAt,
 ): boolean {
-  const [scrolledPast, setScrolledPast] = useState(false);
+  const [solid, setSolid] = useState(false);
+  // Tracks the current side without triggering a re-render on every scroll
+  // tick — setState only fires when the side actually flips.
+  const solidRef = useRef(false);
 
   useEffect(() => {
-    // A viewportFraction reveals the bar only after that share of the first
-    // screen has scrolled away, so it arrives as a deliberate transition
-    // instead of popping in on the first trackpad nudge. Falls back to the
-    // fixed pixel threshold when no fraction is given.
-    const limit = () =>
-      viewportFraction ? window.innerHeight * viewportFraction : threshold;
-
     const handleScroll = () => {
-      setScrolledPast(window.scrollY > limit());
+      const y = window.scrollY;
+      if (!solidRef.current && y > enterAt) {
+        solidRef.current = true;
+        setSolid(true);
+      } else if (solidRef.current && y <= exitAt) {
+        solidRef.current = false;
+        setSolid(false);
+      }
     };
 
     handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
-    window.addEventListener("resize", handleScroll, { passive: true });
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("resize", handleScroll);
     };
-  }, [threshold, viewportFraction]);
+  }, [enterAt, exitAt]);
 
-  return scrolledPast;
+  return solid;
 }

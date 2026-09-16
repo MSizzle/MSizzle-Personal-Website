@@ -2,9 +2,8 @@ import type { Metadata } from "next";
 import { Hanken_Grotesk, JetBrains_Mono } from "next/font/google";
 import { LenisProvider } from "@/components/providers/lenis-provider";
 import { MotionProvider } from "@/components/providers/motion-provider";
-import { Navigation } from "@/components/nav/navigation";
+import { SiteHeader } from "@/components/nav/site-header";
 import { SiteFooter } from "@/components/layout/site-footer";
-import { MainOffset } from "@/components/main-offset";
 import { UmamiAnalytics } from "@/components/analytics/umami-analytics";
 import { VisitSurvey } from "@/components/visit-survey";
 import { SITE_URL } from "@/lib/seo/site";
@@ -76,8 +75,8 @@ export default function RootLayout({
         <JsonLd data={buildWebSiteSchema()} />
         <LenisProvider>
           <MotionProvider>
-            <Navigation />
-            <MainOffset>{children}</MainOffset>
+            <SiteHeader />
+            <main>{children}</main>
             <SiteFooter />
             <VisitSurvey />
           </MotionProvider>

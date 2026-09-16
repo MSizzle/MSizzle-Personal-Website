@@ -1,5 +1,4 @@
 import { Hero } from "./hero";
-import { StickyNav } from "./sticky-nav";
 import { ScrollReveals } from "./scroll-reveals";
 import { SectionBuilding } from "./section-building";
 import { SectionWriting } from "./section-writing";
@@ -19,7 +18,6 @@ import type { LoveItem } from "@/lib/notion-loves";
  * (site-wide footer's /#loves link depends on it).
  *
  * Islands mounted here:
- *   StickyNav: fixed island, z-9000.
  *   ScrollReveals: headless IO island toggling .in on .reveal.
  *
  * page.tsx fetches the Notion/RSS data (Featured projects, published posts,
@@ -48,7 +46,6 @@ export function ExplorativeHomepage({
   return (
     <div className="min-h-screen bg-bg">
       {/* Fixed islands: mounted first so they overlay all bands */}
-      <StickyNav />
       <ScrollReveals />
 
       <Hero />

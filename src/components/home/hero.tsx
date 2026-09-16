@@ -17,7 +17,7 @@ import Link from "next/link";
 
 export function Hero() {
   return (
-    <section className="wrap min-h-screen flex flex-col justify-center py-16 md:py-24">
+    <section className="wrap min-h-[calc(100svh-var(--header-h))] flex flex-col justify-center py-16 md:py-24">
       <div className="reveal font-mono text-xs uppercase tracking-[0.12em] text-text-muted">
         Monty Singer
       </div>

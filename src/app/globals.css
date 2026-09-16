@@ -47,7 +47,15 @@ html {
    mobile browsers pan and rubber-band the page sideways, because the scroll
    container is the root element; it has to be set on `html` too. The
    `overscroll-behavior-x` pair also kills horizontal swipe-to-navigate, which
-   the draggable Things I Love pinboard would otherwise trigger mid-drag. */
+   the draggable Things I Love pinboard would otherwise trigger mid-drag.
+   html's copy is also the one that must stay: body must NOT carry its own
+   `overflow-x: hidden` (quick task 260916-lqq), because per CSS Overflow 3
+   viewport propagation, an overflow-x:hidden body does not propagate to the
+   viewport and is forced to compute overflow-y: auto, making body its own
+   scroll container. A `position: sticky` header inside a body that never
+   scrolls would then silently stop sticking. Do not reach for
+   `overflow-x: clip` either — this repo's browserslist targets Safari 15.4 /
+   iOS 15.4 and `clip` only shipped in Safari 16. */
 html {
   overflow-x: hidden;
   overscroll-behavior-x: none;
@@ -57,7 +65,6 @@ body {
   font-family: var(--font-sans), system-ui, sans-serif;
   font-size: 1rem;
   line-height: 1.45;
-  overflow-x: hidden;
   overscroll-behavior-x: none;
   -webkit-font-smoothing: antialiased;
 }
@@ -117,6 +124,11 @@ h1.sig .hl {
 :root {
   --sig:        var(--color-text);              /* near-black ink fill */
   --sig-shadow: 0.055em 0.055em 0 var(--color-text); /* hard ink lift, not a fill (PATTERNS.md Part 3) */
+
+  /* SiteHeader height (quick task 260916-lqq). .site-header's own height, the
+     mobile drawer's top offset, and html's scroll-padding-top all read this
+     one value, so the three cannot drift apart. */
+  --header-h: 64px;
 
   /* Back-compat aliases: pre-v3 token names still referenced by global
      surfaces (visit-survey popup, navigation, blog/*, about/timeline). The
@@ -450,101 +462,49 @@ p.body {
   width: max-content;
 }
 
-/* ── Sticky mini-nav (D-10) — hidden on first spawn, appears on first scroll
-   (z-index:9000). Plain sticky bar: matches the editorial header (paper field,
-   ink wordmark, sentence-case muted links; solid, no blur). No per-box or
-   folding choreography — the whole bar simply slides down as one unit on scroll
-   and snaps away on scroll-back-up. Supersedes the wave-curl fold + per-box
-   slot-in (quick task 260722-wov item 1). ── */
-/* Desktop only. Mobile already has its own fixed header bar (nav/navigation.tsx),
-   so sliding a second bar down over a 375px viewport just stacks chrome on top
-   of chrome. */
-.stickynav {
-  display: none;
-  position: fixed;
+/* ── SiteHeader (quick task 260916-lqq) — one sticky bar, every route, every
+   scroll position. Replaces the four divergent behaviours that previously
+   coexisted: a static desktop bar rendered on non-home routes only, a
+   scroll-gated desktop fixed bar, a mobile bar with its own scroll gate on
+   home only, and a pathname suppression that hid all desktop nav on `/`
+   until 80% of the viewport had scrolled away. `position: sticky` occupies
+   layout space
+   (unlike the old `fixed` bars) and never translates offscreen — see the
+   body `overflow-x` comment above for the propagation gotcha that would
+   silently break sticky if body kept its own copy. Transparent at rest so
+   the type-only hero shows through; `.is-solid` (useScrolledPast(24, 8) in
+   site-header.tsx) swaps in a solid ground and the bottom border once
+   scrolled past 24px, with an 8px exit for hysteresis against Lenis's
+   lagging scroll position (lerp: 0.1). */
+.site-header {
+  position: sticky;
   top: 0;
-  left: 0;
-  right: 0;
   z-index: 9000;
-  background: var(--color-bg); /* solid — no translucency/blur */
-  color: var(--color-text);
-  border-bottom: 1px solid var(--color-text);
-  transform: translateY(-100%);
-  transition: transform 0.28s ease;
-}
-/* :focus-within lets keyboard-tabbing users reveal the bar before any scroll
-   happens, not only via the scroll-triggered .show class (WCAG 2.4.7, quick
-   task 260726-kjp). */
-.stickynav.show,
-.stickynav:focus-within {
-  transform: translateY(0);
-}
-@media (prefers-reduced-motion: reduce) {
-  .stickynav {
-    transition: none;
-  }
-}
-.stickynav .inner {
-  /* Full-bleed gutters match EditorialHeader; no vertical padding so the nav
-     cells can stretch the full bar height and their dividers run edge to edge. */
-  padding: 0 24px;
+  height: var(--header-h);
   display: flex;
   align-items: stretch;
   justify-content: space-between;
-  gap: 20px;
+  padding-inline: 24px;
+  background-color: transparent;
+  border-bottom: 1px solid transparent;
+  transition: background-color 0.24s ease, border-color 0.24s ease;
+}
+.site-header.is-solid {
+  background-color: var(--color-bg);
+  border-bottom-color: var(--color-text);
 }
 @media (min-width: 768px) {
-  .stickynav {
-    display: block;
+  .site-header {
+    padding-inline: 160px;
   }
-  .stickynav .inner {
-    padding: 0 160px;
-  }
-}
-.stickynav .mk {
-  display: flex;
-  align-items: center;
-  padding: 13px 0;
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 22px;
-  letter-spacing: -0.025em;
-  color: var(--color-text);
-}
-.stickynav ul {
-  display: flex;
-  align-items: stretch;
-  gap: 0;
-  list-style: none;
-  font-size: 15px;
-  margin-left: auto;
-}
-.stickynav ul li {
-  display: flex;
-}
-
-/* .mobile-header-gate is applied only on the homepage by navigation.tsx (quick task
-   260726-fe6), so the 64px mobile bar starts fully offscreen and slides down once
-   scrollY passes the same 24px threshold StickyNav uses. Every non-homepage route
-   never gets this class and stays unconditionally visible exactly as before. */
-.mobile-header-gate {
-  transform: translateY(-100%);
-  transition: transform 0.28s ease;
-}
-/* :focus-within lets keyboard-tabbing users reveal the bar before any scroll
-   happens, not only via the scroll-triggered .show class (WCAG 2.4.7, quick
-   task 260726-kjp). */
-.mobile-header-gate.show,
-.mobile-header-gate:focus-within {
-  transform: translateY(0);
 }
 @media (prefers-reduced-motion: reduce) {
-  .mobile-header-gate {
+  .site-header {
     transition: none;
   }
 }
 
-/* ── Segmented nav cells (EditorialHeader + StickyNav) ──
+/* ── Segmented nav cells (SiteHeader) ──
    Broad, full-height selectable zones separated by vertical dividers. At rest
    they read as plain labels; on hover the cell inverts as a playful surprise —
    background fills with the foreground ink and the label turns vermilion.
@@ -1044,7 +1004,6 @@ footer.site {
 
 /* ── Responsive overrides ── */
 @media (max-width: 860px) {
-  .stickynav ul { display: none; }
   .foot-grid    { grid-template-columns: 1fr; gap: 26px; }
 }
 

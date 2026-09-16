@@ -12,13 +12,6 @@ vi.mock("@/components/home/hero", () => ({
   },
 }));
 
-// Mock StickyNav: must render something so we can assert it mounts
-vi.mock("@/components/home/sticky-nav", () => ({
-  StickyNav: function StickyNavMock() {
-    return React.createElement("div", { "data-testid": "sticky-nav" });
-  },
-}));
-
 // Mock ScrollReveals: headless but must render a node for assertion
 vi.mock("@/components/home/scroll-reveals", () => ({
   ScrollReveals: function ScrollRevealsMock() {
@@ -57,14 +50,6 @@ describe("ExplorativeHomepage orchestrator (21-05 rebuilt band structure)", () =
   afterEach(() => {
     cleanup();
     vi.restoreAllMocks();
-  });
-
-  it("mounts StickyNav island", async () => {
-    const { ExplorativeHomepage } = await import(
-      "@/components/home/explorative-homepage"
-    );
-    const { getByTestId } = render(React.createElement(ExplorativeHomepage));
-    expect(getByTestId("sticky-nav")).toBeTruthy();
   });
 
   it("mounts ScrollReveals island", async () => {
