@@ -520,8 +520,10 @@ function findFirstImageId(blocks: BlockWithChildren[]): string | null {
 }
 
 function NotionImageBlock({ block }: { block: BlockWithChildren }) {
-  if (block.type !== "image") return null;
+  // useContext must run on every render (Rules of Hooks) — called before the
+  // early-return guard below, not after it (quick task 260916-lqq).
   const firstImageId = useContext(FirstImageContext);
+  if (block.type !== "image") return null;
   const isFirst = firstImageId === block.id;
   const caption = plainText(block.image.caption);
   const alt = caption || "Image";

@@ -41,7 +41,12 @@ export function VisitSurvey() {
       clearTimeout(timer)
       if (openTimer) clearTimeout(openTimer)
     }
-  }, [])
+    // pathname is a real dependency: without it this effect only ever
+    // evaluates the pathname from first mount, so a user who lands on
+    // /writing and then client-side navigates to / never arms the survey.
+    // The timer intentionally restarts on every visit to / (cleanup above
+    // clears both timers on navigating away, so nothing orphaned fires).
+  }, [pathname])
 
   function handleOptionClick() {
     localStorage.setItem('visit-survey-done', 'true')
