@@ -1,26 +1,37 @@
 @import "tailwindcss";
 
 @theme inline {
-  /* Mono palette — v4 single fixed theme (no dark mode)
-     pure white ground · pure black ink · no hue anywhere.
-     Retires Ink & Vermilion (2026-07-21); contrast comes from inversion
-     (a solid black block on white) and type weight, never hue (D-01). */
-  --color-bg:             #ffffff;             /* White — main background */
-  --color-surface:        #ffffff;             /* White — cards / photo frames (dark-panel role moved to --color-invert, D-08) */
-  --color-surface-2:      #ffffff;             /* White — light cards / inverse panels */
-  --color-border:         rgba(0,0,0,0.14);
-  --color-border-strong:  rgba(0,0,0,0.32);
+  /* v5 warm palette — bone ground · near-black ink · ten-entry rotating
+     accent (hover only). Reverses D-01's zero-accent lock per the ROADMAP
+     "AMENDED 2026-09-16" block: Monty audited the shipped mono site as
+     "more personable and less stark" and asked for warmth back. Retires the
+     v4 pure white/black system (2026-09-16); contrast still comes from
+     inversion and type weight at rest, with a rotating accent fill added on
+     hover (see the plain :root block below for --ac-0..--ac-9).
+     Ink is #111111, not #000000: pure black halates against a warm ground,
+     and in side-by-side comparison Monty could not distinguish #000 from
+     #111 from #1A1A18, so #111111 was picked as the least-arbitrary near-black.
+     Every derived value below is re-derived from that ink (rgba(17,17,17,*))
+     -- no rgba(0,0,0,*) or rgba(255,255,255,*) survives in this block. */
+  --color-bg:             #F5F2EB;             /* Bone — main background */
+  --color-surface:        #F5F2EB;             /* Bone — cards / photo frames (dark-panel role stays on --color-invert, D-08) */
+  --color-surface-2:      #F5F2EB;             /* Bone — light cards / inverse panels */
+  --color-border:         rgba(17,17,17,0.14);
+  --color-border-strong:  rgba(17,17,17,0.32);
 
-  /* Ink — pure black on white + pure white for text on the invert block */
-  --color-text:           #000000;             /* Black ink — display + body on paper */
-  --color-text-dim:       rgba(0,0,0,0.66);
-  --color-text-muted:     rgba(0,0,0,0.60);    /* D-07: 0.60, not mono.css's 0.46 (fails WCAG AA) */
-  --color-text-inverse:   #ffffff;             /* White — text on the invert block */
+  /* Ink — near-black on bone + bone for text on the invert/accent block */
+  --color-text:           #111111;             /* Near-black ink — display + body on bone */
+  --color-text-dim:       rgba(17,17,17,0.66);
+  /* D-07: 0.60, not mono.css's 0.46 (fails WCAG AA). Against bone the 0.60
+     composite is roughly 4.7:1, still AA for normal text (proved in
+     v5-tokens.test.ts's muted-composite check). */
+  --color-text-muted:     rgba(17,17,17,0.60);
+  --color-text-inverse:   #F5F2EB;             /* Bone — text on the invert/accent block, never pure white */
 
-  /* Invert — the black-block ground that carries the site's emphasis language (D-05) */
-  --color-invert:            #000000;
-  --color-text-inverse-dim:  rgba(255,255,255,0.66);
-  --color-border-inverse:    rgba(255,255,255,0.20);
+  /* Invert — the ink-block ground that carries the site's emphasis language (D-05) */
+  --color-invert:            #111111;
+  --color-text-inverse-dim:  rgba(245,242,235,0.66);
+  --color-border-inverse:    rgba(245,242,235,0.20);
 
   /* v3 type scale (translated from prototype :root to @theme token names) */
   --text-xs:   0.72rem;
@@ -146,8 +157,34 @@ h1.sig .hl {
   --text:   var(--color-text);
   --fg:     var(--color-text);
 
-  /* White behind the hero, pending Phase 21's hero removal (D-04 row 1). */
-  --hero-bg: #ffffff;
+  /* Behind the hero. Phase 21 shipped, so this note is no longer about a
+     pending removal -- it just has to track the ground (var(--color-bg))
+     so a hardcoded value can never leave a white patch on a bone page. */
+  --hero-bg: var(--color-bg);
+
+  /* ── v5 rotating accent palette (D-V5-02) ──────────────────────────────
+     Ten hover-only fills, locked max-contrast order. Declared here on the
+     plain :root, NOT inside @theme inline: their only consumer is an inline
+     `--ac: var(--ac-N)` emitted by a Server Component (src/lib/accent-rotation.ts,
+     21.5-02), which Tailwind's content scanner never sees, so a theme-layer
+     declaration would risk being tree-shaken and would also generate ten
+     unwanted utility classes no one asked for. Per D-V5-03 these are declared
+     and applied to nothing yet -- no rule in this file references --ac-*.
+     Ratios below are the already-computed WCAG bone-on-fill contrast for each
+     fill (AA gate is 4.5:1, proved in v5-tokens.test.ts): row fills carry
+     small mono text (dates, read times, status), not just large type. Ochre
+     was darkened from the originally proposed #9A6A16 (4.22, fails AA) to
+     #8E6214 (4.81, passes) -- keep #8E6214, never revert it. */
+  --ac-0: #6B1F2B; /* Oxblood     10.12 */
+  --ac-1: #185661; /* Slate teal   7.39 */
+  --ac-2: #8E6214; /* Ochre        4.81 (darkened from #9A6A16 = 4.22, which FAILS) */
+  --ac-3: #2A3A6B; /* Indigo ink   9.80 */
+  --ac-4: #1E4D3C; /* Forest ink   8.61 */
+  --ac-5: #4A2547; /* Plum        11.41 */
+  --ac-6: #14524F; /* Deep teal    7.99 */
+  --ac-7: #7A5230; /* Bronze       6.10 */
+  --ac-8: #17395B; /* Prussian    10.60 */
+  --ac-9: #55632F; /* Olive        5.85 */
 }
 
 /* ── Marquee keyframe (used by Marquee component) ── */

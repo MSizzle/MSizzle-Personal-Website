@@ -14,6 +14,7 @@ v3.0's requirements are archived at `.planning/milestones/v3.0-REQUIREMENTS.md`.
 - [x] **MO-01**: Every surface renders on a pure white ground (`#ffffff`) with true black ink (`#000000`) and `rgba(0,0,0,0.14)` hairline borders — no warm paper, no cream, no tinted greys.
 - [x] **MO-02**: No accent color exists anywhere in the token layer. Vermilion (`#e5411f`, `#c8381a`, `#a52d13`), cream `#f4ecdd`, and warm paper `#faf9f7` are removed from `globals.css`, including the hardcoded uses outside the token block.
 - [x] **MO-03**: Emphasis and interaction states are expressed by inversion (black block on white) and type weight, never by hue — including every hover state that previously used the accent.
+  > **Amendment (2026-09-16, Phase 21.5):** the ROADMAP "AMENDED 2026-09-16" block supersedes MO-01's `#ffffff`/`#000000` values with bone `#F5F2EB` ground and near-black `#111111` ink. It supersedes MO-02's "no accent color exists anywhere" with a ten-entry hover-only rotating palette (`--ac-0`..`--ac-9`). It extends MO-03's inversion-only emphasis language to include an accent fill on hover, alongside inversion. Original lines and checkbox state kept as-is for history.
 - [ ] **MO-04**: Notion inline text colors authored inside posts (amber, orange, blue, gray) render as ink/dim/muted greys, so writing in Notion cannot reintroduce a hue.
 - [x] **MO-05**: Hanken Grotesk 800 display type, hard corners (radius 0), and the no-gradients rule are preserved from v3.
 
