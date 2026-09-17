@@ -4,8 +4,8 @@ milestone: v4.0
 milestone_name: Mono Restyle
 status: All 6 plans executed. All 3 human UAT items judged PASS by Monty on 2026-07-22
 stopped_at: Phase 22 context gathered
-last_updated: "2026-09-16T20:10:00.000Z"
-last_activity: 2026-09-16
+last_updated: "2026-09-17T15:05:00.000Z"
+last_activity: 2026-09-17
 progress:
   total_phases: 6
   completed_phases: 2
@@ -39,13 +39,79 @@ Progress: [███░░░░░░░] 33% (2/6 v4.0 phases complete)
 |-------|--------|---------|-----------|
 | 20 — Mono Token Foundation | complete | 2026-07-21 | 2026-07-21 |
 | 21 — Mono Homepage Rebuild | complete | 2026-07-21 | 2026-07-21 |
-| 21.5 — v5 Palette Foundation & Row Rotation | in_progress (2/3 plans) | 2026-09-16 | — |
+| 21.5 — v5 Palette Foundation & Row Rotation | complete (human checkpoint outstanding) | 2026-09-16 | 2026-09-16 |
 | 22 — Things I Love in v5 | not_started | — | — |
 | 23 — Site Sweep & v5 OG | not_started | — | — |
 | 24 — True Inversion Dark Mode | not_started | — | — |
 | 25 — v4.0 QA, Perf Gate & Alias Swap | not_started | — | — |
 
 v1.0 (Phases 1-7), v2.0 (Phases 8-13), and v3.0 (Phases 14-19) are closed — see `milestones/v1.0-ROADMAP.md`, `milestones/v2.0-ROADMAP.md`, and the Completed Phases table in `ROADMAP.md`.
+
+## Session handoff (2026-09-17)
+
+### BLOCKED: branch `v5-review` awaiting Monty's verdict
+
+12 commits sit on `origin/v5-review`, forked from `main` at `c9da041`. **Monty's last word on
+them was "I like this less."** He was NOT asked which parts, so the specific objection is unknown.
+Do not merge, do not revert, and do not build on top of this branch until that is resolved.
+
+The question to put to him, cold, in a fresh session: the branch changed twelve things at once,
+so which of these is worse, given each is an isolated commit and any subset can be peeled off?
+
+| Commit | Change |
+|--------|--------|
+| `ac9b9a7` | Two-column hero + new headline/lede copy ("Most of what I do is turning a mess into something that runs itself", proverb demoted to a kicker) |
+| `61503fd` | Hero lede wrap fix, kicker width, removed the empty cover box |
+| `c5cd04e` | Band rhythm cut by a third, `clamp(96px,13vw,192px)` to `clamp(64px,8.5vw,128px)`, Loves double-padding removed |
+| `68357e6` | Project covers on Building index rows |
+| `d024592` | Things I Love teaser strip above the fold |
+| `c8dd201` | Deleted the fixed Prometheus watermark |
+| `abe1837` | OG cards rebuilt on v5, per-slug stable accents |
+| `95fd137` | Pinboard into v5 (`--pb-paper: #EDE1C3`, neutral swatches kept, ink note panel) |
+| `482f914` | Rotation carried to /writing, /building, blog related essays |
+| `eebb73a` | Contact rows rotate + new 3-paragraph contact copy |
+| `fcd43e5` | Notion inline colours mapped to the v5 ink scale |
+| `f8769bd` | Stale TL-02 wording corrected |
+
+Most likely candidates, in rough order: the hero copy (most opinionated), the tighter band rhythm
+(least air), the covers (only 1 of 3 projects has a Notion cover so the rows look half-empty), and
+colour spreading beyond the homepage.
+
+Branch state: 305 tests pass, 0 fail. Lint 199 errors, exactly the pre-existing baseline.
+
+### Shipped to `main` and approved
+
+- Quick task `260916-lqq`: one sticky `SiteHeader` on every route, replacing four divergent nav
+  behaviours. Deleted `StickyNav`/`EditorialHeader`/`Navigation`/`MainOffset`. Also fixed a
+  conditional `useContext`, a stale-closure effect, raw `<a>` internal links, and added
+  `scroll-padding-top`. **Load-bearing detail: `overflow-x: hidden` was removed from `body`**
+  because it forced body into its own scroll container and silently broke `position: sticky`.
+  `html` keeps its copy, which is what actually clips. Do not reintroduce it; a test guards it.
+- Phase 21.5: v5 palette. Bone `#F5F2EB` ground, `#111111` ink, ten accents rotating on row hover
+  with a continuous counter that does not reset at section heads.
+
+### Outstanding human checkpoint (phase 21.5 plan 03)
+
+Never answered. Ask Monty to open the homepage, hover the first row under `02 · Writing`, and name
+the colour. Worded that way deliberately so a rubber stamp is detectable; Phase 21's equivalent got
+auto-approved and had to be re-walked by hand.
+
+### Not built
+
+Phase 24 (dark mode) and Phase 25 (QA, perf, alias swap). Dark mode needs its own contrast matrix:
+the ten fills are proven for bone text on light, NOT for white text on a dark ground.
+
+### Monty's, not code
+
+- Only `mahealth-scanner` has a Notion cover. Gene-Own and the hardcoded Prometheus row render
+  without one.
+- `/building/Gene-own` has a capital G; both casings return 200, so two URLs serve one page.
+- "MONTY SINGER" renders twice on the mobile first screen (header brand + hero eyebrow).
+
+### Unrelated pre-existing dirt
+
+`.planning/config.json` is modified and `https___montysinger.com_-Coverage-2026-07-28/` is
+untracked. Both predate this session. Left alone deliberately.
 
 ## Active Work
 
