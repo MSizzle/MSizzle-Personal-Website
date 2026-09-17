@@ -73,15 +73,26 @@ const LINKS = [
 export default function ContactPage() {
   return (
     <>
-      <PageHeroBand
-        title="Contact"
-        crumb="Home / Contact"
-        sub="Want to talk shop, trade ideas, or just say hello? Pick a line below and reach out."
-      />
+      <PageHeroBand title="Contact" crumb="Home / Contact" />
+
+      <section className="px-6 md:px-40 pt-10 pb-2 md:pt-14">
+        <div className="max-w-[62ch] space-y-5 font-sans text-base leading-[1.6] text-text-dim">
+          <p>I answer email from people who are building something.</p>
+          <p>
+            Tell me what you are working on and where it is stuck. That is
+            the whole filter. No warm intro, no deck, and no need for a
+            quick call to align first.
+          </p>
+          <p>
+            Cold pitches and SEO offers go unanswered, and I have made peace
+            with that.
+          </p>
+        </div>
+      </section>
 
       <section className="px-6 md:px-40">
         <div className="-mx-[18px]">
-          {LINKS.map((link) => (
+          {LINKS.map((link, i) => (
             <ContactRow
               key={link.numeral}
               numeral={link.numeral}
@@ -90,6 +101,7 @@ export default function ContactPage() {
               handle={link.handle}
               action={link.action}
               external={link.external}
+              accentIndex={i}
             />
           ))}
         </div>

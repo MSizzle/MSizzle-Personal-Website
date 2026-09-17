@@ -11,9 +11,18 @@
    Server component — pure presentation, no client hooks.
    External links get target="_blank" rel="noopener noreferrer"; mailto: opens
    in place (no target/rel). No gradients, no em dashes (brand rules).
+
+   Phase 23 (SW-01): the hover fill reads the row's own --ac custom property
+   (set via accentStyle, src/lib/accent-rotation.ts -- reused, not
+   reinvented) with an ink fallback, so /contact's four rows bloom into the
+   same ten-colour palette the homepage rows do instead of a flat black
+   invert. group-hover:text-bg already resolves to bone (--color-bg is bone
+   in the v5 token system), so the "text on an accent field is always bone"
+   rule holds with no extra change.
 */
 import type { ReactNode } from "react";
 import { cn } from "@/utils/cn";
+import { accentStyle } from "@/lib/accent-rotation";
 
 type Props = {
   /** Ordinal shown in the first grid column, e.g. "01" */
@@ -28,13 +37,24 @@ type Props = {
   action?: ReactNode;
   /** Off-site link: adds target="_blank" rel="noopener noreferrer". */
   external?: boolean;
+  /** Document-order index for the rotating accent hover (Phase 23, SW-01). */
+  accentIndex?: number;
 };
 
-export function ContactRow({ numeral, title, href, handle, action, external = false }: Props) {
+export function ContactRow({
+  numeral,
+  title,
+  href,
+  handle,
+  action,
+  external = false,
+  accentIndex,
+}: Props) {
   return (
     <a
       href={href}
       {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+      style={accentIndex !== undefined ? accentStyle(accentIndex) : undefined}
       className={cn(
         // layout — matches ListRow (big variant)
         "group grid gap-[18px] items-center",
@@ -42,7 +62,7 @@ export function ContactRow({ numeral, title, href, handle, action, external = fa
         "py-7 px-[18px] -mx-[18px]",
         // hover-invert: bg and text flip
         "transition-[background,color] duration-150",
-        "hover:bg-text hover:text-bg",
+        "hover:bg-[var(--ac,var(--color-invert))] hover:text-bg",
         // grid columns: 60px numeral | 1fr content | auto meta
         "[grid-template-columns:60px_1fr_auto]"
       )}
