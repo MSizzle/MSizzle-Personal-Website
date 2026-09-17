@@ -151,13 +151,24 @@ has to live inside)
   5. Chrome that cannot rotate — the hero contact link and the active nav cell — remains black.
   6. Under `prefers-reduced-motion`, hover fills apply without transition rather than disappearing.
 
-**Plans**: TBD
+**Plans**: 3 plans (3 waves)
+
+Plans:
+- [ ] 21.5-01-PLAN.md - v5 token retheme (bone ground, near-black ink, re-derived dim/muted/border/inverse), the ten `--ac-0..9` rotating accent tokens, every in-scope hardcoded pure-white/pure-black survival, and the WCAG AA contrast proof as a test
+- [ ] 21.5-02-PLAN.md - the rotation mechanism: `accent-rotation` + `homepage-rows` contracts, the continuous cross-section counter computed in the orchestrator and passed down as a per-band start offset, hover fills pointed at `var(--ac)`, reduced-motion handling
+- [ ] 21.5-03-PLAN.md - served-bundle proof (Turbopack stale-chunk guard), suite/build/lint gates, shipped contrast table, and the blocking human visual pass
+
 **UI hint**: yes
 
 **Sequencing note**: CSS `nth-child` cannot count across sibling `<section>` elements, so the
 counter cannot be done in pure CSS. The page orchestrator computes a start offset per band and
-passes it down (`Building` 0, `Writing` projects.length, `Loves` projects.length + posts.length);
-each row sets its own `--ac` custom property. Server-rendered, no client JS. The interactive
+passes it down (`Building` 0, `Writing` = the number of Building rows actually rendered,
+`Loves` = Building + Writing rendered rows); each row sets its own `--ac` custom property.
+Note the offsets are NOT `projects.length` / `projects.length + posts.length`: Building always
+prepends a hardcoded Prometheus row and then caps at 3, and Writing drops undated posts and caps
+at 5, so the raw array lengths are wrong in both directions. Planning resolved this by moving the
+row derivation into `src/lib/homepage-rows.ts` so the counter and the rendered rows read the same
+helpers and cannot drift. Server-rendered, no client JS. The interactive
 sketch that Monty signed off lives at `.playwright-mcp/accent-compare.html` (gitignored,
 throwaway — serve with `python3 -m http.server 4321` from that directory). Port the behaviour from
 it, do not re-derive it. Palette is fully token-driven in `globals.css` lines 8-32, but note the
@@ -247,13 +258,14 @@ Logos are also not photography, so criterion 4 does not apply either.
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 20 -> 21 -> 22 -> 23 -> 24 -> 25
+Phases execute in numeric order: 20 -> 21 -> 21.5 -> 22 -> 23 -> 24 -> 25
 
 | Phase | Milestone | Plans | Status | Completed |
 |-------|-----------|-------|--------|-----------|
 | 20. Mono Token Foundation | v4.0 | 5/5 | Complete   | 2026-07-21 |
 | 21. Mono Homepage Rebuild | v4.0 | 6/6 | Complete   | 2026-07-21 |
-| 22. Things I Love in Mono | v4.0 | 0/? | Not started | - |
+| 21.5. v5 Palette Foundation & Row Rotation | v4.0 | 0/3 | Planned | - |
+| 22. Things I Love in v5 | v4.0 | 0/? | Not started | - |
 | 23. Site Sweep & Mono OG | v4.0 | 0/? | Not started | - |
 | 24. True Inversion Dark Mode | v4.0 | 0/? | Not started | - |
 | 25. v4.0 QA, Perf Gate & Alias Swap | v4.0 | 0/? | Not started | - |
