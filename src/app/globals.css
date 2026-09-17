@@ -713,11 +713,15 @@ li:last-child > .nav-cell {
 .a-sec > h2 {
   margin-bottom: clamp(32px, 4vw, 56px);
 }
+/* Leading column widened from 64px (numeral alone) to fit the row's
+   thumbnail + numeral (quick task 260917). align-items switches from
+   baseline to center so the image sits centered against the text, not
+   sunk to the text baseline. */
 .a-row {
   display: grid;
-  grid-template-columns: 64px 1fr 200px 90px;
+  grid-template-columns: 88px 1fr 200px 90px;
   gap: 24px;
-  align-items: baseline;
+  align-items: center;
   padding: 32px 0;
   border-top: 1px solid var(--color-border);
   text-decoration: none;
@@ -725,6 +729,14 @@ li:last-child > .nav-cell {
 }
 .a-row:last-of-type {
   border-bottom: 1px solid var(--color-border);
+}
+/* Thumbnail + numeral, side by side, occupying the row's first grid column
+   as one unit (quick task 260917). Reuses the existing .num element/style
+   unchanged -- only its wrapper is new. */
+.a-row .row-lead {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 .a-row .num {
   font-family: var(--font-mono);
@@ -983,8 +995,12 @@ li:last-child > .nav-cell {
   margin-top: 28px;
 }
 @media (max-width: 760px) {
+  /* Widened from 40px (numeral alone) to fit .row-lead's smaller mobile
+     thumbnail (w-8 = 32px) beside the numeral (quick task 260917). dsc/status
+     stay targeting column 2 unchanged -- .row-lead replaces .num as column
+     1's sole occupant without adding a column. */
   .a-row {
-    grid-template-columns: 40px 1fr;
+    grid-template-columns: 64px 1fr;
   }
   .a-row .dsc,
   .a-row .status {

@@ -54,7 +54,19 @@ describe("buildingRows", () => {
       status: "Current",
       href: "https://prometheus.today",
       external: true,
+      coverSrc: null,
     });
+  });
+
+  it("a project with a cover gets a coverSrc proxy URL; a project with none gets null", () => {
+    const rows = buildingRows([
+      project({ id: "with-cover", cover: "https://example.com/x.jpg" }),
+      project({ id: "no-cover", cover: null }),
+    ]);
+    expect(rows[1].coverSrc).toBe(
+      "/api/notion-cover?pageId=with-cover&w=112"
+    );
+    expect(rows[2].coverSrc).toBeNull();
   });
 
   it("with 5 projects returns 3 rows (BUILDING_ROW_CAP): Prometheus then the first two projects", () => {

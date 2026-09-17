@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Project } from "@/lib/notion-projects";
 import { buildingRows } from "@/lib/homepage-rows";
 import { accentStyle } from "@/lib/accent-rotation";
+import { CardCover } from "@/components/v3/card-cover";
 
 /**
  * SectionBuilding: Swiss numbered index for the Building band (HP-02).
@@ -9,9 +10,16 @@ import { accentStyle } from "@/lib/accent-rotation";
  * from the `projects` prop (real, already-fetched Notion Featured Projects,
  * forwarded by the orchestrator in Plan 21-05) — this absorbs
  * section-work.tsx's Notion data role so that component can be deleted.
- * Server Component only; no client directive.
+ * Server Component only; no client directive (CardCover is a small client
+ * island for its own onError fallback, same pattern /building already uses).
  * Full-row hover/focus inversion is the site's only hover language (HP-02),
  * implemented via the .a-row CSS family in globals.css.
+ *
+ * Each row leads with a compact cover thumbnail (quick task 260917) next to
+ * its numeral -- reuses the same CardCover component and /api/notion-cover
+ * proxy /building already renders covers through, rather than a new one.
+ * A row with no cover (row 001, Prometheus, isn't a Notion page) renders an
+ * empty bordered slot instead, so the grid never breaks.
  *
  * Row derivation lives in `@/lib/homepage-rows` (21.5-02) so the accent
  * rotation offset math and the rendered rows can never drift apart.
@@ -37,9 +45,31 @@ export function SectionBuilding({
         01 · Building
       </h2>
       {rows.map((row, i) => {
+        const emptyThumb = (
+          <span
+            className="block w-8 h-8 md:w-10 md:h-10 shrink-0 border border-border bg-[rgba(17,17,17,0.06)]"
+            aria-hidden="true"
+          />
+        );
+
         const children = (
           <>
-            <span className="num">{String(i + 1).padStart(3, "0")}</span>
+            <span className="row-lead">
+              {row.coverSrc ? (
+                <CardCover
+                  src={row.coverSrc}
+                  alt=""
+                  sizes="40px"
+                  padded={false}
+                  aspectRatio="1 / 1"
+                  className="w-8 h-8 md:w-10 md:h-10 shrink-0"
+                  fallback={emptyThumb}
+                />
+              ) : (
+                emptyThumb
+              )}
+              <span className="num">{String(i + 1).padStart(3, "0")}</span>
+            </span>
             <span className="ttl">{row.title}</span>
             <span className="dsc">{row.description}</span>
             <span className="status">{row.status}</span>

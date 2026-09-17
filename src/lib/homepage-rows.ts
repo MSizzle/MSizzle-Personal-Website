@@ -27,6 +27,14 @@ export type BuildingRow = {
   status: string;
   href: string;
   external: boolean;
+  /**
+   * `/api/notion-cover?pageId=...` URL for the row's thumbnail, or null when
+   * the row has no cover to show (the hardcoded Prometheus row always has
+   * none -- it isn't a Notion page). Rows render fine either way; a null
+   * `coverSrc` falls back to an empty thumbnail slot rather than breaking
+   * the row layout (quick task 260917).
+   */
+  coverSrc: string | null;
 };
 
 export type WritingRow = {
@@ -35,6 +43,9 @@ export type WritingRow = {
   readTime: number;
   href: string;
 };
+
+/** Retina-ish width for the compact ~56px row thumbnail slot (quick task 260917). */
+const ROW_THUMB_WIDTH = 112;
 
 export function buildingRows(projects: Project[]): BuildingRow[] {
   return [
@@ -45,6 +56,8 @@ export function buildingRows(projects: Project[]): BuildingRow[] {
       status: "Current",
       href: "https://prometheus.today",
       external: true,
+      // Hardcoded row, not a Notion page -- no pageId to proxy a cover through.
+      coverSrc: null,
     },
     ...projects.map((project) => ({
       title: project.title,
@@ -54,6 +67,9 @@ export function buildingRows(projects: Project[]): BuildingRow[] {
         String(new Date(project.lastEdited).getUTCFullYear()),
       href: `/building/${project.slug}`,
       external: false,
+      coverSrc: project.cover
+        ? `/api/notion-cover?pageId=${project.id}&w=${ROW_THUMB_WIDTH}`
+        : null,
     })),
   ].slice(0, BUILDING_ROW_CAP);
 }

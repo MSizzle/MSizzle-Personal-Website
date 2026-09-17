@@ -28,13 +28,37 @@ type Props = {
   sizes?: string;
   /** ReactNode to render when the image fails to load (e.g. a TitleCard). */
   fallback: ReactNode;
+  /**
+   * CSS aspect-ratio value for the framed image box (e.g. "4 / 3", "1 / 1").
+   * Applied via inline style, not a Tailwind `aspect-[...]` utility -- a
+   * dynamic value there wouldn't be picked up by Tailwind's static class
+   * scanner. Defaults to "4 / 3" (grid card usage, unchanged from before
+   * this prop existed).
+   */
+  aspectRatio?: string;
+  /**
+   * Whether the outer wrapper keeps the 26px card gutter padding. Defaults
+   * to true (grid card usage, unchanged). Pass false for a compact,
+   * unpadded thumbnail slot (e.g. a homepage index row).
+   */
+  padded?: boolean;
+  /** Extra classes merged onto the outer wrapper -- e.g. a fixed width for a compact thumbnail slot. */
+  className?: string;
 };
 
 /**
  * Client component: renders a cover image with onError swap to the fallback.
  * Safe to use inside server-component trees (only this node is client).
  */
-export function CardCover({ src, alt, sizes, fallback }: Props) {
+export function CardCover({
+  src,
+  alt,
+  sizes,
+  fallback,
+  aspectRatio = "4 / 3",
+  padded = true,
+  className,
+}: Props) {
   const [failed, setFailed] = useState(false);
 
   if (failed) {
@@ -45,10 +69,18 @@ export function CardCover({ src, alt, sizes, fallback }: Props) {
   // uses, so the cover reads as a framed plate rather than the one element that
   // bleeds to the card border. No bottom padding here: the text block below
   // already supplies its own 26px top padding. The fallback TitleCard path
-  // above stays full bleed, unchanged.
+  // above stays full bleed, unchanged. `padded=false` (homepage row thumbnail)
+  // skips this gutter entirely.
+  const outerClasses = [padded ? "px-[26px] pt-[26px]" : "", className ?? ""]
+    .filter(Boolean)
+    .join(" ");
+
   return (
-    <div className="px-[26px] pt-[26px]">
-      <div className="relative w-full aspect-[4/3] overflow-hidden border border-[var(--color-border-strong)]">
+    <div className={outerClasses || undefined}>
+      <div
+        className="relative w-full overflow-hidden border border-[var(--color-border-strong)]"
+        style={{ aspectRatio }}
+      >
         {/* unoptimized (260723-g2q Task 4): /api/notion-cover already resizes,
             rotates, and webp-encodes this image server-side via sharp; wrapping
             it in next/image's own optimizer would re-fetch, re-decode, and
