@@ -28,7 +28,7 @@ export function NewsletterCarousel({ issues }: Props) {
           <>
             {/* Issue cover from the Substack feed; falls back to the "MM" glyph
                 when an issue has no image. */}
-            <div className="relative aspect-[3/2] bg-[rgba(0,0,0,0.08)] border-b-2 border-invert flex items-center justify-center overflow-hidden">
+            <div className="relative aspect-[3/2] bg-[rgba(17,17,17,0.08)] border-b-2 border-invert flex items-center justify-center overflow-hidden">
               {issue.thumbnail ? (
                 <Image
                   src={issue.thumbnail}

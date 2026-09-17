@@ -8,9 +8,9 @@
  * (explicitly out of scope for this task, and matches the deferred
  * "precompute into Blob storage" bigger lever the orchestrator ruled out).
  *
- * Zero hue: matches the existing rgba(0,0,0,0.08) neutral placeholder tone
- * already used elsewhere (.pb-media, card-cover's frame background), keeping
- * the pure-mono / no-accent rule intact.
+ * Zero hue: matches the existing rgba(17,17,17,0.08) neutral placeholder tone
+ * already used elsewhere (.pb-media, card-cover's frame background), against
+ * the v5 bone/ink neutral system.
  */
 export const NEUTRAL_BLUR_DATA_URL =
   "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAIAAABLbSncAAAACXBIWXMAAAPoAAAD6AG1e1JrAAAAD0lEQVR4nGO4hQMwDC0JAOJ5o4HcbYCNAAAAAElFTkSuQmCC";

@@ -34,7 +34,7 @@ export function VideoCard({ title, channel, href, thumbnail, target, rel }: Prop
       className="group block border border-border hover:-translate-y-1 transition-transform"
     >
       {/* Thumb: neutral placeholder fill until it inverts to black on hover; play-triangle inverts on hover (fallback when no thumbnail) */}
-      <div className="aspect-video bg-[rgba(0,0,0,0.08)] border-b border-border relative flex items-center justify-center group-hover:bg-invert transition-colors overflow-hidden">
+      <div className="aspect-video bg-[rgba(17,17,17,0.08)] border-b border-border relative flex items-center justify-center group-hover:bg-invert transition-colors overflow-hidden">
         {thumbnail ? (
           <Image
             src={thumbnail}

@@ -126,7 +126,7 @@ export function Card({
 
   if (href) {
     return (
-      <Link href={href} className="block bg-bg hover:bg-[rgba(0,0,0,0.04)] transition-colors">
+      <Link href={href} className="block bg-bg hover:bg-[rgba(17,17,17,0.04)] transition-colors">
         {coverSlot}
         {textBlock}
       </Link>
@@ -134,7 +134,7 @@ export function Card({
   }
 
   return (
-    <div className="bg-bg hover:bg-[rgba(0,0,0,0.04)] transition-colors">
+    <div className="bg-bg hover:bg-[rgba(17,17,17,0.04)] transition-colors">
       {coverSlot}
       {textBlock}
     </div>

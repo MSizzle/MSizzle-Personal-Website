@@ -2,8 +2,8 @@
  * TitleCard - Phase 19 typographic card face (SC-1).
  *
  * Renders a pure text-based card face: mono kicker chip on black,
- * Hanken Grotesk 800 clamped title, optional dek, on a paper (#ffffff) or
- * ink (#000000) field. Hard corners, no gradients, no images.
+ * Hanken Grotesk 800 clamped title, optional dek, on a bone ground or
+ * near-black ink field. Hard corners, no gradients, no images.
  *
  * Design DNA: inherits the hero "Create Order" block treatment at card scale.
  *
@@ -26,8 +26,8 @@ type Props = {
   dek?: string;
   /**
    * Field color for the card face.
-   * "paper" (default) = #ffffff background, #000000 text.
-   * "ink" = #000000 background, #ffffff text.
+   * "paper" (default) = bone ground, near-black ink text.
+   * "ink" = near-black ink background, bone text.
    * Must be driven deterministically by callers (e.g. by list index).
    */
   field?: "paper" | "ink";
