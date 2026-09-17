@@ -499,6 +499,42 @@ p.body {
   box-shadow: 8px 8px 0 var(--color-text);
 }
 
+/* ── PHASE 23: card-grid rotating accent hover (SW-01) ──
+   Extends the homepage's rotating-accent-with-ink-fallback hover mechanism
+   (`.a-row`/`.e-post` above) to /writing's and /building's card grids. Each
+   Card sets its own inline --ac via accentStyle (src/lib/accent-rotation.ts,
+   src/components/v3/card.tsx) -- reused, not reinvented. A card whose caller
+   didn't pass an accentIndex falls back to the plain ink fill, same as an
+   .a-row with no --ac set. Only the .card-text block's own text flips to
+   bone: a real cover image, an emoji badge, or a title-card face is its own
+   opaque, self-colored field and is intentionally untouched by this hover,
+   matching how those faces already behave everywhere else on the site.
+   Card.tsx's own `transition-colors` Tailwind class already covers both
+   background-color and color, so no extra transition-property rule is
+   needed here -- only the reduced-motion guard below. */
+@media (hover: hover) {
+  .card-grid > a:hover,
+  .card-grid > div:hover {
+    background: var(--ac, var(--color-invert));
+  }
+  .card-grid > a:hover .card-text,
+  .card-grid > a:hover .card-text *,
+  .card-grid > div:hover .card-text,
+  .card-grid > div:hover .card-text * {
+    color: var(--color-text-inverse);
+  }
+}
+body.no-motion .card-grid > a,
+body.no-motion .card-grid > div {
+  transition: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .card-grid > a,
+  .card-grid > div {
+    transition: none;
+  }
+}
+
 /* ── Loves marquee ── */
 .marquee {
   overflow: hidden;

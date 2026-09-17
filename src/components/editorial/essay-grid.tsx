@@ -41,7 +41,15 @@ function groupByYear(posts: EssayGridPost[]): Map<number, EssayGridPost[]> {
   return new Map([...groups.entries()].sort(([a], [b]) => b - a));
 }
 
-function cardProps(post: EssayGridPost, i: number) {
+/**
+ * `i` drives the paper/ink title-card alternation (unchanged). `accentIndex`
+ * drives the Phase 23 rotating-accent hover and defaults to `i`, which is
+ * already page-continuous in every view except the year-grouped one below --
+ * that view passes an explicit continuous index so the accent never resets
+ * at a year boundary while titleCardField alternation stays exactly as it
+ * was (avoids touching already-covered behaviour).
+ */
+function cardProps(post: EssayGridPost, i: number, accentIndex: number = i) {
   return {
     href: `/blog/${post.slug}`,
     title: post.title,
@@ -51,6 +59,7 @@ function cardProps(post: EssayGridPost, i: number) {
     coverAlt: post.cover ? post.title : undefined,
     readingTime: post.readingTime,
     titleCardField: (i % 2 === 0 ? "paper" : "ink") as "paper" | "ink",
+    accentIndex,
   };
 }
 
@@ -108,6 +117,11 @@ export function EssayGrid({ posts }: { posts: EssayGridPost[] }) {
   const postsByYear = groupByYear(posts);
   const yearEntries = [...postsByYear.entries()];
 
+  // Phase 23 (SW-01): continuous, page-wide accent index across every year
+  // group, kept separate from the per-year `i` that still drives
+  // titleCardField alternation unchanged (mirrors building/page.tsx).
+  let accentCounter = 0;
+
   return (
     <div className="-mx-6 md:-mx-40">
       {yearEntries.map(([year, yearPosts], i, arr) => (
@@ -115,7 +129,7 @@ export function EssayGrid({ posts }: { posts: EssayGridPost[] }) {
           <YearBlock year={year}>
             <div className="card-grid">
               {yearPosts.map((post, i) => (
-                <Card key={post.id} {...cardProps(post, i)} />
+                <Card key={post.id} {...cardProps(post, i, accentCounter++)} />
               ))}
             </div>
           </YearBlock>

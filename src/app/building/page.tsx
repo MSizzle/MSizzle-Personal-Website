@@ -65,6 +65,15 @@ export default async function BuildingPage() {
   const projectsByYear = groupProjectsByYear(projects);
   const yearEntries = [...projectsByYear.entries()];
 
+  // Phase 23 (SW-01): continuous, page-wide accent index across every year
+  // group -- kept separate from the per-year `i` below (which still drives
+  // BADGE_FIELDS/titleCardField alternation unchanged) so the rotating
+  // accent never resets at a year boundary, matching the homepage's
+  // cross-section counter rule. /building has no capped row count to derive
+  // offsets from (unlike homepageAccentOffsets), so this is just a running
+  // total incremented in render order.
+  let accentCounter = 0;
+
   return (
     <>
       {/* Full-bleed vermilion hero band (D-01 restyle) -- replaces the pale
@@ -105,6 +114,7 @@ export default async function BuildingPage() {
                         badgeEmoji={project.emoji ?? undefined}
                         badgeField={BADGE_FIELDS[i % BADGE_FIELDS.length]}
                         titleCardField={i % 2 === 0 ? "paper" : "ink"}
+                        accentIndex={accentCounter++}
                       />
                     ))}
                   </div>

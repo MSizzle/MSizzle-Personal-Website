@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { TitleCard } from "@/components/v3/title-card";
 import { CardCover } from "@/components/v3/card-cover";
 import { EmojiBadge } from "@/components/v3/emoji-badge";
+import { accentStyle } from "@/lib/accent-rotation";
 
 type Props = {
   kicker?: string;
@@ -35,6 +36,16 @@ type Props = {
    * "gray". MUST be driven deterministically by callers from list index.
    */
   badgeField?: "ink" | "cream" | "vermilion" | "gray";
+  /**
+   * Document-order index this card should carry for the rotating accent
+   * hover (Phase 23, SW-01). Sets `--ac` via `accentStyle` -- the same
+   * mechanism the homepage's `.a-row`/`.e-post` rows use, reused rather than
+   * reinvented. Callers (building/page.tsx, essay-grid.tsx) must pass a
+   * continuous, page-wide counter, not an index that resets at a year-group
+   * boundary. Omit to fall back to the plain ink hover (`.card-grid`'s
+   * `var(--ac, var(--color-invert))` default in globals.css).
+   */
+  accentIndex?: number;
 };
 
 /**
@@ -65,6 +76,7 @@ export function Card({
   titleCardField,
   badgeEmoji,
   badgeField,
+  accentIndex,
 }: Props) {
   // Pre-build the fallback face once -- passed into CardCover so it doesn't
   // need to re-import TitleCard, keeping CardCover's API generic.
@@ -101,7 +113,7 @@ export function Card({
   const showTitleBlock = hasCover || hasBadge;
 
   const textBlock = showTitleBlock ? (
-    <div className="p-[26px]">
+    <div className="card-text p-[26px]">
       {kicker && (
         <span className="font-mono text-xs text-text-dim block mb-[14px]">{kicker}</span>
       )}
@@ -114,7 +126,7 @@ export function Card({
       )}
     </div>
   ) : blurb || readingTime !== undefined ? (
-    <div className="p-[26px]">
+    <div className="card-text p-[26px]">
       {blurb && <p className="text-sm text-text-dim">{blurb}</p>}
       {readingTime !== undefined && (
         <p className="font-mono text-xs text-[var(--color-text-muted)] mt-2">
@@ -124,9 +136,13 @@ export function Card({
     </div>
   ) : null;
 
+  // Rotating-accent hover fill lives at the .card-grid CSS level (globals.css)
+  // so every caller gets it for free; this only sets the row's own --ac.
+  const style = accentIndex !== undefined ? accentStyle(accentIndex) : undefined;
+
   if (href) {
     return (
-      <Link href={href} className="block bg-bg hover:bg-[rgba(17,17,17,0.04)] transition-colors">
+      <Link href={href} className="block bg-bg transition-colors" style={style}>
         {coverSlot}
         {textBlock}
       </Link>
@@ -134,7 +150,7 @@ export function Card({
   }
 
   return (
-    <div className="bg-bg hover:bg-[rgba(17,17,17,0.04)] transition-colors">
+    <div className="bg-bg transition-colors" style={style}>
       {coverSlot}
       {textBlock}
     </div>

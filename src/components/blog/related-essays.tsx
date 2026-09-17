@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { getPublishedPosts, type BlogPost } from '@/lib/notion'
 import { RELATED_ESSAYS } from '@/data/related-essays'
+import { accentStyle } from '@/lib/accent-rotation'
 
 const TARGET_COUNT = 3
 
@@ -82,18 +83,25 @@ export async function RelatedEssays({ currentSlug }: { currentSlug: string }) {
     <section className="mt-16 border-t border-[var(--border)] pt-8">
       <h2 className="text-sm font-normal uppercase tracking-widest">Related Essays</h2>
       <ul className="mt-4 space-y-4">
-        {posts.map((post) => (
+        {posts.map((post, i) => (
           <li key={post.slug}>
+            {/* Phase 23 (SW-01): rotating-accent hover fill (--ac, set via
+                accentStyle, reused from src/lib/accent-rotation.ts), fresh
+                counter starting at 0 for this page -- a blog post page has
+                no other rotating-accent surface on it to continue from. */}
             <Link
               href={`/blog/${post.slug}`}
-              className="group block transition-opacity hover:opacity-70"
+              style={accentStyle(i)}
+              className="group block -mx-3 px-3 py-2 transition-colors hover:bg-[var(--ac,var(--color-invert))]"
             >
-              <div className="text-base">
+              <div className="text-base group-hover:text-[var(--color-text-inverse)]">
                 {post.emoji && <span className="mr-2">{post.emoji}</span>}
                 <span className="underline">{post.title}</span>
               </div>
               {post.description && (
-                <p className="mt-1 text-sm opacity-60">{post.description}</p>
+                <p className="mt-1 text-sm opacity-60 group-hover:opacity-100 group-hover:text-[var(--color-text-inverse)]">
+                  {post.description}
+                </p>
               )}
             </Link>
           </li>

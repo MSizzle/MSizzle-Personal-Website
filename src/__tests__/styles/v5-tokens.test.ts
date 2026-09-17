@@ -123,25 +123,36 @@ describe("muted-text legibility (D-07)", () => {
 });
 
 describe("rest-state guard (D-V5-03)", () => {
-  // Updated by 21.5-02: the rotation mechanism now wires --ac into the two
-  // row ::before fills. Those fills sit at opacity: 0 at rest and are only
-  // revealed via :hover / :focus-visible, so the invariant becomes "exactly
-  // these two references exist, and nothing else in globals.css touches
-  // --ac" rather than "zero references anywhere" (true only for 21.5-01).
-  it("the only --ac references in globals.css are the two row ::before fallback fills", () => {
+  // Updated by 21.5-02: the rotation mechanism wires --ac into the two
+  // homepage row ::before fills. Those fills sit at opacity: 0 at rest and
+  // are only revealed via :hover / :focus-visible.
+  //
+  // Updated again by Phase 23 (SW-01): the mechanism now also extends to
+  // /writing's and /building's `.card-grid > a:hover` / `.card-grid >
+  // div:hover` fill, carrying the same rotating accent to interior-route
+  // cards. The invariant becomes "exactly these three references exist, and
+  // nothing else in globals.css touches --ac" rather than the two-reference
+  // count that held before this phase.
+  it("the only --ac references in globals.css are the three known hover fills", () => {
     const hits = css.match(/var\(--ac/g) || [];
-    expect(hits).toHaveLength(2);
+    expect(hits).toHaveLength(3);
 
     const aRowBefore = css.match(/\.a-row::before\s*\{([^}]*)\}/);
     const ePostBefore = css.match(/\.e-post::before\s*\{([^}]*)\}/);
+    const cardGridHover = css.match(
+      /\.card-grid > a:hover,\s*\.card-grid > div:hover\s*\{([^}]*)\}/
+    );
     expect(aRowBefore).not.toBeNull();
     expect(ePostBefore).not.toBeNull();
+    expect(cardGridHover).not.toBeNull();
     expect(aRowBefore![1]).toMatch(/background:\s*var\(--ac,\s*var\(--color-invert\)\)/);
     expect(ePostBefore![1]).toMatch(/background:\s*var\(--ac,\s*var\(--color-invert\)\)/);
+    expect(cardGridHover![1]).toMatch(/background:\s*var\(--ac,\s*var\(--color-invert\)\)/);
 
     const withoutFills = css
       .replace(/\.a-row::before\s*\{[^}]*\}/, "")
-      .replace(/\.e-post::before\s*\{[^}]*\}/, "");
+      .replace(/\.e-post::before\s*\{[^}]*\}/, "")
+      .replace(/\.card-grid > a:hover,\s*\.card-grid > div:hover\s*\{[^}]*\}/, "");
     expect(withoutFills).not.toMatch(/var\(--ac/);
   });
 });
