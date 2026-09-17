@@ -1,9 +1,11 @@
-// Phase 19 SC-5 title-card OG image for blog essays.
-// Node runtime for fs font loading; no gradients (site-wide rule).
-// Layout comes from the shared OgCard (quick task 260726-kjp).
+// Phase 19 SC-5 title-card OG image for blog essays, rebuilt onto the v5
+// palette. Node runtime for fs font loading; no gradients (site-wide rule).
+// Layout comes from the shared OgCard (quick task 260726-kjp). Accent is
+// derived from the slug (accentForSlug) so a given essay always previews in
+// the same colour.
 import { ImageResponse } from 'next/og'
 import { getPostBySlug } from '@/lib/notion'
-import { OG_SIZE, OG_CONTENT_TYPE, ogFonts, OgCard } from '@/lib/seo/og-shared'
+import { OG_SIZE, OG_CONTENT_TYPE, ogFonts, OgCard, accentForSlug } from '@/lib/seo/og-shared'
 
 export const alt = 'Essay by Monty Singer'
 export const size = OG_SIZE
@@ -43,6 +45,7 @@ export default async function Image({ params }: Props) {
         title={displayTitle}
         footerLeft="montysinger.com"
         footerRight={date || undefined}
+        accent={accentForSlug(slug)}
       />
     ),
     {

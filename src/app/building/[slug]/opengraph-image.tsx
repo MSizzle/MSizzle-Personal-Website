@@ -1,9 +1,11 @@
-// Phase 19 SC-5 title-card OG image for projects.
-// Node runtime for fs font loading; no gradients (site-wide rule).
-// Layout comes from the shared OgCard (quick task 260726-kjp).
+// Phase 19 SC-5 title-card OG image for projects, rebuilt onto the v5
+// palette. Node runtime for fs font loading; no gradients (site-wide rule).
+// Layout comes from the shared OgCard (quick task 260726-kjp). Accent is
+// derived from the slug (accentForSlug) so a given project always previews in
+// the same colour.
 import { ImageResponse } from 'next/og'
 import { getProjectBySlug } from '@/lib/notion-projects'
-import { OG_SIZE, OG_CONTENT_TYPE, ogFonts, OgCard } from '@/lib/seo/og-shared'
+import { OG_SIZE, OG_CONTENT_TYPE, ogFonts, OgCard, accentForSlug } from '@/lib/seo/og-shared'
 
 export const alt = 'Project by Monty Singer'
 export const size = OG_SIZE
@@ -39,6 +41,7 @@ export default async function Image({ params }: Props) {
         title={displayTitle}
         description={displayDescription || undefined}
         footerLeft="montysinger.com"
+        accent={accentForSlug(slug)}
       />
     ),
     {

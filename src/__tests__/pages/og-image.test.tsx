@@ -3,10 +3,38 @@ import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
 
 describe('OG Image Generation', () => {
-  it('og-shared exports the pure mono ink/paper tokens', async () => {
+  it('og-shared exports the v5 bone/ink tokens', async () => {
     const module = await import('@/lib/seo/og-shared')
-    expect(module.OG_INK).toBe('#000000')
-    expect(module.OG_PAPER).toBe('#ffffff')
+    expect(module.OG_INK).toBe('#111111')
+    expect(module.OG_PAPER).toBe('#F5F2EB')
+  })
+
+  it('og-shared accent palette matches globals.css --ac-0..--ac-9 and the root accent is Oxblood', async () => {
+    const ogShared = await import('@/lib/seo/og-shared')
+    expect(ogShared.OG_ACCENTS).toEqual([
+      '#6B1F2B',
+      '#185661',
+      '#8E6214',
+      '#2A3A6B',
+      '#1E4D3C',
+      '#4A2547',
+      '#14524F',
+      '#7A5230',
+      '#17395B',
+      '#55632F',
+    ])
+    expect(ogShared.OG_ROOT_ACCENT).toBe('#6B1F2B')
+  })
+
+  it('accentForSlug is deterministic and always returns a palette colour', async () => {
+    const ogShared = await import('@/lib/seo/og-shared')
+    const slugs = ['my-first-post', 'exoskel', 'a', '']
+    for (const slug of slugs) {
+      const first = ogShared.accentForSlug(slug)
+      const second = ogShared.accentForSlug(slug)
+      expect(first).toBe(second)
+      expect(ogShared.OG_ACCENTS).toContain(first)
+    }
   })
 
   it('none of the OG route generators contain the retired vermilion hex', () => {
