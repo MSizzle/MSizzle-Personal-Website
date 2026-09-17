@@ -68,10 +68,11 @@ export function ExplorativeHomepage({
         accentStart={writingAccentStart}
       />
 
-      {/* Extra top room: the Writing log ends in small mono type and the
-          pinboard opens with dense tiles, so the two need a wider gap than
-          the standard band rhythm to read as separate sections. */}
-      <section className="band pt-40 md:pt-64" id="loves">
+      {/* Shares the same tightened .a-sec rhythm as Building/Writing (quick
+          task 260917) instead of a bespoke pt-40/pt-64 on top of it -- that
+          extra padding was genuine double spacing once the page carried v5
+          color, and read as unfinished rather than deliberate. */}
+      <section className="band a-sec" id="loves">
         <SectionLoves items={loves} categoryOrder={loveCategories} />
       </section>
 

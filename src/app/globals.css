@@ -703,11 +703,12 @@ li:last-child > .nav-cell {
    site's only hover language. Plan 21-03 reuses the identical invert
    mechanism for Writing terminal rows (.e-post). */
 /* Band rhythm. `--space-32` was never defined anywhere, so this used to read
-   as its 128px fallback; now it is an explicit, fluid value. Generous by
-   intent: the mono system has no color or ornament, so open space is the
-   only thing separating one band from the next. */
+   as its 128px fallback; now it is an explicit, fluid value. Tightened to
+   roughly two-thirds of the original clamp(96px, 13vw, 192px) (quick task
+   260917, Monty audit: "too stark," page now carries v5 color so it no
+   longer needs mono-era amounts of bare air to read as separated bands). */
 .a-sec {
-  padding-top: clamp(96px, 13vw, 192px);
+  padding-top: clamp(64px, 8.5vw, 128px);
 }
 .a-sec > h2 {
   margin-bottom: clamp(32px, 4vw, 56px);
