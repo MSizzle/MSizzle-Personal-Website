@@ -39,7 +39,7 @@ Progress: [███░░░░░░░] 33% (2/6 v4.0 phases complete)
 |-------|--------|---------|-----------|
 | 20 — Mono Token Foundation | complete | 2026-07-21 | 2026-07-21 |
 | 21 — Mono Homepage Rebuild | complete | 2026-07-21 | 2026-07-21 |
-| 21.5 — v5 Palette Foundation & Row Rotation | not_started | — | — |
+| 21.5 — v5 Palette Foundation & Row Rotation | in_progress (2/3 plans) | 2026-09-16 | — |
 | 22 — Things I Love in v5 | not_started | — | — |
 | 23 — Site Sweep & v5 OG | not_started | — | — |
 | 24 — True Inversion Dark Mode | not_started | — | — |
