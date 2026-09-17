@@ -21,7 +21,7 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-20)
 
 **Core value:** A personal site that feels alive and memorable, *and* legible — not another template blog.
-**Current focus:** Phase 22 (Things I Love in Mono)
+**Current focus:** Phase 21.5 (v5 Palette Foundation & Row Rotation)
 
 ## Current Position
 
@@ -39,8 +39,9 @@ Progress: [███░░░░░░░] 33% (2/6 v4.0 phases complete)
 |-------|--------|---------|-----------|
 | 20 — Mono Token Foundation | complete | 2026-07-21 | 2026-07-21 |
 | 21 — Mono Homepage Rebuild | complete | 2026-07-21 | 2026-07-21 |
-| 22 — Things I Love in Mono | not_started | — | — |
-| 23 — Site Sweep & Mono OG | not_started | — | — |
+| 21.5 — v5 Palette Foundation & Row Rotation | not_started | — | — |
+| 22 — Things I Love in v5 | not_started | — | — |
+| 23 — Site Sweep & v5 OG | not_started | — | — |
 | 24 — True Inversion Dark Mode | not_started | — | — |
 | 25 — v4.0 QA, Perf Gate & Alias Swap | not_started | — | — |
 
@@ -56,8 +57,14 @@ this is just a bit about me") and the Vermilion/clay palette was rejected outrig
 pure black/white with **zero accent**, type-only hero, motion stripped to a single slow fade,
 terminal-format writing list, Things I Love pinboard kept but recolored.
 
-Next action: `/gsd-plan-phase 22` (Things I Love in Mono). Phase 21 verification is closed,
-so nothing blocks it.
+Next action: `/gsd-plan-phase 21.5` (v5 Palette Foundation & Row Rotation).
+
+**Direction changed 2026-09-16.** Monty audited the shipped site ("more personable and less
+stark") and reversed D-01's zero-accent lock. The site now targets a bone `#F5F2EB` ground,
+near-black `#111111` ink, and a ten-colour accent palette rotating continuously across index rows
+on hover. See the AMENDED block at the top of ROADMAP.md for the locked palette and rules, and the
+`v5-warm-rotating-palette` memory for full rationale. Phases 22-25 were all specced against pure
+mono and have been amended in place; do not plan them off a pre-2026-09-16 read.
 
 ## Accumulated Context
 

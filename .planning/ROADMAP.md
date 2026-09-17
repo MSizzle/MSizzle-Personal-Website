@@ -11,12 +11,42 @@
 
 ### 🚧 v4.0 Mono Restyle (Phases 20-25)
 
-**Milestone Goal:** Strip the site to pure black and white with zero accent, and rebuild the homepage as a quiet editorial index that reads "here's a bit about me" rather than a founder pitch. Design is locked by `.planning/sketches/015-mono-passive-home/` variant E — this milestone ports it, it does not explore it.
+**Milestone Goal:** Rebuild the homepage as a quiet editorial index that reads "here's a bit about me" rather than a founder pitch. Design register is locked by `.planning/sketches/015-mono-passive-home/` variant E — this milestone ports it, it does not explore it.
+
+> **AMENDED 2026-09-16 — the palette half of this milestone is superseded.** Monty's audit
+> feedback was that the shipped mono site reads "too stark" and wants to be "more personable."
+> D-01 (zero accent, contrast from inversion only) is explicitly reversed. The site now targets a
+> bone ground `#F5F2EB`, near-black ink `#111111`, and a **ten-colour accent palette that rotates
+> continuously across rows on hover**. Everything non-palette in this milestone still stands:
+> type-only hero, motion stripped to a slow fade, terminal writing list, pinboard behaviour
+> preserved, hard corners, no gradients.
+>
+> Locked palette, in rotation order (max-contrast ordering: no two consecutive entries share a
+> hue family, because a continuous counter makes palette neighbours page neighbours):
+>
+> | # | Name | Hex | | # | Name | Hex |
+> |---|------|-----|---|---|------|-----|
+> | 0 | Oxblood | `#6B1F2B` | | 5 | Plum | `#4A2547` |
+> | 1 | Slate teal | `#185661` | | 6 | Deep teal | `#14524F` |
+> | 2 | Ochre | `#8E6214` | | 7 | Bronze | `#7A5230` |
+> | 3 | Indigo ink | `#2A3A6B` | | 8 | Prussian | `#17395B` |
+> | 4 | Forest ink | `#1E4D3C` | | 9 | Olive | `#55632F` |
+>
+> Ochre was darkened from `#9A6A16` (4.22:1 against bone, fails WCAG AA for the small mono text
+> inside row fills) to `#8E6214` (4.81:1). Every other fill clears AA comfortably; Bronze at
+> 6.10:1 is the next lowest.
+>
+> Rules: **hover only, nothing at rest.** The counter runs **continuously in document order and
+> does not reset at a section head** — Building takes 0..n, Writing picks up where Building
+> stopped. Chrome that cannot rotate (hero link, active nav cell) stays black. Positional
+> assignment means publishing a new project shifts downstream row colours; Monty was told and
+> chose rotation anyway. Full rationale in the `v5-warm-rotating-palette` memory.
 
 - [x] **Phase 20: Mono Token Foundation** - Retheme `globals.css` to pure black/white with zero accent, kill every hardcoded survival, establish inversion as the emphasis language, on a branch with a live Vercel preview (completed 2026-07-21)
 - [x] **Phase 21: Mono Homepage Rebuild** - Rebuild the homepage to sketch 015 variant E: type-only hero, Swiss numbered Building index, terminal writing log, one continuous ground, motion stripped to a single slow fade (completed 2026-07-21)
-- [ ] **Phase 22: Things I Love in Mono** - Recolor the pinboard to greyscale with a black note panel while preserving its shipped behaviour exactly, and prove reduced-motion across every surviving animation
-- [ ] **Phase 23: Site Sweep & Mono OG** - Carry mono to every interior route, neutralize Notion inline text colors, retire non-content photography, and regenerate all three OG images without `#e5411f`
+- [ ] **Phase 21.5: v5 Palette Foundation & Row Rotation** - Retheme the tokens to bone/near-black, add the ten-colour rotating accent palette with a continuous cross-section counter, and apply it to the homepage Building and Writing rows on hover only (supersedes D-01)
+- [ ] **Phase 22: Things I Love in v5** - Recolor the pinboard into the v5 system while preserving its shipped behaviour exactly, and prove reduced-motion across every surviving animation
+- [ ] **Phase 23: Site Sweep & v5 OG** - Carry v5 to every interior route, neutralize Notion inline text colors, retire non-content photography, and regenerate all three OG images off the new palette
 - [ ] **Phase 24: True Inversion Dark Mode** - Build light/dark theming from scratch (no `next-themes` today) so the whole site inverts cleanly and the inversion-based emphasis language still reads on a dark ground
 - [ ] **Phase 25: v4.0 QA, Perf Gate & Alias Swap** - Perf budget, vitest + SEO regression gate, human visual QA over every route, then promote production by explicit alias swap
 
@@ -101,16 +131,48 @@ Plans:
 
 **Sequencing note**: Touches `src/components/home/` — `hero.tsx`, `explorative-homepage.tsx`, `section-building.tsx`, `section-work.tsx`, `section-newsletter.tsx`, `section-loves.tsx`, `photo.tsx`, `photo-marquee.tsx`, `scroll-reveals.tsx`, `sticky-nav.tsx`, `monty-monthly-carousel.tsx`, `rail-box.tsx`. **Do not touch `pinboard.tsx`** — TL-01 is a preservation requirement handled in Phase 22. The three homepage vitest failures previously listed here (`section-building` HD-04, `explorative-homepage` TD-03/HD-05) **no longer exist in the suite** — verified during Phase 20 execution (2026-07-21). The only pre-existing failure is `src/__tests__/pages/projects.test.tsx:188` ("renders a title-card face instead of a cover image when project.image is non-null"), confirmed failing on `main` before Phase 20 began; it belongs to the projects page, not the homepage, and must not be logged as a regression introduced here.
 
-### Phase 22: Things I Love in Mono
+### Phase 21.5: v5 Palette Foundation & Row Rotation
 
-**Goal**: The pinboard looks like it belongs to the mono site while behaving exactly as it does in production today.
-**Depends on**: Phase 21
+**Goal**: The site renders on the v5 warm token system, and index rows across the homepage bloom
+into a rotating accent on hover that runs continuously down the page.
+**Depends on**: Phase 21, and quick task 260916-lqq (the unified sticky `SiteHeader` the palette
+has to live inside)
+**Requirements**: supersedes D-01 / MO-01's zero-accent clause; carries MO-02, MO-03, MO-05 forward
+**Success Criteria** (what must be TRUE):
+
+  1. The ground is bone `#F5F2EB` and body ink is near-black `#111111` site-wide, with dim, muted,
+     border and invert tokens all re-derived from the new ink rather than left on pure black.
+  2. Hovering any Building row or Writing row fills it with a colour from the ten-entry palette,
+     in max-contrast order, and the row's text flips to bone. Nothing carries accent colour at rest.
+  3. The accent counter runs continuously in document order across section boundaries: with three
+     Building rows and five Writing rows, the Writing rows take indices 3 through 7, not 0 through 4.
+  4. Every row fill clears WCAG AA (4.5:1) for the small mono text it contains, measured against
+     bone, with Ochre at `#8E6214` not `#9A6A16`.
+  5. Chrome that cannot rotate — the hero contact link and the active nav cell — remains black.
+  6. Under `prefers-reduced-motion`, hover fills apply without transition rather than disappearing.
+
+**Plans**: TBD
+**UI hint**: yes
+
+**Sequencing note**: CSS `nth-child` cannot count across sibling `<section>` elements, so the
+counter cannot be done in pure CSS. The page orchestrator computes a start offset per band and
+passes it down (`Building` 0, `Writing` projects.length, `Loves` projects.length + posts.length);
+each row sets its own `--ac` custom property. Server-rendered, no client JS. The interactive
+sketch that Monty signed off lives at `.playwright-mcp/accent-compare.html` (gitignored,
+throwaway — serve with `python3 -m http.server 4321` from that directory). Port the behaviour from
+it, do not re-derive it. Palette is fully token-driven in `globals.css` lines 8-32, but note the
+four hardcoded survivals Phase 20 already catalogued, plus `--hero-bg` at line 122.
+
+### Phase 22: Things I Love in v5
+
+**Goal**: The pinboard looks like it belongs to the v5 site while behaving exactly as it does in production today.
+**Depends on**: Phase 21.5
 **Requirements**: TL-01, TL-02, TL-03, MS-03
 **Success Criteria** (what must be TRUE):
 
   1. A visitor can still scatter-browse across three start lines, drag cards, click a card to slide a note up over it, see per-type card kinds (book/film cover, YouTube thumb, Thing note card, Place polaroid), and press Organize by topic to gather the board into topic rows — identical to production.
-  2. The board renders with no color: the `SWATCHES` array is greyscale, `.pb-frame--cream` has lost its cream fill, and the note panel that was Vermilion is black.
-  3. A visitor can tell a Book from a Film from a Record from a Hobby by shape and border weight alone, with no hue carrying the distinction.
+  2. The board sits on the v5 ground: `.pb-frame--cream` has lost its cream fill and the note panel that was Vermilion reads correctly against bone. Whether pinboard cards draw from the ten-colour palette or stay neutral is an open design decision for this phase — the locked rotation spec covers index ROWS only and says nothing about the board.
+  3. A visitor can tell a Book from a Film from a Record from a Hobby by shape and border weight alone, without relying on hue to carry the distinction.
   4. With `prefers-reduced-motion` set, every remaining animation on the site — including the pinboard's scatter, drag, and note slide — degrades to a static, fully usable state.
 
 **Plans**: TBD
@@ -118,16 +180,16 @@ Plans:
 
 **Sequencing note**: `src/components/home/pinboard.tsx` is 749 lines of shipped, working behaviour. This phase changes its palette only. **Do not schedule a pinboard rewrite.** Under 760px the board must still degrade to a tappable stack with the toolbar hidden, as shipped.
 
-### Phase 23: Site Sweep & Mono OG
+### Phase 23: Site Sweep & v5 OG
 
-**Goal**: Every route beyond the homepage reads as one mono system, and nothing — not a sub-page, not a Notion-authored text color, not a social preview image — can reintroduce a hue.
+**Goal**: Every route beyond the homepage reads as one v5 system, and no sub-page, Notion-authored text color, or social preview image contradicts it.
 **Depends on**: Phase 22
 **Requirements**: SW-01, SW-02, SW-03, MO-04
 **Success Criteria** (what must be TRUE):
 
-  1. Writing, blog post, building, project detail, contact, and prometheus all render in the mono system with no accent survivals on any element or hover state.
-  2. Sharing any of the three OG-image routes (root, `blog/[slug]`, `building/[slug]`) produces a black-and-white preview card; `#e5411f` no longer appears in any `opengraph-image.tsx`.
-  3. A post authored in Notion using amber, orange, blue, or gray inline text renders as ink/dim/muted greys on the site.
+  1. Writing, blog post, building, project detail, and contact all render in the v5 system, with row-style hovers drawing from the rotating palette and no stale vermilion or cream survivals on any element or hover state.
+  2. Sharing any of the three OG-image routes (root, `blog/[slug]`, `building/[slug]`) produces a preview card built from the v5 palette on a bone ground; `#e5411f` no longer appears in any `opengraph-image.tsx`. OG images were the one deferred exception to the no-gradients rule and lose their gradient here.
+  3. A post authored in Notion using amber, orange, blue, or gray inline text renders as v5 ink/dim/muted values on the site, so authoring in Notion cannot reintroduce an off-system hue.
   4. Photography appears only where it is content — Things I Love cards and Notion project covers; the hero portraits, the wide Prometheus screenshot, and the photo-marquee fallback are gone.
 
 **Carve-out (approved by Monty, 2026-07-21):** the two hero brand marks —
@@ -155,18 +217,27 @@ Logos are also not photography, so criterion 4 does not apply either.
 **Plans**: TBD
 **UI hint**: yes
 
-**Sequencing note**: This is genuinely new scope. `next-themes` is **not** currently a dependency and there is no theme toggle anywhere in `src/` — it must be built from scratch. It is sequenced after the mono system exists because inversion needs something to invert. **DM-02 is the hardest requirement in the milestone:** the site uses inversion (black block on white) as its entire emphasis and hover language, so on a dark ground a "black block" hover has nothing to invert against. That tension must be resolved by an explicit design decision in this phase, not deferred.
+**Sequencing note**: This is genuinely new scope. `next-themes` is **not** currently a dependency and there is no theme toggle anywhere in `src/` — it must be built from scratch.
+
+> **AMENDED 2026-09-16 — DM-02 got substantially easier.** This was previously flagged as the
+> hardest requirement in the milestone: inversion served as BOTH the emphasis/hover language AND
+> dark mode, so a black-block hover on a black ground had nothing to invert against. With Phase
+> 21.5's rotating accent carrying row hover instead, that conflict dissolves — the accents are
+> mid-dark saturated colours that read against both a bone and a near-black ground. What this
+> phase must now verify is the inverse of the old worry: that each of the ten fills still clears
+> AA against **white** text on a dark ground, not just bone text on a light one. Re-run the
+> contrast matrix for the dark theme rather than assuming it carries over.
 
 ### Phase 25: v4.0 QA, Perf Gate & Alias Swap
 
-**Goal**: The mono site is proven correct, fast, and regression-free, and montysinger.com serves it.
+**Goal**: The v5 site is proven correct, fast, and regression-free, and montysinger.com serves it.
 **Depends on**: Phase 24
 **Requirements**: DQ-02, DQ-03, DQ-04, DQ-05
 **Success Criteria** (what must be TRUE):
 
   1. The restyled site meets the existing perf budget: PSI mobile (authoritative) at parity-or-better versus current production, and the LCP gate holds.
   2. The full vitest suite passes, including the SEO regression gate — sitemap, robots, blog feed, per-page metadata, breadcrumb JSON-LD — proven intact through the restyle.
-  3. A human visual QA pass over every route (`/`, `/writing`, `/blog/[slug]`, `/building`, `/building/[slug]`, `/contact`, `/prometheus`) signs off the mono system in both light and dark, recorded as a GO/NO-GO verdict.
+  3. A human visual QA pass over every route (`/`, `/writing`, `/blog/[slug]`, `/building`, `/building/[slug]`, `/contact`) signs off the v5 system in both light and dark, recorded as a GO/NO-GO verdict. Note `/prometheus` no longer exists — it was deleted in favour of a 301 to prometheus.today (quick task 260728-kcg).
   4. On GO, montysinger.com serves the mono site via an explicit alias swap, verified post-promotion with no alias drift.
 
 **Plans**: TBD
