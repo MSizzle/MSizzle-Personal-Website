@@ -32,7 +32,7 @@ v3.0's requirements are archived at `.planning/milestones/v3.0-REQUIREMENTS.md`.
 
 ### Things I Love (TL)
 - [ ] **TL-01**: The pinboard keeps its shipped behaviour exactly — loose scatter across three start lines, drag, click-to-slide-a-note-up, per-type card kinds, and the Organize-by-topic button.
-- [ ] **TL-02**: The pinboard renders in mono: the colored `SWATCHES` array becomes greyscale, `.pb-frame--cream` loses its cream fill, and the note panel is black where it was Vermilion.
+- [ ] **TL-02**: The pinboard renders in the v5 system: `SWATCHES` keeps its muted, desaturated neutral tones (deliberately not greyscale, and deliberately not tied to the ten-entry rotating accent palette — see the reasoning in `globals.css`), `.pb-frame--cream` swaps its stark cream fill for the warm `--pb-paper` tone, and the note panel inverts to ink via `--color-invert` (not a hardcoded black) where it was previously Vermilion.
 - [ ] **TL-03**: Card types remain distinguishable from one another by shape and border weight rather than by hue.
 
 ### Site Sweep (SW)
