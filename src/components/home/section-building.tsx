@@ -18,8 +18,12 @@ import { CardCover } from "@/components/v3/card-cover";
  * Each row leads with a compact cover thumbnail (quick task 260917) next to
  * its numeral -- reuses the same CardCover component and /api/notion-cover
  * proxy /building already renders covers through, rather than a new one.
- * A row with no cover (row 001, Prometheus, isn't a Notion page) renders an
- * empty bordered slot instead, so the grid never breaks.
+ * A row with no cover (row 001, Prometheus, isn't a Notion page; or a
+ * Featured Project with no Notion cover set) renders an invisible spacer of
+ * the same dimensions instead of a bordered/tinted box (quick task
+ * 260917-hf4) -- no image means no visible box, but the numeral column still
+ * lines up across every row since the spacer reserves the same space a real
+ * thumbnail would.
  *
  * Row derivation lives in `@/lib/homepage-rows` (21.5-02) so the accent
  * rotation offset math and the rendered rows can never drift apart.
@@ -45,9 +49,12 @@ export function SectionBuilding({
         01 · Building
       </h2>
       {rows.map((row, i) => {
+        // No border/background: an invisible spacer, not a visible empty
+        // box (quick task 260917-hf4). Same dimensions as a real thumbnail
+        // so the numeral column still aligns row to row.
         const emptyThumb = (
           <span
-            className="block w-8 h-8 md:w-10 md:h-10 shrink-0 border border-border bg-[rgba(17,17,17,0.06)]"
+            className="block w-8 h-8 md:w-10 md:h-10 shrink-0"
             aria-hidden="true"
           />
         );

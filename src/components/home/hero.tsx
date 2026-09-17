@@ -8,11 +8,23 @@
    so the empty right side is filled by moving the meta column up beside the
    lede instead (quick task 260917) rather than by any imagery.
 
-   Two-column on md+: type on the left; the meta column sits on the right,
-   explicitly grid-row-aligned to the lede paragraph (both share row 4 and
-   both carry the same mt-6 top offset) so its top edge lines up with the
-   lede's, not the headline's. Collapses to the original single-column
-   stacked order on mobile via plain DOM order (no grid overrides below md).
+   Two-column at lg+ only (quick task 260917-hf4): type on the left; the meta
+   column sits on the right, explicitly grid-row-aligned to the lede
+   paragraph (both share row 4) so its top edge lines up with the lede's, not
+   the headline's. Below lg the layout stays single-column (plain DOM order)
+   rather than switching at md -- a two-column split in the 768-1023px band
+   left column 1 too narrow for the lede's longer per-sentence lines to hold
+   one line each, which is the whole point of the `.block` spans below.
+
+   Lede sentences and the kicker proverb are deliberately NOT capped with an
+   arbitrary `ch` max-width: column 1's real width is already bounded by
+   `.wrap`'s 1180px cap minus the 250px meta column and the gap, so removing
+   the cap (lede) or generously raising it (kicker, still mono-`ch`-precise
+   since JetBrains Mono is a true monospace font) is what keeps each line on
+   one row at 1440px without reintroducing the old dead-space gap between the
+   lede and the meta column. Verified by character-width arithmetic, not a
+   browser -- see the 260917-hf4 commit message for the numbers; still wants
+   a human check at 1440x900 and 390x844.
 
    The two brand marks in the meta row are a deliberate, Monty-approved
    exception to the pure-mono lock: they render in their real brand colors.
@@ -28,21 +40,21 @@ import Link from "next/link";
 export function Hero() {
   return (
     <section className="wrap min-h-[calc(100svh-var(--header-h))] flex flex-col justify-center py-16 md:py-24">
-      <div className="grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_300px] md:grid-rows-[auto_auto_auto_auto] gap-x-12 lg:gap-x-16">
-        <div className="reveal font-mono text-xs uppercase tracking-[0.12em] text-text-muted md:col-start-1 md:row-start-1">
+      <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_250px] lg:grid-rows-[auto_auto_auto_auto] lg:gap-x-10">
+        <div className="reveal font-mono text-xs uppercase tracking-[0.12em] text-text-muted lg:col-start-1 lg:row-start-1">
           Monty Singer
         </div>
 
-        <h1 className="reveal font-display text-2xl md:text-3xl font-extrabold leading-[0.95] tracking-[-0.03em] max-w-[24ch] mt-6 md:col-start-1 md:row-start-2">
+        <h1 className="reveal font-display text-2xl md:text-3xl font-extrabold leading-[0.95] tracking-[-0.03em] max-w-[24ch] mt-6 lg:col-start-1 lg:row-start-2">
           Most of what I do is turning a mess into something that runs
           itself.
         </h1>
 
-        <p className="reveal font-mono text-xs text-text-muted max-w-[34ch] mt-3 md:mt-4 md:col-start-1 md:row-start-3">
+        <p className="reveal font-mono text-xs text-text-muted max-w-[52ch] mt-4 md:mt-5 lg:col-start-1 lg:row-start-3">
           &ldquo;Blessed are those who create order from chaos.&rdquo;
         </p>
 
-        <p className="reveal font-sans font-light text-base leading-[1.6] text-text-dim max-w-[46ch] mt-6 md:col-start-1 md:row-start-4">
+        <p className="reveal font-sans font-light text-base leading-[1.6] text-text-dim mt-6 lg:col-start-1 lg:row-start-4">
           <span className="block">
             That is Prometheus, my AI consultancy for small and midsize
             businesses.
@@ -59,7 +71,7 @@ export function Hero() {
           </span>
         </p>
 
-        <div className="reveal grid grid-cols-1 gap-8 border-t border-border pt-6 mt-10 md:mt-6 md:border-t-0 md:border-l md:pt-0 md:pl-10 md:col-start-2 md:row-start-4">
+        <div className="reveal grid grid-cols-1 gap-8 border-t border-border pt-6 mt-10 lg:mt-6 lg:border-t-0 lg:border-l lg:pt-0 lg:pl-10 lg:col-start-2 lg:row-start-4">
           <div>
             <div className="text-xs font-mono uppercase tracking-[0.12em] text-text-muted">
               Currently
