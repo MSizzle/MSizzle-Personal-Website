@@ -1,5 +1,7 @@
 import Link from "next/link";
 import type { Project } from "@/lib/notion-projects";
+import { buildingRows } from "@/lib/homepage-rows";
+import { accentStyle } from "@/lib/accent-rotation";
 
 /**
  * SectionBuilding: Swiss numbered index for the Building band (HP-02).
@@ -10,39 +12,24 @@ import type { Project } from "@/lib/notion-projects";
  * Server Component only; no client directive.
  * Full-row hover/focus inversion is the site's only hover language (HP-02),
  * implemented via the .a-row CSS family in globals.css.
+ *
+ * Row derivation lives in `@/lib/homepage-rows` (21.5-02) so the accent
+ * rotation offset math and the rendered rows can never drift apart.
  */
-type Row = {
-  title: string;
-  description: string;
-  status: string;
-  href: string;
-  external: boolean;
-};
-
 export function SectionBuilding({
   projects = [],
+  accentStart = 0,
 }: {
   projects?: Project[];
+  /**
+   * Document-order accent index this section's first row should carry.
+   * `nth-child` cannot count across sibling `<section>` elements, so the
+   * running counter is lifted to the common parent (explorative-homepage.tsx)
+   * and handed down here as a start offset (D-V5-05, D-V5-07).
+   */
+  accentStart?: number;
 }) {
-  const rows: Row[] = [
-    {
-      title: "Prometheus",
-      description:
-        "AI integrations and education. Practical leverage, not hype.",
-      status: "Current",
-      href: "https://prometheus.today",
-      external: true,
-    },
-    ...projects.map((project) => ({
-      title: project.title,
-      description: project.description,
-      status:
-        project.tags?.[0] ||
-        String(new Date(project.lastEdited).getUTCFullYear()),
-      href: `/building/${project.slug}`,
-      external: false,
-    })),
-  ].slice(0, 3);
+  const rows = buildingRows(projects);
 
   return (
     <section className="wrap a-sec" id="building">
@@ -66,11 +53,17 @@ export function SectionBuilding({
             href={row.href}
             target="_blank"
             rel="noopener noreferrer"
+            style={accentStyle(accentStart + i)}
           >
             {children}
           </a>
         ) : (
-          <Link key={row.href} className="a-row reveal" href={row.href}>
+          <Link
+            key={row.href}
+            className="a-row reveal"
+            href={row.href}
+            style={accentStyle(accentStart + i)}
+          >
             {children}
           </Link>
         );

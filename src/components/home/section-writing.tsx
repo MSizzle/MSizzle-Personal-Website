@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { BlogPost } from "@/lib/notion";
-import { estimateReadingTime } from "@/utils/reading-time";
+import { writingRows, formatYYYYMM } from "@/lib/homepage-rows";
+import { accentStyle } from "@/lib/accent-rotation";
 
 /**
  * SectionWriting: terminal-format Writing log (HP-03). Renders real blog
@@ -10,27 +11,18 @@ import { estimateReadingTime } from "@/utils/reading-time";
  * mechanism as .a-row in Plan 21-02). Server Component only; no client
  * directive.
  *
+ * Row derivation lives in `@/lib/homepage-rows` (21.5-02) so the accent
+ * rotation offset math and the rendered rows can never drift apart.
+ *
  * Quick task 260722-wov (item 2) intentionally removed the prior
  * posts+Monty-Monthly merge: this homepage log is posts-only now. Monty
  * Monthly issues still appear on /writing, in their own dedicated section
  * (enlarged as part of the same quick task).
  */
-type Row = {
-  date: string;
-  title: string;
-  readTime: number;
-  href: string;
-};
-
-function formatYYYYMM(dateStr: string): string {
-  const d = new Date(dateStr);
-  if (Number.isNaN(d.getTime())) return "";
-  return `${d.getUTCFullYear()}-${String(d.getUTCMonth() + 1).padStart(2, "0")}`;
-}
-
 export function SectionWriting({
   posts = [],
   readingTimes = {},
+  accentStart = 0,
 }: {
   posts?: BlogPost[];
   /**
@@ -39,17 +31,15 @@ export function SectionWriting({
    * a rough floor -- a description is one line, so it rounds to "1 min".
    */
   readingTimes?: Record<string, number>;
+  /**
+   * Document-order accent index this section's first row should carry.
+   * `nth-child` cannot count across sibling `<section>` elements, so the
+   * running counter is lifted to the common parent (explorative-homepage.tsx)
+   * and handed down here as a start offset (D-V5-05, D-V5-07).
+   */
+  accentStart?: number;
 }) {
-  const rows: Row[] = posts
-    .filter((post) => post.date)
-    .map((post) => ({
-      date: post.date,
-      title: post.title,
-      readTime: readingTimes[post.id] ?? estimateReadingTime(post.description),
-      href: `/blog/${post.slug}`,
-    }))
-    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-    .slice(0, 5);
+  const rows = writingRows(posts, readingTimes);
 
   return (
     <section className="wrap a-sec" id="writing">
@@ -61,8 +51,13 @@ export function SectionWriting({
         {rows.length === 0 ? (
           <p>Nothing here yet. Check back soon.</p>
         ) : (
-          rows.map((row) => (
-            <Link key={row.href} className="e-post" href={row.href}>
+          rows.map((row, i) => (
+            <Link
+              key={row.href}
+              className="e-post"
+              href={row.href}
+              style={accentStyle(accentStart + i)}
+            >
               <span className="dt">{formatYYYYMM(row.date)}</span>
               <span>{row.title}</span>
               <span className="rd">{row.readTime} min</span>

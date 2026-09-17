@@ -6,12 +6,13 @@ import { SectionLoves } from "./section-loves";
 import type { Project } from "@/lib/notion-projects";
 import type { BlogPost } from "@/lib/notion";
 import type { LoveItem } from "@/lib/notion-loves";
+import { homepageAccentOffsets } from "@/lib/homepage-rows";
 
 /**
  * ExplorativeHomepage: mono homepage orchestrator (Server Component).
  *
  * Band order (HP-04): Hero -> 01 Building -> 02 Writing -> 03 Things I Love,
- * all on one continuous #ffffff ground -- no dark-ground class anywhere. Building
+ * all on one continuous bone ground -- no dark-ground class anywhere. Building
  * and Writing each render their own <section> wrapper internally; only Things
  * I Love needs an orchestrator-level wrapper (it doesn't self-wrap), and that
  * wrapper is the sole element on the page that MUST carry id="loves" verbatim
@@ -43,6 +44,15 @@ export function ExplorativeHomepage({
   loveCategories = [],
   readingTimes = {},
 }: Props) {
+  // The accent rotation counter runs continuously in document order across
+  // Building and Writing (D-V5-05). CSS `nth-child` cannot count across
+  // sibling <section> elements, so the counter has to be lifted to this
+  // common parent and handed down as each band's start offset. Not
+  // destructuring `loves` here -- Phase 22 will, and an unused binding is a
+  // lint error today.
+  const { building: buildingAccentStart, writing: writingAccentStart } =
+    homepageAccentOffsets(projects, posts);
+
   return (
     <div className="min-h-screen bg-bg">
       {/* Fixed islands: mounted first so they overlay all bands */}
@@ -50,9 +60,13 @@ export function ExplorativeHomepage({
 
       <Hero />
 
-      <SectionBuilding projects={projects} />
+      <SectionBuilding projects={projects} accentStart={buildingAccentStart} />
 
-      <SectionWriting posts={posts} readingTimes={readingTimes} />
+      <SectionWriting
+        posts={posts}
+        readingTimes={readingTimes}
+        accentStart={writingAccentStart}
+      />
 
       {/* Extra top room: the Writing log ends in small mono type and the
           pinboard opens with dense tiles, so the two need a wider gap than
