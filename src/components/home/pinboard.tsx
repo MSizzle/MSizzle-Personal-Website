@@ -115,7 +115,24 @@ function layoutFor(i: number, n: number): Pos {
   return { x, y, r };
 }
 
-/** Muted, on-brand fallback swatches for items with no page cover. */
+/**
+ * Muted, on-brand fallback swatches for items with no page cover.
+ *
+ * Phase 22 (v5) decision: kept neutral, not migrated to the ten-entry
+ * `--ac-0..9` accent palette. The board is the one place on the site where
+ * colour already exists as content -- book covers, film posters, YouTube
+ * thumbnails, photographs -- so letting the chrome (including this
+ * placeholder) rotate through the same ten hues used for Building/Writing row
+ * hovers would fight that real imagery and blur the accent palette's meaning
+ * (Phase 21.5 scoped it to hover-only index rows, nothing at rest). These
+ * swatches stand in for a missing photo, so they read as content filler, not
+ * UI chrome -- but they're always visible (not hover-gated) and there's no
+ * one clear item-to-accent mapping, so drawing from the locked ten would just
+ * look arbitrary. No text renders directly on a swatch (every caption/tag has
+ * its own solid ink backing -- see .pb-book-caption, .pb-tag), so there's no
+ * legibility constraint on the values below; they're unchanged from
+ * production and read fine against the bone ground.
+ */
 const SWATCHES = ["#8f9e86", "#7c93a6", "#b9805f", "#c9a14e", "#a49e93", "#8a6f82"];
 
 // Mirrors globals.css's .pb-media--* slot sizes exactly (quick task

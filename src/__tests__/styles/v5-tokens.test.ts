@@ -188,8 +188,51 @@ describe("quick task 260916-lqq regression guard", () => {
   });
 });
 
-describe("out-of-scope guard (D-V5-11)", () => {
-  it(".pb-frame--cream still exists, proving the pinboard block was not swept in this plan", () => {
-    expect(css).toMatch(/\.pb-frame--cream\s*\{[^}]*background:\s*#ffffff[^}]*\}/i);
+describe("pinboard v5 recolor (Phase 22, D-V5-11)", () => {
+  it(".pb-frame--cream no longer hardcodes the stark #ffffff that clashed with bone", () => {
+    expect(css).not.toMatch(/\.pb-frame--cream\s*\{[^}]*#ffffff[^}]*\}/i);
+    expect(css).not.toMatch(/\.pb-frame--cream\s*\{[^}]*#fff[^0-9a-f][^}]*\}/i);
+  });
+
+  it(".pb-frame--cream draws from --pb-paper, a warm tone distinct from bone in both directions", () => {
+    expect(css).toMatch(/\.pb-frame--cream\s*\{[^}]*background:\s*var\(--pb-paper\)[^}]*\}/i);
+    const match = css.match(/--pb-paper:\s*(#[0-9a-fA-F]{6})/);
+    expect(match).not.toBeNull();
+    const paperHex = match![1];
+    expect(paperHex.toLowerCase()).not.toBe(BONE.toLowerCase());
+    expect(paperHex.toLowerCase()).not.toBe("#ffffff");
+    // Ink text on the paper fill must clear AA (mirrors the accent-fill proof above).
+    expect(contrastRatio("#111111", paperHex)).toBeGreaterThanOrEqual(4.5);
+  });
+
+  it(".pb-note keeps the site's ink/bone inversion language, not a hardcoded Vermilion or pure white", () => {
+    // `\.pb-note\s*\{` only matches the bare `.pb-note { ... }` rule -- it
+    // cannot match `.pb-note-text` or `.pb-card.is-open .pb-note`, since
+    // those have non-whitespace/non-brace characters immediately after
+    // "note".
+    const match = css.match(/\.pb-note\s*\{([^}]*)\}/);
+    expect(match).not.toBeNull();
+    const body = match![1];
+    expect(body).toMatch(/background:\s*var\(--color-invert\)/);
+    expect(body).toMatch(/color:\s*var\(--color-text-inverse\)/);
+    expect(body).not.toMatch(/#e5411f/i);
+    expect(body).not.toMatch(/#fff(?![0-9a-f])/i);
+  });
+
+  it("SWATCHES in pinboard.tsx stays neutral -- none of the six fallback swatches are one of the ten locked accent hexes", () => {
+    const src = readFileSync(
+      join(process.cwd(), "src/components/home/pinboard.tsx"),
+      "utf-8"
+    );
+    const swatchLine = src.match(/const SWATCHES = \[([^\]]+)\]/);
+    expect(swatchLine).not.toBeNull();
+    const swatchHexes = [...swatchLine![1].matchAll(/#[0-9a-fA-F]{6}/g)].map((m) =>
+      m[0].toLowerCase()
+    );
+    expect(swatchHexes.length).toBeGreaterThan(0);
+    const accentHexes = EXPECTED_ACCENTS.map((a) => a.hex.toLowerCase());
+    for (const hex of swatchHexes) {
+      expect(accentHexes).not.toContain(hex);
+    }
   });
 });

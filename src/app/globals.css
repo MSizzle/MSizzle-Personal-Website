@@ -1097,16 +1097,24 @@ footer.site {
   .foot-grid    { grid-template-columns: 1fr; gap: 26px; }
 }
 
-/* Phase 22's, per D-V5-11 -- NOT swept by the 21.5 v5 retheme. Do not touch
-   `.pb-card.is-dragging .pb-frame`, `.pb-frame--cream`, `.pb-media`,
-   `.pb-media--thing` (or anything else under this block) here. After 21.5-01
-   `.pb-frame--cream`'s hardcoded #ffffff will render as a white card against
-   the new bone ground -- that is an expected Phase 22 input, not a defect. */
+/* Phase 22 (v5 recolor) — the pinboard now sits on the v5 bone/ink system.
+   `.pb-frame`'s background already reads bone (`var(--color-bg)`, inherited
+   from the 21.5 retheme); `.pb-frame--cream` gets its own warm paper tone
+   (`--pb-paper`, defined on `.pinboard` below) instead of the stark #ffffff
+   that read as a bug against bone -- a "Thing" card should look like a
+   separate index card resting on the board, not vanish into the ground and
+   not glare as a cold white against a warm one. The note panel (`.pb-note`)
+   keeps the site's ink/bone inversion language rather than reviving the
+   retired Vermilion fill -- see its own comment below for why. `SWATCHES` in
+   pinboard.tsx stays a muted neutral set on purpose, not the ten-entry
+   `--ac-*` accent palette -- see that file's comment for the reasoning. Card
+   kinds still read apart by shape + frame geometry alone; no hue involved. */
 /* ── Things-I-love pinboard (sketch 012) ─────────────────────────────────────
    Draggable overlapping cards on the light "loves" band. Brutalist offset
-   solids (no gradients), hard corners, pure black/white. Interaction is wired
-   in Pinboard's effect; this only styles the faces + drag/hover/reveal states.
-   Full-bleed-ish: lives outside .wrap so the scatter can spread. */
+   solids (no gradients), hard corners, bone ground + hard ink chrome (v5).
+   Interaction is wired in Pinboard's effect; this only styles the faces +
+   drag/hover/reveal states. Full-bleed-ish: lives outside .wrap so the
+   scatter can spread. */
 .pinboard {
   position: relative;
   max-width: 1180px;
@@ -1121,6 +1129,18 @@ footer.site {
   --pb-tools-h: 88px;
   /* Bottom reserve so a tilted card in the last row cannot cross the footer. */
   --pb-tilt-slack: 28px;
+  /* Warm manila-paper tone for the "Thing" catch-all card (Phase 22, v5):
+     visibly warmer and deeper than the bone ground -- #F5F2EB -> #EDE1C3
+     moves the blue channel down by 40, the biggest single shift -- so the
+     card still reads as a separate index card laid on the board, distinct in
+     both directions from a) vanishing into bone and b) the old #ffffff,
+     which read as a stark, cool-toned bug against a warm ground. Going
+     darker/warmer rather than brighter/lighter was deliberate: it moves
+     unambiguously away from white rather than toward a paler version of it.
+     Deliberately its own value, not a tint of --color-bg -- a card needs a
+     distinct identity, not a shade of the page it sits on. Ink text on this
+     fill clears ~14.7:1 (see v5-tokens.test.ts). */
+  --pb-paper: #EDE1C3;
 }
 /* z-index:1 makes the field its own stacking context, one atomic layer below
    the toolbar (.pb-tools, z-index:20). Every card lives inside the field, so no
@@ -1161,7 +1181,7 @@ footer.site {
   outline-offset: 2px;
 }
 .pb-card.is-dragging .pb-frame { box-shadow: 16px 18px 0 rgba(0, 0, 0, 0.32); }
-.pb-frame--cream { background: #ffffff; }
+.pb-frame--cream { background: var(--pb-paper); }
 
 /* media / thumbnail area */
 .pb-media { position: relative; display: block; overflow: hidden; background: rgba(0,0,0,0.08); }
@@ -1234,7 +1254,16 @@ footer.site {
 .pb-body .pb-t { font-size: 14px; font-weight: 800; }
 .pb-body .pb-s { font-size: 12px; color: var(--color-text-muted); margin-top: 5px; line-height: 1.3; }
 
-/* the "why I love it" reveal on click */
+/* the "why I love it" reveal on click. Phase 22 (v5) decision: stays on the
+   site's ink inversion language (var(--color-invert) fill + bone text) and
+   does not revive the retired Vermilion. Every other emphasis surface on the
+   board already inverts to solid ink -- the book/movie caption bar, the
+   YouTube play-button housing, the toolbar button hover state -- so a
+   Vermilion note panel would be the one surface breaking that shared
+   pattern. Tying it to one of the ten rotating accents instead was also
+   considered and rejected: that palette is reserved for hover-only index
+   rows (Phase 21.5), and the note panel is open-state chrome, not a row. Text
+   is bone (var(--color-text-inverse)), never pure white. */
 .pb-note {
   position: absolute; left: 0; right: 0; bottom: 0;
   background: var(--color-invert); color: var(--color-text-inverse);
