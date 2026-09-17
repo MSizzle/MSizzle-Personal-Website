@@ -20,29 +20,36 @@ export interface NotionRendererProps {
 }
 
 // ---------------------------------------------------------------------------
-// Notion color → Tailwind class map
+// Notion color → v5 ink-scale class map
 // ---------------------------------------------------------------------------
-
+// Phase 23 (SW-01/MO-04): every one of Notion's ten inline-color options --
+// not just the amber/orange/blue/gray set Monty audited -- degrades to one
+// of the three ink shades already in the v5 token system (full ink, dim,
+// muted), so authoring a post in Notion can never reintroduce an
+// off-system hue on the live site. No dark: variants: the site has no dark
+// theme yet (Phase 24 is still scoped, unbuilt), so a stray `dark:` class
+// here would only fire unpredictably under a visitor's OS color scheme
+// rather than a real site theme toggle.
 const COLOR_MAP: Record<string, string> = {
   default: "",
-  gray: "text-gray-500 dark:text-gray-400",
-  brown: "text-amber-700 dark:text-amber-500",
-  orange: "text-orange-600 dark:text-orange-400",
-  yellow: "text-yellow-600 dark:text-yellow-400",
-  green: "text-green-600 dark:text-green-400",
-  blue: "text-blue-600 dark:text-blue-400",
-  purple: "text-purple-600 dark:text-purple-400",
-  pink: "text-pink-600 dark:text-pink-400",
-  red: "text-red-600 dark:text-red-400",
-  gray_background: "bg-gray-100 dark:bg-gray-800 rounded px-1",
-  brown_background: "bg-amber-100 dark:bg-amber-900/40 rounded px-1",
-  orange_background: "bg-orange-100 dark:bg-orange-900/40 rounded px-1",
-  yellow_background: "bg-yellow-100 dark:bg-yellow-900/40 rounded px-1",
-  green_background: "bg-green-100 dark:bg-green-900/40 rounded px-1",
-  blue_background: "bg-blue-100 dark:bg-blue-900/40 rounded px-1",
-  purple_background: "bg-purple-100 dark:bg-purple-900/40 rounded px-1",
-  pink_background: "bg-pink-100 dark:bg-pink-900/40 rounded px-1",
-  red_background: "bg-red-100 dark:bg-red-900/40 rounded px-1",
+  gray: "text-text-muted",
+  brown: "text-text-dim",
+  orange: "text-text-dim",
+  yellow: "text-text-muted",
+  green: "text-text-dim",
+  blue: "text-text-dim",
+  purple: "text-text-muted",
+  pink: "text-text-dim",
+  red: "text-text",
+  gray_background: "bg-[rgba(17,17,17,0.06)] rounded px-1",
+  brown_background: "bg-[rgba(17,17,17,0.08)] rounded px-1",
+  orange_background: "bg-[rgba(17,17,17,0.08)] rounded px-1",
+  yellow_background: "bg-[rgba(17,17,17,0.06)] rounded px-1",
+  green_background: "bg-[rgba(17,17,17,0.08)] rounded px-1",
+  blue_background: "bg-[rgba(17,17,17,0.08)] rounded px-1",
+  purple_background: "bg-[rgba(17,17,17,0.06)] rounded px-1",
+  pink_background: "bg-[rgba(17,17,17,0.08)] rounded px-1",
+  red_background: "bg-[rgba(17,17,17,0.10)] rounded px-1",
 };
 
 // ---------------------------------------------------------------------------
