@@ -11,23 +11,34 @@ describe("Hero", () => {
     const headings = screen.getAllByRole("heading", { level: 1 });
     expect(headings.length).toBe(1);
     expect(headings[0].textContent).toBe(
-      "Blessed are those who create order from chaos."
+      "Most of what I do is turning a mess into something that runs itself."
     );
   });
 
-  it("renders each subtitle sentence as its own line", () => {
+  it("renders the proverb as a mono kicker beneath the headline", () => {
     render(React.createElement(Hero));
     expect(
-      screen.getByText("Founder of Prometheus, an applied AI company.")
+      screen.getByText("“Blessed are those who create order from chaos.”")
+    ).toBeDefined();
+  });
+
+  it("renders each lede sentence as its own line", () => {
+    render(React.createElement(Hero));
+    expect(
+      screen.getByText(
+        "That is Prometheus, my AI consultancy for small and midsize businesses."
+      )
     ).toBeDefined();
     expect(
-      screen.getByText("I love technology, biology, and self-improvement.")
+      screen.getByText(
+        "It is also beekeeping, growing mushrooms, and too much military history."
+      )
     ).toBeDefined();
     expect(
       screen.getByText((_, node) => {
         if (!node || node.tagName.toLowerCase() !== "span") return false;
         return (node.textContent ?? "").startsWith(
-          "If you like these as well,"
+          "Same instinct either way. If it is yours too,"
         );
       })
     ).toBeDefined();
@@ -43,10 +54,10 @@ describe("Hero", () => {
   it("keeps the lead-in phrase outside the contact link", () => {
     render(React.createElement(Hero));
     expect(
-      screen.getByText(/If you like these as well,/)
+      screen.getByText(/Same instinct either way\. If it is yours too,/)
     ).toBeDefined();
     const link = screen.getByRole("link", { name: "we’ll get along." });
-    expect(link.textContent).not.toContain("If you like these as well");
+    expect(link.textContent).not.toContain("Same instinct either way");
     expect(link.textContent).toBe("we’ll get along.");
   });
 
