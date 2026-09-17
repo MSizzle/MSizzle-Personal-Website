@@ -1,5 +1,6 @@
 import { Hero } from "./hero";
 import { ScrollReveals } from "./scroll-reveals";
+import { LovesTeaser } from "./loves-teaser";
 import { SectionBuilding } from "./section-building";
 import { SectionWriting } from "./section-writing";
 import { SectionLoves } from "./section-loves";
@@ -59,6 +60,11 @@ export function ExplorativeHomepage({
       <ScrollReveals />
 
       <Hero />
+
+      {/* Things I Love is the warmest content on the site but sits ~2100px
+          down; this compact teaser strip surfaces a handful of tiles early
+          and links down to the real #loves band (quick task 260917). */}
+      <LovesTeaser items={loves} />
 
       <SectionBuilding projects={projects} accentStart={buildingAccentStart} />
 
