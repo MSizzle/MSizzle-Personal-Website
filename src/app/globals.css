@@ -758,7 +758,12 @@ li:last-child > .nav-cell {
   content: "";
   position: absolute;
   inset: 0 -20px;
-  background: var(--color-invert);
+  /* D-V5-04/21.5-02: reads the row's own inline --ac (set by
+     src/lib/accent-rotation.ts via style={accentStyle(n)}), falling back to
+     the shipped ink fill when --ac is unset. .a-row is homepage-only today,
+     but Phase 23 extends it to interior routes, so an unset --ac must
+     degrade to --color-invert rather than to transparent. */
+  background: var(--ac, var(--color-invert));
   z-index: -1;
   opacity: 0;
   transition: opacity 150ms ease;
@@ -915,7 +920,9 @@ li:last-child > .nav-cell {
   content: "";
   position: absolute;
   inset: 0;
-  background: var(--color-invert);
+  /* D-V5-04/21.5-02: same rotating-accent-with-ink-fallback mechanism as
+     .a-row::before above. */
+  background: var(--ac, var(--color-invert));
   z-index: -1;
   opacity: 0;
   transition: opacity 150ms ease;
@@ -935,11 +942,14 @@ li:last-child > .nav-cell {
 .e-post .dt {
   color: var(--color-text-muted);
 }
+/* Full bone, not the dim inverse -- the AA 4.5:1 numbers 21.5-01 proved for
+   each accent fill were computed against full bone text, not bone at 0.66
+   alpha. */
 .e-post:hover .dt,
 .e-post:focus-visible .dt,
 .e-post:hover .rd,
 .e-post:focus-visible .rd {
-  color: var(--color-text-inverse-dim);
+  color: var(--color-text-inverse);
 }
 .e-post .rd {
   color: var(--color-text-muted);
@@ -1010,11 +1020,24 @@ body.no-motion .reveal {
   opacity: 1 !important;
   transform: none !important;
 }
+/* D-V5-10: the row hover fill survives reduced motion by design -- only the
+   150ms opacity crossfade is dropped. Do NOT set opacity: 0 or display: none
+   here, and do NOT wrap the hover rules themselves in this escape hatch. */
+body.no-motion .a-row::before,
+body.no-motion .e-post::before {
+  transition: none;
+}
 
 @media (prefers-reduced-motion: reduce) {
   .reveal {
     opacity: 1 !important;
     transform: none !important;
+  }
+  /* D-V5-10: same reduced-motion exception as the body.no-motion pair above
+     -- the fill still applies on hover/focus, only the crossfade is gone. */
+  .a-row::before,
+  .e-post::before {
+    transition: none;
   }
 }
 

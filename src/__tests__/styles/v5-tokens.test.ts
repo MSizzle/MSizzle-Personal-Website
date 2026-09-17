@@ -123,9 +123,26 @@ describe("muted-text legibility (D-07)", () => {
 });
 
 describe("rest-state guard (D-V5-03)", () => {
-  it("no --ac reference exists anywhere in globals.css yet -- the palette is declared but applied to nothing", () => {
+  // Updated by 21.5-02: the rotation mechanism now wires --ac into the two
+  // row ::before fills. Those fills sit at opacity: 0 at rest and are only
+  // revealed via :hover / :focus-visible, so the invariant becomes "exactly
+  // these two references exist, and nothing else in globals.css touches
+  // --ac" rather than "zero references anywhere" (true only for 21.5-01).
+  it("the only --ac references in globals.css are the two row ::before fallback fills", () => {
     const hits = css.match(/var\(--ac/g) || [];
-    expect(hits).toHaveLength(0);
+    expect(hits).toHaveLength(2);
+
+    const aRowBefore = css.match(/\.a-row::before\s*\{([^}]*)\}/);
+    const ePostBefore = css.match(/\.e-post::before\s*\{([^}]*)\}/);
+    expect(aRowBefore).not.toBeNull();
+    expect(ePostBefore).not.toBeNull();
+    expect(aRowBefore![1]).toMatch(/background:\s*var\(--ac,\s*var\(--color-invert\)\)/);
+    expect(ePostBefore![1]).toMatch(/background:\s*var\(--ac,\s*var\(--color-invert\)\)/);
+
+    const withoutFills = css
+      .replace(/\.a-row::before\s*\{[^}]*\}/, "")
+      .replace(/\.e-post::before\s*\{[^}]*\}/, "");
+    expect(withoutFills).not.toMatch(/var\(--ac/);
   });
 });
 
