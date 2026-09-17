@@ -82,9 +82,6 @@ export default function RootLayout({
           </MotionProvider>
         </LenisProvider>
         <UmamiAnalytics />
-        <span aria-hidden="true" className="fixed right-3 bottom-3 z-50 text-xs opacity-20 select-none">
-          Prometheus
-        </span>
       </body>
     </html>
   );
