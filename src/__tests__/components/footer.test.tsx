@@ -43,11 +43,12 @@ describe("SiteFooter (single site-wide footer)", () => {
     expect(container.querySelector("footer#contact")).not.toBeNull();
   });
 
-  it("renders the core route links (Building, Writing, Things I Love)", () => {
+  it("renders the core route links (Building, Writing, Things I Love, Unsolicited advice)", () => {
     render(<SiteFooter />);
     expect(document.querySelector('a[href="/building"]')).not.toBeNull();
     expect(document.querySelector('a[href="/writing"]')).not.toBeNull();
     expect(document.querySelector('a[href="/#loves"]')).not.toBeNull();
+    expect(document.querySelector('a[href="/advice"]')).not.toBeNull();
   });
 
   it("external links carry target=_blank + rel=noopener noreferrer", () => {
