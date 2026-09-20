@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "enrich-loves": "tsx scripts/enrich-loves.ts"
+    "enrich-loves": "tsx scripts/enrich-loves.ts",
+    "create-inbox-db": "tsx scripts/create-inbox-db.ts"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
