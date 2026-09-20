@@ -10,10 +10,12 @@
 
    Server component — pure presentation, no client hooks.
    External links get target="_blank" rel="noopener noreferrer"; mailto: opens
-   in place (no target/rel). No gradients, no em dashes (brand rules).
+   in place (no target/rel). Optional accentIndex applies the rotating palette on hover.
+   No gradients, no em dashes (brand rules).
 */
 import type { ReactNode } from "react";
 import { cn } from "@/utils/cn";
+import { accentStyle } from "@/lib/accent-rotation";
 
 type Props = {
   /** Ordinal shown in the first grid column, e.g. "01" */
@@ -28,13 +30,16 @@ type Props = {
   action?: ReactNode;
   /** Off-site link: adds target="_blank" rel="noopener noreferrer". */
   external?: boolean;
+  /** Document-order accent index (homepage rotation). Omit for the ink fill. */
+  accentIndex?: number;
 };
 
-export function ContactRow({ numeral, title, href, handle, action, external = false }: Props) {
+export function ContactRow({ numeral, title, href, handle, action, external = false, accentIndex }: Props) {
   return (
     <a
       href={href}
       {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+      style={accentIndex === undefined ? undefined : accentStyle(accentIndex)}
       className={cn(
         // layout — matches ListRow (big variant)
         "group grid gap-[18px] items-center",
@@ -42,7 +47,7 @@ export function ContactRow({ numeral, title, href, handle, action, external = fa
         "py-7 px-[18px] -mx-[18px]",
         // hover-invert: bg and text flip
         "transition-[background,color] duration-150",
-        "hover:bg-text hover:text-bg",
+        "hover:bg-[var(--ac,var(--color-text))] hover:text-bg",
         // grid columns: 60px numeral | 1fr content | auto meta
         "[grid-template-columns:60px_1fr_auto]"
       )}

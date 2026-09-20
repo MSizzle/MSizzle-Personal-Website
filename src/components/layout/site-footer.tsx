@@ -27,6 +27,7 @@ const ELSEWHERE: { label: string; href: string; external: boolean }[] = [
   { label: "X / Twitter", href: "https://x.com/themontysinger", external: true },
   { label: "LinkedIn", href: "https://linkedin.com/in/monty-singer", external: true },
   { label: "Monty Monthly", href: "https://montymonthly.substack.com", external: true },
+  { label: "Unsolicited advice", href: "/advice", external: false },
 ];
 
 export function SiteFooter() {

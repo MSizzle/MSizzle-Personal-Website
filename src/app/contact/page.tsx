@@ -6,7 +6,7 @@ import { RuleStrong } from "@/components/editorial/rule-strong";
 export const revalidate = 1800;
 
 const DESCRIPTION =
-  "Get in touch with Monty Singer: email, X, LinkedIn, and the Monty Monthly newsletter.";
+  "Get in touch with Monty Singer: email, unsolicited advice, X, LinkedIn, and the Monty Monthly newsletter.";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -20,9 +20,9 @@ export const metadata: Metadata = {
   },
 };
 
-/** The four ways to reach Monty. Handles + hrefs mirror the footer's
- *  "Elsewhere" list (src/components/layout/site-footer.tsx). Only Email is
- *  in-place (mailto:); the rest open off-site in a new tab. */
+/** The five ways to reach Monty. Handles + hrefs mirror the footer's
+ *  "Elsewhere" list (src/components/layout/site-footer.tsx). Email is a mailto: and
+ *  Unsolicited advice is an internal route; the rest open off-site in a new tab. */
 const LINKS = [
   {
     numeral: "01",
@@ -55,6 +55,14 @@ const LINKS = [
     handle: "montymonthly.substack.com",
     action: "Subscribe",
     external: true,
+  },
+  {
+    numeral: "05",
+    title: "Unsolicited advice",
+    href: "/advice",
+    handle: "Anonymous. Advice, questions, corrections.",
+    action: "Say it",
+    external: false,
   },
 ] as const;
 

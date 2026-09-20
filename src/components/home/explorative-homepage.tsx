@@ -3,6 +3,7 @@ import { ScrollReveals } from "./scroll-reveals";
 import { SectionBuilding } from "./section-building";
 import { SectionWriting } from "./section-writing";
 import { SectionLoves } from "./section-loves";
+import { SectionAdvice } from "./section-advice";
 import type { Project } from "@/lib/notion-projects";
 import type { BlogPost } from "@/lib/notion";
 import type { LoveItem } from "@/lib/notion-loves";
@@ -11,7 +12,7 @@ import { homepageAccentOffsets } from "@/lib/homepage-rows";
 /**
  * ExplorativeHomepage: mono homepage orchestrator (Server Component).
  *
- * Band order (HP-04): Hero -> 01 Building -> 02 Writing -> 03 Things I Love,
+ * Band order (HP-04): Hero -> 01 Building -> 02 Writing -> 03 Things I Love -> Unsolicited advice,
  * all on one continuous bone ground -- no dark-ground class anywhere. Building
  * and Writing each render their own <section> wrapper internally; only Things
  * I Love needs an orchestrator-level wrapper (it doesn't self-wrap), and that
@@ -45,12 +46,12 @@ export function ExplorativeHomepage({
   readingTimes = {},
 }: Props) {
   // The accent rotation counter runs continuously in document order across
-  // Building and Writing (D-V5-05). CSS `nth-child` cannot count across
+  // Building, Writing, and Advice (D-V5-05). CSS `nth-child` cannot count across
   // sibling <section> elements, so the counter has to be lifted to this
-  // common parent and handed down as each band's start offset. Not
-  // destructuring `loves` here -- Phase 22 will, and an unused binding is a
-  // lint error today.
-  const { building: buildingAccentStart, writing: writingAccentStart } =
+  // common parent and handed down as each band's start offset. The `loves`
+  // offset is returned here even though Phase 22 owns the pinboard -- it is
+  // part of the contract so Phase 22 does not have to re-derive it.
+  const { building: buildingAccentStart, writing: writingAccentStart, loves: adviceAccentIndex } =
     homepageAccentOffsets(projects, posts);
 
   return (
@@ -74,6 +75,8 @@ export function ExplorativeHomepage({
       <section className="band pt-40 md:pt-64" id="loves">
         <SectionLoves items={loves} categoryOrder={loveCategories} />
       </section>
+
+      <SectionAdvice accentIndex={adviceAccentIndex} />
 
       {/* Footer is the single site-wide SiteFooter, rendered by app/layout.tsx. */}
     </div>
