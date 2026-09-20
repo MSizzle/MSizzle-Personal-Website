@@ -6,6 +6,7 @@ export function SectionAdvice({ accentIndex }: { accentIndex: number }) {
       <div className="px-6 md:px-40">
         <div className="-mx-[18px]">
           <ContactRow
+            numeral="04"
             title="Unsolicited advice"
             handle="Anonymous. No login. I read every one."
             action="Say it"

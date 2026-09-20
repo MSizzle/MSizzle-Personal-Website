@@ -134,7 +134,7 @@ export function AdviceForm() {
               >
                 What's on your mind?
               </label>
-              <div className="relative mt-4 font-sans text-2xl md:text-3xl leading-snug">
+              <div className="relative mt-4 font-sans text-xl md:text-2xl leading-snug">
                 {message.length === 0 && !focused && (
                   <span
                     aria-hidden="true"
@@ -146,7 +146,7 @@ export function AdviceForm() {
                   ref={textareaRef}
                   rows={1}
                   value={message}
-                  className="block w-full resize-none border-0 bg-transparent p-0 text-text outline-none focus:outline-none focus:ring-0"
+                  className="advice-field block w-full resize-none overflow-hidden border-0 bg-transparent p-0 text-text outline-none"
                   style={{ caretColor: "var(--color-text)" }}
                   onFocus={() => setFocused(true)}
                   onBlur={() => setFocused(false)}
@@ -213,7 +213,7 @@ export function AdviceForm() {
                     autoComplete="off"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="block w-full border-0 bg-transparent p-0 text-xl text-text outline-none focus:outline-none focus:ring-0"
+                    className="advice-field block w-full border-0 bg-transparent p-0 text-lg md:text-xl text-text outline-none"
                   />
                   <input
                     id="advice-contact"
@@ -223,7 +223,7 @@ export function AdviceForm() {
                     autoComplete="off"
                     value={contact}
                     onChange={(e) => setContact(e.target.value)}
-                    className="block w-full border-0 bg-transparent p-0 text-xl text-text outline-none focus:outline-none focus:ring-0"
+                    className="advice-field block w-full border-0 bg-transparent p-0 text-lg md:text-xl text-text outline-none"
                   />
                 </div>
                 <div className="mt-8 flex items-center gap-6">
