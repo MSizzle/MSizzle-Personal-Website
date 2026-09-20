@@ -1,3 +1,4 @@
+| 260920-ofb | Anonymous "Unsolicited advice" inbox: /advice two-screen form, POST /api/advice to a Notion Inbox DB, homepage band 04, /contact row 05, footer link; DB not yet provisioned (needs NOTION_INBOX_DB_ID) | 2026-09-20 | 86e2e4d | [260920-ofb-anonymous-unsolicited-advice-inbox-advic](./quick/260920-ofb-anonymous-unsolicited-advice-inbox-advic/) |
 ---
 gsd_state_version: 1.0
 milestone: v4.0
@@ -29,7 +30,7 @@ Phase: 21 (mono-homepage-rebuild) — COMPLETE
 Plan: 6 of 6 (all 6 plans executed and summarized)
 Status: All 6 plans executed. All 3 human UAT items judged PASS by Monty on 2026-07-22
 against `npm run dev`. `21-HUMAN-UAT.md` is complete. Phase 21 is CLOSED.
-Last activity: 2026-07-26 - Completed quick task 260726-kjp: Fix broken-in-production cluster (OG images, pinboard titles, dead redirect, keyboard focus)
+Last activity: 2026-09-20 - Completed quick task 260920-ofb: Anonymous "Unsolicited advice" inbox (/advice, /api/advice, entry points). Blocked on Notion Inbox DB provisioning.
 
 Progress: [███░░░░░░░] 33% (2/6 v4.0 phases complete)
 
