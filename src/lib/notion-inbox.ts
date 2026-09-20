@@ -38,7 +38,8 @@ export async function createInboxEntry(input: InboxEntryInput): Promise<void> {
   }
 
   // Build properties object with exact keys.
-  const properties: Record<string, any> = {
+  type PageProperties = Parameters<typeof notion.pages.create>[0]["properties"];
+  const properties: PageProperties = {
     Name: {
       title: [{ type: "text" as const, text: { content: title } }],
     },
@@ -72,6 +73,6 @@ export async function createInboxEntry(input: InboxEntryInput): Promise<void> {
 
   await notion.pages.create({
     parent: { database_id: dbId },
-    properties: properties as Parameters<typeof notion.pages.create>[0]["properties"],
+    properties,
   });
 }
