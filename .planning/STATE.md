@@ -1,3 +1,4 @@
+| fast | Revalidate + IndexNow now cover every sitemap URL (posts, projects, about), falling back to the three index pages if Notion is unreachable | 2026-09-21 | 3677fdb | (inline) |
 | fast | Advice form collapsed to one page: Submit button plus Want a reply? toggle revealing Name/Email; Notion Advice DB (3e232e75...) wired, env set locally + Vercel prod | 2026-09-21 | 56de243 | (inline) |
 | fast | Pinboard: Organize by topic shrinks and wraps cards; Draw a card auto-settles after 4s riffle + 3s wind-down, Stop kept | 2026-09-20 | f8942bc | (inline) |
 | fast | Advice form follow-up: single Send, ink dividers under reply fields, Email placeholder, homepage row copy trimmed | 2026-09-20 | 6ebbf60 | (inline) |
@@ -33,7 +34,7 @@ Phase: 21 (mono-homepage-rebuild) — COMPLETE
 Plan: 6 of 6 (all 6 plans executed and summarized)
 Status: All 6 plans executed. All 3 human UAT items judged PASS by Monty on 2026-07-22
 against `npm run dev`. `21-HUMAN-UAT.md` is complete. Phase 21 is CLOSED.
-Last activity: 2026-09-21 - Completed quick task 260921-ed0: SEO/GEO hardening (/about + FAQ schema, /llms.txt, @id entity linking, IndexNow, project JSON-LD, sitemap dates, cover cache). Needs env: BING_SITE_VERIFICATION (user), INDEXNOW_KEY.
+Last activity: 2026-09-21 - Fast fix: IndexNow ping covers full sitemap. SEO/GEO hardening (260921-ed0) live. Needs env: BING_SITE_VERIFICATION (user).
 
 Progress: [███░░░░░░░] 33% (2/6 v4.0 phases complete)
 
