@@ -1,6 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { revalidatePath } from "next/cache";
 import { isAuthorized } from "@/lib/enrich/auth";
+import { pingIndexNow } from "@/lib/seo/indexnow";
 
 export const dynamic = "force-dynamic";
 
@@ -16,12 +17,25 @@ export const dynamic = "force-dynamic";
  */
 const PATHS = ["/", "/writing", "/building"];
 
-function handle(request: NextRequest) {
+async function handle(request: NextRequest) {
   if (!isAuthorized(request)) {
     return NextResponse.json({ error: "unauthorized" }, { status: 401 });
   }
   for (const path of PATHS) revalidatePath(path);
-  return NextResponse.json({ revalidated: true, paths: PATHS });
+
+  // Same trigger, second audience: refreshing the cache is the moment we know
+  // the content changed, so tell IndexNow too (260921-ed0). pingIndexNow never
+  // throws, but the extra guard keeps a future refactor from breaking the
+  // revalidate response.
+  try {
+    await pingIndexNow(PATHS);
+  } catch {}
+
+  return NextResponse.json({
+    revalidated: true,
+    paths: PATHS,
+    indexnow: Boolean(process.env.INDEXNOW_KEY),
+  });
 }
 
 export async function GET(request: NextRequest) {

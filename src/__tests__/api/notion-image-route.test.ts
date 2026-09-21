@@ -10,7 +10,7 @@ import { describe, it, expect, vi } from "vitest";
 import { NextRequest } from "next/server";
 
 const EXPECTED_CACHE_CONTROL =
-  "public, max-age=300, s-maxage=31536000, stale-while-revalidate=86400";
+  "public, max-age=86400, s-maxage=31536000, stale-while-revalidate=604800";
 
 vi.mock("@/lib/notion", () => ({
   getFreshImageUrl: vi.fn(async (blockId: string) =>

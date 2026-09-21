@@ -60,10 +60,15 @@ function extractProjectProperties(page: PageObjectResponse): Project {
       ? titleProp.title.map((t) => t.plain_text).join("")
       : "Untitled";
 
+  // Slugs are lowercased here, once, so every link the site builds points at
+  // one casing. A mixed-case Notion slug used to produce /building/Gene-own
+  // and /building/gene-own as two indexable URLs for one project (260921-ed0).
+  // Notion's rich_text equals filter is case-insensitive, so getProjectBySlug
+  // still finds the page whichever form arrives.
   const slugProp = props["Slug"] || props["slug"];
   const slug =
     slugProp?.type === "rich_text"
-      ? slugProp.rich_text.map((t) => t.plain_text).join("")
+      ? slugProp.rich_text.map((t) => t.plain_text).join("").trim().toLowerCase()
       : page.id;
 
   const descProp = props["Description"] || props["description"];

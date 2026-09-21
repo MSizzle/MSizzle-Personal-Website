@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "test": "vitest run",
     "lint": "eslint",
     "enrich-loves": "tsx scripts/enrich-loves.ts",
     "create-inbox-db": "tsx scripts/create-inbox-db.ts"

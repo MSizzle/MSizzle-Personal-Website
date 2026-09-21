@@ -1,11 +1,13 @@
 import Image from "next/image";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import { getPublishedProjects, getProjectBySlug } from "@/lib/notion-projects";
 import { getBlocks } from "@/lib/notion";
 import { NotionRenderer } from "@/components/notion/notion-renderer";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
+import { JsonLd } from "@/components/seo/json-ld";
 import { PageHero, PageCrumb } from "@/components/v3/page-hero";
 import { buildProjectMetadata } from "@/lib/seo/project-metadata";
+import { buildProjectSchema } from "@/lib/seo/schemas";
 import type { Metadata } from "next";
 import type { BlockObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 
@@ -38,6 +40,15 @@ export async function generateMetadata({
 
 export default async function ProjectPage({ params }: PageProps) {
   const { slug } = await params;
+
+  // One project, one URL. Notion's slug filter is case-insensitive, so
+  // /building/Gene-own used to render the same page as /building/gene-own and
+  // both could be indexed. Send the mixed-case form to the canonical one
+  // before spending a Notion call on it (260921-ed0).
+  if (slug !== slug.toLowerCase()) {
+    permanentRedirect(`/building/${slug.toLowerCase()}`);
+  }
+
   const project = await getProjectBySlug(slug);
 
   if (!project) notFound();
@@ -46,6 +57,21 @@ export default async function ProjectPage({ params }: PageProps) {
 
   return (
     <>
+      {/* CreativeWork markup: name, description, author, cover, tags, and the
+          project's own URL. Project pages previously emitted only the
+          breadcrumb below (260921-ed0). */}
+      <JsonLd
+        data={buildProjectSchema({
+          title: project.title,
+          slug: project.slug,
+          description: project.description,
+          coverPageId: project.cover ? project.id : null,
+          lastEdited: project.lastEdited,
+          tags: project.tags,
+          externalUrl: project.externalUrl,
+        })}
+      />
+
       {/* With a cover the crumb leads, then the cover, then the title sits
           flush against the cover's bottom edge. Without one the crumb stays
           inside PageHero and keeps the standing top padding. */}

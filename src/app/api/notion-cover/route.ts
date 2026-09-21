@@ -13,10 +13,13 @@ const notion = new Client({ auth: process.env.NOTION_TOKEN });
 // Success responses carry a long-lived Cache-Control: each pageId(+w)/blockId
 // is effectively immutable per content, so s-maxage=31536000 lets Vercel's
 // edge serve repeat requests with zero function invocation (no Notion API
-// round trip, no sharp re-encode); max-age=300 keeps individual browsers
-// revalidating every 5 minutes. Accepted tradeoff: if Monty swaps a Notion
-// cover image, different edge POPs may keep serving the old bytes for up to a
-// year until naturally evicted or a new deploy busts the cache.
+// round trip, no sharp re-encode); max-age=86400 lets a browser reuse the
+// bytes for a day, and stale-while-revalidate=604800 lets it keep showing a
+// week-old copy while a fresh one loads in the background. Covers barely
+// change, and the 5-minute browser cache this replaced meant a returning
+// reader re-downloaded every image (260921-ed0). Accepted tradeoff: if Monty
+// swaps a Notion cover, edge POPs and warm browsers may serve the old bytes
+// until naturally evicted or a new deploy busts the cache.
 const DEFAULT_WIDTH = 640;
 const MIN_WIDTH = 64;
 const MAX_WIDTH = 1280;
@@ -76,7 +79,7 @@ export async function GET(request: NextRequest) {
       status: 200,
       headers: {
         "Content-Type": contentType,
-        "Cache-Control": "public, max-age=300, s-maxage=31536000, stale-while-revalidate=86400",
+        "Cache-Control": "public, max-age=86400, s-maxage=31536000, stale-while-revalidate=604800",
       },
     });
   } catch {
