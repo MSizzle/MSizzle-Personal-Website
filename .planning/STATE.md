@@ -1,3 +1,4 @@
+| fast | Pinboard: Organize by topic shrinks and wraps cards; Draw a card auto-settles after 4s riffle + 3s wind-down, Stop kept | 2026-09-20 | f8942bc | (inline) |
 | fast | Advice form follow-up: single Send, ink dividers under reply fields, Email placeholder, homepage row copy trimmed | 2026-09-20 | 6ebbf60 | (inline) |
 | 260920-ofb | Anonymous "Unsolicited advice" inbox: /advice two-screen form, POST /api/advice to a Notion Inbox DB, homepage band 04, /contact row 05, footer link; DB not yet provisioned (needs NOTION_INBOX_DB_ID) | 2026-09-20 | 86e2e4d | [260920-ofb-anonymous-unsolicited-advice-inbox-advic](./quick/260920-ofb-anonymous-unsolicited-advice-inbox-advic/) |
 ---
