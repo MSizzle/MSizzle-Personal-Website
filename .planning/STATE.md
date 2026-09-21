@@ -33,7 +33,7 @@ Phase: 21 (mono-homepage-rebuild) — COMPLETE
 Plan: 6 of 6 (all 6 plans executed and summarized)
 Status: All 6 plans executed. All 3 human UAT items judged PASS by Monty on 2026-07-22
 against `npm run dev`. `21-HUMAN-UAT.md` is complete. Phase 21 is CLOSED.
-Last activity: 2026-09-20 - Completed quick task 260920-ofb: Anonymous "Unsolicited advice" inbox (/advice, /api/advice, entry points). Blocked on Notion Inbox DB provisioning.
+Last activity: 2026-09-21 - Completed quick task 260921-ed0: SEO/GEO hardening (/about + FAQ schema, /llms.txt, @id entity linking, IndexNow, project JSON-LD, sitemap dates, cover cache). Needs env: BING_SITE_VERIFICATION (user), INDEXNOW_KEY.
 
 Progress: [███░░░░░░░] 33% (2/6 v4.0 phases complete)
 
@@ -207,6 +207,7 @@ None blocking. Highest-risk item: DM-02 (inversion language on a dark ground) in
 
 | # | Description | Date | Commit | Directory |
 |---|-------------|------|--------|-----------|
+| 260921-ed0 | SEO/GEO hardening: /about biographical page with FAQPage + BreadcrumbList, /llms.txt, Person/WebSite/Organization/article @id linking, one identity sentence, Bing msvalidate + IndexNow key/ping, honest sitemap dates, project CreativeWork schema, lowercase project slugs (308), cover cache 1d browser / 1y CDN. Env still needed: BING_SITE_VERIFICATION, INDEXNOW_KEY | 2026-09-21 | 22f05d2 | [260921-ed0-seo-geo-hardening-about-page-llms-txt-en](./quick/260921-ed0-seo-geo-hardening-about-page-llms-txt-en/) |
 | 260722-wov | Homepage nav reveal, writing split, contact hover, hero copy | 2026-07-22 | c4ba222 | [260722-wov-homepage-nav-reveal-writing-split-contac](./quick/260722-wov-homepage-nav-reveal-writing-split-contac/) |
 | 260723-g2q | Image pipeline: fade-in placeholders, hard proxy caching, de-dupe optimization, right-size delivery | 2026-07-23 | bb132f6 | [260723-g2q-image-pipeline-fade-in-placeholders-hard](./quick/260723-g2q-image-pipeline-fade-in-placeholders-hard/) |
 | 260726-fe6 | Gate the mobile header reveal on scroll on the homepage | 2026-07-26 | 2cfa430 | [260726-fe6-mobile-header-scroll-gate](./quick/260726-fe6-mobile-header-scroll-gate/) |
