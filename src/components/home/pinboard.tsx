@@ -313,7 +313,8 @@ export function Pinboard({
       const setXY = (x: number, y: number) => {
         el.dataset.x = String(x);
         el.dataset.y = String(y);
-        el.style.transform = `translate(${x}px, ${y}px) rotate(${r}deg)`;
+        const sc = el.dataset.s || "1";
+        el.style.transform = `translate(${x}px, ${y}px) rotate(${r}deg) scale(${sc})`;
       };
 
       const onDown = (e: PointerEvent) => {
@@ -411,7 +412,14 @@ export function Pinboard({
     ) {
       type Phase = "board" | "drawing" | "revealed";
       let phase: Phase = "board";
-      let riffleTimer: ReturnType<typeof setInterval> | null = null;
+      let riffleTimer: number | null = null;
+      // Riffle pacing: full speed for RIFFLE_FULL_MS, then ease down over
+      // RIFFLE_SLOW_MS to RIFFLE_SLOWEST_MS between flips, then settle on
+      // whichever card is on top. Stop still works at any point.
+      const RIFFLE_FAST_MS = 80;
+      const RIFFLE_SLOWEST_MS = 420;
+      const RIFFLE_FULL_MS = 4000;
+      const RIFFLE_SLOW_MS = 3000;
       let ptr = 0;
 
       const reduceMotion = () =>
@@ -430,6 +438,7 @@ export function Pinboard({
       ) => {
         el.dataset.x = String(x);
         el.dataset.y = String(y);
+        el.dataset.s = String(s);
         el.style.transform = `translate(${x}px, ${y}px) rotate(${r}deg) scale(${s})`;
       };
       // How big to blow cards up once they leave the board: the gathered deck
@@ -559,7 +568,9 @@ export function Pinboard({
         window.setTimeout(() => {
           cards.forEach((el) => el.classList.remove("pb-anim"));
           ptr = Math.floor(Math.random() * cards.length);
-          riffleTimer = setInterval(() => {
+          const riffleStart = performance.now();
+          const flip = () => {
+            if (phase !== "drawing") return;
             const { w: rw, h: rh } = fieldSize();
             cards.forEach((el) => el.classList.remove("pb-peek"));
             ptr = (ptr + 1) % cards.length;
@@ -571,14 +582,29 @@ export function Pinboard({
             cards.forEach((o, i) => {
               if (o !== el) o.style.zIndex = String(i + 10);
             });
-          }, 80);
+
+            const t = performance.now() - riffleStart;
+            if (t >= RIFFLE_FULL_MS + RIFFLE_SLOW_MS) {
+              riffleTimer = null;
+              stopDraw();
+              return;
+            }
+            let delay = RIFFLE_FAST_MS;
+            if (t > RIFFLE_FULL_MS) {
+              // ease-in: flips get progressively longer, like a wheel winding down
+              const k = (t - RIFFLE_FULL_MS) / RIFFLE_SLOW_MS;
+              delay = RIFFLE_FAST_MS + (RIFFLE_SLOWEST_MS - RIFFLE_FAST_MS) * k * k;
+            }
+            riffleTimer = window.setTimeout(flip, delay);
+          };
+          riffleTimer = window.setTimeout(flip, RIFFLE_FAST_MS);
         }, 420);
       };
 
       const stopDraw = () => {
         if (phase !== "drawing") return;
-        if (riffleTimer) {
-          clearInterval(riffleTimer);
+        if (riffleTimer !== null) {
+          window.clearTimeout(riffleTimer);
           riffleTimer = null;
         }
         const { w, h } = fieldSize();
@@ -643,9 +669,15 @@ export function Pinboard({
         });
 
         const { w } = fieldSize();
-        const LABEL_H = 34; // space above each row for its heading
-        const ROW_GAP = 30; // gap below a row before the next heading
-        const COL_STEP = 250; // ideal horizontal step within a row
+        const LABEL_H = 30; // space above each band for its heading
+        const ROW_GAP = 26; // gap below a band before the next heading
+        // Cards shrink in this view so a topic fits many more per line and
+        // the page stays short. Scale is around the card's center, so the
+        // placement offsets by the shrunk margin to keep a left-aligned,
+        // top-aligned flow. Cards wrap onto extra lines inside their band.
+        const ORG_SCALE = 0.58;
+        const GAP_X = 12;
+        const GAP_Y = 12;
         // The field is absolutely inset to the pinboard's top edge, so it sits
         // under the (z-20) toolbar. Start the first topic row below the
         // toolbar's bottom so its label ("Places") never hides behind the
@@ -665,33 +697,57 @@ export function Pinboard({
           field.appendChild(label);
           topicLabels.push(label);
 
-          const cardsY = y + LABEL_H;
-          const cardW = els[0]?.offsetWidth || CARD_MAX_W;
-          const perRow = Math.max(1, Math.floor((w + 24) / COL_STEP));
-          // If a topic overflows one visual row, let cards overlap horizontally
-          // rather than wrapping, so each topic stays a single band.
-          const step =
-            els.length > 1
-              ? Math.min(COL_STEP, (w - cardW) / (els.length - 1))
-              : 0;
-          let rowH = 0;
+          let lineY = y + LABEL_H;
+          let x = 0;
+          let lineH = 0;
           els.forEach((el, i) => {
             clearCardState(el);
             if (animate) el.classList.add("pb-anim");
-            // Left-align every band, including single-card bands (step === 0),
-            // so a lone card sits at the row's start rather than centered.
-            const x = i * step;
-            place(el, x, cardsY, seeded(i, 7) * 4 - 2);
+            const ow = el.offsetWidth;
+            const oh = el.offsetHeight;
+            const vw = ow * ORG_SCALE;
+            const vh = oh * ORG_SCALE;
+            if (x > 0 && x + vw > w) {
+              x = 0;
+              lineY += lineH + GAP_Y;
+              lineH = 0;
+            }
+            place(
+              el,
+              x - (ow - vw) / 2,
+              lineY - (oh - vh) / 2,
+              seeded(i, 7) * 4 - 2,
+              ORG_SCALE
+            );
             el.style.zIndex = String(++z);
-            rowH = Math.max(rowH, el.offsetHeight);
+            x += vw + GAP_X;
+            lineH = Math.max(lineH, vh);
           });
-          void perRow; // single-band layout; perRow kept for future wrapping
-          y = cardsY + rowH + ROW_GAP;
+          y = lineY + lineH + ROW_GAP;
         });
 
         // Grow the board to fit the organized grid (bigger than the fixed
         // scatter area on purpose — this is an explicit, expanded view).
         board.style.height = `${y + 20}px`;
+
+        // Card images load lazily, so on the first Organize an off-screen
+        // card can still be at its placeholder height. Once any pending image
+        // lands, lay the bands out again (still organized, still on the board).
+        const pendingImgs = [...field.querySelectorAll<HTMLImageElement>("img")]
+          .filter((img) => !img.complete);
+        if (pendingImgs.length > 0) {
+          let relayout: number | null = null;
+          const onImgLoad = () => {
+            if (relayout !== null) window.clearTimeout(relayout);
+            relayout = window.setTimeout(() => {
+              relayout = null;
+              if (topicLabels.length > 0 && phase === "board") organize();
+            }, 60);
+          };
+          pendingImgs.forEach((img) =>
+            img.addEventListener("load", onImgLoad, { once: true })
+          );
+        }
         if (animate) {
           window.setTimeout(
             () => cards.forEach((el) => el.classList.remove("pb-anim")),
@@ -723,7 +779,7 @@ export function Pinboard({
       btnBack.addEventListener("click", onBackClick);
 
       cleanups.push(() => {
-        if (riffleTimer) clearInterval(riffleTimer);
+        if (riffleTimer !== null) window.clearTimeout(riffleTimer);
         topicLabels.forEach((l) => l.remove());
         btnDraw.removeEventListener("click", onDrawClick);
         btnOrganize.removeEventListener("click", onOrganizeClick);
