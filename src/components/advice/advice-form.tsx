@@ -66,13 +66,7 @@ export function AdviceForm() {
     }
   }
 
-  async function submit(anonymous: boolean) {
-    const n = anonymous ? "" : name;
-    const c = anonymous ? "" : contact;
-    if (anonymous) {
-      setName("");
-      setContact("");
-    }
+  async function submit() {
 
     let path = "";
     try {
@@ -92,8 +86,8 @@ export function AdviceForm() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           message,
-          name: n,
-          contact: c,
+          name,
+          contact,
           path,
           hp,
           t: Date.now() - mountTime.current,
@@ -132,7 +126,7 @@ export function AdviceForm() {
                 htmlFor="advice-message"
                 className="font-mono text-sm text-text-muted"
               >
-                What's on your mind?
+                What&apos;s on your mind?
               </label>
               <div className="relative mt-4 font-sans text-xl md:text-2xl leading-snug">
                 {message.length === 0 && !focused && (
@@ -194,7 +188,7 @@ export function AdviceForm() {
               <form
                 onSubmit={(e: FormEvent) => {
                   e.preventDefault();
-                  submit(false);
+                  submit();
                 }}
                 onKeyDown={(e) => {
                   if (e.key === "Escape") {
@@ -213,17 +207,17 @@ export function AdviceForm() {
                     autoComplete="off"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="advice-field block w-full border-0 bg-transparent p-0 text-lg md:text-xl text-text outline-none"
+                    className="advice-field block w-full border-0 border-b border-text bg-transparent px-0 pb-2 text-lg md:text-xl text-text outline-none"
                   />
                   <input
                     id="advice-contact"
                     type="text"
-                    placeholder="Email or handle"
-                    aria-label="Email or handle"
+                    placeholder="Email"
+                    aria-label="Email"
                     autoComplete="off"
                     value={contact}
                     onChange={(e) => setContact(e.target.value)}
-                    className="advice-field block w-full border-0 bg-transparent p-0 text-lg md:text-xl text-text outline-none"
+                    className="advice-field block w-full border-0 border-b border-text bg-transparent px-0 pb-2 text-lg md:text-xl text-text outline-none"
                   />
                 </div>
                 <div className="mt-8 flex items-center gap-6">
@@ -234,15 +228,6 @@ export function AdviceForm() {
                     className="font-mono text-sm underline-offset-4 hover:underline disabled:opacity-40"
                   >
                     Send
-                  </button>
-                  <button
-                    type="button"
-                    disabled={pending}
-                    aria-busy={pending}
-                    onClick={() => submit(true)}
-                    className="font-mono text-sm underline-offset-4 hover:underline disabled:opacity-40"
-                  >
-                    Send anonymously
                   </button>
                   <button
                     type="button"

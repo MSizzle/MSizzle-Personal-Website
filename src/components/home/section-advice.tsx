@@ -8,7 +8,7 @@ export function SectionAdvice({ accentIndex }: { accentIndex: number }) {
           <ContactRow
             numeral="04"
             title="Unsolicited advice"
-            handle="Anonymous. No login. I read every one."
+            handle="Anonymous. No login."
             action="Say it"
             href="/advice"
             external={false}

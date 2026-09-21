@@ -1,17 +1,24 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
 import { render, screen, fireEvent, cleanup, waitFor } from "@testing-library/react";
+import type { ReactNode } from "react";
+
+type MockProps = { children?: ReactNode; [key: string]: unknown };
 
 vi.mock("motion/react", () => ({
   m: {
-    div: ({ children, initial, animate, exit, transition, ...props }: any) =>
-      <div {...props}>{children}</div>,
+    div: (props: MockProps) => {
+      const rest = { ...props };
+      for (const k of ["initial", "animate", "exit", "transition"]) delete rest[k];
+      const { children, ...attrs } = rest;
+      return <div {...attrs}>{children}</div>;
+    },
   },
-  AnimatePresence: ({ children }: any) => <>{children}</>,
+  AnimatePresence: ({ children }: MockProps) => <>{children}</>,
   useReducedMotion: () => false,
 }));
 
 vi.mock("next/link", () => ({
-  default: ({ children, href, ...props }: any) => (
+  default: ({ children, href, ...props }: MockProps & { href: string }) => (
     <a href={href} {...props}>
       {children}
     </a>
@@ -59,17 +66,17 @@ describe("AdviceForm", () => {
     expect(screen.queryByText("What's on your mind?")).toBeNull();
   });
 
-  it("Send anonymously clears name/contact and calls fetch with empty strings", async () => {
+  it("Send with blank fields posts empty name/contact", async () => {
     render(<AdviceForm />);
     const textarea = screen.getByLabelText("What's on your mind?");
     fireEvent.change(textarea, { target: { value: "hello" } });
     fireEvent.keyDown(textarea, { key: "Enter" });
     await screen.findByText("Want a reply?");
 
-    const nameInput = screen.getByLabelText("Name");
-    fireEvent.change(nameInput, { target: { value: "Monty" } });
+    expect(screen.queryByText("Send anonymously")).toBeNull();
+    expect(screen.getByPlaceholderText("Email")).toBeTruthy();
 
-    fireEvent.click(screen.getByText("Send anonymously"));
+    fireEvent.click(screen.getByText("Send"));
     await screen.findAllByText("Sent.");
 
     const [url, init] = vi.mocked(fetch).mock.calls[0];
