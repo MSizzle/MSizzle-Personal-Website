@@ -18,8 +18,10 @@ const nextConfig: NextConfig = {
       { source: '/blog', destination: '/writing', permanent: true },
       { source: '/events', destination: '/', permanent: true },
       { source: '/photos', destination: '/', permanent: true },
-      { source: '/links', destination: '/', permanent: true },
-      { source: '/about', destination: '/', permanent: true },
+      // /about is a real page again as of 260921-ed0 (it used to 301 to the
+      // homepage), and /links now lands there: a bio page answers "who is
+      // this" better than the homepage does.
+      { source: '/links', destination: '/about', permanent: true },
       { source: '/newsletter', destination: '/writing', permanent: true },
       { source: '/watching', destination: '/#loves', permanent: true }, // '/uses' was deleted; the Things I Love section is the successor content (quick task 260726-kjp)
       { source: '/uses', destination: '/#loves', permanent: true }, // /uses itself still 404'd and sat in Google's index as a Not-found (quick task 260728-fri)

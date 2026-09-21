@@ -14,6 +14,7 @@ import Link from "next/link";
  * External anchors carry rel="noopener noreferrer".
  */
 const EXPLORE: { label: string; href: string; external?: boolean }[] = [
+  { label: "About", href: "/about" },
   { label: "Building", href: "/building" },
   { label: "Writing", href: "/writing" },
   { label: "Things I Love", href: "/#loves" },

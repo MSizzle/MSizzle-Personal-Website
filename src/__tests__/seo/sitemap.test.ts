@@ -42,4 +42,22 @@ describe('sitemap()', () => {
     const portfolioEntry = result.find((e) => e.url.endsWith('/portfolio'))
     expect(portfolioEntry).toBeUndefined()
   })
+
+  // /about stopped redirecting to the homepage in 260921-ed0 and is now a real
+  // page, so it belongs in the sitemap.
+  it('includes /about', async () => {
+    const result = await sitemap()
+    expect(result.find((e) => e.url.endsWith('/about'))).toBeDefined()
+  })
+
+  // Static routes used to stamp `new Date()` on every crawl, which claimed the
+  // whole site changed the moment a bot asked. Dates are hand-kept now.
+  it('never stamps a static route as modified right now', async () => {
+    const result = await sitemap()
+    const now = Date.now()
+    for (const entry of result) {
+      const stamp = new Date(entry.lastModified as string | Date).getTime()
+      expect(Math.abs(now - stamp)).toBeGreaterThan(60_000)
+    }
+  })
 })
