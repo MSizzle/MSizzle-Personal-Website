@@ -6,9 +6,9 @@ import { SiteHeader } from "@/components/nav/site-header";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { UmamiAnalytics } from "@/components/analytics/umami-analytics";
 import { VisitSurvey } from "@/components/visit-survey";
-import { SITE_URL } from "@/lib/seo/site";
+import { SITE_URL, IDENTITY_SENTENCE } from "@/lib/seo/site";
 import { JsonLd } from "@/components/seo/json-ld";
-import { buildWebSiteSchema } from "@/lib/seo/schemas";
+import { buildWebSiteSchema, buildOrganizationSchema } from "@/lib/seo/schemas";
 import "./globals.css";
 
 // Hanken Grotesk: display + body font for photo-forward design (D-02).
@@ -27,14 +27,21 @@ const jetbrainsMono = JetBrains_Mono({
   display: "swap",
 });
 
-const SITE_DESCRIPTION =
-  "Monty Singer is the founder of Prometheus, an AI integrations and education company. Builder, writer, and doer.";
+// One sentence, one home: the meta description, the Person node's
+// description, /llms.txt and /about all read from IDENTITY_SENTENCE so they
+// can never drift apart (quick task 260921-ed0).
+const SITE_DESCRIPTION = IDENTITY_SENTENCE;
 const SITE_TITLE = "Monty Singer | Founder of Prometheus, Builder, Writer";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   verification: {
     google: "EV4m-VDmZ4Zqq2sjmhq9qW0OFkBWdMk6eXDAKXOQOcA",
+    // Bing Webmaster Tools. Set BING_SITE_VERIFICATION once the property is
+    // claimed; unset, `other` is undefined and Next renders no meta tag.
+    other: process.env.BING_SITE_VERIFICATION
+      ? { "msvalidate.01": process.env.BING_SITE_VERIFICATION }
+      : undefined,
   },
   title: {
     default: SITE_TITLE,
@@ -71,8 +78,11 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-screen bg-bg text-text antialiased">
-        {/* Site-level entity markup, emitted once for every route (260728-kcg). */}
+        {/* Site-level entity markup, emitted once for every route (260728-kcg).
+            The Organization node joined it in 260921-ed0 so Prometheus is an
+            entity in its own right, linked to the Person by @id. */}
         <JsonLd data={buildWebSiteSchema()} />
+        <JsonLd data={buildOrganizationSchema()} />
         <LenisProvider>
           <MotionProvider>
             <SiteHeader />

@@ -5,7 +5,11 @@ import {
   buildBreadcrumbListSchema,
   buildWebSiteSchema,
   buildBlogPostingSchema,
+  buildOrganizationSchema,
+  buildProjectSchema,
+  personRef,
 } from '@/lib/seo/schemas'
+import { IDENTITY_SENTENCE, PERSON_ID, ORG_ID } from '@/lib/seo/site'
 
 describe('buildPersonSchema', () => {
   it('returns exact D-13 payload', () => {
@@ -17,6 +21,7 @@ describe('buildPersonSchema', () => {
     expect(schema.jobTitle).toBe('Founder')
     expect(schema.worksFor).toEqual({
       '@type': 'Organization',
+      '@id': ORG_ID,
       name: 'Prometheus',
       url: 'https://prometheus.today',
     })
@@ -120,5 +125,101 @@ describe('buildBlogPostingSchema', () => {
     const node = buildBlogPostingSchema({ ...base, date: undefined, lastEdited: undefined })
     expect(node.datePublished).toBeUndefined()
     expect(node.dateModified).toBeUndefined()
+  })
+})
+
+/**
+ * Entity consolidation (quick task 260921-ed0). Before this, the Person,
+ * WebSite and article nodes each described Monty from scratch, so a crawler
+ * had four look-alike entities and no instruction to merge them. Every
+ * reference now carries the same @id.
+ */
+describe('entity graph: shared @id', () => {
+  it('Person carries the canonical @id and the one identity sentence', () => {
+    const person = buildPersonSchema()
+    expect(person['@id']).toBe(PERSON_ID)
+    expect(person.description).toBe(IDENTITY_SENTENCE)
+    expect(person.image).toContain('/opengraph-image')
+    expect(person.email).toBe('mailto:monty@prometheus.today')
+    expect(person.knowsAbout).toContain('Artificial intelligence')
+  })
+
+  it('personRef points at the Person node without copying it', () => {
+    const ref = personRef()
+    expect(ref['@type']).toBe('Person')
+    expect(ref['@id']).toBe(PERSON_ID)
+    expect(ref).not.toHaveProperty('description')
+  })
+
+  it('WebSite publisher and BlogPosting author/publisher resolve to the Person @id', () => {
+    const site = buildWebSiteSchema()
+    expect(site['@id']).toBe('https://montysinger.com/#website')
+    expect(site.publisher['@id']).toBe(PERSON_ID)
+
+    const post = buildBlogPostingSchema({
+      title: 'T',
+      slug: 't',
+      description: 'd',
+      date: '2026-01-01',
+    })
+    expect((post.author as Record<string, unknown>)['@id']).toBe(PERSON_ID)
+    expect((post.publisher as Record<string, unknown>)['@id']).toBe(PERSON_ID)
+  })
+
+  it('Organization names Prometheus and founds it on the Person @id', () => {
+    const org = buildOrganizationSchema()
+    expect(org['@type']).toBe('Organization')
+    expect(org['@id']).toBe(ORG_ID)
+    expect(org.name).toBe('Prometheus')
+    expect(org.url).toBe('https://prometheus.today')
+    expect(org.founder['@id']).toBe(PERSON_ID)
+  })
+
+  it('no emitted string carries an em dash (CLAUDE.md copy rule)', () => {
+    const blob = JSON.stringify([
+      buildPersonSchema(),
+      buildWebSiteSchema(),
+      buildOrganizationSchema(),
+      buildProjectSchema({ title: 'P', slug: 'p', description: 'd' }),
+    ])
+    expect(blob).not.toMatch(/[—–]/)
+  })
+})
+
+describe('buildProjectSchema', () => {
+  const base = {
+    title: 'Gene Own',
+    slug: 'gene-own',
+    description: 'A project description.',
+  }
+
+  it('returns a CreativeWork authored by the Person @id at the canonical URL', () => {
+    const node = buildProjectSchema(base)
+    expect(node['@type']).toBe('CreativeWork')
+    expect(node.name).toBe('Gene Own')
+    expect(node.url).toBe('https://montysinger.com/building/gene-own')
+    expect((node.author as Record<string, unknown>)['@id']).toBe(PERSON_ID)
+  })
+
+  it('adds image, dateModified, keywords and sameAs when the project has them', () => {
+    const node = buildProjectSchema({
+      ...base,
+      coverPageId: 'abc',
+      lastEdited: '2026-05-01T00:00:00.000Z',
+      tags: ['AI', 'Biology'],
+      externalUrl: 'https://example.com',
+    })
+    expect(node.image).toContain('/api/notion-cover?pageId=abc')
+    expect(node.dateModified).toBe('2026-05-01T00:00:00.000Z')
+    expect(node.keywords).toBe('AI, Biology')
+    expect(node.sameAs).toBe('https://example.com')
+  })
+
+  it('omits optional fields, and ignores a non-http externalUrl', () => {
+    const node = buildProjectSchema({ ...base, externalUrl: 'notion://page/1', tags: [] })
+    expect(node.image).toBeUndefined()
+    expect(node.dateModified).toBeUndefined()
+    expect(node.keywords).toBeUndefined()
+    expect(node.sameAs).toBeUndefined()
   })
 })

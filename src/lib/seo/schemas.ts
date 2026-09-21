@@ -1,14 +1,49 @@
-import { SITE_URL, canonical } from './site'
+import {
+  SITE_URL,
+  canonical,
+  IDENTITY_SENTENCE,
+  PERSON_ID,
+  ORG_ID,
+  PERSON_IMAGE,
+} from './site'
+
+/**
+ * A pointer to the Person node rather than a copy of it. Anywhere Monty shows
+ * up in someone else's schema (site publisher, article author, company
+ * founder), emit this: the shared @id is what tells a crawler these are all
+ * the same entity instead of four unlinked strings (quick task 260921-ed0).
+ */
+export function personRef() {
+  return {
+    '@type': 'Person',
+    '@id': PERSON_ID,
+    name: 'Monty Singer',
+    url: SITE_URL,
+  } as const
+}
 
 export function buildPersonSchema() {
   return {
     '@context': 'https://schema.org',
     '@type': 'Person',
+    '@id': PERSON_ID,
     name: 'Monty Singer',
     url: SITE_URL,
+    description: IDENTITY_SENTENCE,
+    image: PERSON_IMAGE,
+    email: 'mailto:monty@prometheus.today',
     jobTitle: 'Founder',
+    knowsAbout: [
+      'Artificial intelligence',
+      'AI integrations',
+      'Entrepreneurship',
+      'Writing',
+      'Biology',
+      'Self-improvement',
+    ],
     worksFor: {
       '@type': 'Organization',
+      '@id': ORG_ID,
       name: 'Prometheus',
       url: 'https://prometheus.today',
     },
@@ -33,13 +68,28 @@ export function buildWebSiteSchema() {
   return {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
+    '@id': `${SITE_URL}/#website`,
     name: 'Monty Singer',
     url: SITE_URL,
-    publisher: {
-      '@type': 'Person',
-      name: 'Monty Singer',
-      url: SITE_URL,
-    },
+    publisher: personRef(),
+  } as const
+}
+
+/**
+ * Prometheus as its own entity, emitted once from the root layout beside the
+ * WebSite node. `founder` points at the Person @id, which closes the loop:
+ * Person worksFor Organization, Organization founder Person.
+ */
+export function buildOrganizationSchema() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    '@id': ORG_ID,
+    name: 'Prometheus',
+    url: 'https://prometheus.today',
+    description:
+      'An applied AI company: AI integrations and education for businesses.',
+    founder: personRef(),
   } as const
 }
 
@@ -76,16 +126,8 @@ export function buildBlogPostingSchema(post: BlogPostingInput) {
     description: post.description,
     url,
     mainEntityOfPage: { '@type': 'WebPage', '@id': url },
-    author: {
-      '@type': 'Person',
-      name: 'Monty Singer',
-      url: SITE_URL,
-    },
-    publisher: {
-      '@type': 'Person',
-      name: 'Monty Singer',
-      url: SITE_URL,
-    },
+    author: personRef(),
+    publisher: personRef(),
   }
 
   if (datePublished) {
@@ -97,6 +139,54 @@ export function buildBlogPostingSchema(post: BlogPostingInput) {
   }
   if (post.wordCount && post.wordCount > 0) {
     node.wordCount = post.wordCount
+  }
+
+  return node
+}
+
+export type ProjectSchemaInput = {
+  title: string
+  slug: string
+  description: string
+  /** Notion page id; present only when the project has a cover image. */
+  coverPageId?: string | null
+  /** Notion page last_edited_time, ISO. */
+  lastEdited?: string
+  tags?: string[]
+  /** The project's own site, when it has one. */
+  externalUrl?: string
+}
+
+/**
+ * CreativeWork markup for a /building page. Projects previously emitted only a
+ * breadcrumb, so a crawler had no way to tell what the page was about or who
+ * made it (quick task 260921-ed0). `sameAs` carries the project's own URL,
+ * which is how a crawler links this page to the live thing it describes.
+ */
+export function buildProjectSchema(project: ProjectSchemaInput) {
+  const url = canonical(`/building/${project.slug}`)
+
+  const node: Record<string, unknown> = {
+    '@context': 'https://schema.org',
+    '@type': 'CreativeWork',
+    name: project.title,
+    description: project.description,
+    url,
+    mainEntityOfPage: { '@type': 'WebPage', '@id': url },
+    author: personRef(),
+  }
+
+  if (project.coverPageId) {
+    node.image = `${SITE_URL}/api/notion-cover?pageId=${project.coverPageId}`
+  }
+  if (project.lastEdited) {
+    node.dateModified = project.lastEdited
+  }
+  if (project.tags && project.tags.length > 0) {
+    node.keywords = project.tags.join(', ')
+  }
+  if (project.externalUrl && /^https?:\/\//i.test(project.externalUrl)) {
+    node.sameAs = project.externalUrl
   }
 
   return node
