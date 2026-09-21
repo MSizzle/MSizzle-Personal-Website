@@ -40,43 +40,35 @@ afterEach(() => {
 import { AdviceForm } from "@/components/advice/advice-form";
 
 describe("AdviceForm", () => {
-  it("renders stage 1: message prompt with focused textarea", async () => {
+  it("renders the prompt with the textarea focused and no reply fields", () => {
     render(<AdviceForm />);
-    expect(screen.getByText("What's on your mind?")).toBeDefined();
     const textarea = screen.getByLabelText("What's on your mind?");
-    expect(textarea).toBeDefined();
-    // Focus effect runs synchronously after render under act().
     expect(document.activeElement).toBe(textarea);
+    expect(screen.getByText("Submit")).toBeDefined();
+    expect(screen.queryByPlaceholderText("Name")).toBeNull();
   });
 
-  it("Enter with empty message does nothing", () => {
+  it("Enter with an empty message does not submit", () => {
     render(<AdviceForm />);
     const textarea = screen.getByLabelText("What's on your mind?");
     fireEvent.keyDown(textarea, { key: "Enter" });
-    expect(screen.queryByText("Want a reply?")).toBeNull();
+    expect(vi.mocked(fetch)).not.toHaveBeenCalled();
     expect(screen.getByText("What's on your mind?")).toBeDefined();
   });
 
-  it("typing and Enter advances to stage 2", async () => {
+  it("Want a reply? reveals the Name and Email lines", () => {
     render(<AdviceForm />);
-    const textarea = screen.getByLabelText("What's on your mind?");
-    fireEvent.change(textarea, { target: { value: "hello" } });
-    fireEvent.keyDown(textarea, { key: "Enter" });
-    await screen.findByText("Want a reply?");
-    expect(screen.queryByText("What's on your mind?")).toBeNull();
+    fireEvent.click(screen.getByText("Want a reply?"));
+    expect(screen.getByPlaceholderText("Name")).toBeDefined();
+    expect(screen.getByPlaceholderText("Email")).toBeDefined();
+    expect(screen.queryByPlaceholderText("Email or handle")).toBeNull();
   });
 
-  it("Send with blank fields posts empty name/contact", async () => {
+  it("Enter submits anonymously when the reply toggle is closed", async () => {
     render(<AdviceForm />);
     const textarea = screen.getByLabelText("What's on your mind?");
     fireEvent.change(textarea, { target: { value: "hello" } });
     fireEvent.keyDown(textarea, { key: "Enter" });
-    await screen.findByText("Want a reply?");
-
-    expect(screen.queryByText("Send anonymously")).toBeNull();
-    expect(screen.getByPlaceholderText("Email")).toBeTruthy();
-
-    fireEvent.click(screen.getByText("Send"));
     await screen.findAllByText("Sent.");
 
     const [url, init] = vi.mocked(fetch).mock.calls[0];
@@ -88,21 +80,36 @@ describe("AdviceForm", () => {
     expect(typeof body.t).toBe("number");
   });
 
-  it("fetch rejection shows error and preserves message after Back", async () => {
+  it("Submit sends name and email when the reply toggle is open", async () => {
+    render(<AdviceForm />);
+    fireEvent.change(screen.getByLabelText("What's on your mind?"), {
+      target: { value: "hello" },
+    });
+    fireEvent.click(screen.getByText("Want a reply?"));
+    fireEvent.change(screen.getByPlaceholderText("Name"), { target: { value: "Monty" } });
+    fireEvent.change(screen.getByPlaceholderText("Email"), {
+      target: { value: "m@example.com" },
+    });
+    fireEvent.click(screen.getByText("Submit"));
+    await screen.findAllByText("Sent.");
+
+    const body = JSON.parse(String(vi.mocked(fetch).mock.calls[0][1]?.body));
+    expect(body.name).toBe("Monty");
+    expect(body.contact).toBe("m@example.com");
+  });
+
+  it("fetch rejection shows the error line and keeps the message", async () => {
     vi.mocked(fetch).mockRejectedValueOnce(new Error("net error"));
     render(<AdviceForm />);
     const textarea = screen.getByLabelText("What's on your mind?");
     fireEvent.change(textarea, { target: { value: "keep me" } });
-    fireEvent.keyDown(textarea, { key: "Enter" });
-    await screen.findByText("Want a reply?");
-
-    fireEvent.click(screen.getByText("Send"));
+    fireEvent.click(screen.getByText("Submit"));
     const alert = await screen.findByRole("alert");
     expect(alert.textContent).toContain("Did not send");
-
-    fireEvent.click(screen.getByText("Back"));
-    await waitFor(() => {
-      expect(screen.getByLabelText("What's on your mind?")).toHaveValue("keep me");
-    });
+    await waitFor(() =>
+      expect((screen.getByLabelText("What's on your mind?") as HTMLTextAreaElement).value).toBe(
+        "keep me"
+      )
+    );
   });
 });

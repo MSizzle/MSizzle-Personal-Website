@@ -11,13 +11,21 @@ import Link from "next/link";
 import { m, AnimatePresence, useReducedMotion } from "motion/react";
 
 /**
- * Three-state anonymous advice form: message | reply | done.
- * Uses motion/react for AnimatePresence (not motion/react's motion.div,
- * which requires LazyMotion strict mode). Honeypot + timing gate prevent bots.
+ * Single-page anonymous advice form.
+ *
+ * One prompt ("What's on your mind?"), one Submit. A small "Want a reply?"
+ * toggle under the button opens optional Name and Email lines. Blank name and
+ * email means anonymous; nothing is derived from either. After a successful
+ * send the page swaps to a short "Sent." state.
+ *
+ * Uses m.div (the site's MotionProvider runs LazyMotion in strict mode, which
+ * rejects motion.div). A honeypot field plus a time-on-page value give the API
+ * route two cheap bot gates.
  */
 export function AdviceForm() {
-  const [stage, setStage] = useState<"message" | "reply" | "done">("message");
+  const [stage, setStage] = useState<"form" | "done">("form");
   const [message, setMessage] = useState("");
+  const [wantReply, setWantReply] = useState(false);
   const [name, setName] = useState("");
   const [contact, setContact] = useState("");
   const [hp, setHp] = useState("");
@@ -34,48 +42,42 @@ export function AdviceForm() {
   const dy = reduced ? 0 : 8;
   const duration = reduced ? 0 : 0.15;
 
-  // Focus the first interactive element of the current stage.
   useEffect(() => {
-    if (stage === "message") {
-      textareaRef.current?.focus();
-    } else if (stage === "reply") {
-      nameInputRef.current?.focus();
-    } else if (stage === "done") {
-      doneLinkRef.current?.focus();
-    }
+    if (stage === "form") textareaRef.current?.focus();
+    else doneLinkRef.current?.focus();
   }, [stage]);
 
-  // Auto-grow textarea.
+  useEffect(() => {
+    if (wantReply) nameInputRef.current?.focus();
+  }, [wantReply]);
+
   function grow(el: HTMLTextAreaElement) {
     el.style.height = "auto";
     el.style.height = el.scrollHeight + "px";
   }
 
   useEffect(() => {
-    if (textareaRef.current) {
-      grow(textareaRef.current);
-    }
+    if (textareaRef.current) grow(textareaRef.current);
   }, [message, stage]);
+
+  const canSubmit = message.trim().length > 0 && !pending;
 
   function onMessageKeyDown(e: KeyboardEvent<HTMLTextAreaElement>) {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
-      if (message.trim().length > 0) {
-        setStage("reply");
-      }
+      if (canSubmit) void submit();
     }
   }
 
   async function submit() {
+    if (!canSubmit) return;
 
     let path = "";
     try {
       const ref = new URL(document.referrer);
-      if (ref.origin === window.location.origin) {
-        path = ref.pathname;
-      }
+      if (ref.origin === window.location.origin) path = ref.pathname;
     } catch {
-      // fall through
+      // no usable referrer
     }
 
     setPending(true);
@@ -86,18 +88,15 @@ export function AdviceForm() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           message,
-          name,
-          contact,
+          name: wantReply ? name : "",
+          contact: wantReply ? contact : "",
           path,
           hp,
           t: Date.now() - mountTime.current,
         }),
       });
-      if (res.ok) {
-        setStage("done");
-      } else {
-        setError(true);
-      }
+      if (res.ok) setStage("done");
+      else setError(true);
     } catch {
       setError(true);
     } finally {
@@ -105,143 +104,135 @@ export function AdviceForm() {
     }
   }
 
+  const fieldClass =
+    "advice-field block w-full border-0 border-b border-text bg-transparent px-0 pb-2 text-lg md:text-xl text-text outline-none";
+
   return (
     <div
       className="flex min-h-[calc(100dvh-var(--header-h))] items-center bg-bg px-6 md:px-40"
-      onClick={() => {
-        if (stage === "message") textareaRef.current?.focus();
+      onClick={(e) => {
+        // Clicking the empty page focuses the prompt; clicks on controls keep their target.
+        if (stage === "form" && e.target === e.currentTarget) textareaRef.current?.focus();
       }}
     >
       <div className="w-full max-w-[62ch] mx-auto">
         <AnimatePresence mode="wait">
-          {stage === "message" && (
+          {stage === "form" && (
             <m.div
-              key="message"
+              key="form"
               initial={{ opacity: 0, y: dy }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -dy }}
               transition={{ duration }}
             >
-              <label
-                htmlFor="advice-message"
-                className="font-mono text-sm text-text-muted"
-              >
-                What&apos;s on your mind?
-              </label>
-              <div className="relative mt-4 font-sans text-xl md:text-2xl leading-snug">
-                {message.length === 0 && !focused && (
-                  <span
-                    aria-hidden="true"
-                    className="pointer-events-none absolute left-0 top-[0.15em] h-[1.1em] w-[2px] bg-text animate-[advice-blink_1s_steps(1,end)_infinite]"
-                  />
-                )}
-                <textarea
-                  id="advice-message"
-                  ref={textareaRef}
-                  rows={1}
-                  value={message}
-                  className="advice-field block w-full resize-none overflow-hidden border-0 bg-transparent p-0 text-text outline-none"
-                  style={{ caretColor: "var(--color-text)" }}
-                  onFocus={() => setFocused(true)}
-                  onBlur={() => setFocused(false)}
-                  onChange={(e) => setMessage(e.target.value)}
-                  onInput={(e) => grow(e.currentTarget)}
-                  onKeyDown={onMessageKeyDown}
-                />
-              </div>
-              <div className="mt-6 flex justify-end">
-                <button
-                  type="button"
-                  disabled={message.trim().length === 0}
-                  onClick={() => setStage("reply")}
-                  className="font-mono text-sm underline-offset-4 hover:underline disabled:opacity-40 disabled:no-underline"
-                >
-                  Continue
-                </button>
-              </div>
-              <p className="mt-4 font-mono text-xs text-text-muted">
-                Enter to continue. Shift+Enter for a new line.
-              </p>
-              <p className="mt-4 font-mono text-xs text-text-muted">
-                Anonymous by default. No account, no IP logged.
-              </p>
-            </m.div>
-          )}
-
-          {stage === "reply" && (
-            <m.div
-              key="reply"
-              initial={{ opacity: 0, y: dy }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -dy }}
-              transition={{ duration }}
-            >
-              <label
-                htmlFor="advice-name"
-                className="font-mono text-sm text-text-muted"
-              >
-                Want a reply?
-              </label>
-              <p className="mt-1 text-text-dim">
-                Leave a name, a contact, or both. Or neither.
-              </p>
               <form
                 onSubmit={(e: FormEvent) => {
                   e.preventDefault();
-                  submit();
-                }}
-                onKeyDown={(e) => {
-                  if (e.key === "Escape") {
-                    e.preventDefault();
-                    setStage("message");
-                  }
+                  void submit();
                 }}
               >
-                <div className="mt-6 space-y-4">
-                  <input
-                    id="advice-name"
-                    ref={nameInputRef}
-                    type="text"
-                    placeholder="Name"
-                    aria-label="Name"
-                    autoComplete="off"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    className="advice-field block w-full border-0 border-b border-text bg-transparent px-0 pb-2 text-lg md:text-xl text-text outline-none"
-                  />
-                  <input
-                    id="advice-contact"
-                    type="text"
-                    placeholder="Email"
-                    aria-label="Email"
-                    autoComplete="off"
-                    value={contact}
-                    onChange={(e) => setContact(e.target.value)}
-                    className="advice-field block w-full border-0 border-b border-text bg-transparent px-0 pb-2 text-lg md:text-xl text-text outline-none"
+                <label
+                  htmlFor="advice-message"
+                  className="font-mono text-sm text-text-muted"
+                >
+                  What&apos;s on your mind?
+                </label>
+                <div className="relative mt-4 font-sans text-xl md:text-2xl leading-snug">
+                  {message.length === 0 && !focused && (
+                    <span
+                      aria-hidden="true"
+                      className="pointer-events-none absolute left-0 top-[0.15em] h-[1.1em] w-[2px] bg-text animate-[advice-blink_1s_steps(1,end)_infinite]"
+                    />
+                  )}
+                  <textarea
+                    id="advice-message"
+                    ref={textareaRef}
+                    rows={1}
+                    value={message}
+                    className="advice-field block w-full resize-none overflow-hidden border-0 bg-transparent p-0 text-text outline-none"
+                    style={{ caretColor: "var(--color-text)" }}
+                    onFocus={() => setFocused(true)}
+                    onBlur={() => setFocused(false)}
+                    onChange={(e) => setMessage(e.target.value)}
+                    onInput={(e) => grow(e.currentTarget)}
+                    onKeyDown={onMessageKeyDown}
                   />
                 </div>
-                <div className="mt-8 flex items-center gap-6">
-                  <button
-                    type="submit"
-                    disabled={pending}
-                    aria-busy={pending}
-                    className="font-mono text-sm underline-offset-4 hover:underline disabled:opacity-40"
-                  >
-                    Send
-                  </button>
+
+                <div className="mt-6 flex items-center justify-between gap-6">
                   <button
                     type="button"
-                    onClick={() => setStage("message")}
-                    className="ml-auto font-mono text-xs text-text-muted hover:underline"
+                    aria-pressed={wantReply}
+                    onClick={() => setWantReply((v) => !v)}
+                    className="group inline-flex items-center gap-2 font-mono text-xs text-text-muted hover:text-text"
                   >
-                    Back
+                    <span
+                      aria-hidden="true"
+                      className={
+                        "inline-block h-3 w-3 border border-text " +
+                        (wantReply ? "bg-text" : "bg-transparent")
+                      }
+                    />
+                    Want a reply?
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={!canSubmit}
+                    aria-busy={pending}
+                    className="font-mono text-sm underline-offset-4 hover:underline disabled:opacity-40 disabled:no-underline"
+                  >
+                    Submit
                   </button>
                 </div>
+
+                <AnimatePresence initial={false}>
+                  {wantReply && (
+                    <m.div
+                      key="reply"
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: "auto" }}
+                      exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration }}
+                      className="overflow-hidden"
+                    >
+                      <p className="mt-6 font-mono text-xs text-text-muted">
+                        Leave a name, an email, or both.
+                      </p>
+                      <div className="mt-4 space-y-4">
+                        <input
+                          id="advice-name"
+                          ref={nameInputRef}
+                          type="text"
+                          placeholder="Name"
+                          aria-label="Name"
+                          autoComplete="off"
+                          value={name}
+                          onChange={(e) => setName(e.target.value)}
+                          className={fieldClass}
+                        />
+                        <input
+                          id="advice-contact"
+                          type="text"
+                          placeholder="Email"
+                          aria-label="Email"
+                          autoComplete="off"
+                          value={contact}
+                          onChange={(e) => setContact(e.target.value)}
+                          className={fieldClass}
+                        />
+                      </div>
+                    </m.div>
+                  )}
+                </AnimatePresence>
+
+                <p className="mt-6 font-mono text-xs text-text-muted">
+                  Enter to submit. Shift+Enter for a new line.
+                </p>
+                <p className="mt-4 font-mono text-xs text-text-muted">
+                  Anonymous by default. No account, no IP logged.
+                </p>
                 {error && (
-                  <p
-                    role="alert"
-                    className="mt-4 font-mono text-xs text-text"
-                  >
+                  <p role="alert" className="mt-4 font-mono text-xs text-text">
                     Did not send. Try again, or email monty@prometheus.today.
                   </p>
                 )}
@@ -290,7 +281,6 @@ export function AdviceForm() {
         />
       </div>
 
-      {/* Accessibility announcement */}
       <div aria-live="polite" className="sr-only">
         {stage === "done" ? "Sent." : ""}
       </div>
